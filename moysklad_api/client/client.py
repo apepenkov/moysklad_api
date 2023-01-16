@@ -5,7 +5,7 @@ import datetime
 from ..errors import MoySkladError
 from .. import types
 
-from ..api.entities import internalorder, products
+from ..api.entities import internalorder, products, move
 import json
 
 
@@ -135,7 +135,9 @@ class MoySkladClient:
         :return: List of InternalOrder objects (Список объектов InternalOrder)
         """
         return await self(
-            internalorder.GetInternalOrdersRequest(limit=limit, offset=offset, search=search)
+            internalorder.GetInternalOrdersRequest(
+                limit=limit, offset=offset, search=search
+            )
         )
 
     async def create_internal_order(
@@ -317,7 +319,9 @@ class MoySkladClient:
         :param positions: Positions (Позиции, которые нужно добавить)
         :return: list(InternalOrder) object (Список объектов InternalOrder)
         """
-        return await self(internalorder.AddOrderPositionsRequest(id_=id_, positions=positions))
+        return await self(
+            internalorder.AddOrderPositionsRequest(id_=id_, positions=positions)
+        )
 
     async def delete_order_position(
         self,
@@ -354,7 +358,9 @@ class MoySkladClient:
         :return: Position object (Объект Position)
         """
         return await self(
-            internalorder.GetOrderPositionRequest(order_id=order_id, position_id=position_id)
+            internalorder.GetOrderPositionRequest(
+                order_id=order_id, position_id=position_id
+            )
         )
 
     # products
@@ -575,4 +581,304 @@ class MoySkladClient:
                 attributes=attributes,
                 images=images,
             )
+        )
+
+    async def get_moves(
+        self,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
+    ) -> typing.List[move.Move]:
+        """
+
+        :param limit: Limit of moves to get (Лимит передвижений для получения)
+        :param offset: Offset of moves to get (Отступ передвижений для получения)
+        :param search: Search string (Строка поиска)
+        """
+
+        return await self(
+            move.GetMovesRequest(
+                limit=limit,
+                offset=offset,
+                search=search,
+            )
+        )
+
+    async def create_move(
+        self,
+        organization: types.Meta,
+        source_store: types.Meta,
+        target_store: types.Meta,
+        applicable: typing.Optional[bool] = None,
+        attributes: typing.Optional[dict] = None,
+        code: typing.Optional[str] = None,
+        description: typing.Optional[str] = None,
+        external_code: typing.Optional[str] = None,
+        files: typing.Optional[types.MetaArray] = None,
+        group: typing.Optional[types.Meta] = None,
+        internal_order: typing.Optional[types.Meta] = None,
+        customer_order: typing.Optional[types.Meta] = None,
+        meta: typing.Optional[types.Meta] = None,
+        moment: typing.Optional[datetime.datetime] = None,
+        name: typing.Optional[str] = None,
+        overhead: typing.Optional[dict] = None,
+        owner: typing.Optional[types.Meta] = None,
+        positions: typing.Optional[types.MetaArray] = None,
+        project: typing.Optional[types.Meta] = None,
+        rate: typing.Optional[types.Rate] = None,
+        shared: typing.Optional[bool] = None,
+        state: typing.Optional[types.Meta] = None,
+        sync_id: typing.Optional[str] = None,
+    ) -> move.Move:
+        """
+
+        :param organization: Organization (Организация)
+        :param source_store: Source store (Склад-источник)
+        :param target_store: Target store (Склад-получатель)
+
+        :param applicable: Applicable (Отметка о проведении)
+        :param attributes: Attributes (Атрибуты)
+        :param code: Code (Код)
+        :param description: Description (Описание)
+        :param external_code: External code (Внешний код)
+        :param files: Files (Файлы)
+        :param group: Group (Группа)
+        :param internal_order: Internal order (Внутренний заказ)
+        :param customer_order: Customer order (Заказ покупателя)
+        :param meta: Meta (Метаданные)
+        :param moment: Moment (Дата)
+        :param name: Name (Название)
+        :param overhead: Overhead (Накладные расходы)
+        :param owner: Owner (Владелец)
+        :param positions: Positions (Позиции)
+        :param project: Project (Проект)
+        :param rate: Rate (Курс)
+        :param shared: Shared (Общий доступ)
+        :param state: State (Статус)
+        :param sync_id: Sync ID (Идентификатор синхронизации)
+        """
+
+        return await self(
+            move.CreateMoveRequest(
+                organization=organization,
+                source_store=source_store,
+                target_store=target_store,
+                applicable=applicable,
+                attributes=attributes,
+                code=code,
+                description=description,
+                external_code=external_code,
+                files=files,
+                group=group,
+                internal_order=internal_order,
+                customer_order=customer_order,
+                meta=meta,
+                moment=moment,
+                name=name,
+                overhead=overhead,
+                owner=owner,
+                positions=positions,
+                project=project,
+                rate=rate,
+                shared=shared,
+                state=state,
+                sync_id=sync_id,
+            )
+        )
+
+    async def delete_move(self, move_id: str) -> None:
+        """
+
+        :param move_id: Move id (ID перемещения)
+        """
+        return await self(move.DeleteMoveRequest(move_id=move_id))
+
+    async def get_move(self, move_id: str) -> move.Move:
+        """
+
+        :param move_id: Move id (ID перемещения)
+        """
+        return await self(move.GetMoveRequest(move_id=move_id))
+
+    async def update_move(
+        self,
+        move_id: str,
+        organization: typing.Optional[types.Meta] = None,
+        source_store: typing.Optional[types.Meta] = None,
+        target_store: typing.Optional[types.Meta] = None,
+        applicable: typing.Optional[bool] = None,
+        attributes: typing.Optional[dict] = None,
+        code: typing.Optional[str] = None,
+        description: typing.Optional[str] = None,
+        external_code: typing.Optional[str] = None,
+        files: typing.Optional[types.MetaArray] = None,
+        group: typing.Optional[types.Meta] = None,
+        internal_order: typing.Optional[types.Meta] = None,
+        customer_order: typing.Optional[types.Meta] = None,
+        meta: typing.Optional[types.Meta] = None,
+        moment: typing.Optional[datetime.datetime] = None,
+        name: typing.Optional[str] = None,
+        overhead: typing.Optional[dict] = None,
+        owner: typing.Optional[types.Meta] = None,
+        positions: typing.Optional[types.MetaArray] = None,
+        project: typing.Optional[types.Meta] = None,
+        rate: typing.Optional[types.Rate] = None,
+        shared: typing.Optional[bool] = None,
+        state: typing.Optional[types.Meta] = None,
+        sync_id: typing.Optional[str] = None,
+    ) -> move.Move:
+        """
+
+        :param move_id: Move id (ID перемещения)
+
+        :param organization: Organization (Организация)
+        :param source_store: Source store (Склад-источник)
+        :param target_store: Target store (Склад-получатель)
+        :param applicable: Applicable (Отметка о проведении)
+        :param attributes: Attributes (Атрибуты)
+        :param code: Code (Код)
+        :param description: Description (Описание)
+        :param external_code: External code (Внешний код)
+        :param files: Files (Файлы)
+        :param group: Group (Группа)
+        :param internal_order: Internal order (Внутренний заказ)
+        :param customer_order: Customer order (Заказ покупателя)
+        :param meta: Meta (Метаданные)
+        :param moment: Moment (Дата)
+        :param name: Name (Название)
+        :param overhead: Overhead (Накладные расходы)
+        :param owner: Owner (Владелец)
+        :param positions: Positions (Позиции)
+        :param project: Project (Проект)
+        :param rate: Rate (Курс)
+        :param shared: Shared (Общий доступ)
+        :param state: State (Статус)
+        :param sync_id: Sync ID (Идентификатор синхронизации)
+        """
+        return await self(
+            move.UpdateMoveRequest(
+                move_id=move_id,
+                organization=organization,
+                source_store=source_store,
+                target_store=target_store,
+                applicable=applicable,
+                attributes=attributes,
+                code=code,
+                description=description,
+                external_code=external_code,
+                files=files,
+                group=group,
+                internal_order=internal_order,
+                customer_order=customer_order,
+                meta=meta,
+                moment=moment,
+                name=name,
+                overhead=overhead,
+                owner=owner,
+                positions=positions,
+                project=project,
+                rate=rate,
+                shared=shared,
+                state=state,
+                sync_id=sync_id,
+            )
+        )
+
+    async def get_move_positions(
+        self,
+        move_id: str,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
+    ) -> typing.List[move.MovePosition]:
+        """
+
+        :param move_id: Move ID (Идентификатор перемещения)
+        :param limit: Limit (Максимальное количество сущностей для извлечения.Допустимые значения 1 - 1000.)
+        :param offset: Offset (Отступ в выдаваемом списке сущностей.)
+        :param search: Search (Фильтр документов по указанной поисковой строке.)
+        """
+
+        return await self(
+            move.GetMovePositionsRequest(
+                move_id=move_id, limit=limit, offset=offset, search=search
+            )
+        )
+
+    async def create_move_position(
+        self,
+        move_id: str,
+        assortment: types.Meta,
+        quantity: int,
+        price: typing.Optional[int] = None,
+        overhead: typing.Optional[int] = None,
+    ) -> move.MovePosition:
+        """
+
+        :param move_id: Move ID (Идентификатор перемещения)
+        :param assortment: Assortment (Информация о позиции)
+        :param quantity: Quantity (Количество)
+        :param price: Price (Цена)
+        :param overhead: Overhead (Надбавка)
+        """
+        return await self(
+            move.CreateMovePositionRequest(
+                move_id=move_id,
+                assortment=assortment,
+                quantity=quantity,
+                price=price,
+                overhead=overhead,
+            )
+        )
+
+    async def get_move_position(
+        self, move_id: str, position_id: str
+    ) -> move.MovePosition:
+        """
+
+        :param move_id: Move ID (Идентификатор перемещения)
+        :param position_id: Position ID (Идентификатор позиции перемещения)
+        """
+        return await self(
+            move.GetMovePositionRequest(move_id=move_id, position_id=position_id)
+        )
+
+    async def update_move_position(
+        self,
+        move_id: str,
+        position_id: str,
+        assortment: typing.Optional[types.Meta] = None,
+        quantity: typing.Optional[int] = None,
+        price: typing.Optional[int] = None,
+        overhead: typing.Optional[int] = None,
+    ) -> move.MovePosition:
+        """
+
+        :param move_id: Move ID (Идентификатор перемещения)
+        :param position_id: Position ID (Идентификатор позиции)
+        :param assortment: Assortment (Информация о позиции)
+        :param quantity: Quantity (Количество)
+        :param price: Price (Цена)
+        :param overhead: Overhead (Надбавка)
+        """
+
+        return await self(
+            move.UpdateMovePositionRequest(
+                move_id=move_id,
+                position_id=position_id,
+                assortment=assortment,
+                quantity=quantity,
+                price=price,
+                overhead=overhead,
+            )
+        )
+
+    async def delete_move_position(self, move_id: str, position_id: str) -> None:
+        """
+
+        :param move_id: Move ID (Идентификатор перемещения)
+        :param position_id: Position ID (Идентификатор позиции)
+        """
+        return await self(
+            move.DeleteMovePositionRequest(move_id=move_id, position_id=position_id)
         )

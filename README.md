@@ -27,6 +27,7 @@ class ApiRequest:
         raise NotImplementedError
 ```
 Example of an ApiRequest:
+
 ```python
 class GetOrderPositionRequest(types.ApiRequest):
   """
@@ -58,7 +59,7 @@ class GetOrderPositionRequest(types.ApiRequest):
     }
 
   def from_response(self, response: dict) -> Position:
-    return Position.json_parse(response)
+    return Position.from_json(response)
 ```
 When you want to call API, you have to either use wrapped method from `client`, or
 call it via 

@@ -47,13 +47,15 @@ class MoySkladBaseClass:
             + ")"
         )
 
+    @classmethod
+    def from_json(cls, dict_data: dict) -> "MoySkladBaseClass":
+        raise NotImplementedError
+
 
 class ApiRequest:
     # method: typing.Literal["GET", "POST", "PUT", "DELETE"], url: str, **kwargs
-    def to_request(
-        self,
-    ) -> dict:
+    def to_request(self) -> dict:
         raise NotImplementedError
 
-    def from_response(self, result) -> typing.Any:
+    def from_response(self, result):
         raise NotImplementedError

@@ -46,16 +46,16 @@ class InternalOrder(types.MoySkladBaseClass):
         self.applicable: bool = None
         self.attributes: typing.Optional[list] = None
         self.code: typing.Optional[str] = None
-        self.created: str = None
-        self.deleted: str = None
-        self.delivery_planned_moment: typing.Optional[str] = None
+        self.created: datetime.datetime = None
+        self.deleted: datetime.datetime = None
+        self.delivery_planned_moment: typing.Optional[datetime.datetime] = None
         self.description: typing.Optional[str] = None
         self.external_code: str = None
         self.files: types.MetaArray = None
         self.group: types.Meta = None
         self.id: str = None
         self.meta: types.Meta = None
-        self.moment: str = None
+        self.moment: datetime.datetime = None
         self.moves: list = None
         self.name: str = None
         self.organization: types.Meta = None
@@ -71,28 +71,38 @@ class InternalOrder(types.MoySkladBaseClass):
         self.store: typing.Optional[types.Meta] = None
         self.sum: int = None
         self.sync_id: typing.Optional[str] = None
-        self.updated: str = None
+        self.updated: datetime.datetime = None
         self.vat_enabled: bool = None
         self.vat_included: typing.Optional[bool] = None
         self.vat_sum: float = None
 
-    @staticmethod
-    def json_parse(dict_data: dict) -> "InternalOrder":
-        result = InternalOrder()
+    @classmethod
+    def from_json(cls, dict_data: dict) -> "InternalOrder":
+        result = cls()
         result.account_id = dict_data.get("accountId")
         result.applicable = dict_data.get("applicable")
         result.attributes = dict_data.get("attributes")
         result.code = dict_data.get("code")
-        result.created = dict_data.get("created")
-        result.deleted = dict_data.get("deleted")
-        result.delivery_planned_moment = dict_data.get("deliveryPlannedMoment")
+        created = dict_data.get("created")
+        if created:
+            result.created = datetime.datetime.fromisoformat(created)
+        deleted = dict_data.get("deleted")
+        if deleted:
+            result.deleted = datetime.datetime.fromisoformat(deleted)
+        delivery_planned_moment = dict_data.get("deliveryPlannedMoment")
+        if delivery_planned_moment:
+            result.delivery_planned_moment = datetime.datetime.fromisoformat(
+                delivery_planned_moment
+            )
         result.description = dict_data.get("description")
         result.external_code = dict_data.get("externalCode")
         result.files = dict_data.get("files")
         result.group = dict_data.get("group")
         result.id = dict_data.get("id")
         result.meta = dict_data.get("meta")
-        result.moment = dict_data.get("moment")
+        moment = dict_data.get("moment")
+        if moment:
+            result.moment = datetime.datetime.fromisoformat(moment)
         result.moves = dict_data.get("moves")
         result.name = dict_data.get("name")
         result.organization = dict_data.get("organization")
@@ -108,7 +118,9 @@ class InternalOrder(types.MoySkladBaseClass):
         result.store = dict_data.get("store")
         result.sum = dict_data.get("sum")
         result.sync_id = dict_data.get("syncId")
-        result.updated = dict_data.get("updated")
+        updated = dict_data.get("updated")
+        if updated:
+            result.updated = datetime.datetime.fromisoformat(updated)
         result.vat_enabled = dict_data.get("vatEnabled")
         result.vat_included = dict_data.get("vatIncluded")
         result.vat_sum = dict_data.get("vatSum")
@@ -147,9 +159,9 @@ class Position(types.MoySkladBaseClass):
         self.vat: int = vat
         self.vat_enabled: typing.Optional[bool] = vat_enabled
 
-    @staticmethod
-    def json_parse(dict_data: dict) -> "Position":
-        result = Position()
+    @classmethod
+    def from_json(cls, dict_data: dict) -> "Position":
+        result = cls()
         result.account_id = dict_data.get("accountId")
         result.assortment = dict_data.get("assortment", {}).get("meta")
         result.id = dict_data.get("id")
@@ -191,21 +203,21 @@ class GetInternalOrdersRequest(types.ApiRequest):
     def to_request(
         self,
     ) -> dict:
-        json_data = {}
+        params = {}
         if self.limit is not None:
-            json_data["limit"] = self.limit
+            params["limit"] = self.limit
         if self.offset is not None:
-            json_data["offset"] = self.offset
+            params["offset"] = self.offset
         if self.search is not None:
-            json_data["search"] = self.search
+            params["search"] = self.search
         return {
             "method": "GET",
             "url": "https://online.moysklad.ru/api/remap/1.2/entity/internalorder",
-            "json": json_data,
+            "params": params,
         }
 
     def from_response(self, response: dict) -> typing.List[InternalOrder]:
-        return [InternalOrder.json_parse(i) for i in response["rows"]]
+        return [InternalOrder.from_json(i) for i in response["rows"]]
 
 
 class CreateInternalOrderRequest(types.ApiRequest):
@@ -350,7 +362,7 @@ class CreateInternalOrderRequest(types.ApiRequest):
         }
 
     def from_response(self, response: dict) -> InternalOrder:
-        return InternalOrder.json_parse(response)
+        return InternalOrder.from_json(response)
 
 
 class GetInternalOrderRequest(types.ApiRequest):
@@ -376,7 +388,7 @@ class GetInternalOrderRequest(types.ApiRequest):
         }
 
     def from_response(self, response: dict) -> InternalOrder:
-        return InternalOrder.json_parse(response)
+        return InternalOrder.from_json(response)
 
 
 class UpdateInternalOrderRequest(types.ApiRequest):
@@ -512,7 +524,7 @@ class UpdateInternalOrderRequest(types.ApiRequest):
         }
 
     def from_response(self, response: dict) -> InternalOrder:
-        return InternalOrder.json_parse(response)
+        return InternalOrder.from_json(response)
 
 
 class GetOrderPositionsRequest(types.ApiRequest):
@@ -544,22 +556,22 @@ class GetOrderPositionsRequest(types.ApiRequest):
     def to_request(
         self,
     ) -> dict:
-        json_data = {}
+        params = {}
         if self.limit is not None:
-            json_data["limit"] = self.limit
+            params["limit"] = self.limit
         if self.offset is not None:
-            json_data["offset"] = self.offset
+            params["offset"] = self.offset
         if self.search is not None:
-            json_data["search"] = self.search
+            params["search"] = self.search
 
         return {
             "method": "GET",
             "url": f"https://online.moysklad.ru/api/remap/1.2/entity/internalorder/{self.id}/positions",
-            "json": json_data,
+            "params": params,
         }
 
     def from_response(self, response: dict) -> typing.List[Position]:
-        return [Position.json_parse(x) for x in response["rows"]]
+        return [Position.from_json(x) for x in response["rows"]]
 
 
 class AddOrderPositionsRequest(types.ApiRequest):
@@ -613,7 +625,7 @@ class AddOrderPositionsRequest(types.ApiRequest):
         }
 
     def from_response(self, response: dict) -> typing.List[Position]:
-        return [Position.json_parse(x) for x in response]
+        return [Position.from_json(x) for x in response]
 
 
 class DeleteOrderPositionRequest(types.ApiRequest):
@@ -681,4 +693,4 @@ class GetOrderPositionRequest(types.ApiRequest):
         }
 
     def from_response(self, response: dict) -> Position:
-        return Position.json_parse(response)
+        return Position.from_json(response)

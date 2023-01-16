@@ -1,3 +1,4 @@
+import datetime
 import typing
 
 from .... import types
@@ -97,7 +98,7 @@ class Product(types.MoySkladBaseClass):
         self.tnved: str = None
         self.tracking_type: str = None
         self.uom: types.Meta = None
-        self.updated: str = None
+        self.updated: datetime.datetime = None
         self.use_parent_vat: bool = None
         self.variants_count: int = None
         self.vat: int = None
@@ -105,9 +106,9 @@ class Product(types.MoySkladBaseClass):
         self.volume: int = None
         self.weight: int = None
 
-    @staticmethod
-    def json_parse(dict_data: dict) -> "Product":
-        result = Product()
+    @classmethod
+    def from_json(cls, dict_data: dict) -> "Product":
+        result = cls()
         result.account_id = dict_data.get("accountId")
         result.alcoholic = dict_data.get("alcoholic")
         result.archived = dict_data.get("archived")
@@ -146,6 +147,15 @@ class Product(types.MoySkladBaseClass):
         result.tnved = dict_data.get("tnved")
         result.tracking_type = dict_data.get("trackingType")
         result.uom = dict_data.get("uom")
+        updated = dict_data.get("updated")
+        if updated:
+            result.updated = datetime.datetime.fromisoformat(updated)
+        result.use_parent_vat = dict_data.get("useParentVat")
+        result.variants_count = dict_data.get("variantsCount")
+        result.vat = dict_data.get("vat")
+        result.vat_enabled = dict_data.get("vatEnabled")
+        result.volume = dict_data.get("volume")
+        result.weight = dict_data.get("weight")
         return result
 
 
@@ -167,20 +177,20 @@ class GetProductListRequest(types.ApiRequest):
     def to_request(
         self,
     ) -> dict:
-        json_data = {}
+        params = {}
         if self.limit is not None:
-            json_data["limit"] = self.limit
+            params["limit"] = self.limit
         if self.offset is not None:
-            json_data["offset"] = self.offset
+            params["offset"] = self.offset
 
         return {
             "method": "GET",
             "url": f"https://online.moysklad.ru/api/remap/1.2/entity/product",
-            "json": json_data,
+            "params": params,
         }
 
     def from_response(self, response: dict) -> typing.List[Product]:
-        return [Product.json_parse(product) for product in response["rows"]]
+        return [Product.from_json(product) for product in response["rows"]]
 
 
 class CreateProductRequest(types.ApiRequest):
@@ -342,7 +352,7 @@ class CreateProductRequest(types.ApiRequest):
         }
 
     def from_response(self, response: dict) -> Product:
-        return Product.json_parse(response)
+        return Product.from_json(response)
 
 
 class DeleteProductRequest(types.ApiRequest):
@@ -395,7 +405,7 @@ class GetProductRequest(types.ApiRequest):
         }
 
     def from_response(self, response: dict) -> Product:
-        return Product.json_parse(response)
+        return Product.from_json(response)
 
 
 class UpdateProductRequest(types.ApiRequest):
@@ -566,4 +576,4 @@ class UpdateProductRequest(types.ApiRequest):
         }
 
     def from_response(self, response: dict) -> Product:
-        return Product.json_parse(response)
+        return Product.from_json(response)
