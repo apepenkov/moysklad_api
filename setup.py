@@ -11,6 +11,7 @@ setup(
         "moysklad_api.api.entities.internalorder",
         "moysklad_api.api.entities.products",
         "moysklad_api.api.entities.move",
+        "moysklad_api.api.entities.purchaseorder",
         "moysklad_api.types",
         "moysklad_api.client",
         "moysklad_api.errors",

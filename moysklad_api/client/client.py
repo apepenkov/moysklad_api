@@ -5,7 +5,7 @@ import datetime
 from ..errors import MoySkladError
 from .. import types
 
-from ..api.entities import internalorder, products, move
+from ..api.entities import internalorder, products, move, purchaseorder
 import json
 
 
@@ -882,3 +882,245 @@ class MoySkladClient:
         return await self(
             move.DeleteMovePositionRequest(move_id=move_id, position_id=position_id)
         )
+
+    # purchaseorder
+    async def get_purchase_orders(
+        self, limit: int = 1000, offset: int = 0, search: str = None
+    ) -> typing.List[purchaseorder.PurchaseOrder]:
+        """
+        :param limit: Limit of entities to extract. Allowed values 1 - 1000. (Лимит сущностей для извлечения. Допустимые значения 1 - 1000.)
+        :param offset: Offset in the list of entities returned. (Отступ в выдаваемом списке сущностей.)
+        :param search: Filter documents by the specified search string. (Фильтр документов по указанной поисковой строке.)
+        """
+        return await self(
+            purchaseorder.GetPurchaseOrderListRequest(
+                limit=limit, offset=offset, search=search
+            )
+        )
+
+    async def create_purchase_order(
+        self,
+        organization: types.Meta,
+        agent: types.Meta,
+        agent_account: typing.Optional[types.Meta] = None,
+        applicable: typing.Optional[bool] = None,
+        attributes: typing.Optional[typing.List[dict]] = None,
+        code: typing.Optional[str] = None,
+        contract: typing.Optional[types.Meta] = None,
+        delivery_planned_moment: typing.Optional[datetime.datetime] = None,
+        description: typing.Optional[str] = None,
+        external_code: typing.Optional[str] = None,
+        files: typing.Optional[types.MetaArray] = None,
+        group: typing.Optional[types.Meta] = None,
+        meta: typing.Optional[types.Meta] = None,
+        moment: typing.Optional[datetime.datetime] = None,
+        name: typing.Optional[str] = None,
+        organization_account: typing.Optional[types.Meta] = None,
+        owner: typing.Optional[types.Meta] = None,
+        positions: typing.Optional[
+            typing.List[purchaseorder.CreatePurchaseOrderRequest.CreatePosition]
+        ] = None,
+        project: typing.Optional[types.Meta] = None,
+        rate: typing.Optional[types.Rate] = None,
+        shared: typing.Optional[bool] = None,
+        state: typing.Optional[types.Meta] = None,
+        store: typing.Optional[types.Meta] = None,
+        sync_id: typing.Optional[str] = None,
+        vat_enabled: typing.Optional[bool] = None,
+        vat_included: typing.Optional[bool] = None,
+        wait_sum: typing.Optional[float] = None,
+    ) -> purchaseorder.PurchaseOrder:
+        """
+
+        :param organization: Organization meta (Метаданные юрлица)
+        :param agent: Agent meta (Метаданные контрагента)
+        :param agent_account: Agent account meta (Метаданные счета контрагента)
+        :param applicable: Applicable (Действует)
+        :param attributes: Attributes (Атрибуты)
+        :param code: Code (Код)
+        :param contract: Contract meta (Метаданные договора)
+        :param delivery_planned_moment: Delivery planned moment (Планируемая дата доставки)
+        :param description: Description (Описание)
+        :param external_code: External code (Внешний код)
+        :param files: Files (Файлы)
+        :param group: Group meta (Метаданные группы)
+        :param meta: Meta (Метаданные)
+        :param moment: Moment (Дата)
+        :param name: Name (Название)
+        :param organization_account: Organization account meta (Метаданные счета организации)
+        :param owner: Owner meta (Метаданные владельца)
+        :param positions: Positions (Позиции)
+        :param project: Project meta (Метаданные проекта)
+        :param rate: Rate (Курс)
+        :param shared: Shared (Общий доступ)
+        :param state: State meta (Метаданные статуса заказа)
+        :param store: Store meta (Метаданные склада)
+        :param sync_id: Sync ID (ID синхронизации. После заполнения недоступен для изменения)
+        :param vat_enabled: Vat enabled (Учитывается ли НДС)
+        :param vat_included: Vat included (Включен ли НДС в цену)
+        :param wait_sum: Wait sum (Сумма товаров в пути)
+        """
+
+        return await self(
+            purchaseorder.CreatePurchaseOrderRequest(
+                organization=organization,
+                agent=agent,
+                agent_account=agent_account,
+                applicable=applicable,
+                attributes=attributes,
+                code=code,
+                contract=contract,
+                delivery_planned_moment=delivery_planned_moment,
+                description=description,
+                external_code=external_code,
+                files=files,
+                group=group,
+                meta=meta,
+                moment=moment,
+                name=name,
+                organization_account=organization_account,
+                owner=owner,
+                positions=positions,
+                project=project,
+                rate=rate,
+                shared=shared,
+                state=state,
+                store=store,
+                sync_id=sync_id,
+                vat_enabled=vat_enabled,
+                vat_included=vat_included,
+                wait_sum=wait_sum,
+            )
+        )
+
+    async def delete_purchase_order(self, order_id: str) -> None:
+        """
+
+        :param order_id: Order id to delete (ID Заказа поставщику для удаления)
+        """
+        return await self(purchaseorder.DeletePurchaseOrderRequest(order_id=order_id))
+
+    async def get_purchase_order(self, order_id: str) -> purchaseorder.PurchaseOrder:
+        """
+
+        :param order_id: Order id to get (ID Заказа поставщику для получения)
+        """
+        return await self(purchaseorder.GetPurchaseOrderRequest(order_id=order_id))
+
+    async def update_purchase_order(
+        self,
+        order_id: str,
+        organization: typing.Optional[types.Meta] = None,
+        agent: typing.Optional[types.Meta] = None,
+        agent_account: typing.Optional[types.Meta] = None,
+        applicable: typing.Optional[bool] = None,
+        attributes: typing.Optional[typing.List[dict]] = None,
+        code: typing.Optional[str] = None,
+        contract: typing.Optional[types.Meta] = None,
+        delivery_planned_moment: typing.Optional[datetime.datetime] = None,
+        description: typing.Optional[str] = None,
+        external_code: typing.Optional[str] = None,
+        files: typing.Optional[types.MetaArray] = None,
+        group: typing.Optional[types.Meta] = None,
+        meta: typing.Optional[types.Meta] = None,
+        moment: typing.Optional[datetime.datetime] = None,
+        name: typing.Optional[str] = None,
+        organization_account: typing.Optional[types.Meta] = None,
+        owner: typing.Optional[types.Meta] = None,
+        positions: typing.Optional[
+            typing.List[purchaseorder.UpdatePurchaseOrderRequest.UpdatePosition]
+        ] = None,
+        project: typing.Optional[types.Meta] = None,
+        rate: typing.Optional[types.Rate] = None,
+        shared: typing.Optional[bool] = None,
+        state: typing.Optional[types.Meta] = None,
+        store: typing.Optional[types.Meta] = None,
+        sync_id: typing.Optional[str] = None,
+        vat_enabled: typing.Optional[bool] = None,
+        vat_included: typing.Optional[bool] = None,
+        wait_sum: typing.Optional[float] = None,
+    ) -> purchaseorder.PurchaseOrder:
+        return await self(
+            purchaseorder.UpdatePurchaseOrderRequest(
+                order_id=order_id,
+                organization=organization,
+                agent=agent,
+                agent_account=agent_account,
+                applicable=applicable,
+                attributes=attributes,
+                code=code,
+                contract=contract,
+                delivery_planned_moment=delivery_planned_moment,
+                description=description,
+                external_code=external_code,
+                files=files,
+                group=group,
+                meta=meta,
+                moment=moment,
+                name=name,
+                organization_account=organization_account,
+                owner=owner,
+                positions=positions,
+                project=project,
+                rate=rate,
+                shared=shared,
+                state=state,
+                store=store,
+                sync_id=sync_id,
+                vat_enabled=vat_enabled,
+                vat_included=vat_included,
+                wait_sum=wait_sum,
+            )
+        )
+
+    async def get_purchase_order_positions(
+        self, order_id: str, limit: int = 1000, offset: int = 0
+    ) -> typing.List[purchaseorder.PurchaseOrderPosition]:
+        return await self(
+            purchaseorder.GetPurchaseOrderPositionsRequest(
+                order_id=order_id, limit=limit, offset=offset
+            )
+        )
+
+
+async def get_purchase_order_position(
+    self, order_id: str, position_id: str
+) -> purchaseorder.PurchaseOrderPosition:
+    return await self(
+        purchaseorder.GetPurchaseOrderPositionRequest(
+            order_id=order_id, position_id=position_id
+        )
+    )
+
+
+async def update_purchase_order_position(
+    self,
+    order_id: str,
+    position_id: str,
+    assortment: typing.Optional[types.Meta] = None,
+    quantity: typing.Optional[float] = None,
+    price: typing.Optional[float] = None,
+    vat: typing.Optional[float] = None,
+    in_transit: typing.Optional[int] = None,
+    discount: typing.Optional[float] = None,
+) -> purchaseorder.PurchaseOrderPosition:
+    return await self(
+        purchaseorder.UpdatePurchaseOrderPositionRequest(
+            order_id=order_id,
+            position_id=position_id,
+            assortment=assortment,
+            quantity=quantity,
+            price=price,
+            vat=vat,
+            in_transit=in_transit,
+            discount=discount,
+        )
+    )
+
+
+async def delete_purchase_order_position(self, order_id: str, position_id: str) -> None:
+    return await self(
+        purchaseorder.DeletePurchaseOrderPositionRequest(
+            order_id=order_id, position_id=position_id
+        )
+    )
