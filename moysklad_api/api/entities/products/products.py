@@ -117,14 +117,18 @@ class Product(types.MoySkladBaseClass):
         result.barcodes = dict_data.get("barcodes")
         result.buy_price = dict_data.get("buyPrice")
         result.code = dict_data.get("code")
-        result.country = dict_data.get("country")
+        country = dict_data.get("country")
+        if country:
+            result.country = country["meta"]
         result.description = dict_data.get("description")
         result.discount_prohibited = dict_data.get("discountProhibited")
         result.effective_vat = dict_data.get("effectiveVat")
         result.effective_vat_enabled = dict_data.get("effectiveVatEnabled")
         result.external_code = dict_data.get("externalCode")
         result.files = dict_data.get("files")
-        result.group = dict_data.get("group")
+        group = dict_data.get("group")
+        if group:
+            result.group = group["meta"]
         result.id = dict_data.get("id")
         result.images = dict_data.get("images")
         result.is_serial_trackable = dict_data.get("isSerialTrackable")
@@ -132,21 +136,29 @@ class Product(types.MoySkladBaseClass):
         result.min_price = dict_data.get("minPrice")
         result.minimum_balance = dict_data.get("minimumBalance")
         result.name = dict_data.get("name")
-        result.owner = dict_data.get("owner")
+        owner = dict_data.get("owner")
+        if owner:
+            result.owner = owner["meta"]
         result.packs = dict_data.get("packs")
         result.partial_disposal = dict_data.get("partialDisposal")
         result.path_name = dict_data.get("pathName")
         result.payment_item_type = dict_data.get("paymentItemType")
         result.ppe_type = dict_data.get("ppeType")
-        result.product_folder = dict_data.get("productFolder")
+        product_folder = dict_data.get("productFolder")
+        if product_folder:
+            result.product_folder = product_folder["meta"]
         result.sale_prices = dict_data.get("salePrices")
-        result.supplier = dict_data.get("supplier")
+        supplier = dict_data.get("supplier")
+        if supplier:
+            result.supplier = supplier["meta"]
         result.sync_id = dict_data.get("syncId")
         result.tax_system = dict_data.get("taxSystem")
         result.things = dict_data.get("things")
         result.tnved = dict_data.get("tnved")
         result.tracking_type = dict_data.get("trackingType")
-        result.uom = dict_data.get("uom")
+        uom = dict_data.get("uom")
+        if uom:
+            result.uom = uom["meta"]
         updated = dict_data.get("updated")
         if updated:
             result.updated = datetime.datetime.fromisoformat(updated)

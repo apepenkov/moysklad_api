@@ -95,12 +95,18 @@ class PurchaseOrder(types.MoySkladBaseClass):
     def from_json(cls, dict_data: dict) -> "PurchaseOrder":
         instance = cls()
         instance.account_id = dict_data.get("accountId")
-        instance.agent = dict_data.get("agent")
-        instance.agent_account = dict_data.get("agentAccount")
+        agent = dict_data.get("agent")
+        if agent:
+            instance.agent = agent["meta"]
+        agent_account = dict_data.get("agentAccount")
+        if agent_account:
+            instance.agent_account = agent_account["meta"]
         instance.applicable = dict_data.get("applicable")
         instance.attributes = dict_data.get("attributes")
         instance.code = dict_data.get("code")
-        instance.contract = dict_data.get("contract")
+        contract = dict_data.get("contract")
+        if contract:
+            instance.contract = contract["meta"]
         created = dict_data.get("created")
         if created:
             instance.created = datetime.datetime.fromisoformat(created)
@@ -115,7 +121,9 @@ class PurchaseOrder(types.MoySkladBaseClass):
         instance.description = dict_data.get("description")
         instance.external_code = dict_data.get("externalCode")
         instance.files = dict_data.get("files")
-        instance.group = dict_data.get("group")
+        group = dict_data.get("group")
+        if group:
+            instance.group = group["meta"]
         instance.id = dict_data.get("id")
         instance.invoiced_sum = dict_data.get("invoicedSum")
         instance.meta = dict_data.get("meta")
@@ -123,19 +131,29 @@ class PurchaseOrder(types.MoySkladBaseClass):
         if moment:
             instance.moment = datetime.datetime.fromisoformat(moment)
         instance.name = dict_data.get("name")
-        instance.organization = dict_data.get("organization")
-        instance.organization_account = dict_data.get("organizationAccount")
+        organization = dict_data.get("organization")
+        if organization:
+            instance.organization = organization["meta"]
+        organization_account = dict_data.get("organizationAccount")
+        if organization_account:
+            instance.organization_account = organization_account["meta"]
         instance.owner = dict_data.get("owner")
         instance.payed_sum = dict_data.get("payedSum")
         instance.positions = dict_data.get("positions")
         instance.printed = dict_data.get("printed")
-        instance.project = dict_data.get("project")
+        project = dict_data.get("project")
+        if project:
+            instance.project = project["meta"]
         instance.published = dict_data.get("published")
         instance.rate = dict_data.get("rate")
         instance.shared = dict_data.get("shared")
         instance.shipped_sum = dict_data.get("shippedSum")
-        instance.state = dict_data.get("state")
-        instance.store = dict_data.get("store")
+        state = dict_data.get("state")
+        if state:
+            instance.state = state["meta"]
+        store = dict_data.get("store")
+        if store:
+            instance.store = store["meta"]
         instance.sum = dict_data.get("sum")
         instance.sync_id = dict_data.get("syncId")
         updated = dict_data.get("updated")
@@ -186,7 +204,9 @@ class PurchaseOrderPosition(types.MoySkladBaseClass):
     def from_json(cls, dict_data: dict) -> "PurchaseOrderPosition":
         instance = cls()
         instance.account_id = dict_data.get("accountId")
-        instance.assortment = dict_data.get("assortment")
+        assortment = dict_data.get("assortment")
+        if assortment:
+            instance.assortment = assortment["meta"]
         instance.discount = dict_data.get("discount")
         instance.id = dict_data.get("id")
         instance.pack = dict_data.get("pack")

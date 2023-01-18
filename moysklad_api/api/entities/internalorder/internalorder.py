@@ -97,7 +97,9 @@ class InternalOrder(types.MoySkladBaseClass):
         result.description = dict_data.get("description")
         result.external_code = dict_data.get("externalCode")
         result.files = dict_data.get("files")
-        result.group = dict_data.get("group")
+        group = dict_data.get("group")
+        if group:
+            result.group = group["meta"]
         result.id = dict_data.get("id")
         result.meta = dict_data.get("meta")
         moment = dict_data.get("moment")
@@ -105,17 +107,27 @@ class InternalOrder(types.MoySkladBaseClass):
             result.moment = datetime.datetime.fromisoformat(moment)
         result.moves = dict_data.get("moves")
         result.name = dict_data.get("name")
-        result.organization = dict_data.get("organization")
-        result.owner = dict_data.get("owner")
+        organization = dict_data.get("organization")
+        if organization:
+            result.organization = organization["meta"]
+        owner = dict_data.get("owner")
+        if owner:
+            result.owner = owner["meta"]
         result.positions = dict_data.get("positions")
-        result.project = dict_data.get("project")
+        project = dict_data.get("project")
+        if project:
+            result.project = project["meta"]
         result.printed = dict_data.get("printed")
         result.published = dict_data.get("published")
         result.purchase_orders = dict_data.get("purchaseOrders")
         result.rate = dict_data.get("rate")
         result.shared = dict_data.get("shared")
-        result.state = dict_data.get("state")
-        result.store = dict_data.get("store")
+        state = dict_data.get("state")
+        if state:
+            result.state = state["meta"]
+        store = dict_data.get("store")
+        if store:
+            result.store = store["meta"]
         result.sum = dict_data.get("sum")
         result.sync_id = dict_data.get("syncId")
         updated = dict_data.get("updated")

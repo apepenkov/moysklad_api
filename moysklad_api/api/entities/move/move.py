@@ -90,29 +90,47 @@ class Move(types.MoySkladBaseClass):
         instance.description = dict_data.get("description")
         instance.external_code = dict_data.get("externalCode")
         instance.files = dict_data.get("files")
-        instance.group = dict_data.get("group")
+        group = dict_data.get("group")
+        if group:
+            instance.group = group["meta"]
         instance.id = dict_data.get("id")
-        instance.internal_order = dict_data.get("internalOrder")
-        instance.custom_order = dict_data.get("customOrder")
+        internal_order = dict_data.get("internalOrder")
+        if internal_order:
+            instance.internal_order = internal_order["meta"]
+        custom_order = dict_data.get("customOrder")
+        if custom_order:
+            instance.custom_order = custom_order["meta"]
         instance.meta = dict_data.get("meta")
         moment = dict_data.get("moment")
         if moment:
             instance.moment = datetime.datetime.fromisoformat(moment)
         instance.name = dict_data.get("name")
-        instance.organization = dict_data.get("organization")
+        organization = dict_data.get("organization")
+        if organization:
+            instance.organization = organization["meta"]
         instance.overhead = dict_data.get("overhead")
-        instance.owner = dict_data.get("owner")
+        owner = dict_data.get("owner")
+        if owner:
+            instance.owner = owner["meta"]
         instance.positions = dict_data.get("positions")
         instance.printed = dict_data.get("printed")
-        instance.project = dict_data.get("project")
+        project = dict_data.get("project")
+        if project:
+            instance.project = project["meta"]
         instance.published = dict_data.get("published")
         instance.rate = dict_data.get("rate")
         instance.shared = dict_data.get("shared")
-        instance.source_store = dict_data.get("sourceStore")
-        instance.state = dict_data.get("state")
+        source_store = dict_data.get("sourceStore")
+        if source_store:
+            instance.source_store = source_store["meta"]
+        state = dict_data.get("state")
+        if state:
+            instance.state = state["meta"]
         instance.sum = dict_data.get("sum")
         instance.sync_id = dict_data.get("syncId")
-        instance.target_store = dict_data.get("targetStore")
+        target_store = dict_data.get("targetStore")
+        if target_store:
+            instance.target_store = target_store["meta"]
         updated = dict_data.get("updated")
         if updated:
             instance.updated = datetime.datetime.fromisoformat(updated)
@@ -150,14 +168,20 @@ class MovePosition(types.MoySkladBaseClass):
     def from_json(cls, dict_data: dict) -> "MovePosition":
         instance = cls()
         instance.account_id = dict_data.get("accountId")
-        instance.assortment = dict_data.get("assortment")
+        assortment = dict_data.get("assortment")
+        if assortment:
+            instance.assortment = assortment["meta"]
         instance.id = dict_data.get("id")
         instance.overhead = dict_data.get("overhead")
         instance.pack = dict_data.get("pack")
         instance.price = dict_data.get("price")
         instance.quantity = dict_data.get("quantity")
-        instance.source_slot = dict_data.get("sourceSlot")
-        instance.target_slot = dict_data.get("targetSlot")
+        source_slot = dict_data.get("sourceSlot")
+        if source_slot:
+            instance.source_slot = source_slot["meta"]
+        target_slot = dict_data.get("targetSlot")
+        if target_slot:
+            instance.target_slot = target_slot["meta"]
         instance.things = dict_data.get("things")
         return instance
 
