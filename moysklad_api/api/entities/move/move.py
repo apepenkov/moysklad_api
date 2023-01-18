@@ -116,6 +116,7 @@ class Move(types.MoySkladBaseClass):
         updated = dict_data.get("updated")
         if updated:
             instance.updated = datetime.datetime.fromisoformat(updated)
+        return instance
 
 
 class MovePosition(types.MoySkladBaseClass):
