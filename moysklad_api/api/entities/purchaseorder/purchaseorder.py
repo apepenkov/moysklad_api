@@ -48,6 +48,14 @@ class PurchaseOrder(types.MoySkladBaseClass):
     vatIncluded 	        Boolean 		Включен ли НДС в цену
     vatSum 	                Float 		    Сумма НДС     Только для чтения
     waitSum 	            Float 		    Сумма товаров в пути
+
+    Связи с другими документами
+    Название 	            Описание
+    customerOrders      	Массив ссылок на связанные заказы покупателей в формате Метаданных
+    invoicesIn 	            Массив ссылок на связанные счета поставщиков в формате Метаданных
+    payments 	            Массив ссылок на связанные платежи в формате Метаданных
+    supplies 	            Массив ссылок на связанные приемки в формате Метаданных
+    internalOrder 	        Внутренний заказ, связанный с заказом поставщику, в формате Метаданных
     """
 
     def __init__(self):
@@ -90,6 +98,11 @@ class PurchaseOrder(types.MoySkladBaseClass):
         self.vat_included: typing.Optional[bool] = None
         self.vat_sum: typing.Optional[float] = None
         self.wait_sum: typing.Optional[float] = None
+        self.custom_orders: typing.Optional[typing.List[types.Meta]] = None
+        self.invoices_in: typing.Optional[typing.List[types.Meta]] = None
+        self.payments: typing.Optional[typing.List[types.Meta]] = None
+        self.supplies: typing.Optional[typing.List[types.Meta]] = None
+        self.internal_order: typing.Optional[types.Meta] = None
 
     @classmethod
     def from_json(cls, dict_data: dict) -> "PurchaseOrder":
@@ -163,6 +176,21 @@ class PurchaseOrder(types.MoySkladBaseClass):
         instance.vat_included = dict_data.get("vatIncluded")
         instance.vat_sum = dict_data.get("vatSum")
         instance.wait_sum = dict_data.get("waitSum")
+        custom_orders = dict_data.get("customOrders")
+        if custom_orders:
+            instance.custom_orders = [item["meta"] for item in custom_orders]
+        invoices_in = dict_data.get("invoicesIn")
+        if invoices_in:
+            instance.invoices_in = [item["meta"] for item in invoices_in]
+        payments = dict_data.get("payments")
+        if payments:
+            instance.payments = [item["meta"] for item in payments]
+        supplies = dict_data.get("supplies")
+        if supplies:
+            instance.supplies = [item["meta"] for item in supplies]
+        internal_order = dict_data.get("internalOrder")
+        if internal_order:
+            instance.internal_order = internal_order["meta"]
         return instance
 
 
@@ -295,6 +323,14 @@ class CreatePurchaseOrderRequest(types.ApiRequest):
     vatEnabled 	            Boolean 		Учитывается ли НДС     Обязательное при ответе
     vatIncluded 	        Boolean 		Включен ли НДС в цену
     waitSum 	            Float 		    Сумма товаров в пути
+
+    Связи с другими документами
+    Название 	            Описание
+    customerOrders      	Массив ссылок на связанные заказы покупателей в формате Метаданных
+    invoicesIn 	            Массив ссылок на связанные счета поставщиков в формате Метаданных
+    payments 	            Массив ссылок на связанные платежи в формате Метаданных
+    supplies 	            Массив ссылок на связанные приемки в формате Метаданных
+    internalOrder 	        Внутренний заказ, связанный с заказом поставщику, в формате Метаданных
     """
 
     class CreatePosition(typing.TypedDict):
@@ -346,6 +382,11 @@ class CreatePurchaseOrderRequest(types.ApiRequest):
         vat_enabled: typing.Optional[bool] = None,
         vat_included: typing.Optional[bool] = None,
         wait_sum: typing.Optional[float] = None,
+        customer_orders: typing.Optional[typing.List[types.Meta]] = None,
+        invoices_in: typing.Optional[typing.List[types.Meta]] = None,
+        payments: typing.Optional[typing.List[types.Meta]] = None,
+        supplies: typing.Optional[typing.List[types.Meta]] = None,
+        internal_order: typing.Optional[types.Meta] = None,
     ):
         """
 
@@ -376,6 +417,11 @@ class CreatePurchaseOrderRequest(types.ApiRequest):
         :param vat_enabled: Vat enabled (Учитывается ли НДС)
         :param vat_included: Vat included (Включен ли НДС в цену)
         :param wait_sum: Wait sum (Сумма товаров в пути)
+        :param customer_orders: Customer orders (Заказы покупателей)
+        :param invoices_in: Invoices in (Входящие счета)
+        :param payments: Payments (Платежи)
+        :param supplies: Supplies (Поставки)
+        :param internal_order: Internal order meta (Метаданные внутреннего заказа)
         """
         self.organization: types.Meta = organization
         self.agent: types.Meta = agent
@@ -408,6 +454,11 @@ class CreatePurchaseOrderRequest(types.ApiRequest):
         self.vat_enabled: typing.Optional[bool] = vat_enabled
         self.vat_included: typing.Optional[bool] = vat_included
         self.wait_sum: typing.Optional[float] = wait_sum
+        self.customer_orders: typing.Optional[typing.List[types.Meta]] = customer_orders
+        self.invoices_in: typing.Optional[typing.List[types.Meta]] = invoices_in
+        self.payments: typing.Optional[typing.List[types.Meta]] = payments
+        self.supplies: typing.Optional[typing.List[types.Meta]] = supplies
+        self.internal_order: typing.Optional[types.Meta] = internal_order
 
     def to_request(self) -> dict:
         json_data = {
@@ -480,6 +531,18 @@ class CreatePurchaseOrderRequest(types.ApiRequest):
             json_data["vatIncluded"] = self.vat_included
         if self.wait_sum is not None:
             json_data["waitSum"] = self.wait_sum
+        if self.customer_orders is not None:
+            json_data["customerOrders"] = [
+                {"meta": item} for item in self.customer_orders
+            ]
+        if self.invoices_in is not None:
+            json_data["invoicesIn"] = [{"meta": item} for item in self.invoices_in]
+        if self.payments is not None:
+            json_data["payments"] = [{"meta": item} for item in self.payments]
+        if self.supplies is not None:
+            json_data["supplies"] = [{"meta": item} for item in self.supplies]
+        if self.internal_order is not None:
+            json_data["internalOrder"] = {"meta": self.internal_order}
         return {
             "method": "POST",
             "url": "https://online.moysklad.ru/api/remap/1.2/entity/purchaseorder",
@@ -582,6 +645,14 @@ class UpdatePurchaseOrderRequest(types.ApiRequest):
     vatEnabled 	            Boolean 		Учитывается ли НДС     Обязательное при ответе
     vatIncluded 	        Boolean 		Включен ли НДС в цену
     waitSum 	            Float 		    Сумма товаров в пути
+
+    Связи с другими документами
+    Название 	            Описание
+    customerOrders      	Массив ссылок на связанные заказы покупателей в формате Метаданных
+    invoicesIn 	            Массив ссылок на связанные счета поставщиков в формате Метаданных
+    payments 	            Массив ссылок на связанные платежи в формате Метаданных
+    supplies 	            Массив ссылок на связанные приемки в формате Метаданных
+    internalOrder 	        Внутренний заказ, связанный с заказом поставщику, в формате Метаданных
     """
 
     UpdatePosition = CreatePurchaseOrderRequest.CreatePosition
@@ -616,6 +687,11 @@ class UpdatePurchaseOrderRequest(types.ApiRequest):
         vat_enabled: typing.Optional[bool] = None,
         vat_included: typing.Optional[bool] = None,
         wait_sum: typing.Optional[float] = None,
+        customer_orders: typing.Optional[typing.List[types.Meta]] = None,
+        invoices_in: typing.Optional[typing.List[types.Meta]] = None,
+        payments: typing.Optional[typing.List[types.Meta]] = None,
+        supplies: typing.Optional[typing.List[types.Meta]] = None,
+        internal_order: typing.Optional[types.Meta] = None,
     ):
         """
 
@@ -647,6 +723,11 @@ class UpdatePurchaseOrderRequest(types.ApiRequest):
         :param vat_enabled: Vat enabled (Учитывается ли НДС)
         :param vat_included: Vat included (Включен ли НДС в цену)
         :param wait_sum: Wait sum (Сумма товаров в пути)
+        :param customer_orders: Customer orders (Заказы покупателей)
+        :param invoices_in: Invoices in (Входящие счета)
+        :param payments: Payments (Платежи)
+        :param supplies: Supplies (Поставки)
+        :param internal_order: Internal order meta (Метаданные внутреннего заказа)
         """
         self.order_id: str = order_id
         self.organization: typing.Optional[types.Meta] = organization
@@ -680,6 +761,11 @@ class UpdatePurchaseOrderRequest(types.ApiRequest):
         self.vat_enabled: typing.Optional[bool] = vat_enabled
         self.vat_included: typing.Optional[bool] = vat_included
         self.wait_sum: typing.Optional[float] = wait_sum
+        self.customer_orders: typing.Optional[typing.List[types.Meta]] = customer_orders
+        self.invoices_in: typing.Optional[typing.List[types.Meta]] = invoices_in
+        self.payments: typing.Optional[typing.List[types.Meta]] = payments
+        self.supplies: typing.Optional[typing.List[types.Meta]] = supplies
+        self.internal_order: typing.Optional[types.Meta] = internal_order
 
     def to_request(self) -> dict:
         json_data = {}
@@ -753,6 +839,18 @@ class UpdatePurchaseOrderRequest(types.ApiRequest):
             json_data["vatIncluded"] = self.vat_included
         if self.wait_sum is not None:
             json_data["waitSum"] = self.wait_sum
+        if self.customer_orders is not None:
+            json_data["customerOrders"] = [
+                {"meta": item} for item in self.customer_orders
+            ]
+        if self.invoices_in is not None:
+            json_data["invoicesIn"] = [{"meta": item} for item in self.invoices_in]
+        if self.payments is not None:
+            json_data["payments"] = [{"meta": item} for item in self.payments]
+        if self.supplies is not None:
+            json_data["supplies"] = [{"meta": item} for item in self.supplies]
+        if self.internal_order is not None:
+            json_data["internalOrder"] = {"meta": self.internal_order}
 
         return {
             "method": "PUT",

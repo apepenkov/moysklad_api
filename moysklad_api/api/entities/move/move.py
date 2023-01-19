@@ -198,9 +198,9 @@ class GetMovesRequest(types.ApiRequest):
 
     def __init__(
         self,
-            limit: typing.Optional[int] = None,
-            offset: typing.Optional[int] = None,
-            search: typing.Optional[str] = None,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
     ):
         """
 

@@ -929,6 +929,11 @@ class MoySkladClient:
         vat_enabled: typing.Optional[bool] = None,
         vat_included: typing.Optional[bool] = None,
         wait_sum: typing.Optional[float] = None,
+        customer_orders: typing.Optional[typing.List[types.Meta]] = None,
+        invoices_in: typing.Optional[typing.List[types.Meta]] = None,
+        payments: typing.Optional[typing.List[types.Meta]] = None,
+        supplies: typing.Optional[typing.List[types.Meta]] = None,
+        internal_order: typing.Optional[types.Meta] = None,
     ) -> purchaseorder.PurchaseOrder:
         """
 
@@ -959,6 +964,11 @@ class MoySkladClient:
         :param vat_enabled: Vat enabled (Учитывается ли НДС)
         :param vat_included: Vat included (Включен ли НДС в цену)
         :param wait_sum: Wait sum (Сумма товаров в пути)
+        :param customer_orders: Customer orders (Заказы покупателей)
+        :param invoices_in: Invoices in (Входящие счета)
+        :param payments: Payments (Платежи)
+        :param supplies: Supplies (Поставки)
+        :param internal_order: Internal order meta (Метаданные внутреннего заказа)
         """
 
         return await self(
@@ -990,6 +1000,11 @@ class MoySkladClient:
                 vat_enabled=vat_enabled,
                 vat_included=vat_included,
                 wait_sum=wait_sum,
+                customer_orders=customer_orders,
+                invoices_in=invoices_in,
+                payments=payments,
+                supplies=supplies,
+                internal_order=internal_order,
             )
         )
 
@@ -1039,7 +1054,48 @@ class MoySkladClient:
         vat_enabled: typing.Optional[bool] = None,
         vat_included: typing.Optional[bool] = None,
         wait_sum: typing.Optional[float] = None,
+        customer_orders: typing.Optional[typing.List[types.Meta]] = None,
+        invoices_in: typing.Optional[typing.List[types.Meta]] = None,
+        payments: typing.Optional[typing.List[types.Meta]] = None,
+        supplies: typing.Optional[typing.List[types.Meta]] = None,
+        internal_order: typing.Optional[types.Meta] = None,
     ) -> purchaseorder.PurchaseOrder:
+        """
+
+        :param order_id: ID Заказа поставщику
+        :param organization: Organization meta (Метаданные юрлица)
+        :param agent: Agent meta (Метаданные контрагента)
+        :param agent_account: Agent account meta (Метаданные счета контрагента)
+        :param applicable: Applicable (Действует)
+        :param attributes: Attributes (Атрибуты)
+        :param code: Code (Код)
+        :param contract: Contract meta (Метаданные договора)
+        :param delivery_planned_moment: Delivery planned moment (Планируемая дата доставки)
+        :param description: Description (Описание)
+        :param external_code: External code (Внешний код)
+        :param files: Files (Файлы)
+        :param group: Group meta (Метаданные группы)
+        :param meta: Meta (Метаданные)
+        :param moment: Moment (Дата)
+        :param name: Name (Название)
+        :param organization_account: Organization account meta (Метаданные счета организации)
+        :param owner: Owner meta (Метаданные владельца)
+        :param positions: Positions (Позиции)
+        :param project: Project meta (Метаданные проекта)
+        :param rate: Rate (Курс)
+        :param shared: Shared (Общий доступ)
+        :param state: State meta (Метаданные статуса заказа)
+        :param store: Store meta (Метаданные склада)
+        :param sync_id: Sync ID (ID синхронизации. После заполнения недоступен для изменения)
+        :param vat_enabled: Vat enabled (Учитывается ли НДС)
+        :param vat_included: Vat included (Включен ли НДС в цену)
+        :param wait_sum: Wait sum (Сумма товаров в пути)
+        :param customer_orders: Customer orders (Заказы покупателей)
+        :param invoices_in: Invoices in (Входящие счета)
+        :param payments: Payments (Платежи)
+        :param supplies: Supplies (Поставки)
+        :param internal_order: Internal order meta (Метаданные внутреннего заказа)
+        """
         return await self(
             purchaseorder.UpdatePurchaseOrderRequest(
                 order_id=order_id,
@@ -1070,6 +1126,11 @@ class MoySkladClient:
                 vat_enabled=vat_enabled,
                 vat_included=vat_included,
                 wait_sum=wait_sum,
+                customer_orders=customer_orders,
+                invoices_in=invoices_in,
+                payments=payments,
+                supplies=supplies,
+                internal_order=internal_order,
             )
         )
 
