@@ -1,4 +1,4 @@
-from .internalorder import (
+from .internalorders import (
     InternalOrder,
     GetInternalOrdersRequest,
     Position,

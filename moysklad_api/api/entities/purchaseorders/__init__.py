@@ -1,4 +1,4 @@
-from .purchaseorder import (
+from .purchaseorders import (
     PurchaseOrderPosition,
     CreatePurchaseOrderRequest,
     PurchaseOrder,

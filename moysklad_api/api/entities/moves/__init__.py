@@ -1,4 +1,4 @@
-from .move import (
+from .moves import (
     MovePosition,
     Move,
     DeleteMovePositionRequest,
