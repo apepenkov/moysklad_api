@@ -1,5 +1,4 @@
 from setuptools import setup
-import shutil
 
 setup(
     name="moysklad_api",
@@ -12,6 +11,7 @@ setup(
         "moysklad_api.api.entities.products",
         "moysklad_api.api.entities.moves",
         "moysklad_api.api.entities.purchaseorders",
+        "moysklad_api.api.entities.productfolders",
         "moysklad_api.types",
         "moysklad_api.client",
         "moysklad_api.errors",

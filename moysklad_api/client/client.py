@@ -5,7 +5,13 @@ import datetime
 from ..errors import MoySkladError
 from .. import types
 
-from ..api.entities import internalorders, products, moves, purchaseorders
+from ..api.entities import (
+    internalorders,
+    products,
+    moves,
+    purchaseorders,
+    productfolders,
+)
 import json
 
 
@@ -1143,45 +1149,210 @@ class MoySkladClient:
             )
         )
 
-
-async def get_purchase_order_position(
-    self, order_id: str, position_id: str
-) -> purchaseorders.PurchaseOrderPosition:
-    return await self(
-        purchaseorders.GetPurchaseOrderPositionRequest(
-            order_id=order_id, position_id=position_id
+    async def get_purchase_order_position(
+        self, order_id: str, position_id: str
+    ) -> purchaseorders.PurchaseOrderPosition:
+        return await self(
+            purchaseorders.GetPurchaseOrderPositionRequest(
+                order_id=order_id, position_id=position_id
+            )
         )
-    )
 
-
-async def update_purchase_order_position(
-    self,
-    order_id: str,
-    position_id: str,
-    assortment: typing.Optional[types.Meta] = None,
-    quantity: typing.Optional[float] = None,
-    price: typing.Optional[float] = None,
-    vat: typing.Optional[float] = None,
-    in_transit: typing.Optional[int] = None,
-    discount: typing.Optional[float] = None,
-) -> purchaseorders.PurchaseOrderPosition:
-    return await self(
-        purchaseorders.UpdatePurchaseOrderPositionRequest(
-            order_id=order_id,
-            position_id=position_id,
-            assortment=assortment,
-            quantity=quantity,
-            price=price,
-            vat=vat,
-            in_transit=in_transit,
-            discount=discount,
+    async def update_purchase_order_position(
+        self,
+        order_id: str,
+        position_id: str,
+        assortment: typing.Optional[types.Meta] = None,
+        quantity: typing.Optional[float] = None,
+        price: typing.Optional[float] = None,
+        vat: typing.Optional[float] = None,
+        in_transit: typing.Optional[int] = None,
+        discount: typing.Optional[float] = None,
+    ) -> purchaseorders.PurchaseOrderPosition:
+        return await self(
+            purchaseorders.UpdatePurchaseOrderPositionRequest(
+                order_id=order_id,
+                position_id=position_id,
+                assortment=assortment,
+                quantity=quantity,
+                price=price,
+                vat=vat,
+                in_transit=in_transit,
+                discount=discount,
+            )
         )
-    )
 
-
-async def delete_purchase_order_position(self, order_id: str, position_id: str) -> None:
-    return await self(
-        purchaseorders.DeletePurchaseOrderPositionRequest(
-            order_id=order_id, position_id=position_id
+    async def delete_purchase_order_position(
+        self, order_id: str, position_id: str
+    ) -> None:
+        return await self(
+            purchaseorders.DeletePurchaseOrderPositionRequest(
+                order_id=order_id, position_id=position_id
+            )
         )
-    )
+
+    # product folders
+
+    async def get_product_folders(
+        self, limit: int = 1000, offset: int = 0
+    ) -> typing.List[productfolders.ProductFolder]:
+        """
+        Get product folders (Получить папки товаров)
+        :param limit: Limit of entities to extract. Allowed values 1 - 1000. (Лимит сущностей для извлечения. Допустимые значения 1 - 1000.)
+        :param offset: Offset in the list of entities returned. (Отступ в выдаваемом списке сущностей.)
+        :return: List of product folders (Список папок товаров)
+        """
+        return await self(
+            productfolders.GetProductFoldersRequest(limit=limit, offset=offset)
+        )
+
+    async def create_product_folder(
+        self,
+        name: str,
+        code: typing.Optional[str] = None,
+        description: typing.Optional[str] = None,
+        external_code: typing.Optional[str] = None,
+        group: typing.Optional[types.Meta] = None,
+        meta: typing.Optional[types.Meta] = None,
+        owner: typing.Optional[types.Meta] = None,
+        product_folder: typing.Optional[types.Meta] = None,
+        shared: typing.Optional[bool] = None,
+        tax_system: typing.Optional[
+            typing.Literal[
+                "GENERAL_TAX_SYSTEM",
+                "PATENT_BASED",
+                "PRESUMPTIVE_TAX_SYSTEM",
+                "SIMPLIFIED_TAX_SYSTEM_INCOME",
+                "SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME",
+                "TAX_SYSTEM_SAME_AS_GROUP",
+                "UNIFIED_AGRICULTURAL_TAX",
+            ]
+        ] = None,
+        use_parent_vat: typing.Optional[bool] = None,
+        vat: typing.Optional[int] = None,
+        vat_enabled: typing.Optional[bool] = None,
+    ) -> productfolders.ProductFolder:
+        """
+        Create product folder (Создать папку товаров)
+
+        :param name: Name of the product folder (Имя группы товаров)
+        :param code: Code of the product folder (Код группы товаров)
+        :param description: Description of the product folder (Описание группы товаров)
+        :param external_code: External code of the product folder (Внешний код группы товаров)
+        :param group: Group of the product folder (Группа группы товаров)
+        :param meta: Meta of the product folder (Метаданные группы товаров)
+        :param owner: Owner of the product folder (Владелец группы товаров)
+        :param product_folder: Product folder of the product folder (Группа товаров группы товаров)
+        :param shared: Shared of the product folder (Общий доступ группы товаров)
+        :param tax_system: Tax system of the product folder (Код системы налогообложения группы товаров)
+        :param use_parent_vat: Use parent vat of the product folder (Используется ли ставка НДС родительской группы)
+        :param vat: Vat of the product folder (НДС % группы товаров)
+        :param vat_enabled: Vat enabled of the product folder (Включен ли НДС для группы товаров)
+        :return: Created product folder (Созданная группа товаров)
+        """
+
+        return await self(
+            productfolders.CreateProductFolderRequest(
+                name=name,
+                code=code,
+                description=description,
+                external_code=external_code,
+                group=group,
+                meta=meta,
+                owner=owner,
+                product_folder=product_folder,
+                shared=shared,
+                tax_system=tax_system,
+                use_parent_vat=use_parent_vat,
+                vat=vat,
+                vat_enabled=vat_enabled,
+            )
+        )
+
+    async def delete_product_folder(
+        self,
+        folder_id: str,
+    ):
+        """
+        Delete product folder (Удалить папку товаров)
+        :param folder_id: Product folder id (ID папки товаров)
+        :return: None
+        """
+        return await self(
+            productfolders.DeleteProductFolderRequest(folder_id=folder_id)
+        )
+
+    async def get_product_folder(
+        self,
+        folder_id: str,
+    ) -> productfolders.ProductFolder:
+        """
+        Get product folder by id (Получить папку товаров по ID)
+        :param folder_id: Product folder id (ID папки товаров)
+        :return: Product folder (Папка товаров)
+        """
+        return await self(productfolders.GetProductFolderRequest(folder_id=folder_id))
+
+    async def update_product_folder(
+        self,
+        folder_id: str,
+        name: typing.Optional[str] = None,
+        code: typing.Optional[str] = None,
+        description: typing.Optional[str] = None,
+        external_code: typing.Optional[str] = None,
+        group: typing.Optional[types.Meta] = None,
+        meta: typing.Optional[types.Meta] = None,
+        owner: typing.Optional[types.Meta] = None,
+        product_folder: typing.Optional[types.Meta] = None,
+        shared: typing.Optional[bool] = None,
+        tax_system: typing.Optional[
+            typing.Literal[
+                "GENERAL_TAX_SYSTEM",
+                "PATENT_BASED",
+                "PRESUMPTIVE_TAX_SYSTEM",
+                "SIMPLIFIED_TAX_SYSTEM_INCOME",
+                "SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME",
+                "TAX_SYSTEM_SAME_AS_GROUP",
+                "UNIFIED_AGRICULTURAL_TAX",
+            ]
+        ] = None,
+        use_parent_vat: typing.Optional[bool] = None,
+        vat: typing.Optional[int] = None,
+        vat_enabled: typing.Optional[bool] = None,
+    ) -> productfolders.ProductFolder:
+        """
+        Update product folder (Обновить папку товаров)
+        :param folder_id: Product folder id (ID папки товаров)
+        :param name: Name of the product folder (Имя группы товаров)
+        :param code: Code of the product folder (Код группы товаров)
+        :param description: Description of the product folder (Описание группы товаров)
+        :param external_code: External code of the product folder (Внешний код группы товаров)
+        :param group: Group of the product folder (Группа группы товаров)
+        :param meta: Meta of the product folder (Метаданные группы товаров)
+        :param owner: Owner of the product folder (Владелец группы товаров)
+        :param product_folder: Product folder of the product folder (Группа товаров группы товаров)
+        :param shared: Shared of the product folder (Общий доступ группы товаров)
+        :param tax_system: Tax system of the product folder (Код системы налогообложения группы товаров)
+        :param use_parent_vat: Use parent vat of the product folder (Используется ли ставка НДС родительской группы)
+        :param vat: Vat of the product folder (НДС % группы товаров)
+        :param vat_enabled: Vat enabled of the product folder (Включен ли НДС для группы товаров)
+        :return: Updated product folder (Обновленная группа товаров)
+        """
+        return await self(
+            productfolders.UpdateProductFolderRequest(
+                folder_id=folder_id,
+                name=name,
+                code=code,
+                description=description,
+                external_code=external_code,
+                group=group,
+                meta=meta,
+                owner=owner,
+                product_folder=product_folder,
+                shared=shared,
+                tax_system=tax_system,
+                use_parent_vat=use_parent_vat,
+                vat=vat,
+                vat_enabled=vat_enabled,
+            )
+        )
