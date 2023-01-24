@@ -29,6 +29,7 @@ class ProductFolder(types.MoySkladBaseClass):
     useParentVat 	        Boolean 		Используется ли ставка НДС родительской группы. Если true для единицы ассортимента будет применена ставка, установленная для родительской группы. Обязательное при ответе
     vat 	                Int 		    НДС %
     vatEnabled 	            Boolean 		Включен ли НДС для группы. С помощью этого флага для группы можно выставлять НДС = 0 или НДС = "без НДС". (vat = 0, vatEnabled = false) -> vat = "без НДС", (vat = 0, vatEnabled = true) -> vat = 0%.
+    productFolder           Meta            Ссылка на Группу товаров, в которую входит данная Группа товаров, в формате Метаданных     Expand
 
     Код системы налогообложения
 
@@ -73,6 +74,7 @@ class ProductFolder(types.MoySkladBaseClass):
         self.use_parent_vat: bool = None
         self.vat: typing.Optional[int] = None
         self.vat_enabled: typing.Optional[bool] = None
+        self.product_folder: types.Meta = None
 
     @classmethod
     def from_json(cls, dict_data: dict) -> "ProductFolder":
@@ -102,6 +104,9 @@ class ProductFolder(types.MoySkladBaseClass):
         instance.use_parent_vat = dict_data.get("useParentVat")
         instance.vat = dict_data.get("vat")
         instance.vat_enabled = dict_data.get("vatEnabled")
+        product_folder = dict_data.get("productFolder")
+        if product_folder:
+            instance.product_folder = product_folder["meta"]
         return instance
 
 
