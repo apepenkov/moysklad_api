@@ -13,6 +13,7 @@ from ..api.entities import (
     productfolders,
     enters,
 )
+from ..api.reports import stocks
 import json
 
 
@@ -1641,5 +1642,62 @@ class MoySkladClient:
             enters.DeleteEnterPositionRequest(
                 enter_id=enter_id,
                 position_id=position_id,
+            )
+        )
+
+    # stocks
+    async def get_full_stock_report(
+            self,
+            limit: typing.Optional[int] = 1000,
+            offset: typing.Optional[int] = 0,
+            group_by: typing.Optional[
+                typing.Literal["product", "variant", "consignment"]
+            ] = None,
+            include_related: typing.Optional[bool] = None,
+    ) -> typing.List[stocks.FullStockReport]:
+        """
+
+        :param limit: Limit the number of entities to retrieve. (Ограничить количество сущностей для извлечения.)
+        :param offset: Offset in the returned list of entities. (Отступ в выдаваемом списке сущностей.)
+        :param group_by: Type to group by. (Тип, по которому нужно сгруппировать выдачу.)
+        :param include_related: Include consignments for products and variants. (Вывод остатков по модификациям и сериям товаров.)
+        :return: List of full stock reports (Список отчетов по остаткам)
+        """
+        return await self(
+            stocks.GetFullStockReportRequest(
+                limit=limit,
+                offset=offset,
+                group_by=group_by,
+                include_related=include_related,
+            )
+        )
+
+    async def get_small_stock_current_report(
+            self,
+            include: typing.Optional[str] = None,
+            changed_since: typing.Optional[datetime.datetime] = None,
+            stock_type: typing.Optional[
+                typing.Literal["stock", "freeStock", "quantity"]
+            ] = None,
+            filter_assortment_id: typing.Optional[typing.List[str]] = None,
+            filter_store_id: typing.Optional[typing.List[str]] = None,
+    ) -> typing.List[stocks.SmallStockReport]:
+        """
+
+        :param include: Include related entities (Включить связанные сущности)
+        :param changed_since: Changed since (Изменено с)
+        :param stock_type: Stock type (Тип остатка)
+        :param filter_assortment_id: Filter by assortment id (Фильтр по id товара)
+        :param filter_store_id: Filter by store id (Фильтр по id склада)
+        :return: List of small stock reports (Список отчетов по остаткам)
+        """
+
+        return await self(
+            stocks.GetSmallStockReportCurrentRequest(
+                include=include,
+                changed_since=changed_since,
+                stock_type=stock_type,
+                filter_assortment_id=filter_assortment_id,
+                filter_store_id=filter_store_id,
             )
         )
