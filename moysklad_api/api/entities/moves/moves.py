@@ -228,7 +228,7 @@ class GetMovesRequest(types.ApiRequest):
         }
 
     def from_response(self, result) -> typing.List[Move]:
-        return [Move.from_json(move) for move in result.json()["rows"]]
+        return [Move.from_json(move) for move in result["rows"]]
 
 
 class CreateMoveRequest(types.ApiRequest):

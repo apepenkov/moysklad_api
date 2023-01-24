@@ -285,7 +285,7 @@ class GetPurchaseOrderListRequest(types.ApiRequest):
         }
 
     def from_response(self, result) -> typing.List[PurchaseOrder]:
-        return [PurchaseOrder.from_json(item) for item in result.json()["rows"]]
+        return [PurchaseOrder.from_json(item) for item in result["rows"]]
 
 
 class CreatePurchaseOrderRequest(types.ApiRequest):

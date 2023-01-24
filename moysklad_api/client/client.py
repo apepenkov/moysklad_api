@@ -11,6 +11,7 @@ from ..api.entities import (
     moves,
     purchaseorders,
     productfolders,
+    enters,
 )
 import json
 
@@ -1354,5 +1355,291 @@ class MoySkladClient:
                 use_parent_vat=use_parent_vat,
                 vat=vat,
                 vat_enabled=vat_enabled,
+            )
+        )
+
+    # enters
+    async def get_enters(
+        self,
+        limit: typing.Optional[int] = 1000,
+        offset: typing.Optional[int] = 0,
+        search: typing.Optional[str] = None,
+    ) -> typing.List[enters.Enter]:
+        """
+
+        :param limit: Limit of entities to extract. (Лимит сущностей для извлечения)
+        :param offset: Offset in the list of entities returned. (Отступ в выдаваемом списке сущностей)
+        :param search: Filter documents by the specified search string. (Фильтр документов по указанной поисковой строке)
+        :return: List of enters (Список приходов)
+        """
+
+        return await self(
+            enters.GetEntersRequest(limit=limit, offset=offset, search=search)
+        )
+
+    async def create_enter(
+        self,
+        organization: types.Meta,
+        store: types.Meta,
+        applicable: typing.Optional[bool] = None,
+        attributes: typing.Optional[list] = None,
+        code: typing.Optional[str] = None,
+        description: typing.Optional[str] = None,
+        external_code: typing.Optional[str] = None,
+        files: typing.Optional[types.MetaArray] = None,
+        group: typing.Optional[types.Meta] = None,
+        moment: typing.Optional[datetime.datetime] = None,
+        name: typing.Optional[str] = None,
+        overhead: typing.Optional[dict] = None,
+        positions: typing.Optional[
+            typing.List[enters.CreateEnterRequest.CreateEnterPosition]
+        ] = None,
+        project: typing.Optional[types.Meta] = None,
+        rate: typing.Optional[dict] = None,
+        shared: typing.Optional[bool] = None,
+    ) -> enters.Enter:
+
+        """
+
+        :param organization: Organization meta (Метаданные организации)
+        :param store: Store meta (Метаданные склада)
+        :param applicable: Mark of the document (Отметка о проведении)
+        :param attributes: Attributes (Доп. поля)
+        :param code: Code (Код)
+        :param description: Description (Комментарий)
+        :param external_code: External code (Внешний код)
+        :param files: Files (Файлы)
+        :param group: Group (Отдел сотрудника)
+        :param moment: Moment (Дата документа)
+        :param name: Name (Номер)
+        :param overhead: Overhead (Накладные расходы)
+        :param positions: Positions (Позиции)
+        :param project: Project (Проект)
+        :param rate: Rate (Валюта)
+        :param shared: Shared (Общий доступ)
+        :return: Created enter (Созданный приход)
+        """
+        return await self(
+            enters.CreateEnterRequest(
+                organization=organization,
+                store=store,
+                applicable=applicable,
+                attributes=attributes,
+                code=code,
+                description=description,
+                external_code=external_code,
+                files=files,
+                group=group,
+                moment=moment,
+                name=name,
+                overhead=overhead,
+                positions=positions,
+                project=project,
+                rate=rate,
+                shared=shared,
+            )
+        )
+
+    async def delete_enter(self, enter_id: str) -> None:
+        """
+
+        :param enter_id: ID of enter (ID оприходования)
+        """
+        return await self(enters.DeleteEnterRequest(enter_id=enter_id))
+
+    async def get_enter(self, enter_id: str) -> enters.Enter:
+        """
+
+        :param enter_id: ID of enter (ID оприходования)
+        :return: Enter (Оприходование)
+        """
+        return await self(enters.GetEnterRequest(enter_id=enter_id))
+
+    async def update_enter(
+        self,
+        enter_id: str,
+        organization: typing.Optional[str] = None,
+        store: typing.Optional[str] = None,
+        applicable: typing.Optional[bool] = None,
+        attributes: typing.Optional[dict] = None,
+        code: typing.Optional[str] = None,
+        description: typing.Optional[str] = None,
+        external_code: typing.Optional[str] = None,
+        files: typing.Optional[dict] = None,
+        group: typing.Optional[str] = None,
+        moment: typing.Optional[datetime.datetime] = None,
+        name: typing.Optional[str] = None,
+        overhead: typing.Optional[dict] = None,
+        positions: typing.Optional[
+            typing.List[enters.UpdateEnterRequest.UpdateEnterPosition]
+        ] = None,
+        project: typing.Optional[str] = None,
+        rate: typing.Optional[str] = None,
+        shared: typing.Optional[bool] = None,
+    ) -> enters.Enter:
+        """
+
+        :param enter_id: ID of enter (ID оприходования)
+        :param organization: Organization (Организация)
+        :param store: Store (Склад)
+        :param applicable: Applicable (Проведен)
+        :param attributes: Attributes (Атрибуты)
+        :param code: Code (Код)
+        :param description: Description (Описание)
+        :param external_code: External code (Внешний код)
+        :param files: Files (Файлы)
+        :param group: Group (Группа)
+        :param moment: Moment (Момент)
+        :param name: Name (Название)
+        :param overhead: Overhead (Налоги)
+        :param positions: Positions (Позиции)
+        :param project: Project (Проект)
+        :param rate: Rate (Валюта)
+        :param shared: Shared (Общий доступ)
+        :return: Updated enter (Обновленное оприходование)
+        """
+        return await self(
+            enters.UpdateEnterRequest(
+                enter_id=enter_id,
+                organization=organization,
+                store=store,
+                applicable=applicable,
+                attributes=attributes,
+                code=code,
+                description=description,
+                external_code=external_code,
+                files=files,
+                group=group,
+                moment=moment,
+                name=name,
+                overhead=overhead,
+                positions=positions,
+                project=project,
+                rate=rate,
+                shared=shared,
+            )
+        )
+
+    async def get_enter_positions(
+        self,
+        enter_id: str,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
+    ) -> typing.List[enters.EnterPosition]:
+        """
+
+        :param enter_id: ID of enter (ID оприходования)
+        :param limit: Limit (Ограничение)
+        :param offset: Offset (Смещение)
+        :return: Enter positions (Позиции оприходования)
+        """
+        return await self(
+            enters.GetEnterPositionsRequest(
+                enter_id=enter_id,
+                limit=limit,
+                offset=offset,
+            )
+        )
+
+    async def create_enter_position(
+        self,
+        enter_id: str,
+        positions: typing.List[enters.CreateEnterPositionRequest.CreateEnterPosition],
+    ) -> typing.List[enters.EnterPosition]:
+        """
+
+        :param enter_id: Enter id (id Оприходования)
+        :param positions: Positions (Позиции)
+        :return: Created enter positions (Созданные позиции оприходования)
+        """
+        return await self(
+            enters.CreateEnterPositionRequest(
+                enter_id=enter_id,
+                positions=positions,
+            )
+        )
+
+    async def get_enter_position(
+        self,
+        enter_id: str,
+        position_id: str,
+    ) -> enters.EnterPosition:
+        """
+
+        :param enter_id: Enter id (id Оприходования)
+        :param position_id: Position id (id Позиции)
+        :return: Enter position (Позиция оприходования)
+        """
+        return await self(
+            enters.GetEnterPositionRequest(
+                enter_id=enter_id,
+                position_id=position_id,
+            )
+        )
+
+    async def update_enter_position(
+        self,
+        enter_id: str,
+        position_id: str,
+        assortment: types.Meta,
+        price: float,
+        quantity: int,
+        country: typing.Optional[types.Meta] = None,
+        gtd: typing.Optional[typing.Dict] = None,
+        pack: typing.Optional[typing.Dict] = None,
+        reason: typing.Optional[str] = None,
+        slot: typing.Optional[types.Meta] = None,
+        things: typing.Optional[typing.Dict] = None,
+        overhead: typing.Optional[int] = None,
+    ) -> enters.EnterPosition:
+        """
+
+        :param enter_id: Enter id (id Оприходования)
+        :param position_id: Position id (id позиции)
+        :param assortment: Assortment of position (Метаданные товара/услуги/серии/модификации, которую представляет собой позиция)
+        :param price: Price of position (Цена товара/услуги в копейках)
+        :param quantity: Quantity of position (Количество товаров/услуг данного вида в позиции)
+        :param country: Country of position (Метаданные страны)
+        :param gtd: GTD of position (ГТД)
+        :param pack: Pack of position (Упаковка Товара)
+        :param reason: Reason of position (Причина оприходования данной позиции)
+        :param slot: Slot of position (Ячейка на складе)
+        :param things: Things of position (Серийные номера)
+        :param overhead: Overhead of position (Накладные расходы)
+        :return: Updated enter position (Обновленная позиция оприходования)
+        """
+
+        return await self(
+            enters.UpdateEnterPositionRequest(
+                enter_id=enter_id,
+                position_id=position_id,
+                assortment=assortment,
+                price=price,
+                quantity=quantity,
+                country=country,
+                gtd=gtd,
+                pack=pack,
+                reason=reason,
+                slot=slot,
+                things=things,
+                overhead=overhead,
+            )
+        )
+
+    async def delete_enter_position(
+        self,
+        enter_id: str,
+        position_id: str,
+    ) -> None:
+        """
+
+        :param enter_id: Enter id (id Оприходования)
+        :param position_id: Position id (id позиции)
+        :return: None
+        """
+        return await self(
+            enters.DeleteEnterPositionRequest(
+                enter_id=enter_id,
+                position_id=position_id,
             )
         )

@@ -57,5 +57,5 @@ class ApiRequest:
     def to_request(self) -> dict:
         raise NotImplementedError
 
-    def from_response(self, result):
+    def from_response(self, result: dict):
         raise NotImplementedError
