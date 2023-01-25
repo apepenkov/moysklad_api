@@ -499,7 +499,7 @@ class MoySkladClient:
     async def update_product(
         self,
         id_: str,
-        name: typing.Optional[str],
+        name: typing.Optional[str] = None,
         code: typing.Optional[str] = None,
         external_code: typing.Optional[str] = None,
         description: typing.Optional[str] = None,

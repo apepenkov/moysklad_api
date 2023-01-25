@@ -430,7 +430,7 @@ class UpdateProductRequest(types.ApiRequest):
     def __init__(
         self,
         id_: str,
-        name: typing.Optional[str],
+        name: typing.Optional[str] = None,
         code: typing.Optional[str] = None,
         external_code: typing.Optional[str] = None,
         description: typing.Optional[str] = None,
