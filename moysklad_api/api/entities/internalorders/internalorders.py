@@ -272,6 +272,13 @@ class CreateInternalOrderRequest(types.ApiRequest):
         state: typing.Optional[types.Meta] = None,
         positions: typing.Optional[typing.List[CreatePosition]] = None,
         attributes: typing.Optional[typing.List[dict]] = None,
+        code: typing.Optional[str] = None,
+        delivery_planned_moment: typing.Optional[datetime.datetime] = None,
+        files: typing.Optional[list] = None,
+        moves: typing.Optional[list] = None,
+        purchase_orders: typing.Optional[list] = None,
+        vat_enabled: typing.Optional[bool] = None,
+        vat_included: typing.Optional[bool] = None,
     ):
         """
         :param organization: Organization (Организация)
@@ -290,6 +297,13 @@ class CreateInternalOrderRequest(types.ApiRequest):
         :param state: State (Состояние)
         :param positions: Positions (Позиции)
         :param attributes: Attributes (Атрибуты)
+        :param code: Code (Код)
+        :param delivery_planned_moment: Delivery planned moment (Планируемая дата доставки)
+        :param files: Files (Файлы)
+        :param moves: Moves (Движения)
+        :param purchase_orders: Purchase orders (Заказы на закупку)
+        :param vat_enabled: Vat enabled (НДС включен)
+        :param vat_included: Vat included (НДС включен в цену)
         """
         self.organization = organization
         self.owner = owner
@@ -307,6 +321,13 @@ class CreateInternalOrderRequest(types.ApiRequest):
         self.state = state
         self.positions = positions
         self.attributes = attributes
+        self.code = code
+        self.delivery_planned_moment = delivery_planned_moment
+        self.files = files
+        self.moves = moves
+        self.purchase_orders = purchase_orders
+        self.vat_enabled = vat_enabled
+        self.vat_included = vat_included
         if positions:
             """
             Additional check for `positions` field.
@@ -367,6 +388,20 @@ class CreateInternalOrderRequest(types.ApiRequest):
                 )
         if self.attributes is not None:
             json_data["attributes"] = self.attributes
+        if self.code is not None:
+            json_data["code"] = self.code
+        if self.delivery_planned_moment is not None:
+            json_data["deliveryPlannedMoment"] = self.delivery_planned_moment
+        if self.files is not None:
+            json_data["files"] = self.files
+        if self.moves is not None:
+            json_data["moves"] = self.moves
+        if self.purchase_orders is not None:
+            json_data["purchaseOrders"] = self.purchase_orders
+        if self.vat_enabled is not None:
+            json_data["vatEnabled"] = self.vat_enabled
+        if self.vat_included is not None:
+            json_data["vatIncluded"] = self.vat_included
         return {
             "method": "POST",
             "url": "https://online.moysklad.ru/api/remap/1.2/entity/internalorder",
@@ -416,7 +451,7 @@ class UpdateInternalOrderRequest(types.ApiRequest):
     def __init__(
         self,
         id_: str,
-        organization: types.Meta,
+        organization: types.Meta = None,
         owner: typing.Optional[types.Meta] = None,
         shared: typing.Optional[bool] = None,
         group: typing.Optional[types.Meta] = None,
@@ -432,6 +467,13 @@ class UpdateInternalOrderRequest(types.ApiRequest):
         state: typing.Optional[types.Meta] = None,
         positions: typing.Optional[typing.List[UpdatePosition]] = None,
         attributes: typing.Optional[typing.List[dict]] = None,
+        code: typing.Optional[str] = None,
+        delivery_planned_moment: typing.Optional[datetime.datetime] = None,
+        files: typing.Optional[list] = None,
+        moves: typing.Optional[list] = None,
+        purchase_orders: typing.Optional[list] = None,
+        vat_enabled: typing.Optional[bool] = None,
+        vat_included: typing.Optional[bool] = None,
     ):
         """
         :param id_: Internal order ID (ID внутреннего заказа)
@@ -451,6 +493,13 @@ class UpdateInternalOrderRequest(types.ApiRequest):
         :param state: State (Состояние)
         :param positions: Positions (Позиции)
         :param attributes: Attributes (Атрибуты)
+        :param code: Code (Код)
+        :param delivery_planned_moment: Delivery planned moment (Планируемая дата доставки)
+        :param files: Files (Файлы)
+        :param moves: Moves (Движения)
+        :param purchase_orders: Purchase orders (Заказы на закупку)
+        :param vat_enabled: Vat enabled (НДС включен)
+        :param vat_included: Vat included (НДС включен в цену)
         """
         self.id = id_
         self.organization = organization
@@ -469,6 +518,13 @@ class UpdateInternalOrderRequest(types.ApiRequest):
         self.state = state
         self.positions = positions
         self.attributes = attributes
+        self.code = code
+        self.delivery_planned_moment = delivery_planned_moment
+        self.files = files
+        self.moves = moves
+        self.purchase_orders = purchase_orders
+        self.vat_enabled = vat_enabled
+        self.vat_included = vat_included
         if positions:
             """
             Additional check for `positions` field.
@@ -529,6 +585,20 @@ class UpdateInternalOrderRequest(types.ApiRequest):
                 )
         if self.attributes is not None:
             json_data["attributes"] = self.attributes
+        if self.code is not None:
+            json_data["code"] = self.code
+        if self.delivery_planned_moment is not None:
+            json_data["deliveryPlannedMoment"] = self.delivery_planned_moment
+        if self.files is not None:
+            json_data["files"] = self.files
+        if self.moves is not None:
+            json_data["moves"] = self.moves
+        if self.purchase_orders is not None:
+            json_data["purchaseOrders"] = self.purchase_orders
+        if self.vat_enabled is not None:
+            json_data["vatEnabled"] = self.vat_enabled
+        if self.vat_included is not None:
+            json_data["vatIncluded"] = self.vat_included
         return {
             "method": "PUT",
             "url": f"https://online.moysklad.ru/api/remap/1.2/entity/internalorder/{self.id}",

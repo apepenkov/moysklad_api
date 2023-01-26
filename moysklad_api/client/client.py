@@ -6,12 +6,12 @@ from ..errors import MoySkladError
 from .. import types
 
 from ..api.entities import (
-    internalorders,
-    products,
-    moves,
-    purchaseorders,
-    productfolders,
-    enters,
+    internalorders as internalorders_api,
+    products as products_api,
+    moves as moves_api,
+    purchaseorders as purchaseorders_api,
+    productfolders as productfolders_api,
+    enters as enters_api,
 )
 from ..api.reports import stocks
 import json
@@ -86,10 +86,10 @@ class MoySkladClient:
                     # (конвертируем json в тело с красиво отформатированным json,
                     # устанавливаем content-type в application/json)
                     # (это нужно для лучшего чтения ошибок)
-                    kwargs["data"] = json.dumps(kwargs.pop("json", {}), indent=4)
+                    kwargs["data"] = json.dumps(kwargs.pop("json", {}), indent=4, ensure_ascii=False)
                 else:
                     kwargs["data"] = json.dumps(
-                        kwargs.pop("json", {}), separators=(",", ":")
+                        kwargs.pop("json", {}), separators=(",", ":"), ensure_ascii=False
                     )
                 json_text = kwargs["data"]
                 kwargs["headers"]["Content-Type"] = "application/json"
@@ -132,7 +132,7 @@ class MoySkladClient:
         limit: typing.Optional[int] = None,
         offset: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
-    ) -> typing.List[internalorders.InternalOrder]:
+    ) -> typing.List[internalorders_api.InternalOrder]:
         """
         https://dev.moysklad.ru/doc/api/remap/1.2/documents/#dokumenty-vnutrennij-zakaz-poluchit-vnutrennie-zakazy
 
@@ -143,7 +143,7 @@ class MoySkladClient:
         :return: List of InternalOrder objects (Список объектов InternalOrder)
         """
         return await self(
-            internalorders.GetInternalOrdersRequest(
+            internalorders_api.GetInternalOrdersRequest(
                 limit=limit, offset=offset, search=search
             )
         )
@@ -165,10 +165,17 @@ class MoySkladClient:
         project: typing.Optional[types.Meta] = None,
         state: typing.Optional[types.Meta] = None,
         positions: typing.Optional[
-            typing.List[internalorders.CreateInternalOrderRequest.CreatePosition]
+            typing.List[internalorders_api.CreateInternalOrderRequest.CreatePosition]
         ] = None,
         attributes: typing.Optional[typing.List[dict]] = None,
-    ) -> internalorders.InternalOrder:
+        code: typing.Optional[str] = None,
+        delivery_planned_moment: typing.Optional[datetime.datetime] = None,
+        files: typing.Optional[list] = None,
+        moves: typing.Optional[list] = None,
+        purchase_orders: typing.Optional[list] = None,
+        vat_enabled: typing.Optional[bool] = None,
+        vat_included: typing.Optional[bool] = None,
+    ) -> internalorders_api.InternalOrder:
         """
         https://dev.moysklad.ru/doc/api/remap/1.2/documents/#dokumenty-vnutrennij-zakaz-sozdat-vnutrennij-zakaz
 
@@ -190,10 +197,17 @@ class MoySkladClient:
         :param state: State (Состояние)
         :param positions: Positions (Позиции)
         :param attributes: Attributes (Атрибуты)
+        :param code: Code (Код)
+        :param delivery_planned_moment: Delivery planned moment (Планируемая дата доставки)
+        :param files: Files (Файлы)
+        :param moves: Moves (Движения)
+        :param purchase_orders: Purchase orders (Заказы на закупку)
+        :param vat_enabled: Vat enabled (НДС включен)
+        :param vat_included: Vat included (НДС включен в цену)
         :return: InternalOrder object (Объект InternalOrder)
         """
         return await self(
-            internalorders.CreateInternalOrderRequest(
+            internalorders_api.CreateInternalOrderRequest(
                 organization=organization,
                 owner=owner,
                 shared=shared,
@@ -210,10 +224,17 @@ class MoySkladClient:
                 state=state,
                 positions=positions,
                 attributes=attributes,
+                code=code,
+                delivery_planned_moment=delivery_planned_moment,
+                files=files,
+                moves=moves,
+                purchase_orders=purchase_orders,
+                vat_enabled=vat_enabled,
+                vat_included=vat_included,
             )
         )
 
-    async def get_internal_order(self, id_: str) -> internalorders.InternalOrder:
+    async def get_internal_order(self, id_: str) -> internalorders_api.InternalOrder:
         """
         https://dev.moysklad.ru/doc/api/remap/1.2/documents/#dokumenty-vnutrennij-zakaz-poluchit-vnutrennij-zakaz
 
@@ -221,7 +242,7 @@ class MoySkladClient:
         :param id_: Internal order ID (ID внутреннего заказа)
         :return: InternalOrder object (Объект InternalOrder)
         """
-        return await self(internalorders.GetInternalOrderRequest(id_=id_))
+        return await self(internalorders_api.GetInternalOrderRequest(id_=id_))
 
     async def update_internal_order(
         self,
@@ -241,10 +262,17 @@ class MoySkladClient:
         project: typing.Optional[types.Meta] = None,
         state: typing.Optional[types.Meta] = None,
         positions: typing.Optional[
-            typing.List[internalorders.UpdateInternalOrderRequest.UpdatePosition]
+            typing.List[internalorders_api.UpdateInternalOrderRequest.UpdatePosition]
         ] = None,
         attributes: typing.Optional[typing.List[dict]] = None,
-    ) -> internalorders.InternalOrder:
+        code: typing.Optional[str] = None,
+        delivery_planned_moment: typing.Optional[datetime.datetime] = None,
+        files: typing.Optional[list] = None,
+        moves: typing.Optional[list] = None,
+        purchase_orders: typing.Optional[list] = None,
+        vat_enabled: typing.Optional[bool] = None,
+        vat_included: typing.Optional[bool] = None,
+    ) -> internalorders_api.InternalOrder:
         """
         https://dev.moysklad.ru/doc/api/remap/1.2/documents/#dokumenty-vnutrennij-zakaz-izmenit-vnutrennij-zakaz
 
@@ -266,10 +294,17 @@ class MoySkladClient:
         :param state: State (Состояние)
         :param positions: Positions (Позиции)
         :param attributes: Attributes (Атрибуты)
+        :param code: Code (Код)
+        :param delivery_planned_moment: Delivery planned moment (Планируемая дата доставки)
+        :param files: Files (Файлы)
+        :param moves: Moves (Движения)
+        :param purchase_orders: Purchase orders (Заказы на закупку)
+        :param vat_enabled: Vat enabled (НДС включен)
+        :param vat_included: Vat included (НДС включен в цену)
         :return: InternalOrder object (Объект InternalOrder)
         """
         return await self(
-            internalorders.UpdateInternalOrderRequest(
+            internalorders_api.UpdateInternalOrderRequest(
                 id_=id_,
                 organization=organization,
                 owner=owner,
@@ -287,6 +322,13 @@ class MoySkladClient:
                 state=state,
                 positions=positions,
                 attributes=attributes,
+                code=code,
+                delivery_planned_moment=delivery_planned_moment,
+                files=files,
+                moves=moves,
+                purchase_orders=purchase_orders,
+                vat_enabled=vat_enabled,
+                vat_included=vat_included,
             )
         )
 
@@ -296,7 +338,7 @@ class MoySkladClient:
         limit: typing.Optional[int] = None,
         offset: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
-    ) -> typing.List[internalorders.Position]:
+    ) -> typing.List[internalorders_api.Position]:
         """
         https://dev.moysklad.ru/doc/api/remap/1.2/documents/#dokumenty-vnutrennij-zakaz-poluchit-pozicii-vnutrennego-zakaza
 
@@ -308,7 +350,7 @@ class MoySkladClient:
         :return: list(InternalOrder) object (Список объектов InternalOrder)
         """
         return await self(
-            internalorders.GetOrderPositionsRequest(
+            internalorders_api.GetOrderPositionsRequest(
                 id_=id_, limit=limit, offset=offset, search=search
             )
         )
@@ -316,8 +358,8 @@ class MoySkladClient:
     async def add_order_positions(
         self,
         id_: str,
-        positions: typing.List[internalorders.AddOrderPositionsRequest.AddPosition],
-    ) -> typing.List[internalorders.Position]:
+        positions: typing.List[internalorders_api.AddOrderPositionsRequest.AddPosition],
+    ) -> typing.List[internalorders_api.Position]:
         """
         https://dev.moysklad.ru/doc/api/remap/1.2/documents/#dokumenty-vnutrennij-zakaz-poluchit-pozicii-vnutrennego-zakaza
 
@@ -328,7 +370,7 @@ class MoySkladClient:
         :return: list(InternalOrder) object (Список объектов InternalOrder)
         """
         return await self(
-            internalorders.AddOrderPositionsRequest(id_=id_, positions=positions)
+            internalorders_api.AddOrderPositionsRequest(id_=id_, positions=positions)
         )
 
     async def delete_order_position(
@@ -346,7 +388,7 @@ class MoySkladClient:
         :return: None
         """
         return await self(
-            internalorders.DeleteOrderPositionRequest(
+            internalorders_api.DeleteOrderPositionRequest(
                 order_id=order_id, position_id=position_id
             )
         )
@@ -355,7 +397,7 @@ class MoySkladClient:
         self,
         order_id: str,
         position_id: str,
-    ) -> internalorders.Position:
+    ) -> internalorders_api.Position:
         """
         https://dev.moysklad.ru/doc/api/remap/1.2/documents/#dokumenty-vnutrennij-zakaz-poluchit-poziciu
 
@@ -366,17 +408,17 @@ class MoySkladClient:
         :return: Position object (Объект Position)
         """
         return await self(
-            internalorders.GetOrderPositionRequest(
+            internalorders_api.GetOrderPositionRequest(
                 order_id=order_id, position_id=position_id
             )
         )
 
-    # products
+    # products_api
     async def get_product_list(
         self,
         limit: typing.Optional[int] = None,
         offset: typing.Optional[int] = None,
-    ) -> typing.List[products.Product]:
+    ) -> typing.List[products_api.Product]:
         """
         https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-towar-poluchit-spisok-towarow
 
@@ -385,7 +427,7 @@ class MoySkladClient:
         :param offset: Offset (Смещение)
         :return: list(Product) object (Список объектов Product)
         """
-        return await self(products.GetProductListRequest(limit=limit, offset=offset))
+        return await self(products_api.GetProductListRequest(limit=limit, offset=offset))
 
     async def create_product(
         self,
@@ -425,7 +467,7 @@ class MoySkladClient:
         ] = None,
         attributes: typing.Optional[typing.List[dict]] = None,
         images: typing.Optional[typing.List[dict]] = None,
-    ) -> products.Product:
+    ) -> products_api.Product:
         """
         https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-towar-sozdat-towar
 
@@ -453,7 +495,7 @@ class MoySkladClient:
         :return: Product object (Объект Product)
         """
         return await self(
-            products.CreateProductRequest(
+            products_api.CreateProductRequest(
                 name=name,
                 code=code,
                 external_code=external_code,
@@ -485,16 +527,16 @@ class MoySkladClient:
         :param id_: Product ID (ID Товара)
         :return: None
         """
-        await self(products.DeleteProductRequest(id_=id_))
+        await self(products_api.DeleteProductRequest(id_=id_))
 
-    async def get_product(self, id_: str) -> products.Product:
+    async def get_product(self, id_: str) -> products_api.Product:
         """
         https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-towar-poluchit-towar
 
         :param id_: Product ID (ID Товара)
         :return: Product object (Объект Product)
         """
-        return await self(products.GetProductRequest(id_=id_))
+        return await self(products_api.GetProductRequest(id_=id_))
 
     async def update_product(
         self,
@@ -535,7 +577,7 @@ class MoySkladClient:
         ] = None,
         attributes: typing.Optional[typing.List[dict]] = None,
         images: typing.Optional[typing.List[dict]] = None,
-    ) -> products.Product:
+    ) -> products_api.Product:
         """
         https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-towar-izmenit-towar
 
@@ -565,7 +607,7 @@ class MoySkladClient:
         """
 
         return await self(
-            products.UpdateProductRequest(
+            products_api.UpdateProductRequest(
                 id_=id_,
                 name=name,
                 code=code,
@@ -596,7 +638,7 @@ class MoySkladClient:
         limit: typing.Optional[int] = None,
         offset: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
-    ) -> typing.List[moves.Move]:
+    ) -> typing.List[moves_api.Move]:
         """
 
         :param limit: Limit of moves to get (Лимит передвижений для получения)
@@ -605,7 +647,7 @@ class MoySkladClient:
         """
 
         return await self(
-            moves.GetMovesRequest(
+            moves_api.GetMovesRequest(
                 limit=limit,
                 offset=offset,
                 search=search,
@@ -637,7 +679,7 @@ class MoySkladClient:
         shared: typing.Optional[bool] = None,
         state: typing.Optional[types.Meta] = None,
         sync_id: typing.Optional[str] = None,
-    ) -> moves.Move:
+    ) -> moves_api.Move:
         """
 
         :param organization: Organization (Организация)
@@ -667,7 +709,7 @@ class MoySkladClient:
         """
 
         return await self(
-            moves.CreateMoveRequest(
+            moves_api.CreateMoveRequest(
                 organization=organization,
                 source_store=source_store,
                 target_store=target_store,
@@ -699,14 +741,14 @@ class MoySkladClient:
 
         :param move_id: Move id (ID перемещения)
         """
-        return await self(moves.DeleteMoveRequest(move_id=move_id))
+        return await self(moves_api.DeleteMoveRequest(move_id=move_id))
 
-    async def get_move(self, move_id: str) -> moves.Move:
+    async def get_move(self, move_id: str) -> moves_api.Move:
         """
 
         :param move_id: Move id (ID перемещения)
         """
-        return await self(moves.GetMoveRequest(move_id=move_id))
+        return await self(moves_api.GetMoveRequest(move_id=move_id))
 
     async def update_move(
         self,
@@ -734,7 +776,7 @@ class MoySkladClient:
         shared: typing.Optional[bool] = None,
         state: typing.Optional[types.Meta] = None,
         sync_id: typing.Optional[str] = None,
-    ) -> moves.Move:
+    ) -> moves_api.Move:
         """
 
         :param move_id: Move id (ID перемещения)
@@ -764,7 +806,7 @@ class MoySkladClient:
         :param sync_id: Sync ID (Идентификатор синхронизации)
         """
         return await self(
-            moves.UpdateMoveRequest(
+            moves_api.UpdateMoveRequest(
                 move_id=move_id,
                 organization=organization,
                 source_store=source_store,
@@ -798,7 +840,7 @@ class MoySkladClient:
         limit: typing.Optional[int] = None,
         offset: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
-    ) -> typing.List[moves.MovePosition]:
+    ) -> typing.List[moves_api.MovePosition]:
         """
 
         :param move_id: Move ID (Идентификатор перемещения)
@@ -808,7 +850,7 @@ class MoySkladClient:
         """
 
         return await self(
-            moves.GetMovePositionsRequest(
+            moves_api.GetMovePositionsRequest(
                 move_id=move_id, limit=limit, offset=offset, search=search
             )
         )
@@ -820,7 +862,7 @@ class MoySkladClient:
         quantity: int,
         price: typing.Optional[int] = None,
         overhead: typing.Optional[int] = None,
-    ) -> moves.MovePosition:
+    ) -> moves_api.MovePosition:
         """
 
         :param move_id: Move ID (Идентификатор перемещения)
@@ -830,7 +872,7 @@ class MoySkladClient:
         :param overhead: Overhead (Надбавка)
         """
         return await self(
-            moves.CreateMovePositionRequest(
+            moves_api.CreateMovePositionRequest(
                 move_id=move_id,
                 assortment=assortment,
                 quantity=quantity,
@@ -841,14 +883,14 @@ class MoySkladClient:
 
     async def get_move_position(
         self, move_id: str, position_id: str
-    ) -> moves.MovePosition:
+    ) -> moves_api.MovePosition:
         """
 
         :param move_id: Move ID (Идентификатор перемещения)
         :param position_id: Position ID (Идентификатор позиции перемещения)
         """
         return await self(
-            moves.GetMovePositionRequest(move_id=move_id, position_id=position_id)
+            moves_api.GetMovePositionRequest(move_id=move_id, position_id=position_id)
         )
 
     async def update_move_position(
@@ -859,7 +901,7 @@ class MoySkladClient:
         quantity: typing.Optional[int] = None,
         price: typing.Optional[int] = None,
         overhead: typing.Optional[int] = None,
-    ) -> moves.MovePosition:
+    ) -> moves_api.MovePosition:
         """
 
         :param move_id: Move ID (Идентификатор перемещения)
@@ -871,7 +913,7 @@ class MoySkladClient:
         """
 
         return await self(
-            moves.UpdateMovePositionRequest(
+            moves_api.UpdateMovePositionRequest(
                 move_id=move_id,
                 position_id=position_id,
                 assortment=assortment,
@@ -888,20 +930,20 @@ class MoySkladClient:
         :param position_id: Position ID (Идентификатор позиции)
         """
         return await self(
-            moves.DeleteMovePositionRequest(move_id=move_id, position_id=position_id)
+            moves_api.DeleteMovePositionRequest(move_id=move_id, position_id=position_id)
         )
 
     # purchaseorder
     async def get_purchase_orders(
         self, limit: int = 1000, offset: int = 0, search: str = None
-    ) -> typing.List[purchaseorders.PurchaseOrder]:
+    ) -> typing.List[purchaseorders_api.PurchaseOrder]:
         """
         :param limit: Limit of entities to extract. Allowed values 1 - 1000. (Лимит сущностей для извлечения. Допустимые значения 1 - 1000.)
         :param offset: Offset in the list of entities returned. (Отступ в выдаваемом списке сущностей.)
         :param search: Filter documents by the specified search string. (Фильтр документов по указанной поисковой строке.)
         """
         return await self(
-            purchaseorders.GetPurchaseOrderListRequest(
+            purchaseorders_api.GetPurchaseOrderListRequest(
                 limit=limit, offset=offset, search=search
             )
         )
@@ -926,7 +968,7 @@ class MoySkladClient:
         organization_account: typing.Optional[types.Meta] = None,
         owner: typing.Optional[types.Meta] = None,
         positions: typing.Optional[
-            typing.List[purchaseorders.CreatePurchaseOrderRequest.CreatePosition]
+            typing.List[purchaseorders_api.CreatePurchaseOrderRequest.CreatePosition]
         ] = None,
         project: typing.Optional[types.Meta] = None,
         rate: typing.Optional[types.Rate] = None,
@@ -942,7 +984,7 @@ class MoySkladClient:
         payments: typing.Optional[typing.List[types.Meta]] = None,
         supplies: typing.Optional[typing.List[types.Meta]] = None,
         internal_order: typing.Optional[types.Meta] = None,
-    ) -> purchaseorders.PurchaseOrder:
+    ) -> purchaseorders_api.PurchaseOrder:
         """
 
         :param organization: Organization meta (Метаданные юрлица)
@@ -980,7 +1022,7 @@ class MoySkladClient:
         """
 
         return await self(
-            purchaseorders.CreatePurchaseOrderRequest(
+            purchaseorders_api.CreatePurchaseOrderRequest(
                 organization=organization,
                 agent=agent,
                 agent_account=agent_account,
@@ -1021,14 +1063,14 @@ class MoySkladClient:
 
         :param order_id: Order id to delete (ID Заказа поставщику для удаления)
         """
-        return await self(purchaseorders.DeletePurchaseOrderRequest(order_id=order_id))
+        return await self(purchaseorders_api.DeletePurchaseOrderRequest(order_id=order_id))
 
-    async def get_purchase_order(self, order_id: str) -> purchaseorders.PurchaseOrder:
+    async def get_purchase_order(self, order_id: str) -> purchaseorders_api.PurchaseOrder:
         """
 
         :param order_id: Order id to get (ID Заказа поставщику для получения)
         """
-        return await self(purchaseorders.GetPurchaseOrderRequest(order_id=order_id))
+        return await self(purchaseorders_api.GetPurchaseOrderRequest(order_id=order_id))
 
     async def update_purchase_order(
         self,
@@ -1051,7 +1093,7 @@ class MoySkladClient:
         organization_account: typing.Optional[types.Meta] = None,
         owner: typing.Optional[types.Meta] = None,
         positions: typing.Optional[
-            typing.List[purchaseorders.UpdatePurchaseOrderRequest.UpdatePosition]
+            typing.List[purchaseorders_api.UpdatePurchaseOrderRequest.UpdatePosition]
         ] = None,
         project: typing.Optional[types.Meta] = None,
         rate: typing.Optional[types.Rate] = None,
@@ -1067,7 +1109,7 @@ class MoySkladClient:
         payments: typing.Optional[typing.List[types.Meta]] = None,
         supplies: typing.Optional[typing.List[types.Meta]] = None,
         internal_order: typing.Optional[types.Meta] = None,
-    ) -> purchaseorders.PurchaseOrder:
+    ) -> purchaseorders_api.PurchaseOrder:
         """
 
         :param order_id: ID Заказа поставщику
@@ -1105,7 +1147,7 @@ class MoySkladClient:
         :param internal_order: Internal order meta (Метаданные внутреннего заказа)
         """
         return await self(
-            purchaseorders.UpdatePurchaseOrderRequest(
+            purchaseorders_api.UpdatePurchaseOrderRequest(
                 order_id=order_id,
                 organization=organization,
                 agent=agent,
@@ -1144,18 +1186,18 @@ class MoySkladClient:
 
     async def get_purchase_order_positions(
         self, order_id: str, limit: int = 1000, offset: int = 0
-    ) -> typing.List[purchaseorders.PurchaseOrderPosition]:
+    ) -> typing.List[purchaseorders_api.PurchaseOrderPosition]:
         return await self(
-            purchaseorders.GetPurchaseOrderPositionsRequest(
+            purchaseorders_api.GetPurchaseOrderPositionsRequest(
                 order_id=order_id, limit=limit, offset=offset
             )
         )
 
     async def get_purchase_order_position(
         self, order_id: str, position_id: str
-    ) -> purchaseorders.PurchaseOrderPosition:
+    ) -> purchaseorders_api.PurchaseOrderPosition:
         return await self(
-            purchaseorders.GetPurchaseOrderPositionRequest(
+            purchaseorders_api.GetPurchaseOrderPositionRequest(
                 order_id=order_id, position_id=position_id
             )
         )
@@ -1170,9 +1212,9 @@ class MoySkladClient:
         vat: typing.Optional[float] = None,
         in_transit: typing.Optional[int] = None,
         discount: typing.Optional[float] = None,
-    ) -> purchaseorders.PurchaseOrderPosition:
+    ) -> purchaseorders_api.PurchaseOrderPosition:
         return await self(
-            purchaseorders.UpdatePurchaseOrderPositionRequest(
+            purchaseorders_api.UpdatePurchaseOrderPositionRequest(
                 order_id=order_id,
                 position_id=position_id,
                 assortment=assortment,
@@ -1188,7 +1230,7 @@ class MoySkladClient:
         self, order_id: str, position_id: str
     ) -> None:
         return await self(
-            purchaseorders.DeletePurchaseOrderPositionRequest(
+            purchaseorders_api.DeletePurchaseOrderPositionRequest(
                 order_id=order_id, position_id=position_id
             )
         )
@@ -1197,7 +1239,7 @@ class MoySkladClient:
 
     async def get_product_folders(
         self, limit: int = 1000, offset: int = 0
-    ) -> typing.List[productfolders.ProductFolder]:
+    ) -> typing.List[productfolders_api.ProductFolder]:
         """
         Get product folders (Получить папки товаров)
         :param limit: Limit of entities to extract. Allowed values 1 - 1000. (Лимит сущностей для извлечения. Допустимые значения 1 - 1000.)
@@ -1205,7 +1247,7 @@ class MoySkladClient:
         :return: List of product folders (Список папок товаров)
         """
         return await self(
-            productfolders.GetProductFoldersRequest(limit=limit, offset=offset)
+            productfolders_api.GetProductFoldersRequest(limit=limit, offset=offset)
         )
 
     async def create_product_folder(
@@ -1233,7 +1275,7 @@ class MoySkladClient:
         use_parent_vat: typing.Optional[bool] = None,
         vat: typing.Optional[int] = None,
         vat_enabled: typing.Optional[bool] = None,
-    ) -> productfolders.ProductFolder:
+    ) -> productfolders_api.ProductFolder:
         """
         Create product folder (Создать папку товаров)
 
@@ -1254,7 +1296,7 @@ class MoySkladClient:
         """
 
         return await self(
-            productfolders.CreateProductFolderRequest(
+            productfolders_api.CreateProductFolderRequest(
                 name=name,
                 code=code,
                 description=description,
@@ -1281,19 +1323,19 @@ class MoySkladClient:
         :return: None
         """
         return await self(
-            productfolders.DeleteProductFolderRequest(folder_id=folder_id)
+            productfolders_api.DeleteProductFolderRequest(folder_id=folder_id)
         )
 
     async def get_product_folder(
         self,
         folder_id: str,
-    ) -> productfolders.ProductFolder:
+    ) -> productfolders_api.ProductFolder:
         """
         Get product folder by id (Получить папку товаров по ID)
         :param folder_id: Product folder id (ID папки товаров)
         :return: Product folder (Папка товаров)
         """
-        return await self(productfolders.GetProductFolderRequest(folder_id=folder_id))
+        return await self(productfolders_api.GetProductFolderRequest(folder_id=folder_id))
 
     async def update_product_folder(
         self,
@@ -1321,7 +1363,7 @@ class MoySkladClient:
         use_parent_vat: typing.Optional[bool] = None,
         vat: typing.Optional[int] = None,
         vat_enabled: typing.Optional[bool] = None,
-    ) -> productfolders.ProductFolder:
+    ) -> productfolders_api.ProductFolder:
         """
         Update product folder (Обновить папку товаров)
         :param folder_id: Product folder id (ID папки товаров)
@@ -1341,7 +1383,7 @@ class MoySkladClient:
         :return: Updated product folder (Обновленная группа товаров)
         """
         return await self(
-            productfolders.UpdateProductFolderRequest(
+            productfolders_api.UpdateProductFolderRequest(
                 folder_id=folder_id,
                 name=name,
                 code=code,
@@ -1359,13 +1401,13 @@ class MoySkladClient:
             )
         )
 
-    # enters
+    # enters_api
     async def get_enters(
         self,
         limit: typing.Optional[int] = 1000,
         offset: typing.Optional[int] = 0,
         search: typing.Optional[str] = None,
-    ) -> typing.List[enters.Enter]:
+    ) -> typing.List[enters_api.Enter]:
         """
 
         :param limit: Limit of entities to extract. (Лимит сущностей для извлечения)
@@ -1375,7 +1417,7 @@ class MoySkladClient:
         """
 
         return await self(
-            enters.GetEntersRequest(limit=limit, offset=offset, search=search)
+            enters_api.GetEntersRequest(limit=limit, offset=offset, search=search)
         )
 
     async def create_enter(
@@ -1393,12 +1435,12 @@ class MoySkladClient:
         name: typing.Optional[str] = None,
         overhead: typing.Optional[dict] = None,
         positions: typing.Optional[
-            typing.List[enters.CreateEnterRequest.CreateEnterPosition]
+            typing.List[enters_api.CreateEnterRequest.CreateEnterPosition]
         ] = None,
         project: typing.Optional[types.Meta] = None,
         rate: typing.Optional[dict] = None,
         shared: typing.Optional[bool] = None,
-    ) -> enters.Enter:
+    ) -> enters_api.Enter:
 
         """
 
@@ -1421,7 +1463,7 @@ class MoySkladClient:
         :return: Created enter (Созданный приход)
         """
         return await self(
-            enters.CreateEnterRequest(
+            enters_api.CreateEnterRequest(
                 organization=organization,
                 store=store,
                 applicable=applicable,
@@ -1446,15 +1488,15 @@ class MoySkladClient:
 
         :param enter_id: ID of enter (ID оприходования)
         """
-        return await self(enters.DeleteEnterRequest(enter_id=enter_id))
+        return await self(enters_api.DeleteEnterRequest(enter_id=enter_id))
 
-    async def get_enter(self, enter_id: str) -> enters.Enter:
+    async def get_enter(self, enter_id: str) -> enters_api.Enter:
         """
 
         :param enter_id: ID of enter (ID оприходования)
         :return: Enter (Оприходование)
         """
-        return await self(enters.GetEnterRequest(enter_id=enter_id))
+        return await self(enters_api.GetEnterRequest(enter_id=enter_id))
 
     async def update_enter(
         self,
@@ -1472,12 +1514,12 @@ class MoySkladClient:
         name: typing.Optional[str] = None,
         overhead: typing.Optional[dict] = None,
         positions: typing.Optional[
-            typing.List[enters.UpdateEnterRequest.UpdateEnterPosition]
+            typing.List[enters_api.UpdateEnterRequest.UpdateEnterPosition]
         ] = None,
         project: typing.Optional[str] = None,
         rate: typing.Optional[str] = None,
         shared: typing.Optional[bool] = None,
-    ) -> enters.Enter:
+    ) -> enters_api.Enter:
         """
 
         :param enter_id: ID of enter (ID оприходования)
@@ -1500,7 +1542,7 @@ class MoySkladClient:
         :return: Updated enter (Обновленное оприходование)
         """
         return await self(
-            enters.UpdateEnterRequest(
+            enters_api.UpdateEnterRequest(
                 enter_id=enter_id,
                 organization=organization,
                 store=store,
@@ -1526,7 +1568,7 @@ class MoySkladClient:
         enter_id: str,
         limit: typing.Optional[int] = None,
         offset: typing.Optional[int] = None,
-    ) -> typing.List[enters.EnterPosition]:
+    ) -> typing.List[enters_api.EnterPosition]:
         """
 
         :param enter_id: ID of enter (ID оприходования)
@@ -1535,7 +1577,7 @@ class MoySkladClient:
         :return: Enter positions (Позиции оприходования)
         """
         return await self(
-            enters.GetEnterPositionsRequest(
+            enters_api.GetEnterPositionsRequest(
                 enter_id=enter_id,
                 limit=limit,
                 offset=offset,
@@ -1545,8 +1587,8 @@ class MoySkladClient:
     async def create_enter_position(
         self,
         enter_id: str,
-        positions: typing.List[enters.CreateEnterPositionRequest.CreateEnterPosition],
-    ) -> typing.List[enters.EnterPosition]:
+        positions: typing.List[enters_api.CreateEnterPositionRequest.CreateEnterPosition],
+    ) -> typing.List[enters_api.EnterPosition]:
         """
 
         :param enter_id: Enter id (id Оприходования)
@@ -1554,7 +1596,7 @@ class MoySkladClient:
         :return: Created enter positions (Созданные позиции оприходования)
         """
         return await self(
-            enters.CreateEnterPositionRequest(
+            enters_api.CreateEnterPositionRequest(
                 enter_id=enter_id,
                 positions=positions,
             )
@@ -1564,7 +1606,7 @@ class MoySkladClient:
         self,
         enter_id: str,
         position_id: str,
-    ) -> enters.EnterPosition:
+    ) -> enters_api.EnterPosition:
         """
 
         :param enter_id: Enter id (id Оприходования)
@@ -1572,7 +1614,7 @@ class MoySkladClient:
         :return: Enter position (Позиция оприходования)
         """
         return await self(
-            enters.GetEnterPositionRequest(
+            enters_api.GetEnterPositionRequest(
                 enter_id=enter_id,
                 position_id=position_id,
             )
@@ -1592,7 +1634,7 @@ class MoySkladClient:
         slot: typing.Optional[types.Meta] = None,
         things: typing.Optional[typing.Dict] = None,
         overhead: typing.Optional[int] = None,
-    ) -> enters.EnterPosition:
+    ) -> enters_api.EnterPosition:
         """
 
         :param enter_id: Enter id (id Оприходования)
@@ -1611,7 +1653,7 @@ class MoySkladClient:
         """
 
         return await self(
-            enters.UpdateEnterPositionRequest(
+            enters_api.UpdateEnterPositionRequest(
                 enter_id=enter_id,
                 position_id=position_id,
                 assortment=assortment,
@@ -1639,7 +1681,7 @@ class MoySkladClient:
         :return: None
         """
         return await self(
-            enters.DeleteEnterPositionRequest(
+            enters_api.DeleteEnterPositionRequest(
                 enter_id=enter_id,
                 position_id=position_id,
             )
