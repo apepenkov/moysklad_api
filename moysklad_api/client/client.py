@@ -12,6 +12,7 @@ from ..api.entities import (
     purchaseorders as purchaseorders_api,
     productfolders as productfolders_api,
     enters as enters_api,
+    custom_entities as custom_entities_api,
 )
 from ..api.reports import stocks
 import json
@@ -1887,5 +1888,203 @@ class MoySkladClient:
                 stock_type=stock_type,
                 filter_assortment_id=filter_assortment_id,
                 filter_store_id=filter_store_id,
+            )
+        )
+
+    # custom entities
+    async def create_custom_entity(
+        self,
+        name: str,
+        meta: typing.Optional[types.Meta] = None,
+    ) -> custom_entities_api.CustomEntity:
+        """
+        Create custom entity (Создание пользовательского справочника)
+
+        :param name: Name of custom entity (Наименование Пользовательского справочника)
+        :param meta: Meta of custom entity (Метаданные Пользовательского справочника)
+        :return: Created custom entity (Созданный пользовательский справочник)
+        """
+
+        return await self(
+            custom_entities_api.CreateCustomEntityRequest(
+                name=name,
+                meta=meta,
+            )
+        )
+
+    async def update_custom_entity(
+        self,
+        metadata_id: str,
+        name: typing.Optional[str] = None,
+        meta: typing.Optional[types.Meta] = None,
+    ) -> custom_entities_api.CustomEntity:
+        """
+        Update custom entity (Обновление пользовательского справочника)
+
+        :param metadata_id: ID of custom entity (ID Пользовательского справочника)
+        :param name: Name of custom entity (Наименование Пользовательского справочника)
+        :param meta: Meta of custom entity (Метаданные Пользовательского справочника)
+        :return: Updated custom entity (Обновленный пользовательский справочник)
+        """
+        return await self(
+            custom_entities_api.UpdateCustomEntityRequest(
+                metadata_id=metadata_id,
+                name=name,
+                meta=meta,
+            )
+        )
+
+    async def delete_custom_entity(self, metadata_id: str) -> None:
+        """
+        Delete custom entity (Удаление пользовательского справочника)
+
+        :param metadata_id: ID of custom entity (ID Пользовательского справочника)
+        :return: None
+        """
+        return await self(
+            custom_entities_api.DeleteCustomEntityRequest(
+                metadata_id=metadata_id,
+            )
+        )
+
+    async def create_custom_entity_element(
+        self,
+        metadata_id: str,
+        name: str,
+        code: typing.Optional[str] = None,
+        description: typing.Optional[str] = None,
+        external_code: typing.Optional[str] = None,
+        meta: typing.Optional[types.Meta] = None,
+        group: typing.Optional[types.Meta] = None,
+        owner: typing.Optional[types.Meta] = None,
+        shared: typing.Optional[bool] = None,
+    ) -> custom_entities_api.CustomEntityElement:
+        """
+        Create custom entity element (Создание элемента пользовательского справочника)
+
+        :param metadata_id: ID of the custom entity (ID справочника)
+        :param name: Name of the custom entity element (Наименование элемента справочника)
+        :param code: Code of the custom entity element (Код элемента справочника)
+        :param description: Description of the custom entity element (Описание элемента справочника)
+        :param external_code: External code of the custom entity element (Внешний код элемента справочника)
+        :param meta: Metadata of the custom entity element (Метаданные элемента справочника)
+        :param group: Group of the custom entity element (Отдел элемента справочника)
+        :param owner: Owner of the custom entity element (Владелец элемента справочника)
+        :param shared: Shared access of the custom entity element (Общий доступ элемента справочника)
+        :return: Created custom entity element (Созданный элемент пользовательского справочника)
+        """
+        return await self(
+            custom_entities_api.CreateCustomEntityElementRequest(
+                metadata_id=metadata_id,
+                name=name,
+                code=code,
+                description=description,
+                external_code=external_code,
+                meta=meta,
+                group=group,
+                owner=owner,
+                shared=shared,
+            )
+        )
+
+    async def update_custom_entity_element(
+        self,
+        metadata_id: str,
+        element_id: str,
+        name: typing.Optional[str] = None,
+        code: typing.Optional[str] = None,
+        description: typing.Optional[str] = None,
+        external_code: typing.Optional[str] = None,
+        meta: typing.Optional[types.Meta] = None,
+        group: typing.Optional[types.Meta] = None,
+        owner: typing.Optional[types.Meta] = None,
+        shared: typing.Optional[bool] = None,
+    ) -> custom_entities_api.CustomEntityElement:
+        """
+        Update custom entity element (Обновление элемента пользовательского справочника)
+
+        :param metadata_id: ID of the custom entity (ID справочника)
+        :param element_id: ID of the custom entity element (ID элемента справочника)
+        :param name: Name of the custom entity element (Наименование элемента справочника)
+        :param code: Code of the custom entity element (Код элемента справочника)
+        :param description: Description of the custom entity element (Описание элемента справочника)
+        :param external_code: External code of the custom entity element (Внешний код элемента справочника)
+        :param meta: Metadata of the custom entity element (Метаданные элемента справочника)
+        :param group: Group of the custom entity element (Отдел элемента справочника)
+        :param owner: Owner of the custom entity element (Владелец элемента справочника)
+        :param shared: Shared access of the custom entity element (Общий доступ элемента справочника)
+        :return: Updated custom entity element (Обновленный элемент пользовательского справочника)
+        """
+        return await self(
+            custom_entities_api.UpdateCustomEntityElementRequest(
+                metadata_id=metadata_id,
+                element_id=element_id,
+                name=name,
+                code=code,
+                description=description,
+                external_code=external_code,
+                meta=meta,
+                group=group,
+                owner=owner,
+                shared=shared,
+            )
+        )
+
+    async def delete_custom_entity_element(
+        self,
+        metadata_id: str,
+        element_id: str,
+    ) -> None:
+        """
+        Delete custom entity element (Удаление элемента пользовательского справочника)
+
+        :param metadata_id: ID of the custom entity (ID справочника)
+        :param element_id: ID of the custom entity element (ID элемента справочника)
+        """
+        return await self(
+            custom_entities_api.DeleteCustomEntityElementRequest(
+                metadata_id=metadata_id,
+                element_id=element_id,
+            )
+        )
+
+    async def get_custom_entity_element(
+        self,
+        metadata_id: str,
+        element_id: str,
+    ) -> custom_entities_api.CustomEntityElement:
+        """
+        Get custom entity element (Получение элемента пользовательского справочника)
+
+        :param metadata_id: ID of the custom entity (ID справочника)
+        :param element_id: ID of the custom entity element (ID элемента справочника)
+        :return: Custom entity element (Элемент пользовательского справочника)
+        """
+        return await self(
+            custom_entities_api.GetCustomEntityElementRequest(
+                metadata_id=metadata_id,
+                element_id=element_id,
+            )
+        )
+
+    async def list_custom_entity_elements(
+        self,
+        metadata_id: str,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
+    ) -> typing.List[custom_entities_api.CustomEntityElement]:
+        """
+        List custom entity elements (Получение списка элементов пользовательского справочника)
+
+        :param metadata_id: ID of the custom entity (ID справочника)
+        :param limit: Limit (Ограничение)
+        :param offset: Offset (Смещение)
+        :return: List of custom entity elements (Список элементов пользовательского справочника)
+        """
+        return await self(
+            custom_entities_api.GetCustomEntityElementsRequest(
+                metadata_id=metadata_id,
+                limit=limit,
+                offset=offset,
             )
         )

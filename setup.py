@@ -13,6 +13,7 @@ setup(
         "moysklad_api.api.entities.purchaseorders",
         "moysklad_api.api.entities.productfolders",
         "moysklad_api.api.entities.enters",
+        "moysklad_api.api.entities.custom_entities",
         "moysklad_api.api.reports",
         "moysklad_api.api.reports.stocks",
         "moysklad_api.types",
