@@ -250,6 +250,39 @@ class CreateProductRequest(types.ApiRequest):
         ] = None,
         attributes: typing.Optional[typing.List[dict]] = None,
         images: typing.Optional[typing.List[dict]] = None,
+        alcoholic: typing.Optional[dict] = None,
+        archived: typing.Optional[bool] = None,
+        country: typing.Optional[types.Meta] = None,
+        files: typing.Optional[typing.List[dict]] = None,
+        group: typing.Optional[types.Meta] = None,
+        minimum_balance: typing.Optional[int] = None,
+        owner: typing.Optional[types.Meta] = None,
+        partial_disposal: typing.Optional[bool] = None,
+        payment_item_type: typing.Optional[
+            typing.Literal[
+                "GOODS",
+                "EXCISABLE_GOOD",
+                "COMPOUND_PAYMENT_ITEM",
+                "ANOTHER_PAYMENT_ITEM",
+            ]
+        ] = None,
+        ppe_type: typing.Optional[str] = None,
+        product_folder: typing.Optional[types.Meta] = None,
+        shared: typing.Optional[bool] = None,
+        tax_system: typing.Optional[
+            typing.Literal[
+                "GENERAL_TAX_SYSTEM",
+                "PATENT_BASED",
+                "PRESUMPTIVE_TAX_SYSTEM",
+                "SIMPLIFIED_TAX_SYSTEM_INCOME",
+                "SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME",
+                "TAX_SYSTEM_SAME_AS_GROUP",
+                "UNIFIED_AGRICULTURAL_TAX",
+            ]
+        ] = None,
+        things: typing.Optional[typing.List[str]] = None,
+        tnved: typing.Optional[str] = None,
+        use_parent_vat: typing.Optional[bool] = None,
     ):
         """
 
@@ -274,6 +307,22 @@ class CreateProductRequest(types.ApiRequest):
         :param tracking_type: Tracking type (Тип отслеживания) - https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-towar-towary-atributy-suschnosti-tip-markiruemoj-produkcii
         :param attributes: Attributes (Атрибуты)
         :param images: Images (Изображения) - https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-izobrazhenie
+        :param alcoholic: Alcoholic (Объект, содержащий поля алкогольной продукции) https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-towar-towary-atributy-wlozhennyh-suschnostej-ob-ekt-soderzhaschij-polq-alkogol-noj-produkcii
+        :param archived: Archived (Архивный)
+        :param country: Country (Страна)
+        :param files: Files (Метаданные массива Файлов (Максимальное количество файлов - 100))
+        :param group: Group (Метаданные отдела сотрудника)
+        :param minimum_balance: Minimum balance (Минимальный остаток)
+        :param owner: Owner (Метаданные владельца (Сотрудника))
+        :param partial_disposal: Partial disposal (Управление состоянием частичного выбытия маркированного товара. «true» - возможность включена.)
+        :param payment_item_type: Payment item type (Признак предмета расчета. https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-komplekt-komplekty-atributy-suschnosti-priznak-predmeta-rascheta)
+        :param ppe_type: PPE type (Код вида номенклатурной классификации медицинских средств индивидуальной защиты (EAN-13)) - https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-towar-towary-atributy-suschnosti-kod-wida-nomenklaturnoj-klassifikacii-medicinskih-sredstw-indiwidual-noj-zaschity
+        :param product_folder: Product folder (Метаданные группы товара)
+        :param shared: Shared (Общий)
+        :param tax_system: Tax system (Система налогообложения) - https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-towar-towary-atributy-suschnosti-kod-sistemy-nalogooblozheniq
+        :param things: Serial numbers (Серийные номера)
+        :param tnved: TNVED (Код ТН ВЭД)
+        :param use_parent_vat: Use parent VAT (Использовать родительский НДС)
         """
         self.name = name
         self.code = code
@@ -296,6 +345,22 @@ class CreateProductRequest(types.ApiRequest):
         self.tracking_type = tracking_type
         self.attributes = attributes
         self.images = images
+        self.alcoholic = alcoholic
+        self.archived = archived
+        self.country = country
+        self.files = files
+        self.group = group
+        self.minimum_balance = minimum_balance
+        self.owner = owner
+        self.partial_disposal = partial_disposal
+        self.payment_item_type = payment_item_type
+        self.ppe_type = ppe_type
+        self.product_folder = product_folder
+        self.shared = shared
+        self.tax_system = tax_system
+        self.things = things
+        self.tnved = tnved
+        self.use_parent_vat = use_parent_vat
 
     def to_request(self) -> dict:
         if not self.name:
@@ -356,6 +421,38 @@ class CreateProductRequest(types.ApiRequest):
             json_data["attributes"] = self.attributes
         if self.images is not None:
             json_data["images"] = self.images
+        if self.alcoholic is not None:
+            json_data["alcoholic"] = self.alcoholic
+        if self.archived is not None:
+            json_data["archived"] = self.archived
+        if self.country is not None:
+            json_data["country"] = {"meta": self.country}
+        if self.files is not None:
+            json_data["files"] = self.files
+        if self.group is not None:
+            json_data["group"] = {"meta": self.group}
+        if self.minimum_balance is not None:
+            json_data["minimumBalance"] = self.minimum_balance
+        if self.owner is not None:
+            json_data["owner"] = {"meta": self.owner}
+        if self.partial_disposal is not None:
+            json_data["partialDisposal"] = self.partial_disposal
+        if self.payment_item_type is not None:
+            json_data["paymentItemType"] = self.payment_item_type
+        if self.ppe_type is not None:
+            json_data["ppeType"] = self.ppe_type
+        if self.product_folder is not None:
+            json_data["productFolder"] = {"meta": self.product_folder}
+        if self.shared is not None:
+            json_data["shared"] = self.shared
+        if self.tax_system is not None:
+            json_data["taxSystem"] = self.tax_system
+        if self.things is not None:
+            json_data["things"] = self.things
+        if self.tnved is not None:
+            json_data["tnved"] = self.tnved
+        if self.use_parent_vat is not None:
+            json_data["useParentVat"] = self.use_parent_vat
 
         return {
             "method": "POST",
@@ -466,6 +563,39 @@ class UpdateProductRequest(types.ApiRequest):
         ] = None,
         attributes: typing.Optional[typing.List[dict]] = None,
         images: typing.Optional[typing.List[dict]] = None,
+            alcoholic: typing.Optional[dict] = None,
+            archived: typing.Optional[bool] = None,
+            country: typing.Optional[types.Meta] = None,
+            files: typing.Optional[typing.List[dict]] = None,
+            group: typing.Optional[types.Meta] = None,
+            minimum_balance: typing.Optional[int] = None,
+            owner: typing.Optional[types.Meta] = None,
+            partial_disposal: typing.Optional[bool] = None,
+            payment_item_type: typing.Optional[
+                typing.Literal[
+                    "GOODS",
+                    "EXCISABLE_GOOD",
+                    "COMPOUND_PAYMENT_ITEM",
+                    "ANOTHER_PAYMENT_ITEM",
+                ]
+            ] = None,
+            ppe_type: typing.Optional[str] = None,
+            product_folder: typing.Optional[types.Meta] = None,
+            shared: typing.Optional[bool] = None,
+            tax_system: typing.Optional[
+                typing.Literal[
+                    "GENERAL_TAX_SYSTEM",
+                    "PATENT_BASED",
+                    "PRESUMPTIVE_TAX_SYSTEM",
+                    "SIMPLIFIED_TAX_SYSTEM_INCOME",
+                    "SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME",
+                    "TAX_SYSTEM_SAME_AS_GROUP",
+                    "UNIFIED_AGRICULTURAL_TAX",
+                ]
+            ] = None,
+            things: typing.Optional[typing.List[str]] = None,
+            tnved: typing.Optional[str] = None,
+        use_parent_vat: typing.Optional[bool] = None,
     ):
         """
 
@@ -491,6 +621,22 @@ class UpdateProductRequest(types.ApiRequest):
         :param tracking_type: Tracking type (Тип отслеживания) - https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-towar-towary-atributy-suschnosti-tip-markiruemoj-produkcii
         :param attributes: Attributes (Атрибуты)
         :param images: Images (Изображения) - https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-izobrazhenie
+        :param alcoholic: Alcoholic (Объект, содержащий поля алкогольной продукции) https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-towar-towary-atributy-wlozhennyh-suschnostej-ob-ekt-soderzhaschij-polq-alkogol-noj-produkcii
+        :param archived: Archived (Архивный)
+        :param country: Country (Страна)
+        :param files: Files (Метаданные массива Файлов (Максимальное количество файлов - 100))
+        :param group: Group (Метаданные отдела сотрудника)
+        :param minimum_balance: Minimum balance (Минимальный остаток)
+        :param owner: Owner (Метаданные владельца (Сотрудника))
+        :param partial_disposal: Partial disposal (Управление состоянием частичного выбытия маркированного товара. «true» - возможность включена.)
+        :param payment_item_type: Payment item type (Признак предмета расчета. https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-komplekt-komplekty-atributy-suschnosti-priznak-predmeta-rascheta)
+        :param ppe_type: PPE type (Код вида номенклатурной классификации медицинских средств индивидуальной защиты (EAN-13)) - https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-towar-towary-atributy-suschnosti-kod-wida-nomenklaturnoj-klassifikacii-medicinskih-sredstw-indiwidual-noj-zaschity
+        :param product_folder: Product folder (Метаданные группы товара)
+        :param shared: Shared (Общий)
+        :param tax_system: Tax system (Система налогообложения) - https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-towar-towary-atributy-suschnosti-kod-sistemy-nalogooblozheniq
+        :param things: Serial numbers (Серийные номера)
+        :param tnved: TNVED (Код ТН ВЭД)
+        :param use_parent_vat: Use parent VAT (Использовать родительский НДС)
         """
         self.id = id_
         self.name = name
@@ -514,6 +660,22 @@ class UpdateProductRequest(types.ApiRequest):
         self.tracking_type = tracking_type
         self.attributes = attributes
         self.images = images
+        self.alcoholic = alcoholic
+        self.archived = archived
+        self.country = country
+        self.files = files
+        self.group = group
+        self.minimum_balance = minimum_balance
+        self.owner = owner
+        self.partial_disposal = partial_disposal
+        self.payment_item_type = payment_item_type
+        self.ppe_type = ppe_type
+        self.product_folder = product_folder
+        self.shared = shared
+        self.tax_system = tax_system
+        self.things = things
+        self.tnved = tnved
+        self.use_parent_vat = use_parent_vat
 
     def to_request(self) -> dict:
         if not self.id:
@@ -577,6 +739,38 @@ class UpdateProductRequest(types.ApiRequest):
             json_data["attributes"] = self.attributes
         if self.images is not None:
             json_data["images"] = self.images
+        if self.alcoholic is not None:
+            json_data["alcoholic"] = self.alcoholic
+        if self.archived is not None:
+            json_data["archived"] = self.archived
+        if self.country is not None:
+            json_data["country"] = {"meta": self.country}
+        if self.files is not None:
+            json_data["files"] = self.files
+        if self.group is not None:
+            json_data["group"] = {"meta": self.group}
+        if self.minimum_balance is not None:
+            json_data["minimumBalance"] = self.minimum_balance
+        if self.owner is not None:
+            json_data["owner"] = {"meta": self.owner}
+        if self.partial_disposal is not None:
+            json_data["partialDisposal"] = self.partial_disposal
+        if self.payment_item_type is not None:
+            json_data["paymentItemType"] = self.payment_item_type
+        if self.ppe_type is not None:
+            json_data["ppeType"] = self.ppe_type
+        if self.product_folder is not None:
+            json_data["productFolder"] = {"meta": self.product_folder}
+        if self.shared is not None:
+            json_data["shared"] = self.shared
+        if self.tax_system is not None:
+            json_data["taxSystem"] = self.tax_system
+        if self.things is not None:
+            json_data["things"] = self.things
+        if self.tnved is not None:
+            json_data["tnved"] = self.tnved
+        if self.use_parent_vat is not None:
+            json_data["useParentVat"] = self.use_parent_vat
         # actually it would be good to place a check for len(json_data) > 1, to avoid extra requests,
         # but I don't think that should be done on library level
         # Здесь было бы хорошо проверить, что длина json_data > 1, чтобы избежать лишних запросов,

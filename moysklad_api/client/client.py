@@ -86,10 +86,14 @@ class MoySkladClient:
                     # (конвертируем json в тело с красиво отформатированным json,
                     # устанавливаем content-type в application/json)
                     # (это нужно для лучшего чтения ошибок)
-                    kwargs["data"] = json.dumps(kwargs.pop("json", {}), indent=4, ensure_ascii=False)
+                    kwargs["data"] = json.dumps(
+                        kwargs.pop("json", {}), indent=4, ensure_ascii=False
+                    )
                 else:
                     kwargs["data"] = json.dumps(
-                        kwargs.pop("json", {}), separators=(",", ":"), ensure_ascii=False
+                        kwargs.pop("json", {}),
+                        separators=(",", ":"),
+                        ensure_ascii=False,
                     )
                 json_text = kwargs["data"]
                 kwargs["headers"]["Content-Type"] = "application/json"
@@ -427,7 +431,9 @@ class MoySkladClient:
         :param offset: Offset (Смещение)
         :return: list(Product) object (Список объектов Product)
         """
-        return await self(products_api.GetProductListRequest(limit=limit, offset=offset))
+        return await self(
+            products_api.GetProductListRequest(limit=limit, offset=offset)
+        )
 
     async def create_product(
         self,
@@ -467,6 +473,39 @@ class MoySkladClient:
         ] = None,
         attributes: typing.Optional[typing.List[dict]] = None,
         images: typing.Optional[typing.List[dict]] = None,
+        alcoholic: typing.Optional[dict] = None,
+        archived: typing.Optional[bool] = None,
+        country: typing.Optional[types.Meta] = None,
+        files: typing.Optional[typing.List[dict]] = None,
+        group: typing.Optional[types.Meta] = None,
+        minimum_balance: typing.Optional[int] = None,
+        owner: typing.Optional[types.Meta] = None,
+        partial_disposal: typing.Optional[bool] = None,
+        payment_item_type: typing.Optional[
+            typing.Literal[
+                "GOODS",
+                "EXCISABLE_GOOD",
+                "COMPOUND_PAYMENT_ITEM",
+                "ANOTHER_PAYMENT_ITEM",
+            ]
+        ] = None,
+        ppe_type: typing.Optional[str] = None,
+        product_folder: typing.Optional[types.Meta] = None,
+        shared: typing.Optional[bool] = None,
+        tax_system: typing.Optional[
+            typing.Literal[
+                "GENERAL_TAX_SYSTEM",
+                "PATENT_BASED",
+                "PRESUMPTIVE_TAX_SYSTEM",
+                "SIMPLIFIED_TAX_SYSTEM_INCOME",
+                "SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME",
+                "TAX_SYSTEM_SAME_AS_GROUP",
+                "UNIFIED_AGRICULTURAL_TAX",
+            ]
+        ] = None,
+        things: typing.Optional[typing.List[str]] = None,
+        tnved: typing.Optional[str] = None,
+        use_parent_vat: typing.Optional[bool] = None,
     ) -> products_api.Product:
         """
         https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-towar-sozdat-towar
@@ -492,6 +531,22 @@ class MoySkladClient:
         :param tracking_type: Tracking type (Тип отслеживания) - https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-towar-towary-atributy-suschnosti-tip-markiruemoj-produkcii
         :param attributes: Attributes (Атрибуты)
         :param images: Images (Изображения) - https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-izobrazhenie
+        :param alcoholic: Alcoholic (Объект, содержащий поля алкогольной продукции) https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-towar-towary-atributy-wlozhennyh-suschnostej-ob-ekt-soderzhaschij-polq-alkogol-noj-produkcii
+        :param archived: Archived (Архивный)
+        :param country: Country (Страна)
+        :param files: Files (Метаданные массива Файлов (Максимальное количество файлов - 100))
+        :param group: Group (Метаданные отдела сотрудника)
+        :param minimum_balance: Minimum balance (Минимальный остаток)
+        :param owner: Owner (Метаданные владельца (Сотрудника))
+        :param partial_disposal: Partial disposal (Управление состоянием частичного выбытия маркированного товара. «true» - возможность включена.)
+        :param payment_item_type: Payment item type (Признак предмета расчета. https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-komplekt-komplekty-atributy-suschnosti-priznak-predmeta-rascheta)
+        :param ppe_type: PPE type (Код вида номенклатурной классификации медицинских средств индивидуальной защиты (EAN-13)) - https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-towar-towary-atributy-suschnosti-kod-wida-nomenklaturnoj-klassifikacii-medicinskih-sredstw-indiwidual-noj-zaschity
+        :param product_folder: Product folder (Метаданные группы товара)
+        :param shared: Shared (Общий)
+        :param tax_system: Tax system (Система налогообложения) - https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-towar-towary-atributy-suschnosti-kod-sistemy-nalogooblozheniq
+        :param things: Serial numbers (Серийные номера)
+        :param tnved: TNVED (Код ТН ВЭД)
+        :param use_parent_vat: Use parent VAT (Использовать родительский НДС)
         :return: Product object (Объект Product)
         """
         return await self(
@@ -517,6 +572,22 @@ class MoySkladClient:
                 tracking_type=tracking_type,
                 attributes=attributes,
                 images=images,
+                alcoholic=alcoholic,
+                archived=archived,
+                country=country,
+                files=files,
+                group=group,
+                minimum_balance=minimum_balance,
+                owner=owner,
+                partial_disposal=partial_disposal,
+                payment_item_type=payment_item_type,
+                ppe_type=ppe_type,
+                product_folder=product_folder,
+                shared=shared,
+                tax_system=tax_system,
+                things=things,
+                tnved=tnved,
+                use_parent_vat=use_parent_vat,
             )
         )
 
@@ -577,6 +648,39 @@ class MoySkladClient:
         ] = None,
         attributes: typing.Optional[typing.List[dict]] = None,
         images: typing.Optional[typing.List[dict]] = None,
+        alcoholic: typing.Optional[dict] = None,
+        archived: typing.Optional[bool] = None,
+        country: typing.Optional[types.Meta] = None,
+        files: typing.Optional[typing.List[dict]] = None,
+        group: typing.Optional[types.Meta] = None,
+        minimum_balance: typing.Optional[int] = None,
+        owner: typing.Optional[types.Meta] = None,
+        partial_disposal: typing.Optional[bool] = None,
+        payment_item_type: typing.Optional[
+            typing.Literal[
+                "GOODS",
+                "EXCISABLE_GOOD",
+                "COMPOUND_PAYMENT_ITEM",
+                "ANOTHER_PAYMENT_ITEM",
+            ]
+        ] = None,
+        ppe_type: typing.Optional[str] = None,
+        product_folder: typing.Optional[types.Meta] = None,
+        shared: typing.Optional[bool] = None,
+        tax_system: typing.Optional[
+            typing.Literal[
+                "GENERAL_TAX_SYSTEM",
+                "PATENT_BASED",
+                "PRESUMPTIVE_TAX_SYSTEM",
+                "SIMPLIFIED_TAX_SYSTEM_INCOME",
+                "SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME",
+                "TAX_SYSTEM_SAME_AS_GROUP",
+                "UNIFIED_AGRICULTURAL_TAX",
+            ]
+        ] = None,
+        things: typing.Optional[typing.List[str]] = None,
+        tnved: typing.Optional[str] = None,
+        use_parent_vat: typing.Optional[bool] = None,
     ) -> products_api.Product:
         """
         https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-towar-izmenit-towar
@@ -603,6 +707,22 @@ class MoySkladClient:
         :param tracking_type: Tracking type (Тип отслеживания) - https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-towar-towary-atributy-suschnosti-tip-markiruemoj-produkcii
         :param attributes: Attributes (Атрибуты)
         :param images: Images (Изображения) - https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-izobrazhenie
+        :param alcoholic: Alcoholic (Объект, содержащий поля алкогольной продукции) https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-towar-towary-atributy-wlozhennyh-suschnostej-ob-ekt-soderzhaschij-polq-alkogol-noj-produkcii
+        :param archived: Archived (Архивный)
+        :param country: Country (Страна)
+        :param files: Files (Метаданные массива Файлов (Максимальное количество файлов - 100))
+        :param group: Group (Метаданные отдела сотрудника)
+        :param minimum_balance: Minimum balance (Минимальный остаток)
+        :param owner: Owner (Метаданные владельца (Сотрудника))
+        :param partial_disposal: Partial disposal (Управление состоянием частичного выбытия маркированного товара. «true» - возможность включена.)
+        :param payment_item_type: Payment item type (Признак предмета расчета. https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-komplekt-komplekty-atributy-suschnosti-priznak-predmeta-rascheta)
+        :param ppe_type: PPE type (Код вида номенклатурной классификации медицинских средств индивидуальной защиты (EAN-13)) - https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-towar-towary-atributy-suschnosti-kod-wida-nomenklaturnoj-klassifikacii-medicinskih-sredstw-indiwidual-noj-zaschity
+        :param product_folder: Product folder (Метаданные группы товара)
+        :param shared: Shared (Общий)
+        :param tax_system: Tax system (Система налогообложения) - https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-towar-towary-atributy-suschnosti-kod-sistemy-nalogooblozheniq
+        :param things: Serial numbers (Серийные номера)
+        :param tnved: TNVED (Код ТН ВЭД)
+        :param use_parent_vat: Use parent VAT (Использовать родительский НДС)
         :return: Product object (Объект Product)
         """
 
@@ -630,6 +750,22 @@ class MoySkladClient:
                 tracking_type=tracking_type,
                 attributes=attributes,
                 images=images,
+                alcoholic=alcoholic,
+                archived=archived,
+                country=country,
+                files=files,
+                group=group,
+                minimum_balance=minimum_balance,
+                owner=owner,
+                partial_disposal=partial_disposal,
+                payment_item_type=payment_item_type,
+                ppe_type=ppe_type,
+                product_folder=product_folder,
+                shared=shared,
+                tax_system=tax_system,
+                things=things,
+                tnved=tnved,
+                use_parent_vat=use_parent_vat,
             )
         )
 
@@ -930,7 +1066,9 @@ class MoySkladClient:
         :param position_id: Position ID (Идентификатор позиции)
         """
         return await self(
-            moves_api.DeleteMovePositionRequest(move_id=move_id, position_id=position_id)
+            moves_api.DeleteMovePositionRequest(
+                move_id=move_id, position_id=position_id
+            )
         )
 
     # purchaseorder
@@ -1063,9 +1201,13 @@ class MoySkladClient:
 
         :param order_id: Order id to delete (ID Заказа поставщику для удаления)
         """
-        return await self(purchaseorders_api.DeletePurchaseOrderRequest(order_id=order_id))
+        return await self(
+            purchaseorders_api.DeletePurchaseOrderRequest(order_id=order_id)
+        )
 
-    async def get_purchase_order(self, order_id: str) -> purchaseorders_api.PurchaseOrder:
+    async def get_purchase_order(
+        self, order_id: str
+    ) -> purchaseorders_api.PurchaseOrder:
         """
 
         :param order_id: Order id to get (ID Заказа поставщику для получения)
@@ -1335,7 +1477,9 @@ class MoySkladClient:
         :param folder_id: Product folder id (ID папки товаров)
         :return: Product folder (Папка товаров)
         """
-        return await self(productfolders_api.GetProductFolderRequest(folder_id=folder_id))
+        return await self(
+            productfolders_api.GetProductFolderRequest(folder_id=folder_id)
+        )
 
     async def update_product_folder(
         self,
@@ -1587,7 +1731,9 @@ class MoySkladClient:
     async def create_enter_position(
         self,
         enter_id: str,
-        positions: typing.List[enters_api.CreateEnterPositionRequest.CreateEnterPosition],
+        positions: typing.List[
+            enters_api.CreateEnterPositionRequest.CreateEnterPosition
+        ],
     ) -> typing.List[enters_api.EnterPosition]:
         """
 
@@ -1689,13 +1835,13 @@ class MoySkladClient:
 
     # stocks
     async def get_full_stock_report(
-            self,
-            limit: typing.Optional[int] = 1000,
-            offset: typing.Optional[int] = 0,
-            group_by: typing.Optional[
-                typing.Literal["product", "variant", "consignment"]
-            ] = None,
-            include_related: typing.Optional[bool] = None,
+        self,
+        limit: typing.Optional[int] = 1000,
+        offset: typing.Optional[int] = 0,
+        group_by: typing.Optional[
+            typing.Literal["product", "variant", "consignment"]
+        ] = None,
+        include_related: typing.Optional[bool] = None,
     ) -> typing.List[stocks.FullStockReport]:
         """
 
@@ -1715,14 +1861,14 @@ class MoySkladClient:
         )
 
     async def get_small_stock_current_report(
-            self,
-            include: typing.Optional[str] = None,
-            changed_since: typing.Optional[datetime.datetime] = None,
-            stock_type: typing.Optional[
-                typing.Literal["stock", "freeStock", "quantity"]
-            ] = None,
-            filter_assortment_id: typing.Optional[typing.List[str]] = None,
-            filter_store_id: typing.Optional[typing.List[str]] = None,
+        self,
+        include: typing.Optional[str] = None,
+        changed_since: typing.Optional[datetime.datetime] = None,
+        stock_type: typing.Optional[
+            typing.Literal["stock", "freeStock", "quantity"]
+        ] = None,
+        filter_assortment_id: typing.Optional[typing.List[str]] = None,
+        filter_store_id: typing.Optional[typing.List[str]] = None,
     ) -> typing.List[stocks.SmallStockReport]:
         """
 
