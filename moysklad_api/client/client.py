@@ -13,6 +13,7 @@ from ..api.entities import (
     productfolders as productfolders_api,
     enters as enters_api,
     custom_entities as custom_entities_api,
+    stores as stores_api,
 )
 from ..api.reports import stocks
 import json
@@ -2086,5 +2087,408 @@ class MoySkladClient:
                 metadata_id=metadata_id,
                 limit=limit,
                 offset=offset,
+            )
+        )
+
+    # stores
+    async def get_stores(
+        self,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
+    ) -> typing.List[stores_api.Store]:
+        """
+        Get stores (Получение списка складов)
+
+        :param limit: Limit of entities to extract. (Лимит сущностей для извлечения.)
+        :param offset: Offset in the list of entities. (Отступ в выдаваемом списке сущностей.)
+        :return: List of stores (Список складов)
+        """
+        return await self(stores_api.GetStoresRequest(limit=limit, offset=offset))
+
+    async def create_store(
+        self,
+        name: str,
+        address: typing.Optional[str] = None,
+        address_full: typing.Optional[stores_api.CreateStoreRequest.AddressFull] = None,
+        archived: typing.Optional[bool] = None,
+        attributes: typing.Optional[typing.List[dict]] = None,
+        code: typing.Optional[str] = None,
+        description: typing.Optional[str] = None,
+        external_code: typing.Optional[str] = None,
+        group: typing.Optional[types.Meta] = None,
+        meta: typing.Optional[types.Meta] = None,
+        owner: typing.Optional[types.Meta] = None,
+        parent: typing.Optional[types.Meta] = None,
+        path_name: typing.Optional[str] = None,
+        shared: typing.Optional[bool] = None,
+    ) -> stores_api.Store:
+        """
+        Create store (Создание склада)
+
+        :param name: Name of the store. (Название склада.)
+        :param address: Address of the store. (Адрес склада.)
+        :param address_full: Full address of the store. (Полный адрес склада.)
+        :param archived: Archived status of the store. (Статус архивности склада.)
+        :param attributes: Attributes of the store. (Атрибуты склада.)
+        :param code: Code of the store. (Код склада.)
+        :param description: Description of the store. (Описание склада.)
+        :param external_code: External code of the store. (Внешний код склада.)
+        :param group: Group of the store. (Группа склада.)
+        :param meta: Meta of the store. (Метаданные склада.)
+        :param owner: Owner of the store. (Владелец склада.)
+        :param parent: Parent of the store. (Родительский склад.)
+        :param path_name: Path name of the store. (Путь склада.)
+        :param shared: Shared status of the store. (Статус общего доступа склада.)
+        :return: Store (Склад)
+        """
+
+        return await self(
+            stores_api.CreateStoreRequest(
+                name=name,
+                address=address,
+                address_full=address_full,
+                archived=archived,
+                attributes=attributes,
+                code=code,
+                description=description,
+                external_code=external_code,
+                group=group,
+                meta=meta,
+                owner=owner,
+                parent=parent,
+                path_name=path_name,
+                shared=shared,
+            )
+        )
+
+    async def update_store(
+        self,
+        store_id: str,
+        name: typing.Optional[str] = None,
+        address: typing.Optional[str] = None,
+        address_full: typing.Optional[stores_api.UpdateStoreRequest.AddressFull] = None,
+        archived: typing.Optional[bool] = None,
+        attributes: typing.Optional[typing.List[dict]] = None,
+        code: typing.Optional[str] = None,
+        description: typing.Optional[str] = None,
+        external_code: typing.Optional[str] = None,
+        group: typing.Optional[types.Meta] = None,
+        meta: typing.Optional[types.Meta] = None,
+        owner: typing.Optional[types.Meta] = None,
+        parent: typing.Optional[types.Meta] = None,
+        path_name: typing.Optional[str] = None,
+        shared: typing.Optional[bool] = None,
+    ) -> stores_api.Store:
+        """
+        Update store (Обновление склада)
+
+        :param store_id: ID of the store. (ID склада.)
+        :param name: Name of the store. (Название склада.)
+        :param address: Address of the store. (Адрес склада.)
+        :param address_full: Full address of the store. (Полный адрес склада.)
+        :param archived: Archived status of the store. (Статус архивности склада.)
+        :param attributes: Attributes of the store. (Атрибуты склада.)
+        :param code: Code of the store. (Код склада.)
+        :param description: Description of the store. (Описание склада.)
+        :param external_code: External code of the store. (Внешний код склада.)
+        :param group: Group of the store. (Группа склада.)
+        :param meta: Meta of the store. (Метаданные склада.)
+        :param owner: Owner of the store. (Владелец склада.)
+        :param parent: Parent of the store. (Родительский склад.)
+        :param path_name: Path name of the store. (Путь склада.)
+        :param shared: Shared status of the store. (Статус общего доступа склада.)
+        :return: Store (Склад)
+        """
+
+        return await self(
+            stores_api.UpdateStoreRequest(
+                store_id=store_id,
+                name=name,
+                address=address,
+                address_full=address_full,
+                archived=archived,
+                attributes=attributes,
+                code=code,
+                description=description,
+                external_code=external_code,
+                group=group,
+                meta=meta,
+                owner=owner,
+                parent=parent,
+                path_name=path_name,
+                shared=shared,
+            )
+        )
+
+    async def delete_store(
+        self,
+        store_id: str,
+    ):
+        """
+        Delete store (Удаление склада)
+
+        :param store_id: ID of the store. (ID склада.)
+        """
+
+        return await self(
+            stores_api.DeleteStoreRequest(
+                store_id=store_id,
+            )
+        )
+
+    async def get_store(
+        self,
+        store_id: str,
+    ) -> stores_api.Store:
+        """
+        Get store (Получение склада)
+
+        :param store_id: ID of the store. (ID склада.)
+        :return: Store (Склад)
+        """
+
+        return await self(
+            stores_api.GetStoreRequest(
+                store_id=store_id,
+            )
+        )
+
+    async def get_store_zones(
+        self,
+        store_id: str,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
+    ) -> typing.List[stores_api.StoreZone]:
+        """
+        Get store zones (Получение зон склада)
+
+        :param store_id: ID of the store. (ID склада.)
+        :param limit: Limit of the response. (Лимит ответа.)
+        :param offset: Offset of the response. (Смещение ответа.)
+        :return: GetStoreZonesResponse (Ответ на запрос получения зон склада)
+        """
+
+        return await self(
+            stores_api.GetStoreZonesRequest(
+                store_id=store_id,
+                limit=limit,
+                offset=offset,
+            )
+        )
+
+    async def create_store_zone(
+        self,
+        store_id: str,
+        name: str,
+        external_code: typing.Optional[str] = None,
+        meta: typing.Optional[types.Meta] = None,
+    ) -> stores_api.StoreZone:
+        """
+        Create store zone (Создание зоны склада)
+
+        :param store_id: ID of the store. (ID склада.)
+        :param name: Name of the store zone. (Название зоны склада.)
+        :param external_code: External code of the store zone. (Внешний код зоны склада.)
+        :param meta: Meta of the store zone. (Метаданные зоны склада.)
+        :return: StoreZone (Зона склада)
+        """
+
+        return await self(
+            stores_api.CreateStoreZoneRequest(
+                store_id=store_id,
+                name=name,
+                external_code=external_code,
+                meta=meta,
+            )
+        )
+
+    async def update_store_zone(
+        self,
+        store_id: str,
+        zone_id: str,
+        name: typing.Optional[str] = None,
+        external_code: typing.Optional[str] = None,
+        meta: typing.Optional[types.Meta] = None,
+    ) -> stores_api.StoreZone:
+        """
+        Update store zone (Обновление зоны склада)
+
+        :param store_id: ID of the store. (ID склада.)
+        :param zone_id: ID of the store zone. (ID зоны склада.)
+        :param name: Name of the store zone. (Название зоны склада.)
+        :param external_code: External code of the store zone. (Внешний код зоны склада.)
+        :param meta: Meta of the store zone. (Метаданные зоны склада.)
+        :return: StoreZone (Зона склада)
+        """
+
+        return await self(
+            stores_api.UpdateStoreZoneRequest(
+                store_id=store_id,
+                zone_id=zone_id,
+                name=name,
+                external_code=external_code,
+                meta=meta,
+            )
+        )
+
+    async def delete_store_zone(
+        self,
+        store_id: str,
+        zone_id: str,
+    ):
+        """
+        Delete store zone (Удаление зоны склада)
+
+        :param store_id: ID of the store. (ID склада.)
+        :param zone_id: ID of the store zone. (ID зоны склада.)
+        """
+
+        return await self(
+            stores_api.DeleteStoreZoneRequest(
+                store_id=store_id,
+                zone_id=zone_id,
+            )
+        )
+
+    async def get_store_zone(
+        self,
+        store_id: str,
+        zone_id: str,
+    ) -> stores_api.StoreZone:
+        """
+        Get store zone (Получение зоны склада)
+
+        :param store_id: ID of the store. (ID склада.)
+        :param zone_id: ID of the store zone. (ID зоны склада.)
+        :return: StoreZone (Зона склада)
+        """
+
+        return await self(
+            stores_api.GetStoreZoneRequest(
+                store_id=store_id,
+                zone_id=zone_id,
+            )
+        )
+
+    async def get_store_slots(
+        self,
+        store_id: str,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
+    ) -> typing.List[stores_api.StoreSlot]:
+        """
+        Get store slots (Получение ячеек склада)
+
+        :param store_id: ID of the store. (ID склада.)
+        :param limit: Limit of the response. (Лимит ответа.)
+        :param offset: Offset of the response. (Смещение ответа.)
+        :return: GetStoreSlotsResponse (Ответ на запрос получения ячеек склада)
+        """
+
+        return await self(
+            stores_api.GetStoreSlotsRequest(
+                store_id=store_id,
+                limit=limit,
+                offset=offset,
+            )
+        )
+
+    async def create_store_slot(
+        self,
+        store_id: str,
+        name: str,
+        external_code: typing.Optional[str] = None,
+        meta: typing.Optional[types.Meta] = None,
+        zone: typing.Optional[types.Meta] = None,
+    ) -> stores_api.StoreSlot:
+        """
+        Create store slot (Создание ячейки склада)
+
+        :param store_id: ID of the store. (ID склада.)
+        :param name: Name of the store slot. (Название ячейки склада.)
+        :param external_code: External code of the store slot. (Внешний код ячейки склада.)
+        :param meta: Meta of the store slot. (Метаданные ячейки склада.)
+        :param zone: Zone of the store slot. (Зона ячейки склада.)
+        :return: StoreSlot (Ячейка склада)
+        """
+
+        return await self(
+            stores_api.CreateStoreSlotRequest(
+                store_id=store_id,
+                name=name,
+                external_code=external_code,
+                meta=meta,
+                zone=zone,
+            )
+        )
+
+    async def update_store_slot(
+        self,
+        store_id: str,
+        slot_id: str,
+        name: typing.Optional[str] = None,
+        external_code: typing.Optional[str] = None,
+        meta: typing.Optional[types.Meta] = None,
+        zone: typing.Optional[types.Meta] = None,
+    ) -> stores_api.StoreSlot:
+        """
+        Update store slot (Обновление ячейки склада)
+
+        :param store_id: ID of the store. (ID склада.)
+        :param slot_id: ID of the store slot. (ID ячейки склада.)
+        :param name: Name of the store slot. (Название ячейки склада.)
+        :param external_code: External code of the store slot. (Внешний код ячейки склада.)
+        :param meta: Meta of the store slot. (Метаданные ячейки склада.)
+        :param zone: Zone of the store slot. (Зона ячейки склада.)
+        :return: StoreSlot (Ячейка склада)
+        """
+
+        return await self(
+            stores_api.UpdateStoreSlotRequest(
+                store_id=store_id,
+                slot_id=slot_id,
+                name=name,
+                external_code=external_code,
+                meta=meta,
+                zone=zone,
+            )
+        )
+
+    async def delete_store_slot(
+        self,
+        store_id: str,
+        slot_id: str,
+    ):
+        """
+        Delete store slot (Удаление ячейки склада)
+
+        :param store_id: ID of the store. (ID склада.)
+        :param slot_id: ID of the store slot. (ID ячейки склада.)
+        """
+
+        return await self(
+            stores_api.DeleteStoreSlotRequest(
+                store_id=store_id,
+                slot_id=slot_id,
+            )
+        )
+
+    async def get_store_slot(
+        self,
+        store_id: str,
+        slot_id: str,
+    ) -> stores_api.StoreSlot:
+        """
+        Get store slot (Получение ячейки склада)
+
+        :param store_id: ID of the store. (ID склада.)
+        :param slot_id: ID of the store slot. (ID ячейки склада.)
+        :return: StoreSlot (Ячейка склада)
+        """
+
+        return await self(
+            stores_api.GetStoreSlotRequest(
+                store_id=store_id,
+                slot_id=slot_id,
             )
         )

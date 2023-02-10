@@ -563,38 +563,38 @@ class UpdateProductRequest(types.ApiRequest):
         ] = None,
         attributes: typing.Optional[typing.List[dict]] = None,
         images: typing.Optional[typing.List[dict]] = None,
-            alcoholic: typing.Optional[dict] = None,
-            archived: typing.Optional[bool] = None,
-            country: typing.Optional[types.Meta] = None,
-            files: typing.Optional[typing.List[dict]] = None,
-            group: typing.Optional[types.Meta] = None,
-            minimum_balance: typing.Optional[int] = None,
-            owner: typing.Optional[types.Meta] = None,
-            partial_disposal: typing.Optional[bool] = None,
-            payment_item_type: typing.Optional[
-                typing.Literal[
-                    "GOODS",
-                    "EXCISABLE_GOOD",
-                    "COMPOUND_PAYMENT_ITEM",
-                    "ANOTHER_PAYMENT_ITEM",
-                ]
-            ] = None,
-            ppe_type: typing.Optional[str] = None,
-            product_folder: typing.Optional[types.Meta] = None,
-            shared: typing.Optional[bool] = None,
-            tax_system: typing.Optional[
-                typing.Literal[
-                    "GENERAL_TAX_SYSTEM",
-                    "PATENT_BASED",
-                    "PRESUMPTIVE_TAX_SYSTEM",
-                    "SIMPLIFIED_TAX_SYSTEM_INCOME",
-                    "SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME",
-                    "TAX_SYSTEM_SAME_AS_GROUP",
-                    "UNIFIED_AGRICULTURAL_TAX",
-                ]
-            ] = None,
-            things: typing.Optional[typing.List[str]] = None,
-            tnved: typing.Optional[str] = None,
+        alcoholic: typing.Optional[dict] = None,
+        archived: typing.Optional[bool] = None,
+        country: typing.Optional[types.Meta] = None,
+        files: typing.Optional[typing.List[dict]] = None,
+        group: typing.Optional[types.Meta] = None,
+        minimum_balance: typing.Optional[int] = None,
+        owner: typing.Optional[types.Meta] = None,
+        partial_disposal: typing.Optional[bool] = None,
+        payment_item_type: typing.Optional[
+            typing.Literal[
+                "GOODS",
+                "EXCISABLE_GOOD",
+                "COMPOUND_PAYMENT_ITEM",
+                "ANOTHER_PAYMENT_ITEM",
+            ]
+        ] = None,
+        ppe_type: typing.Optional[str] = None,
+        product_folder: typing.Optional[types.Meta] = None,
+        shared: typing.Optional[bool] = None,
+        tax_system: typing.Optional[
+            typing.Literal[
+                "GENERAL_TAX_SYSTEM",
+                "PATENT_BASED",
+                "PRESUMPTIVE_TAX_SYSTEM",
+                "SIMPLIFIED_TAX_SYSTEM_INCOME",
+                "SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME",
+                "TAX_SYSTEM_SAME_AS_GROUP",
+                "UNIFIED_AGRICULTURAL_TAX",
+            ]
+        ] = None,
+        things: typing.Optional[typing.List[str]] = None,
+        tnved: typing.Optional[str] = None,
         use_parent_vat: typing.Optional[bool] = None,
     ):
         """
