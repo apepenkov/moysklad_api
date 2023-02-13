@@ -66,7 +66,7 @@ class Product(types.MoySkladBaseClass):
         self.article: str = None
         self.attributes: list = None
         self.barcodes: list = None
-        self.buy_price: int = None
+        self.buy_price: dict = None
         self.code: str = None
         self.country: types.Meta = None
         self.description: str = None
