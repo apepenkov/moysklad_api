@@ -130,6 +130,24 @@ class MoySkladClient:
                     raise MoySkladError(json_resp["errors"][0], json_text)
                 return json_resp
 
+    async def raw_request(
+        self,
+        *args,
+        **kwargs,
+    ) -> bytes:
+        """
+        Make a request to the MoySklad API, automatically adding the Authorization header.
+        (Делает запрос к API MoySklad, автоматически добавляя заголовок Authorization.)
+
+        :returns raw response
+        """
+        async with aiohttp.ClientSession() as session:
+            kwargs.setdefault("headers", {})
+            kwargs["headers"]["Authorization"] = f"Basic {self._api_token}"
+
+            async with session.request(*args, **kwargs) as resp:
+                return await resp.read()
+
     # function that allows us to use MoySkladClient as a caller
     # (функция, которая позволяет нам использовать MoySkladClient как вызывающий)
     async def __call__(self, request):
