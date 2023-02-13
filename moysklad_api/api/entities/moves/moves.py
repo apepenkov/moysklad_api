@@ -235,9 +235,14 @@ class CreateMoveRequest(types.ApiRequest):
     """
     https://dev.moysklad.ru/doc/api/remap/1.2/documents/#dokumenty-peremeschenie-sozdat-peremeschenie
 
-    List of available arguments is not documented, so I have to guess it.
-    Список доступных аргументов не документирован, поэтому я постарался угадать его.
     """
+
+    class CreatePosition(typing.TypedDict):
+        assortment: types.Meta
+        quantity: int
+        price: typing.NotRequired[float]
+        overhead: typing.NotRequired[float]
+        reason: typing.NotRequired[str]
 
     def __init__(
         self,
@@ -258,7 +263,7 @@ class CreateMoveRequest(types.ApiRequest):
         name: typing.Optional[str] = None,
         overhead: typing.Optional[dict] = None,
         owner: typing.Optional[types.Meta] = None,
-        positions: typing.Optional[types.MetaArray] = None,
+        positions: typing.Optional[typing.List[CreatePosition]] = None,
         project: typing.Optional[types.Meta] = None,
         rate: typing.Optional[types.Rate] = None,
         shared: typing.Optional[bool] = None,
@@ -353,7 +358,11 @@ class CreateMoveRequest(types.ApiRequest):
         if self.owner:
             json_data["owner"] = {"meta": self.owner}
         if self.positions:
-            json_data["positions"] = self.positions
+            json_data["positions"] = []
+            for position in self.positions:
+                new_position: dict = position.copy()
+                new_position["assortment"] = {"meta": new_position["assortment"]}
+                json_data["positions"].append(new_position)
         if self.project:
             json_data["project"] = {"meta": self.project}
         if self.rate:

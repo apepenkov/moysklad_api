@@ -836,7 +836,7 @@ class MoySkladClient:
         name: typing.Optional[str] = None,
         overhead: typing.Optional[dict] = None,
         owner: typing.Optional[types.Meta] = None,
-        positions: typing.Optional[types.MetaArray] = None,
+        positions: typing.Optional[typing.List[moves_api.CreateMoveRequest.CreatePosition]] = None,
         project: typing.Optional[types.Meta] = None,
         rate: typing.Optional[types.Rate] = None,
         shared: typing.Optional[bool] = None,
