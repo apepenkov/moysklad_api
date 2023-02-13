@@ -1,7 +1,10 @@
 import typing
 import base64
-import aiohttp
 import datetime
+import json
+
+import aiohttp
+
 from ..errors import MoySkladError
 from .. import types
 
@@ -15,8 +18,12 @@ from ..api.entities import (
     custom_entities as custom_entities_api,
     stores as stores_api,
 )
-from ..api.reports import stocks
-import json
+from ..api.reports import (
+    stocks as stocks_api,
+)
+from ..api.documents import (
+    supplies as supplies_api,
+)
 
 
 class MoySkladClient:
@@ -1587,7 +1594,6 @@ class MoySkladClient:
         rate: typing.Optional[dict] = None,
         shared: typing.Optional[bool] = None,
     ) -> enters_api.Enter:
-
         """
 
         :param organization: Organization meta (Метаданные организации)
@@ -1844,7 +1850,7 @@ class MoySkladClient:
             typing.Literal["product", "variant", "consignment"]
         ] = None,
         include_related: typing.Optional[bool] = None,
-    ) -> typing.List[stocks.FullStockReport]:
+    ) -> typing.List[stocks_api.FullStockReport]:
         """
 
         :param limit: Limit the number of entities to retrieve. (Ограничить количество сущностей для извлечения.)
@@ -1854,7 +1860,7 @@ class MoySkladClient:
         :return: List of full stock reports (Список отчетов по остаткам)
         """
         return await self(
-            stocks.GetFullStockReportRequest(
+            stocks_api.GetFullStockReportRequest(
                 limit=limit,
                 offset=offset,
                 group_by=group_by,
@@ -1871,7 +1877,7 @@ class MoySkladClient:
         ] = None,
         filter_assortment_id: typing.Optional[typing.List[str]] = None,
         filter_store_id: typing.Optional[typing.List[str]] = None,
-    ) -> typing.List[stocks.SmallStockReport]:
+    ) -> typing.List[stocks_api.SmallStockReport]:
         """
 
         :param include: Include related entities (Включить связанные сущности)
@@ -1883,7 +1889,7 @@ class MoySkladClient:
         """
 
         return await self(
-            stocks.GetSmallStockReportCurrentRequest(
+            stocks_api.GetSmallStockReportCurrentRequest(
                 include=include,
                 changed_since=changed_since,
                 stock_type=stock_type,
@@ -2490,5 +2496,391 @@ class MoySkladClient:
             stores_api.GetStoreSlotRequest(
                 store_id=store_id,
                 slot_id=slot_id,
+            )
+        )
+
+    # supplies
+    async def get_supplies(
+        self,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
+    ) -> typing.List[supplies_api.Supply]:
+        """
+        Get supplies ;ost (Получение списка приёмок)
+
+        :param limit: Limit of entities to extract (Лимит сущностей для извлечения)
+        :param offset: Offset in the list of entities (Отступ в выдаваемом списке сущностей)
+        :param search: Filter documents by the specified search string (Фильтр документов по указанной поисковой строке)
+        :return: List of supplies (Список приёмок)
+        """
+
+        return await self(
+            supplies_api.GetSuppliesRequest(
+                limit=limit,
+                offset=offset,
+                search=search,
+            )
+        )
+
+    async def create_supply(
+        self,
+        organization: types.Meta,
+        agent: types.Meta,
+        store: types.Meta,
+        agent_account: typing.Optional[types.Meta] = None,
+        applicable: typing.Optional[bool] = None,
+        attributes: typing.Optional[typing.List[dict]] = None,
+        code: typing.Optional[str] = None,
+        contract: typing.Optional[types.Meta] = None,
+        description: typing.Optional[str] = None,
+        external_code: typing.Optional[str] = None,
+        files: typing.Optional[types.MetaArray] = None,
+        group: typing.Optional[types.Meta] = None,
+        incoming_date: typing.Optional[datetime.datetime] = None,
+        incoming_number: typing.Optional[str] = None,
+        moment: typing.Optional[datetime.datetime] = None,
+        name: typing.Optional[str] = None,
+        organization_account: typing.Optional[types.Meta] = None,
+        overhead: typing.Optional[dict] = None,
+        owner: typing.Optional[types.Meta] = None,
+        positions: typing.Optional[
+            typing.List[supplies_api.CreateSupplyRequest.CreatePosition]
+        ] = None,
+        project: typing.Optional[types.Meta] = None,
+        rate: typing.Optional[dict] = None,
+        shared: typing.Optional[bool] = None,
+        state: typing.Optional[types.Meta] = None,
+        sync_id: typing.Optional[str] = None,
+        vat_enabled: typing.Optional[bool] = None,
+        vat_included: typing.Optional[bool] = None,
+    ) -> supplies_api.Supply:
+        """
+        Create supply (Создание приёмки)
+
+        :param organization: Organization (Организация)
+        :param agent: Agent (Контрагент)
+        :param store: Store (Склад)
+        :param agent_account: Metadata of the agent account (Метаданные счета контрагента)
+        :param applicable: Mark as applicable (Пометить как проведенный)
+        :param attributes: Attributes (Атрибуты)
+        :param code: Code (Код)
+        :param contract: Contract (Договор)
+        :param description: Description (Описание)
+        :param external_code: External code (Внешний код)
+        :param files: Files (Файлы)
+        :param group: Group (Группа)
+        :param incoming_date: Incoming date (Дата поступления)
+        :param incoming_number: Incoming number (Номер поступления)
+        :param moment: Moment (Время документа)
+        :param name: Name (Название)
+        :param organization_account: Metadata of the organization account (Метаданные счета организации)
+        :param overhead: Overhead (Налоги) https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#dokumenty-priemka-priemki-nakladnye-rashody
+        :param owner: Owner (Владелец)
+        :param positions: Positions (Позиции)
+        :param project: Project (Проект)
+        :param rate: Rate (Курс)
+        :param shared: Shared (Общий доступ)
+        :param state: State (Статус)
+        :param sync_id: Sync ID (Идентификатор синхронизации)
+        :param vat_enabled: VAT enabled (НДС включен)
+        :param vat_included: VAT included (НДС считается)
+        :return: Supply (Приёмка)
+        """
+
+        return await self(
+            supplies_api.CreateSupplyRequest(
+                organization=organization,
+                agent=agent,
+                store=store,
+                agent_account=agent_account,
+                applicable=applicable,
+                attributes=attributes,
+                code=code,
+                contract=contract,
+                description=description,
+                external_code=external_code,
+                files=files,
+                group=group,
+                incoming_date=incoming_date,
+                incoming_number=incoming_number,
+                moment=moment,
+                name=name,
+                organization_account=organization_account,
+                overhead=overhead,
+                owner=owner,
+                positions=positions,
+                project=project,
+                rate=rate,
+                shared=shared,
+                state=state,
+                sync_id=sync_id,
+                vat_enabled=vat_enabled,
+                vat_included=vat_included,
+            )
+        )
+
+    async def delete_supply(self, supply_id: str):
+        """
+        Delete supply (Удалить приемку)
+
+        :param supply_id: ID of the supply (ID приемки)
+        """
+        return await self(
+            supplies_api.DeleteSupplyRequest(
+                supply_id=supply_id,
+            )
+        )
+
+    async def get_supply(self, supply_id: str) -> supplies_api.Supply:
+        """
+        Get supply (Получить приемку)
+
+        :param supply_id: ID of the supply (ID приемки)
+        :return: Supply (Приёмка)
+        """
+        return await self(
+            supplies_api.GetSupplyRequest(
+                supply_id=supply_id,
+            )
+        )
+
+    async def update_supply(
+        self,
+        supply_id: str,
+        organization: typing.Optional[types.Meta],
+        agent: typing.Optional[types.Meta],
+        store: typing.Optional[types.Meta],
+        agent_account: typing.Optional[types.Meta] = None,
+        applicable: typing.Optional[bool] = None,
+        attributes: typing.Optional[typing.List[dict]] = None,
+        code: typing.Optional[str] = None,
+        contract: typing.Optional[types.Meta] = None,
+        description: typing.Optional[str] = None,
+        external_code: typing.Optional[str] = None,
+        files: typing.Optional[types.MetaArray] = None,
+        group: typing.Optional[types.Meta] = None,
+        incoming_date: typing.Optional[datetime.datetime] = None,
+        incoming_number: typing.Optional[str] = None,
+        moment: typing.Optional[datetime.datetime] = None,
+        name: typing.Optional[str] = None,
+        organization_account: typing.Optional[types.Meta] = None,
+        overhead: typing.Optional[dict] = None,
+        owner: typing.Optional[types.Meta] = None,
+        positions: typing.Optional[
+            typing.List[supplies_api.UpdateSupplyRequest.UpdatePosition]
+        ] = None,
+        project: typing.Optional[types.Meta] = None,
+        rate: typing.Optional[dict] = None,
+        shared: typing.Optional[bool] = None,
+        state: typing.Optional[types.Meta] = None,
+        sync_id: typing.Optional[str] = None,
+        vat_enabled: typing.Optional[bool] = None,
+        vat_included: typing.Optional[bool] = None,
+    ) -> supplies_api.Supply:
+        """
+        Update supply (Редактировать приемку)
+
+        :param supply_id: ID of the supply (ID приемки)
+        :param organization: Organization (Организация)
+        :param agent: Agent (Контрагент)
+        :param store: Store (Склад)
+        :param agent_account: Metadata of the agent account (Метаданные счета контрагента)
+        :param applicable: Mark as applicable (Пометить как проведенный)
+        :param attributes: Attributes (Атрибуты)
+        :param code: Code (Код)
+        :param contract: Contract (Договор)
+        :param description: Description (Описание)
+        :param external_code: External code (Внешний код)
+        :param files: Files (Файлы)
+        :param group: Group (Группа)
+        :param incoming_date: Incoming date (Дата поступления)
+        :param incoming_number: Incoming number (Номер поступления)
+        :param moment: Moment (Время документа)
+        :param name: Name (Название)
+        :param organization_account: Metadata of the organization account (Метаданные счета организации)
+        :param overhead: Overhead (Налоги) https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#dokumenty-priemka-priemki-nakladnye-rashody
+        :param owner: Owner (Владелец)
+        :param positions: Positions (Позиции)
+        :param project: Project (Проект)
+        :param rate: Rate (Курс)
+        :param shared: Shared (Общий доступ)
+        :param state: State (Статус)
+        :param sync_id: Sync ID (Идентификатор синхронизации)
+        :param vat_enabled: VAT enabled (НДС включен)
+        :param vat_included: VAT included (НДС считается)
+        :return: Supply (Приёмка)
+        """
+        return await self(
+            supplies_api.UpdateSupplyRequest(
+                supply_id=supply_id,
+                organization=organization,
+                agent=agent,
+                store=store,
+                agent_account=agent_account,
+                applicable=applicable,
+                attributes=attributes,
+                code=code,
+                contract=contract,
+                description=description,
+                external_code=external_code,
+                files=files,
+                group=group,
+                incoming_date=incoming_date,
+                incoming_number=incoming_number,
+                moment=moment,
+                name=name,
+                organization_account=organization_account,
+                overhead=overhead,
+                owner=owner,
+                positions=positions,
+                project=project,
+                rate=rate,
+                shared=shared,
+                state=state,
+                sync_id=sync_id,
+                vat_enabled=vat_enabled,
+                vat_included=vat_included,
+            )
+        )
+
+    async def get_supply_positions(
+        self,
+        supply_id: str,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
+    ) -> typing.List[supplies_api.Position]:
+        """
+        Get supply positions
+        Получить позиции приемки
+
+        :param supply_id: ID of supply (ID приемки)
+        :param limit: Limit of positions (Максимальное количество позиций)
+        :param offset: Offset of positions (Отступ в выдаваемом списке позиций)
+        :return: List of positions (Список позиций)
+        """
+        return await self(
+            supplies_api.GetSupplyPositionsRequest(
+                supply_id=supply_id,
+                limit=limit,
+                offset=offset,
+            )
+        )
+
+    async def create_supply_position(
+        self,
+        supply_id: str,
+        assortment: types.Meta,
+        quantity: int,
+        price: typing.Optional[float] = None,
+        discount: typing.Optional[int] = None,
+        vat: typing.Optional[int] = None,
+        tracking_codes: typing.Optional[typing.List[dict]] = None,
+        overhead: typing.Optional[float] = None,
+    ) -> supplies_api.Position:
+        """
+        Create supply position
+        Создать позицию приемки
+
+        :param supply_id: ID of supply (ID приемки)
+        :param assortment: Assortment (Информация о товаре)
+        :param quantity: Quantity (Количество)
+        :param price: Price (Цена)
+        :param discount: Discount (Скидка)
+        :param vat: VAT (НДС)
+        :param tracking_codes: Tracking codes (Коды отслеживания)
+        :param overhead: Overhead (Накладные расходы)
+        :return: Position (Позиция)
+        """
+        return await self(
+            supplies_api.CreateSupplyPositionRequest(
+                supply_id=supply_id,
+                assortment=assortment,
+                quantity=quantity,
+                price=price,
+                discount=discount,
+                vat=vat,
+                tracking_codes=tracking_codes,
+                overhead=overhead,
+            )
+        )
+
+    async def get_supply_position(
+        self,
+        supply_id: str,
+        position_id: str,
+    ) -> supplies_api.Position:
+        """
+        Get supply position
+        Получить позицию приемки
+
+        :param supply_id: ID of supply (ID приемки)
+        :param position_id: ID of position (ID позиции приемки)
+        :return: Position (Позиция)
+        """
+        return await self(
+            supplies_api.GetSupplyPositionRequest(
+                supply_id=supply_id,
+                position_id=position_id,
+            )
+        )
+
+    async def update_supply_position(
+        self,
+        supply_id: str,
+        position_id: str,
+        assortment: typing.Optional[types.Meta] = None,
+        quantity: typing.Optional[int] = None,
+        price: typing.Optional[float] = None,
+        discount: typing.Optional[int] = None,
+        vat: typing.Optional[int] = None,
+        tracking_codes: typing.Optional[typing.List[dict]] = None,
+        overhead: typing.Optional[float] = None,
+    ) -> supplies_api.Position:
+        """
+        Update supply position
+        Изменить позицию приемки
+
+        :param supply_id: ID of supply (ID приемки)
+        :param position_id: ID of position (ID позиции приемки)
+        :param assortment: Assortment (Информация о товаре)
+        :param quantity: Quantity (Количество)
+        :param price: Price (Цена)
+        :param discount: Discount (Скидка)
+        :param vat: VAT (НДС)
+        :param tracking_codes: Tracking codes (Коды отслеживания)
+        :param overhead: Overhead (Накладные расходы)
+        :return: Position (Позиция)
+        """
+        return await self(
+            supplies_api.UpdateSupplyPositionRequest(
+                supply_id=supply_id,
+                position_id=position_id,
+                assortment=assortment,
+                quantity=quantity,
+                price=price,
+                discount=discount,
+                vat=vat,
+                tracking_codes=tracking_codes,
+                overhead=overhead,
+            )
+        )
+
+    async def delete_supply_position(
+        self,
+        supply_id: str,
+        position_id: str,
+    ) -> None:
+        """
+        Delete supply position
+        Удалить позицию приемки
+
+        :param supply_id: ID of supply (ID приемки)
+        :param position_id: ID of position (ID позиции приемки)
+        """
+        return await self(
+            supplies_api.DeleteSupplyPositionRequest(
+                supply_id=supply_id,
+                position_id=position_id,
             )
         )

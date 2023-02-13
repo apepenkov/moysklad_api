@@ -17,6 +17,8 @@ setup(
         "moysklad_api.api.entities.stores",
         "moysklad_api.api.reports",
         "moysklad_api.api.reports.stocks",
+        "moysklad_api.api.documents",
+        "moysklad_api.api.documents.supplies",
         "moysklad_api.types",
         "moysklad_api.client",
         "moysklad_api.errors",
