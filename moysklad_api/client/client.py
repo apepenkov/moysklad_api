@@ -17,6 +17,7 @@ from ..api.entities import (
     enters as enters_api,
     custom_entities as custom_entities_api,
     stores as stores_api,
+    demands as demands_api,
 )
 from ..api.reports import (
     stocks as stocks_api,
@@ -836,7 +837,9 @@ class MoySkladClient:
         name: typing.Optional[str] = None,
         overhead: typing.Optional[dict] = None,
         owner: typing.Optional[types.Meta] = None,
-        positions: typing.Optional[typing.List[moves_api.CreateMoveRequest.CreatePosition]] = None,
+        positions: typing.Optional[
+            typing.List[moves_api.CreateMoveRequest.CreatePosition]
+        ] = None,
         project: typing.Optional[types.Meta] = None,
         rate: typing.Optional[types.Rate] = None,
         shared: typing.Optional[bool] = None,
@@ -2902,3 +2905,340 @@ class MoySkladClient:
                 position_id=position_id,
             )
         )
+
+    # demands
+    async def create_demand(
+        self,
+        organization: types.Meta,
+        agent: types.Meta,
+        store: types.Meta,
+        agent_account: typing.Optional[types.Meta] = None,
+        applicable: typing.Optional[bool] = None,
+        attributes: typing.Optional[list] = None,
+        code: typing.Optional[str] = None,
+        contract: typing.Optional[types.Meta] = None,
+        description: typing.Optional[str] = None,
+        external_code: typing.Optional[str] = None,
+        files: typing.Optional[types.MetaArray] = None,
+        group: typing.Optional[types.Meta] = None,
+        moment: typing.Optional[datetime.datetime] = None,
+        name: typing.Optional[str] = None,
+        organization_account: typing.Optional[bool] = None,
+        overhead: typing.Optional[dict] = None,
+        owner: typing.Optional[types.Meta] = None,
+        positions: typing.Optional[
+            demands_api.CreateDemandRequest.CreateDemandPosition
+        ] = None,
+        project: typing.Optional[types.Meta] = None,
+        rate: typing.Optional[dict] = None,
+        sales_channel: typing.Optional[bool] = None,
+        shared: typing.Optional[bool] = None,
+        shipment_address: typing.Optional[str] = None,
+        shipment_address_full: typing.Optional[dict] = None,
+        state: typing.Optional[types.Meta] = None,
+        sync_id: typing.Optional[str] = None,
+        vat_enabled: typing.Optional[bool] = None,
+        vat_included: typing.Optional[bool] = None,
+    ) -> demands_api.Demand:
+        """
+        Creates a demand
+        Создаёт отгрузку
+
+        :param organization: Organization (организация)
+        :param agent: Agent (контрагент)
+        :param store: Store (склад)
+        :param agent_account: Agent account (Аккаунт контрагента)
+        :param applicable: Is applicable (Проведено(
+        :param attributes: Attributes (массив дополнительных полей)
+        :param code: Code (код)
+        :param contract: Contract (договор)
+        :param description: Description (описание)
+        :param external_code: External code (внешний код)
+        :param files: Files (файлы)
+        :param group: Group (группа)
+        :param moment: Creation date (Время создания)
+        :param name: Name (название)
+        :param organization_account: Organization account (аккаунт организации)
+        :param overhead: Overhead (накладные расходы)
+        :param owner: Owner (владелец)
+        :param positions: Positions (позиции)
+        :param project: Project (проект)
+        :param rate: Rate (валюта)
+        :param sales_channel: Sales channel (канал продаж)
+        :param shared: Shared (общий доступ)
+        :param shipment_address: Shipment address (адрес доставки)
+        :param shipment_address_full: Shipment address full (полный адрес доставки)
+        :param state: State (статус)
+        :param sync_id: Sync id (id синхронизации)
+        :param vat_enabled: Vat enabled (НДС включен)
+        :param vat_included: Vat included (НДС включен в цену)
+
+        :return: Demand (Отгрузка)
+        """
+        return await self(
+            demands_api.CreateDemandRequest(
+                organization=organization,
+                agent=agent,
+                store=store,
+                agent_account=agent_account,
+                applicable=applicable,
+                attributes=attributes,
+                code=code,
+                contract=contract,
+                description=description,
+                external_code=external_code,
+                files=files,
+                group=group,
+                moment=moment,
+                name=name,
+                organization_account=organization_account,
+                overhead=overhead,
+                owner=owner,
+                positions=positions,
+                project=project,
+                rate=rate,
+                sales_channel=sales_channel,
+                shared=shared,
+                shipment_address=shipment_address,
+                shipment_address_full=shipment_address_full,
+                state=state,
+                sync_id=sync_id,
+                vat_enabled=vat_enabled,
+                vat_included=vat_included,
+            )
+        )
+
+    async def get_demand(self, demand_id: str) -> demands_api.Demand:
+        """
+        Get demand
+        Получить отгрузку
+
+        :param demand_id: ID of demand (ID отгрузки)
+        :return: Demand (Отгрузка)
+        """
+        return await self(demands_api.GetDemandRequest(demand_id=demand_id))
+
+    async def get_demands(
+        self,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
+    ) -> typing.List[demands_api.Demand]:
+        """
+        Get demands
+        Получить отгрузки
+
+        :param limit: Limit (ограничение)
+        :param offset: Offset (смещение)
+        :param search: Search (поиск)
+        :return: List of demands (список отгрузок)
+        """
+        return await self(
+            demands_api.GetDemandsRequest(
+                limit=limit,
+                offset=offset,
+                search=search,
+            )
+        )
+
+    async def update_demand(
+        self,
+        demand_id: str,
+        organization: typing.Optional[types.Meta] = None,
+        agent: typing.Optional[types.Meta] = None,
+        store: typing.Optional[types.Meta] = None,
+        agent_account: typing.Optional[types.Meta] = None,
+        applicable: typing.Optional[bool] = None,
+        attributes: typing.Optional[list] = None,
+        code: typing.Optional[str] = None,
+        contract: typing.Optional[types.Meta] = None,
+        description: typing.Optional[str] = None,
+        external_code: typing.Optional[str] = None,
+        files: typing.Optional[types.MetaArray] = None,
+        group: typing.Optional[types.Meta] = None,
+        moment: typing.Optional[datetime.datetime] = None,
+        name: typing.Optional[str] = None,
+        organization_account: typing.Optional[bool] = None,
+        overhead: typing.Optional[dict] = None,
+        owner: typing.Optional[types.Meta] = None,
+        positions: typing.Optional[
+            demands_api.UpdateDemandRequest.UpdateDemandPosition
+        ] = None,
+        project: typing.Optional[types.Meta] = None,
+        rate: typing.Optional[dict] = None,
+        sales_channel: typing.Optional[bool] = None,
+        shared: typing.Optional[bool] = None,
+        shipment_address: typing.Optional[str] = None,
+        shipment_address_full: typing.Optional[dict] = None,
+        state: typing.Optional[types.Meta] = None,
+        sync_id: typing.Optional[str] = None,
+        vat_enabled: typing.Optional[bool] = None,
+        vat_included: typing.Optional[bool] = None,
+    ) -> demands_api.Demand:
+        """
+
+        :param demand_id: ID (идентификатор)
+        :param organization: Organization (организация)
+        :param agent: Agent (контрагент)
+        :param store: Store (склад)
+        :param agent_account: Agent account (Аккаунт контрагента)
+        :param applicable: Is applicable (Проведено(
+        :param attributes: Attributes (массив дополнительных полей)
+        :param code: Code (код)
+        :param contract: Contract (договор)
+        :param description: Description (описание)
+        :param external_code: External code (внешний код)
+        :param files: Files (файлы)
+        :param group: Group (группа)
+        :param moment: Creation date (Время создания)
+        :param name: Name (название)
+        :param organization_account: Organization account (аккаунт организации)
+        :param overhead: Overhead (накладные расходы)
+        :param owner: Owner (владелец)
+        :param positions: Positions (позиции)
+        :param project: Project (проект)
+        :param rate: Rate (валюта)
+        :param sales_channel: Sales channel (канал продаж)
+        :param shared: Shared (общий доступ)
+        :param shipment_address: Shipment address (адрес доставки)
+        :param shipment_address_full: Shipment address full (полный адрес доставки)
+        :param state: State (статус)
+        :param sync_id: Sync id (id синхронизации)
+        :param vat_enabled: Vat enabled (НДС включен)
+        :param vat_included: Vat included (НДС включен в цену)
+
+        :return: Demand (Отгрузка)
+        """
+        return await self(
+            demands_api.UpdateDemandRequest(
+                demand_id=demand_id,
+                organization=organization,
+                agent=agent,
+                store=store,
+                agent_account=agent_account,
+                applicable=applicable,
+                attributes=attributes,
+                code=code,
+                contract=contract,
+                description=description,
+                external_code=external_code,
+                files=files,
+                group=group,
+                moment=moment,
+                name=name,
+                organization_account=organization_account,
+                overhead=overhead,
+                owner=owner,
+                positions=positions,
+                project=project,
+                rate=rate,
+                sales_channel=sales_channel,
+                shared=shared,
+                shipment_address=shipment_address,
+                shipment_address_full=shipment_address_full,
+                state=state,
+                sync_id=sync_id,
+                vat_enabled=vat_enabled,
+                vat_included=vat_included,
+            )
+        )
+
+    async def delete_demand(self, demand_id: str) -> None:
+        """
+        Delete demand
+        Удалить отгрузку
+
+        :param demand_id: ID (идентификатор)
+        :return:
+        """
+        await self(demands_api.DeleteDemandRequest(demand_id=demand_id))
+
+    async def create_demand_positions(
+        self,
+        demand_id: str,
+        positions: typing.List[
+            demands_api.CreateDemandPositionsRequest.CreateDemandPositionPosition
+        ],
+    ) -> typing.List[demands_api.DemandPosition]:
+        """
+        Create demand positions
+        Создать позиции отгрузки
+
+        :param demand_id: ID (идентификатор)
+        :param positions: Positions (позиции)
+        :return: List of demand positions (список позиций отгрузки)
+        """
+
+        return await self(
+            demands_api.CreateDemandPositionsRequest(
+                demand_id=demand_id, positions=positions
+            )
+        )
+
+    async def get_demand_positions(
+        self, demand_id: str, limit: int = 1000, offset: int = 0
+    ) -> typing.List[demands_api.DemandPosition]:
+        """
+        Get demand positions
+        Получить позиции отгрузки
+
+        :param demand_id: ID (идентификатор)
+        :param limit: Limit (лимит)
+        :param offset: Offset (смещение)
+        :return: List of demand positions (список позиций отгрузки)
+        """
+
+        return await self(
+            demands_api.GetDemandPositionsRequest(
+                demand_id=demand_id, limit=limit, offset=offset
+            )
+        )
+
+    async def get_demand_position(
+        self, demand_id: str, position_id: str
+    ) -> demands_api.DemandPosition:
+        """
+        Get demand position
+        Получить позицию отгрузки
+
+        :param demand_id: ID of demand (ID отгрузки)
+        :param position_id: ID of position (ID позиции)
+        :return: Demand position (позиция отгрузки)
+        """
+        return await self(
+            demands_api.GetDemandPositionRequest(
+                demand_id=demand_id, position_id=position_id
+            )
+        )
+
+    async def update_demand_position(
+        self,
+        demand_id: str,
+        position_id: str,
+        position: demands_api.UpdateDemandPositionRequest.UpdateDemandPositionPosition,
+    ) -> demands_api.DemandPosition:
+        """
+        Update demand position
+        Изменить позицию отгрузки
+
+        :param demand_id: ID of demand (ID отгрузки)
+        :param position_id: ID of position (ID позиции)
+        :param position: Position (позиция)
+        :return: Demand position (позиция отгрузки)
+        """
+        return await self(
+            demands_api.UpdateDemandPositionRequest(
+                demand_id=demand_id, position_id=position_id, position=position
+            )
+        )
+
+    async def delete_demand_position(self, demand_id: str, position_id: str) -> None:
+        """
+        Delete demand position
+        Удалить позицию отгрузки
+
+        :param demand_id: ID of demand (ID отгрузки)
+        :param position_id: ID of position (ID позиции)
+        :return:
+        """
+        await self(demands_api.DeleteDemandPositionRequest(demand_id=demand_id, position_id=position_id))

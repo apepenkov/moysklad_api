@@ -11,6 +11,8 @@ MoySklad_api.iml
 .idea/**/shelf
 .idea
 
+gen
+
 # AWS User-specific
 .idea/**/aws.xml
 
