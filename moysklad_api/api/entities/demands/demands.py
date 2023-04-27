@@ -531,7 +531,7 @@ class GetDemandRequest(types.ApiRequest):
         return Demand.from_json(result)
 
 
-class UpdateDemandRequest(types.MoySkladBaseClass):
+class UpdateDemandRequest(types.ApiRequest):
     UpdateDemandPosition = CreateDemandRequest.CreateDemandPosition
 
     """
