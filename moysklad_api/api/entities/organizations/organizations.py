@@ -11,6 +11,7 @@ class Organization(types.MoySkladBaseClass):
     actualAddress          String(255)  Фактический адрес Юрлица
     actualAddressFull      Object       Фактический адрес Юрлица с детализацией по отдельным полям. Подробнее тут
     archived               Boolean      Добавлено ли Юрлицо в архив Обязательное при ответе
+    attributes             Array        Массив метаданных доп. полей Обязательное при ответе
     bonusPoints            Int          Бонусные баллы по активной бонусной программе Только для чтения
     bonusProgram           Meta         Метаданные активной бонусной программы
     code                   String(255)  Код Юрлица
@@ -35,6 +36,7 @@ class Organization(types.MoySkladBaseClass):
         self.actual_address: typing.Optional[str] = None
         self.actual_address_full: typing.Optional[dict] = None
         self.archived: bool = None
+        self.attributes: typing.List[dict] = None
         self.bonus_points: typing.Optional[int] = None
         self.bonus_program: typing.Optional[types.Meta] = None
         self.code: typing.Optional[str] = None
@@ -60,6 +62,7 @@ class Organization(types.MoySkladBaseClass):
         instance.actual_address = dict_data.get("actualAddress")
         instance.actual_address_full = dict_data.get("actualAddressFull")
         instance.archived = dict_data.get("archived")
+        instance.attributes = dict_data.get("attributes")
         instance.bonus_points = dict_data.get("bonusPoints")
         bonus_program = dict_data.get("bonusProgram")
         if bonus_program is not None:
