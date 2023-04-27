@@ -18,6 +18,7 @@ from ..api.entities import (
     custom_entities as custom_entities_api,
     stores as stores_api,
     demands as demands_api,
+    organizations as organizations_api,
 )
 from ..api.reports import (
     stocks as stocks_api,
@@ -3241,4 +3242,169 @@ class MoySkladClient:
         :param position_id: ID of position (ID позиции)
         :return:
         """
-        await self(demands_api.DeleteDemandPositionRequest(demand_id=demand_id, position_id=position_id))
+        await self(
+            demands_api.DeleteDemandPositionRequest(
+                demand_id=demand_id, position_id=position_id
+            )
+        )
+
+    # organizations
+    async def get_organizations(
+        self,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
+    ) -> typing.List[organizations_api.Organization]:
+        """
+
+        :param limit:  Limit (макс. )
+        :param offset: Offset (Смещение)
+        :return: List of organizations (список организаций)
+        """
+        return await self(
+            organizations_api.GetOrganizationsRequest(limit=limit, offset=offset)
+        )
+
+    async def get_organization(
+        self, organization_id: str
+    ) -> organizations_api.Organization:
+        """
+
+        :param organization_id: ID (идентификатор)
+        :return: Organization (организация)
+        """
+        return await self(
+            organizations_api.GetOrganizationRequest(organization_id=organization_id)
+        )
+
+    async def create_organization(
+        self,
+        name: str,
+        actual_address: typing.Optional[str] = None,
+        actual_address_full: typing.Optional[dict] = None,
+        archived: bool = None,
+        attributes: typing.Optional[typing.List[dict]] = None,
+        bonus_program: typing.Optional[types.Meta] = None,
+        code: typing.Optional[str] = None,
+        company_type: typing.Literal["legal", "entrepreneur", "individual"] = None,
+        description: typing.Optional[str] = None,
+        external_code: str = None,
+        group: types.Meta = None,
+        owner: typing.Optional[types.Meta] = None,
+        shared: bool = None,
+        sync_id: typing.Optional[str] = None,
+        tracking_contract_date: typing.Optional[datetime.datetime] = None,
+        tracking_contract_number: typing.Optional[str] = None,
+    ) -> organizations_api.Organization:
+        """
+
+        :param name: Name of organization (Название организации)
+        :param actual_address: Actual address (Фактический адрес)
+        :param actual_address_full: Actual address full (Полный фактический адрес)
+        :param archived: Is archived (Архивирован)
+        :param attributes: Attributes (Атрибуты)
+        :param bonus_program: Bonus program (Бонусная программа)
+        :param code: Code (Код)
+        :param company_type: Company type (Тип компании)
+        :param description: Description (Описание)
+        :param external_code: External code (Внешний код)
+        :param group: Group (Группа)
+        :param owner: Owner (Владелец)
+        :param shared: Shared (Общий доступ)
+        :param sync_id: Sync id (Синхронизационный id)
+        :param tracking_contract_date: Tracking contract date (Дата договора отслеживания)
+        :param tracking_contract_number: Tracking contract number (Номер договора отслеживания)
+        :return: Organization (организация)
+        """
+        return await self(
+            organizations_api.CreateOrganizationRequest(
+                name=name,
+                actual_address=actual_address,
+                actual_address_full=actual_address_full,
+                archived=archived,
+                attributes=attributes,
+                bonus_program=bonus_program,
+                code=code,
+                company_type=company_type,
+                description=description,
+                external_code=external_code,
+                group=group,
+                owner=owner,
+                shared=shared,
+                sync_id=sync_id,
+                tracking_contract_date=tracking_contract_date,
+                tracking_contract_number=tracking_contract_number,
+            )
+        )
+
+    async def update_organization(
+        self,
+        organization_id: str,
+        name: typing.Optional[str] = None,
+        actual_address: typing.Optional[str] = None,
+        actual_address_full: typing.Optional[dict] = None,
+        archived: bool = None,
+        attributes: typing.Optional[typing.List[dict]] = None,
+        bonus_program: typing.Optional[types.Meta] = None,
+        code: typing.Optional[str] = None,
+        company_type: typing.Literal["legal", "entrepreneur", "individual"] = None,
+        description: typing.Optional[str] = None,
+        external_code: str = None,
+        group: types.Meta = None,
+        owner: typing.Optional[types.Meta] = None,
+        shared: bool = None,
+        sync_id: typing.Optional[str] = None,
+        tracking_contract_date: typing.Optional[datetime.datetime] = None,
+        tracking_contract_number: typing.Optional[str] = None,
+    ) -> organizations_api.Organization:
+        """
+
+        :param organization_id: Organization id (Идентификатор организации)
+        :param name: Name of organization (Название организации)
+        :param actual_address: Actual address (Фактический адрес)
+        :param actual_address_full: Actual address full (Полный фактический адрес)
+        :param archived: Is archived (Архивирован)
+        :param attributes: Attributes (Атрибуты)
+        :param bonus_program: Bonus program (Бонусная программа)
+        :param code: Code (Код)
+        :param company_type: Company type (Тип компании)
+        :param description: Description (Описание)
+        :param external_code: External code (Внешний код)
+        :param group: Group (Группа)
+        :param owner: Owner (Владелец)
+        :param shared: Shared (Общий доступ)
+        :param sync_id: Sync id (Синхронизационный id)
+        :param tracking_contract_date: Tracking contract date (Дата договора отслеживания)
+        :param tracking_contract_number: Tracking contract number (Номер договора отслеживания)
+        :return: Organization (организация)
+        """
+        return await self(
+            organizations_api.UpdateOrganizationRequest(
+                organization_id=organization_id,
+                name=name,
+                actual_address=actual_address,
+                actual_address_full=actual_address_full,
+                archived=archived,
+                attributes=attributes,
+                bonus_program=bonus_program,
+                code=code,
+                company_type=company_type,
+                description=description,
+                external_code=external_code,
+                group=group,
+                owner=owner,
+                shared=shared,
+                sync_id=sync_id,
+                tracking_contract_date=tracking_contract_date,
+                tracking_contract_number=tracking_contract_number,
+            )
+        )
+
+    async def delete_organization(self, organization_id: str) -> None:
+        """
+
+        :param organization_id: Organization id (Идентификатор организации)
+        :return:
+        """
+        await self(
+            organizations_api.DeleteOrganizationRequest(organization_id=organization_id)
+        )
