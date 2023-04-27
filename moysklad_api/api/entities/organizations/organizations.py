@@ -230,7 +230,7 @@ class CreateOrganizationRequest(types.ApiRequest):
         if self.sync_id is not None:
             json_data["syncId"] = self.sync_id
         if self.tracking_contract_date is not None:
-            json_data["trackingContractDate"] = self.tracking_contract_date.isoformat()
+            json_data["trackingContractDate"] = self.tracking_contract_date.strftime("%Y-%m-%d %H:%M:%S")
         if self.tracking_contract_number is not None:
             json_data["trackingContractNumber"] = self.tracking_contract_number
 
@@ -378,7 +378,7 @@ class UpdateOrganizationRequest(types.ApiRequest):
         if self.sync_id is not None:
             json_data["syncId"] = self.sync_id
         if self.tracking_contract_date is not None:
-            json_data["trackingContractDate"] = self.tracking_contract_date.isoformat()
+            json_data["trackingContractDate"] = self.tracking_contract_date.strftime("%Y-%m-%d %H:%M:%S")
         if self.tracking_contract_number is not None:
             json_data["trackingContractNumber"] = self.tracking_contract_number
 

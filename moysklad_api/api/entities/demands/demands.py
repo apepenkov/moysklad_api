@@ -392,7 +392,7 @@ class CreateDemandRequest(types.ApiRequest):
         if self.group is not None:
             json_data["group"] = {"meta": self.group}
         if self.moment is not None:
-            json_data["moment"] = self.moment.isoformat()
+            json_data["moment"] = self.moment.strftime("%Y-%m-%d %H:%M:%S")
         if self.name is not None:
             json_data["name"] = self.name
         if self.organization_account is not None:
@@ -690,7 +690,7 @@ class UpdateDemandRequest(types.MoySkladBaseClass):
         if self.group is not None:
             json_data["group"] = {"meta": self.group}
         if self.moment is not None:
-            json_data["moment"] = self.moment.isoformat()
+            json_data["moment"] = self.moment.strftime("%Y-%m-%d %H:%M:%S")
         if self.name is not None:
             json_data["name"] = self.name
         if self.organization_account is not None:

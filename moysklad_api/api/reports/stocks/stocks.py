@@ -234,7 +234,7 @@ class GetSmallStockReportCurrentRequest(types.ApiRequest):
         if self.include is not None:
             params["include"] = self.include
         if self.changed_since is not None:
-            params["changedSince"] = self.changed_since.isoformat()
+            params["changedSince"] = self.changed_since.strftime("%Y-%m-%d %H:%M:%S")
         if self.stock_type is not None:
             params["stockType"] = self.stock_type
         if self.filter_assortment_id is not None:

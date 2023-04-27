@@ -365,7 +365,7 @@ class CreateEnterRequest(types.ApiRequest):
         if self.group is not None:
             json_data["group"] = {"meta": self.group}
         if self.moment is not None:
-            json_data["moment"] = self.moment.isoformat()
+            json_data["moment"] = self.moment.strftime("%Y-%m-%d %H:%M:%S")
         if self.name is not None:
             json_data["name"] = self.name
         if self.overhead is not None:
@@ -566,7 +566,7 @@ class UpdateEnterRequest(types.ApiRequest):
         if self.group is not None:
             json_data["group"] = {"meta": self.group}
         if self.moment is not None:
-            json_data["moment"] = self.moment.isoformat()
+            json_data["moment"] = self.moment.strftime("%Y-%m-%d %H:%M:%S")
         if self.name is not None:
             json_data["name"] = self.name
         if self.overhead is not None:

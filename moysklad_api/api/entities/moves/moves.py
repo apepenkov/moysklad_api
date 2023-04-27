@@ -350,7 +350,7 @@ class CreateMoveRequest(types.ApiRequest):
         if self.meta:
             json_data["meta"] = self.meta
         if self.moment:
-            json_data["moment"] = self.moment.isoformat()
+            json_data["moment"] = self.moment.strftime("%Y-%m-%d %H:%M:%S")
         if self.name:
             json_data["name"] = self.name
         if self.overhead:
@@ -550,7 +550,7 @@ class UpdateMoveRequest(types.ApiRequest):
         if self.meta is not None:
             json_data["meta"] = self.meta
         if self.moment is not None:
-            json_data["moment"] = self.moment.isoformat()
+            json_data["moment"] = self.moment.strftime("%Y-%m-%d %H:%M:%S")
         if self.name is not None:
             json_data["name"] = self.name
         if self.overhead is not None:

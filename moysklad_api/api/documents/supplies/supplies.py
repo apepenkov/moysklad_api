@@ -341,11 +341,11 @@ class CreateSupplyRequest(types.ApiRequest):
         if self.group is not None:
             json_data["group"] = {"meta": self.group}
         if self.incoming_date is not None:
-            json_data["incomingDate"] = self.incoming_date.isoformat()
+            json_data["incomingDate"] = self.incoming_date.strftime("%Y-%m-%d %H:%M:%S")
         if self.incoming_number is not None:
             json_data["incomingNumber"] = self.incoming_number
         if self.moment is not None:
-            json_data["moment"] = self.moment.isoformat()
+            json_data["moment"] = self.moment.strftime("%Y-%m-%d %H:%M:%S")
         if self.name is not None:
             json_data["name"] = self.name
         if self.organization_account is not None:
@@ -562,11 +562,11 @@ class UpdateSupplyRequest(types.ApiRequest):
         if self.group is not None:
             json_data["group"] = {"meta": self.group}
         if self.incoming_date is not None:
-            json_data["incomingDate"] = self.incoming_date.isoformat()
+            json_data["incomingDate"] = self.incoming_date.strftime("%Y-%m-%d %H:%M:%S")
         if self.incoming_number is not None:
             json_data["incomingNumber"] = self.incoming_number
         if self.moment is not None:
-            json_data["moment"] = self.moment.isoformat()
+            json_data["moment"] = self.moment.strftime("%Y-%m-%d %H:%M:%S")
         if self.name is not None:
             json_data["name"] = self.name
         if self.organization_account is not None:
