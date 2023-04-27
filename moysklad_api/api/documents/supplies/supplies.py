@@ -126,9 +126,7 @@ class Supply(types.MoySkladBaseClass):
         if incoming_date is not None:
             instance.incoming_date = datetime.datetime.fromisoformat(incoming_date)
         instance.incoming_number = dict_data.get("incomingNumber")
-        meta = dict_data.get("meta")
-        if meta is not None:
-            instance.meta = meta["meta"]
+        instance.meta = dict_data.get("meta")
         moment = dict_data.get("moment")
         if moment is not None:
             instance.moment = datetime.datetime.fromisoformat(moment)
