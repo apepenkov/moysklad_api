@@ -194,7 +194,7 @@ class DemandPosition(types.MoySkladBaseClass):
         self.id: str = None
         self.pack: typing.Optional[dict] = None
         self.price: float = None
-        self.quantity: int = None
+        self.quantity: float = None
         self.slot: typing.Optional[types.Meta] = None
         self.things: typing.Optional[typing.List[str]] = None
         self.tracking_codes: typing.Optional[typing.List[dict]] = None
@@ -232,7 +232,7 @@ class CreateDemandRequest(types.ApiRequest):
     class CreateDemandPosition(typing.TypedDict):
         assortment: types.Meta
         price: float
-        quantity: int
+        quantity: float
         trackingCodes: typing.NotRequired[typing.List[dict]]
         vat: typing.NotRequired[int]
         discount: typing.NotRequired[int]

@@ -221,7 +221,7 @@ class PurchaseOrderPosition(types.MoySkladBaseClass):
         self.id: str = None
         self.pack: typing.Optional[dict] = None
         self.price: float = None
-        self.quantity: int = None
+        self.quantity: float = None
         self.shipped: int = None
         self.in_transit: int = None
         self.vat: int = None
@@ -346,7 +346,7 @@ class CreatePurchaseOrderRequest(types.ApiRequest):
         """
 
         assortment: types.Meta
-        quantity: int
+        quantity: float
 
         price: typing.NotRequired[float]
         vat: typing.NotRequired[float]

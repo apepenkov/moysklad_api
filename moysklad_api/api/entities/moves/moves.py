@@ -159,7 +159,7 @@ class MovePosition(types.MoySkladBaseClass):
         self.overhead: int = None
         self.pack: dict = None
         self.price: float = None
-        self.quantity: int = None
+        self.quantity: float = None
         self.source_slot: types.Meta = None
         self.target_slot: types.Meta = None
         self.things: typing.List[str] = None
@@ -239,7 +239,7 @@ class CreateMoveRequest(types.ApiRequest):
 
     class CreatePosition(typing.TypedDict):
         assortment: types.Meta
-        quantity: int
+        quantity: float
         price: typing.NotRequired[float]
         overhead: typing.NotRequired[float]
         reason: typing.NotRequired[str]
@@ -646,7 +646,7 @@ class CreateMovePositionRequest(types.ApiRequest):
         self,
         move_id: str,
         assortment: types.Meta,
-        quantity: int,
+        quantity: float,
         price: typing.Optional[int] = None,
         overhead: typing.Optional[int] = None,
     ):

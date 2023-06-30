@@ -221,7 +221,7 @@ class CreateSupplyRequest(types.ApiRequest):
 
     class CreatePosition(typing.TypedDict):
         assortment: types.Meta
-        quantity: int
+        quantity: float
         price: typing.NotRequired[float]
         discount: typing.NotRequired[int]
         vat: typing.NotRequired[int]
@@ -637,7 +637,7 @@ class Position(types.MoySkladBaseClass):
         self.id: str = None
         self.pack: typing.Optional[dict] = None
         self.price: float = None
-        self.quantity: int = None
+        self.quantity: float = None
         self.slot: typing.Optional[int] = None
         self.things: typing.Optional[typing.List[str]] = None
         self.overhead: int
@@ -726,7 +726,7 @@ class CreateSupplyPositionRequest(types.ApiRequest):
         self,
         supply_id: str,
         assortment: types.Meta,
-        quantity: int,
+        quantity: float,
         price: typing.Optional[float] = None,
         discount: typing.Optional[int] = None,
         vat: typing.Optional[int] = None,

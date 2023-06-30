@@ -169,7 +169,7 @@ class Position(types.MoySkladBaseClass):
         self.id: typing.Optional[str] = id_
         self.pack: typing.Optional[dict] = pack
         self.price: float = price
-        self.quantity: int = quantity
+        self.quantity: float = quantity
         self.vat: int = vat
         self.vat_enabled: typing.Optional[bool] = vat_enabled
 
@@ -244,7 +244,7 @@ class CreateInternalOrderRequest(types.ApiRequest):
         Поэтому я создал этот класс, чтобы избежать путаницы.
         """
 
-        quantity: int
+        quantity: float
         price: int
         discount: int
         vat: int

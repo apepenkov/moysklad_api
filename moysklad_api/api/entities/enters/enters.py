@@ -163,7 +163,7 @@ class EnterPosition(types.MoySkladBaseClass):
         self.overhead: int = None
         self.pack: typing.Optional[dict] = None
         self.price: float = None
-        self.quantity: int = None
+        self.quantity: float = None
         self.reason: typing.Optional[str] = None
         self.slot: typing.Optional[types.Meta] = None
         self.things: typing.Optional[dict] = None
@@ -256,7 +256,7 @@ class CreateEnterRequest(types.ApiRequest):
 
         assortment: types.Meta
         price: float
-        quantity: int
+        quantity: float
         country: typing.NotRequired[types.Meta]
         gtd: typing.NotRequired[dict]
         pack: typing.NotRequired[dict]
@@ -805,7 +805,7 @@ class UpdateEnterPositionRequest(types.ApiRequest):
         position_id: str,
         assortment: types.Meta,
         price: float,
-        quantity: int,
+        quantity: float,
         country: typing.Optional[types.Meta] = None,
         gtd: typing.Optional[typing.Dict] = None,
         pack: typing.Optional[typing.Dict] = None,
