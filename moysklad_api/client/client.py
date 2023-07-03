@@ -4,6 +4,8 @@ import datetime
 import json
 
 import aiohttp
+import asyncio
+import aiohttp.client_exceptions
 
 from ..errors import MoySkladError
 from .. import types
@@ -35,6 +37,8 @@ class MoySkladClient:
         password: typing.Optional[str] = None,
         api_token: typing.Optional[str] = None,
         debug: bool = False,
+        auto_retry_count: int = 5,
+        auto_retry_delay: float = 1.0,
     ):
         """
         Create a MoySkladClient instance. Converts login and password to api_token, if needed.
@@ -46,6 +50,8 @@ class MoySkladClient:
         :param password:  Optional password (Пароль)
         :param api_token:  Optional api_token (Токен)
         :param debug:  If True, prints all requests and responses (Если True, печатает все запросы и ответы)
+        :param auto_retry_count:  Number of times to retry a request if it fails (ClientConnectError, errorcode > 500, etc) (Количество попыток повторить запрос, если он не удался (ClientConnectError, errorcode> 500 и т. Д.))
+        :param auto_retry_delay:  Delay between retries (Задержка между повторами)
         """
         if not (login and password) and not api_token:
             raise ValueError("Either login and password or api_token must be provided")
@@ -63,6 +69,10 @@ class MoySkladClient:
 
         self._api_token = api_token
         self._debug = debug
+        self._auto_retry_count = auto_retry_count if auto_retry_count > 0 else 0
+        if auto_retry_delay < 0:
+            raise ValueError("auto_retry_delay must be >= 0")
+        self._auto_retry_delay = auto_retry_delay
 
     async def request(
         self,
@@ -113,24 +123,53 @@ class MoySkladClient:
             # (разрешаем сжатые ответы)
             kwargs["headers"]["Accept-Encoding"] = "gzip"
 
-            async with session.request(method, url, **kwargs) as resp:
-                if self._debug:
-                    print(
-                        f"Request: {method} {url} {kwargs.get('json', '')} {kwargs.get('data', '')}\n"
-                        f"Response: {resp.status} {await resp.text()}"
-                    )
-                if resp.content_type != "application/json":
-                    if allow_non_json:
-                        return {}
-                    raise ValueError(
-                        f"Response is not JSON: `{resp.content_type}` : {await resp.text()}"
-                    )
-                json_resp = await resp.json()
-                if resp.status >= 400:
-                    if self._debug:
-                        print(f"Raising error!")
-                    raise MoySkladError(json_resp["errors"][0], json_text)
-                return json_resp
+            last_exception = None
+            for retry_num in range(1, self._auto_retry_count + 1):
+                is_last_retry = retry_num == self._auto_retry_count
+                try:
+                    async with session.request(method, url, **kwargs) as resp:
+                        if self._debug:
+                            print(
+                                f"Request: {method} {url} {kwargs.get('json', '')} {kwargs.get('data', '')}\n"
+                                f"Response: {resp.status} {await resp.text()}"
+                            )
+                        if resp.content_type != "application/json":
+                            if allow_non_json:
+                                return {}
+                            raise ValueError(
+                                f"Response is not JSON: `{resp.content_type}` : {await resp.text()}"
+                            )
+                        if resp.status >= 500:
+                            try:
+                                json_resp = await resp.json()
+                            except Exception:
+                                json_resp = {}
+                            last_exception = MoySkladError(
+                                json_resp.get(
+                                    "errors",
+                                    [{"error": f"Server returned {resp.status}"}],
+                                ),
+                                json_text,
+                            )
+                            if is_last_retry:
+                                raise last_exception
+                            await asyncio.sleep(self._auto_retry_delay)
+                            continue
+                        json_resp = await resp.json()
+                        if resp.status >= 400:
+                            raise MoySkladError(json_resp["errors"][0], json_text)
+                        return json_resp
+                except (
+                    aiohttp.client_exceptions.ClientConnectorError,
+                    asyncio.TimeoutError,
+                ) as e:
+                    if is_last_retry:
+                        raise e
+                    await asyncio.sleep(self._auto_retry_delay)
+                    last_exception = e
+        if last_exception is not None:
+            raise last_exception
+        raise ValueError("This should never happen")
 
     async def raw_request(
         self,
