@@ -133,12 +133,6 @@ class MoySkladClient:
                                 f"Request: {method} {url} {kwargs.get('json', '')} {kwargs.get('data', '')}\n"
                                 f"Response: {resp.status} {await resp.text()}"
                             )
-                        if resp.content_type != "application/json":
-                            if allow_non_json:
-                                return {}
-                            raise ValueError(
-                                f"Response is not JSON: `{resp.content_type}` : {await resp.text()}"
-                            )
                         if resp.status >= 500:
                             try:
                                 json_resp = await resp.json()
@@ -155,6 +149,12 @@ class MoySkladClient:
                                 raise last_exception
                             await asyncio.sleep(self._auto_retry_delay)
                             continue
+                        if resp.content_type != "application/json":
+                            if allow_non_json:
+                                return {}
+                            raise ValueError(
+                                f"Response is not JSON: `{resp.content_type}` : {await resp.text()}"
+                            )
                         json_resp = await resp.json()
                         if resp.status >= 400:
                             raise MoySkladError(json_resp["errors"][0], json_text)
