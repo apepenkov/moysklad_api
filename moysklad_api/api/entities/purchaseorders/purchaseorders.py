@@ -854,7 +854,7 @@ class UpdatePurchaseOrderRequest(types.ApiRequest):
 
         return {
             "method": "PUT",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/purchaseorder{self.order_id}",
+            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}",
             "json": json_data,
         }
 
