@@ -21,6 +21,7 @@ from ..api.entities import (
     stores as stores_api,
     demands as demands_api,
     organizations as organizations_api,
+    webhooks as webhooks_api,
 )
 from ..api.reports import (
     stocks as stocks_api,
@@ -3446,4 +3447,77 @@ class MoySkladClient:
         """
         await self(
             organizations_api.DeleteOrganizationRequest(organization_id=organization_id)
+        )
+
+    async def create_webhook(
+        self,
+        url: str,
+        entity_type: str,
+        action: str,
+        diff_type: typing.Optional[str] = None,
+    ) -> webhooks_api.Webhook:
+        """
+        Create a webhook
+
+        :param url: URL of webhook (URL вебхука)
+        :param entity_type: type of entity (Тип сущности)
+        :param action: type of action (Тип действия)
+        :param diff_type: diff type for update action (Тип изменения для действия обновления)
+        """
+        return await self(
+            webhooks_api.CreateWebhookRequest(
+                url=url,
+                entity_type=entity_type,
+                action=action,
+                diff_type=diff_type,
+            )
+        )
+
+    async def get_webhook(self, webhook_id: str) -> webhooks_api.Webhook:
+        """
+        Get a webhook
+
+        :param webhook_id: ID of webhook (ID вебхука)
+        """
+        return await self(webhooks_api.GetWebhookRequest(webhook_id=webhook_id))
+
+    async def get_webhooks(self) -> typing.List[webhooks_api.Webhook]:
+        """
+        Get webhooks
+        """
+        return await self(webhooks_api.GetWebhooksRequest())
+
+    async def delete_webhook(self, webhook_id: str) -> None:
+        """
+        Delete a webhook
+
+        :param webhook_id: ID of webhook (ID вебхука)
+        """
+        await self(webhooks_api.DeleteWebhookRequest(webhook_id=webhook_id))
+
+    async def update_webhook(
+        self,
+        webhook_id: str,
+        url: typing.Optional[str] = None,
+        entity_type: typing.Optional[str] = None,
+        action: typing.Optional[str] = None,
+        diff_type: typing.Optional[str] = None,
+    ) -> webhooks_api.Webhook:
+        """
+        Update a webhook
+
+        :param webhook_id: ID of webhook (ID вебхука)
+        :param url: URL of webhook (URL вебхука)
+        :param entity_type: type of entity (Тип сущности)
+        :param action: type of action (Тип действия)
+        :param diff_type: diff type for update action (Тип изменения для действия обновления)
+        """
+        return await self(
+            webhooks_api.UpdateWebhookRequest(
+                webhook_id=webhook_id,
+                url=url,
+                entity_type=entity_type,
+                action=action,
+                diff_type=diff_type,
+            )
         )
