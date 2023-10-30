@@ -2,6 +2,7 @@ import datetime
 import typing
 
 from .... import types
+from ....types import Unset
 
 
 class Webhook(types.MoySkladBaseClass):
@@ -86,7 +87,7 @@ class CreateWebhookRequest(types.ApiRequest):
         url: str,
         entity_type: str,
         action: str,
-        diff_type: typing.Optional[str] = None,
+        diff_type: typing.Union[Unset, str] = Unset,
     ):
         """
 
@@ -154,10 +155,10 @@ class UpdateWebhookRequest(types.ApiRequest):
     def __init__(
         self,
         webhook_id: str,
-        url: typing.Optional[str] = None,
-        entity_type: typing.Optional[str] = None,
-        action: typing.Optional[str] = None,
-        diff_type: typing.Optional[str] = None,
+        url: typing.Union[Unset, str] = Unset,
+        entity_type: typing.Union[Unset, str] = Unset,
+        action: typing.Union[Unset, str] = Unset,
+        diff_type: typing.Union[Unset, str] = Unset,
     ):
         """
 
@@ -175,13 +176,13 @@ class UpdateWebhookRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         json_data = {}
-        if self.url is not None:
+        if self.url != Unset:
             json_data["url"] = self.url
-        if self.entity_type is not None:
+        if self.entity_type != Unset:
             json_data["entityType"] = self.entity_type
-        if self.action is not None:
+        if self.action != Unset:
             json_data["action"] = self.action
-        if self.diff_type is not None:
+        if self.diff_type != Unset:
             json_data["diffType"] = self.diff_type
 
         return {

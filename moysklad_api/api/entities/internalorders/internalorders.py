@@ -1,6 +1,7 @@
 import typing
 import datetime
 from .... import types, helpers
+from ....types import Unset
 
 
 class InternalOrder(types.MoySkladBaseClass):
@@ -207,9 +208,9 @@ class GetInternalOrdersRequest(types.ApiRequest):
 
     def __init__(
         self,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
-        search: typing.Optional[str] = None,
+        limit: typing.Union[Unset, int] = Unset,
+        offset: typing.Union[Unset, int] = Unset,
+        search: typing.Union[Unset, str] = Unset,
     ):
         """
         :param limit: Limit the number of results (Ограничить количество результатов)
@@ -224,11 +225,11 @@ class GetInternalOrdersRequest(types.ApiRequest):
         self,
     ) -> dict:
         params = {}
-        if self.limit is not None:
+        if self.limit != Unset:
             params["limit"] = self.limit
-        if self.offset is not None:
+        if self.offset != Unset:
             params["offset"] = self.offset
-        if self.search is not None:
+        if self.search != Unset:
             params["search"] = self.search
         return {
             "method": "GET",
@@ -265,28 +266,28 @@ class CreateInternalOrderRequest(types.ApiRequest):
     def __init__(
         self,
         organization: types.Meta,
-        owner: typing.Optional[types.Meta] = None,
-        shared: typing.Optional[bool] = None,
-        group: typing.Optional[types.Meta] = None,
-        name: typing.Optional[str] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        moment: typing.Optional[typing.Union[str, datetime.datetime]] = None,
-        applicable: typing.Optional[bool] = None,
-        rate: typing.Optional[types.Rate] = None,
-        sum_: typing.Optional[int] = None,
-        store: typing.Optional[types.Meta] = None,
-        project: typing.Optional[types.Meta] = None,
-        state: typing.Optional[types.Meta] = None,
-        positions: typing.Optional[typing.List[CreatePosition]] = None,
-        attributes: typing.Optional[typing.List[dict]] = None,
-        code: typing.Optional[str] = None,
-        delivery_planned_moment: typing.Optional[datetime.datetime] = None,
-        files: typing.Optional[list] = None,
-        moves: typing.Optional[list] = None,
-        purchase_orders: typing.Optional[list] = None,
-        vat_enabled: typing.Optional[bool] = None,
-        vat_included: typing.Optional[bool] = None,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        name: typing.Union[Unset, str] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        moment: typing.Union[Unset, typing.Union[str, datetime.datetime]] = Unset,
+        applicable: typing.Union[Unset, bool] = Unset,
+        rate: typing.Union[Unset, types.Rate] = Unset,
+        sum_: typing.Union[Unset, int] = Unset,
+        store: typing.Union[Unset, types.Meta] = Unset,
+        project: typing.Union[Unset, types.Meta] = Unset,
+        state: typing.Union[Unset, types.Meta] = Unset,
+        positions: typing.Union[Unset, typing.List[CreatePosition]] = Unset,
+        attributes: typing.Union[Unset, typing.List[dict]] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        delivery_planned_moment: typing.Union[Unset, datetime.datetime] = Unset,
+        files: typing.Union[Unset, list] = Unset,
+        moves: typing.Union[Unset, list] = Unset,
+        purchase_orders: typing.Union[Unset, list] = Unset,
+        vat_enabled: typing.Union[Unset, bool] = Unset,
+        vat_included: typing.Union[Unset, bool] = Unset,
     ):
         """
         :param organization: Organization (Организация)
@@ -356,33 +357,43 @@ class CreateInternalOrderRequest(types.ApiRequest):
         if not self.organization:
             raise ValueError("organization is required")
         json_data = {"organization": {"meta": self.organization}}
-        if self.owner is not None:
-            json_data["owner"] = {"meta": self.owner}
-        if self.shared is not None:
+        if self.owner != Unset:
+            json_data["owner"] = (
+                {"meta": self.owner} if self.owner is not None else None
+            )
+        if self.shared != Unset:
             json_data["shared"] = self.shared
-        if self.group is not None:
-            json_data["group"] = {"meta": self.group}
-        if self.name is not None:
+        if self.group != Unset:
+            json_data["group"] = (
+                {"meta": self.group} if self.group is not None else None
+            )
+        if self.name != Unset:
             json_data["name"] = self.name
-        if self.description is not None:
+        if self.description != Unset:
             json_data["description"] = self.description
-        if self.external_code is not None:
+        if self.external_code != Unset:
             json_data["externalCode"] = self.external_code
-        if self.moment is not None:
+        if self.moment != Unset:
             json_data["moment"] = self.moment
-        if self.applicable is not None:
+        if self.applicable != Unset:
             json_data["applicable"] = self.applicable
-        if self.rate is not None:
+        if self.rate != Unset:
             json_data["rate"] = self.rate
-        if self.sum is not None:
+        if self.sum != Unset:
             json_data["sum"] = self.sum
-        if self.store is not None:
-            json_data["store"] = {"meta": self.store}
-        if self.project is not None:
-            json_data["project"] = {"meta": self.project}
-        if self.state is not None:
-            json_data["state"] = {"meta": self.state}
-        if self.positions is not None:
+        if self.store != Unset:
+            json_data["store"] = (
+                {"meta": self.store} if self.store is not None else None
+            )
+        if self.project != Unset:
+            json_data["project"] = (
+                {"meta": self.project} if self.project is not None else None
+            )
+        if self.state != Unset:
+            json_data["state"] = (
+                {"meta": self.state} if self.state is not None else None
+            )
+        if self.positions != Unset:
             json_data["positions"] = []
             for i in self.positions:
                 json_data["positions"].append(
@@ -394,21 +405,21 @@ class CreateInternalOrderRequest(types.ApiRequest):
                         "assortment": {"meta": i["assortment"]},
                     }
                 )
-        if self.attributes is not None:
+        if self.attributes != Unset:
             json_data["attributes"] = self.attributes
-        if self.code is not None:
+        if self.code != Unset:
             json_data["code"] = self.code
-        if self.delivery_planned_moment is not None:
+        if self.delivery_planned_moment != Unset:
             json_data["deliveryPlannedMoment"] = self.delivery_planned_moment
-        if self.files is not None:
+        if self.files != Unset:
             json_data["files"] = self.files
-        if self.moves is not None:
+        if self.moves != Unset:
             json_data["moves"] = self.moves
-        if self.purchase_orders is not None:
+        if self.purchase_orders != Unset:
             json_data["purchaseOrders"] = self.purchase_orders
-        if self.vat_enabled is not None:
+        if self.vat_enabled != Unset:
             json_data["vatEnabled"] = self.vat_enabled
-        if self.vat_included is not None:
+        if self.vat_included != Unset:
             json_data["vatIncluded"] = self.vat_included
         return {
             "method": "POST",
@@ -459,29 +470,29 @@ class UpdateInternalOrderRequest(types.ApiRequest):
     def __init__(
         self,
         id_: str,
-        organization: types.Meta = None,
-        owner: typing.Optional[types.Meta] = None,
-        shared: typing.Optional[bool] = None,
-        group: typing.Optional[types.Meta] = None,
-        name: typing.Optional[str] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        moment: typing.Optional[typing.Union[str, datetime.datetime]] = None,
-        applicable: typing.Optional[bool] = None,
-        rate: typing.Optional[types.Rate] = None,
-        sum_: typing.Optional[int] = None,
-        store: typing.Optional[types.Meta] = None,
-        project: typing.Optional[types.Meta] = None,
-        state: typing.Optional[types.Meta] = None,
-        positions: typing.Optional[typing.List[UpdatePosition]] = None,
-        attributes: typing.Optional[typing.List[dict]] = None,
-        code: typing.Optional[str] = None,
-        delivery_planned_moment: typing.Optional[datetime.datetime] = None,
-        files: typing.Optional[list] = None,
-        moves: typing.Optional[list] = None,
-        purchase_orders: typing.Optional[list] = None,
-        vat_enabled: typing.Optional[bool] = None,
-        vat_included: typing.Optional[bool] = None,
+        organization: typing.Union[Unset, types.Meta] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        name: typing.Union[Unset, str] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        moment: typing.Union[Unset, typing.Union[str, datetime.datetime]] = Unset,
+        applicable: typing.Union[Unset, bool] = Unset,
+        rate: typing.Union[Unset, types.Rate] = Unset,
+        sum_: typing.Union[Unset, int] = Unset,
+        store: typing.Union[Unset, types.Meta] = Unset,
+        project: typing.Union[Unset, types.Meta] = Unset,
+        state: typing.Union[Unset, types.Meta] = Unset,
+        positions: typing.Union[Unset, typing.List[UpdatePosition]] = Unset,
+        attributes: typing.Union[Unset, typing.List[dict]] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        delivery_planned_moment: typing.Union[Unset, datetime.datetime] = Unset,
+        files: typing.Union[Unset, list] = Unset,
+        moves: typing.Union[Unset, list] = Unset,
+        purchase_orders: typing.Union[Unset, list] = Unset,
+        vat_enabled: typing.Union[Unset, bool] = Unset,
+        vat_included: typing.Union[Unset, bool] = Unset,
     ):
         """
         :param id_: Internal order ID (ID внутреннего заказа)
@@ -551,35 +562,47 @@ class UpdateInternalOrderRequest(types.ApiRequest):
         self,
     ) -> dict:
         json_data = {}
-        if self.organization is not None:
-            json_data["organization"] = {"meta": self.organization}
-        if self.owner is not None:
-            json_data["owner"] = {"meta": self.owner}
-        if self.shared is not None:
+        if self.organization != Unset:
+            json_data["organization"] = (
+                {"meta": self.organization} if self.organization is not None else None
+            )
+        if self.owner != Unset:
+            json_data["owner"] = (
+                {"meta": self.owner} if self.owner is not None else None
+            )
+        if self.shared != Unset:
             json_data["shared"] = self.shared
-        if self.group is not None:
-            json_data["group"] = {"meta": self.group}
-        if self.name is not None:
+        if self.group != Unset:
+            json_data["group"] = (
+                {"meta": self.group} if self.group is not None else None
+            )
+        if self.name != Unset:
             json_data["name"] = self.name
-        if self.description is not None:
+        if self.description != Unset:
             json_data["description"] = self.description
-        if self.external_code is not None:
+        if self.external_code != Unset:
             json_data["externalCode"] = self.external_code
-        if self.moment is not None:
+        if self.moment != Unset:
             json_data["moment"] = self.moment
-        if self.applicable is not None:
+        if self.applicable != Unset:
             json_data["applicable"] = self.applicable
-        if self.rate is not None:
+        if self.rate != Unset:
             json_data["rate"] = self.rate
-        if self.sum is not None:
+        if self.sum != Unset:
             json_data["sum"] = self.sum
-        if self.store is not None:
-            json_data["store"] = {"meta": self.store}
-        if self.project is not None:
-            json_data["project"] = {"meta": self.project}
-        if self.state is not None:
-            json_data["state"] = {"meta": self.state}
-        if self.positions is not None:
+        if self.store != Unset:
+            json_data["store"] = (
+                {"meta": self.store} if self.store is not None else None
+            )
+        if self.project != Unset:
+            json_data["project"] = (
+                {"meta": self.project} if self.project is not None else None
+            )
+        if self.state != Unset:
+            json_data["state"] = (
+                {"meta": self.state} if self.state is not None else None
+            )
+        if self.positions != Unset:
             json_data["positions"] = []
             for i in self.positions:
                 json_data["positions"].append(
@@ -591,21 +614,21 @@ class UpdateInternalOrderRequest(types.ApiRequest):
                         "assortment": {"meta": i["assortment"]},
                     }
                 )
-        if self.attributes is not None:
+        if self.attributes != Unset:
             json_data["attributes"] = self.attributes
-        if self.code is not None:
+        if self.code != Unset:
             json_data["code"] = self.code
-        if self.delivery_planned_moment is not None:
+        if self.delivery_planned_moment != Unset:
             json_data["deliveryPlannedMoment"] = self.delivery_planned_moment
-        if self.files is not None:
+        if self.files != Unset:
             json_data["files"] = self.files
-        if self.moves is not None:
+        if self.moves != Unset:
             json_data["moves"] = self.moves
-        if self.purchase_orders is not None:
+        if self.purchase_orders != Unset:
             json_data["purchaseOrders"] = self.purchase_orders
-        if self.vat_enabled is not None:
+        if self.vat_enabled != Unset:
             json_data["vatEnabled"] = self.vat_enabled
-        if self.vat_included is not None:
+        if self.vat_included != Unset:
             json_data["vatIncluded"] = self.vat_included
         return {
             "method": "PUT",
@@ -628,9 +651,9 @@ class GetOrderPositionsRequest(types.ApiRequest):
     def __init__(
         self,
         id_: str,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
-        search: typing.Optional[str] = None,
+        limit: typing.Union[Unset, int] = Unset,
+        offset: typing.Union[Unset, int] = Unset,
+        search: typing.Union[Unset, str] = Unset,
     ):
         """
         :param id_: Internal order ID (ID внутреннего заказа)
@@ -647,11 +670,11 @@ class GetOrderPositionsRequest(types.ApiRequest):
         self,
     ) -> dict:
         params = {}
-        if self.limit is not None:
+        if self.limit != Unset:
             params["limit"] = self.limit
-        if self.offset is not None:
+        if self.offset != Unset:
             params["offset"] = self.offset
-        if self.search is not None:
+        if self.search != Unset:
             params["search"] = self.search
 
         return {

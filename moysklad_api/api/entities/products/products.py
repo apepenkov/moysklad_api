@@ -2,6 +2,7 @@ import datetime
 import typing
 
 from .... import types
+from ....types import Unset
 
 
 # https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-towar-towary
@@ -190,9 +191,9 @@ class GetProductListRequest(types.ApiRequest):
         self,
     ) -> dict:
         params = {}
-        if self.limit is not None:
+        if self.limit != Unset:
             params["limit"] = self.limit
-        if self.offset is not None:
+        if self.offset != Unset:
             params["offset"] = self.offset
 
         return {
@@ -215,24 +216,25 @@ class CreateProductRequest(types.ApiRequest):
     def __init__(
         self,
         name: str,
-        code: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        description: typing.Optional[str] = None,
-        vat: typing.Optional[int] = None,
-        effective_vat: typing.Optional[int] = None,
-        discount_prohibited: typing.Optional[bool] = None,
-        uom: typing.Optional[types.Meta] = None,
-        supplier: typing.Optional[types.Meta] = None,
-        min_price: typing.Optional[dict] = None,
-        buy_price: typing.Optional[dict] = None,
-        sale_prices: typing.Optional[typing.List[dict]] = None,
-        barcodes: typing.Optional[typing.List[dict]] = None,
-        article: typing.Optional[str] = None,
-        weight: typing.Optional[int] = None,
-        volume: typing.Optional[int] = None,
-        packs: typing.Optional[typing.List[dict]] = None,
-        is_serial_trackable: typing.Optional[bool] = None,
-        tracking_type: typing.Optional[
+        code: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        vat: typing.Union[Unset, int] = Unset,
+        effective_vat: typing.Union[Unset, int] = Unset,
+        discount_prohibited: typing.Union[Unset, bool] = Unset,
+        uom: typing.Union[Unset, types.Meta] = Unset,
+        supplier: typing.Union[Unset, types.Meta] = Unset,
+        min_price: typing.Union[Unset, dict] = Unset,
+        buy_price: typing.Union[Unset, dict] = Unset,
+        sale_prices: typing.Union[Unset, typing.List[dict]] = Unset,
+        barcodes: typing.Union[Unset, typing.List[dict]] = Unset,
+        article: typing.Union[Unset, str] = Unset,
+        weight: typing.Union[Unset, int] = Unset,
+        volume: typing.Union[Unset, int] = Unset,
+        packs: typing.Union[Unset, typing.List[dict]] = Unset,
+        is_serial_trackable: typing.Union[Unset, bool] = Unset,
+        tracking_type: typing.Union[
+            Unset,
             typing.Literal[
                 "ELECTRONICS",
                 "LP_CLOTHES",
@@ -246,30 +248,32 @@ class CreateProductRequest(types.ApiRequest):
                 "TIRES",
                 "TOBACCO",
                 "WATER",
-            ]
-        ] = None,
-        attributes: typing.Optional[typing.List[dict]] = None,
-        images: typing.Optional[typing.List[dict]] = None,
-        alcoholic: typing.Optional[dict] = None,
-        archived: typing.Optional[bool] = None,
-        country: typing.Optional[types.Meta] = None,
-        files: typing.Optional[typing.List[dict]] = None,
-        group: typing.Optional[types.Meta] = None,
-        minimum_balance: typing.Optional[int] = None,
-        owner: typing.Optional[types.Meta] = None,
-        partial_disposal: typing.Optional[bool] = None,
-        payment_item_type: typing.Optional[
+            ],
+        ] = Unset,
+        attributes: typing.Union[Unset, typing.List[dict]] = Unset,
+        images: typing.Union[Unset, typing.List[dict]] = Unset,
+        alcoholic: typing.Union[Unset, dict] = Unset,
+        archived: typing.Union[Unset, bool] = Unset,
+        country: typing.Union[Unset, types.Meta] = Unset,
+        files: typing.Union[Unset, typing.List[dict]] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        minimum_balance: typing.Union[Unset, int] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        partial_disposal: typing.Union[Unset, bool] = Unset,
+        payment_item_type: typing.Union[
+            Unset,
             typing.Literal[
                 "GOODS",
                 "EXCISABLE_GOOD",
                 "COMPOUND_PAYMENT_ITEM",
                 "ANOTHER_PAYMENT_ITEM",
-            ]
-        ] = None,
-        ppe_type: typing.Optional[str] = None,
-        product_folder: typing.Optional[types.Meta] = None,
-        shared: typing.Optional[bool] = None,
-        tax_system: typing.Optional[
+            ],
+        ] = Unset,
+        ppe_type: typing.Union[Unset, str] = Unset,
+        product_folder: typing.Union[Unset, types.Meta] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        tax_system: typing.Union[
+            Unset,
             typing.Literal[
                 "GENERAL_TAX_SYSTEM",
                 "PATENT_BASED",
@@ -278,11 +282,11 @@ class CreateProductRequest(types.ApiRequest):
                 "SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME",
                 "TAX_SYSTEM_SAME_AS_GROUP",
                 "UNIFIED_AGRICULTURAL_TAX",
-            ]
-        ] = None,
-        things: typing.Optional[typing.List[str]] = None,
-        tnved: typing.Optional[str] = None,
-        use_parent_vat: typing.Optional[bool] = None,
+            ],
+        ] = Unset,
+        things: typing.Union[Unset, typing.List[str]] = Unset,
+        tnved: typing.Union[Unset, str] = Unset,
+        use_parent_vat: typing.Union[Unset, bool] = Unset,
     ):
         """
 
@@ -366,41 +370,43 @@ class CreateProductRequest(types.ApiRequest):
         if not self.name:
             raise ValueError("Name is required")
         json_data = {"name": self.name}
-        if self.code is not None:
+        if self.code != Unset:
             json_data["code"] = self.code
-        if self.external_code is not None:
+        if self.external_code != Unset:
             json_data["externalCode"] = self.external_code
-        if self.description is not None:
+        if self.description != Unset:
             json_data["description"] = self.description
-        if self.vat is not None:
+        if self.vat != Unset:
             json_data["vat"] = self.vat
-        if self.effective_vat is not None:
+        if self.effective_vat != Unset:
             json_data["effectiveVat"] = self.effective_vat
-        if self.discount_prohibited is not None:
+        if self.discount_prohibited != Unset:
             json_data["discountProhibited"] = self.discount_prohibited
-        if self.uom is not None:
-            json_data["uom"] = {"meta": self.uom}
-        if self.supplier is not None:
-            json_data["supplier"] = {"meta": self.supplier}
-        if self.min_price is not None:
+        if self.uom != Unset:
+            json_data["uom"] = {"meta": self.uom} if self.uom is not None else None
+        if self.supplier != Unset:
+            json_data["supplier"] = (
+                {"meta": self.supplier} if self.supplier is not None else None
+            )
+        if self.min_price != Unset:
             json_data["minPrice"] = self.min_price
-        if self.buy_price is not None:
+        if self.buy_price != Unset:
             json_data["buyPrice"] = self.buy_price
-        if self.sale_prices is not None:
+        if self.sale_prices != Unset:
             json_data["salePrices"] = self.sale_prices
-        if self.barcodes is not None:
+        if self.barcodes != Unset:
             json_data["barcodes"] = self.barcodes
-        if self.article is not None:
+        if self.article != Unset:
             json_data["article"] = self.article
-        if self.weight is not None:
+        if self.weight != Unset:
             json_data["weight"] = self.weight
-        if self.volume is not None:
+        if self.volume != Unset:
             json_data["volume"] = self.volume
-        if self.packs is not None:
+        if self.packs != Unset:
             json_data["packs"] = self.packs
-        if self.is_serial_trackable is not None:
+        if self.is_serial_trackable != Unset:
             json_data["isSerialTrackable"] = self.is_serial_trackable
-        if self.tracking_type is not None:
+        if self.tracking_type != Unset:
             if self.tracking_type not in [
                 "ELECTRONICS",
                 "LP_CLOTHES",
@@ -417,41 +423,51 @@ class CreateProductRequest(types.ApiRequest):
             ]:
                 raise ValueError("Tracking type is not valid")
             json_data["trackingType"] = self.tracking_type
-        if self.attributes is not None:
+        if self.attributes != Unset:
             json_data["attributes"] = self.attributes
-        if self.images is not None:
+        if self.images != Unset:
             json_data["images"] = self.images
-        if self.alcoholic is not None:
+        if self.alcoholic != Unset:
             json_data["alcoholic"] = self.alcoholic
-        if self.archived is not None:
+        if self.archived != Unset:
             json_data["archived"] = self.archived
-        if self.country is not None:
-            json_data["country"] = {"meta": self.country}
-        if self.files is not None:
+        if self.country != Unset:
+            json_data["country"] = (
+                {"meta": self.country} if self.country is not None else None
+            )
+        if self.files != Unset:
             json_data["files"] = self.files
-        if self.group is not None:
-            json_data["group"] = {"meta": self.group}
-        if self.minimum_balance is not None:
+        if self.group != Unset:
+            json_data["group"] = (
+                {"meta": self.group} if self.group is not None else None
+            )
+        if self.minimum_balance != Unset:
             json_data["minimumBalance"] = self.minimum_balance
-        if self.owner is not None:
-            json_data["owner"] = {"meta": self.owner}
-        if self.partial_disposal is not None:
+        if self.owner != Unset:
+            json_data["owner"] = (
+                {"meta": self.owner} if self.owner is not None else None
+            )
+        if self.partial_disposal != Unset:
             json_data["partialDisposal"] = self.partial_disposal
-        if self.payment_item_type is not None:
+        if self.payment_item_type != Unset:
             json_data["paymentItemType"] = self.payment_item_type
-        if self.ppe_type is not None:
+        if self.ppe_type != Unset:
             json_data["ppeType"] = self.ppe_type
-        if self.product_folder is not None:
-            json_data["productFolder"] = {"meta": self.product_folder}
-        if self.shared is not None:
+        if self.product_folder != Unset:
+            json_data["productFolder"] = (
+                {"meta": self.product_folder}
+                if self.product_folder is not None
+                else None
+            )
+        if self.shared != Unset:
             json_data["shared"] = self.shared
-        if self.tax_system is not None:
+        if self.tax_system != Unset:
             json_data["taxSystem"] = self.tax_system
-        if self.things is not None:
+        if self.things != Unset:
             json_data["things"] = self.things
-        if self.tnved is not None:
+        if self.tnved != Unset:
             json_data["tnved"] = self.tnved
-        if self.use_parent_vat is not None:
+        if self.use_parent_vat != Unset:
             json_data["useParentVat"] = self.use_parent_vat
 
         return {
@@ -527,25 +543,26 @@ class UpdateProductRequest(types.ApiRequest):
     def __init__(
         self,
         id_: str,
-        name: typing.Optional[str] = None,
-        code: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        description: typing.Optional[str] = None,
-        vat: typing.Optional[int] = None,
-        effective_vat: typing.Optional[int] = None,
-        discount_prohibited: typing.Optional[bool] = None,
-        uom: typing.Optional[dict] = None,
-        supplier: typing.Optional[dict] = None,
-        min_price: typing.Optional[int] = None,
-        buy_price: typing.Optional[int] = None,
-        sale_prices: typing.Optional[typing.List[dict]] = None,
-        barcodes: typing.Optional[typing.List[str]] = None,
-        article: typing.Optional[str] = None,
-        weight: typing.Optional[int] = None,
-        volume: typing.Optional[int] = None,
-        packs: typing.Optional[typing.List[dict]] = None,
-        is_serial_trackable: typing.Optional[bool] = None,
-        tracking_type: typing.Optional[
+        name: typing.Union[Unset, str] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        vat: typing.Union[Unset, int] = Unset,
+        effective_vat: typing.Union[Unset, int] = Unset,
+        discount_prohibited: typing.Union[Unset, bool] = Unset,
+        uom: typing.Union[Unset, dict] = Unset,
+        supplier: typing.Union[Unset, dict] = Unset,
+        min_price: typing.Union[Unset, int] = Unset,
+        buy_price: typing.Union[Unset, int] = Unset,
+        sale_prices: typing.Union[Unset, typing.List[dict]] = Unset,
+        barcodes: typing.Union[Unset, typing.List[str]] = Unset,
+        article: typing.Union[Unset, str] = Unset,
+        weight: typing.Union[Unset, int] = Unset,
+        volume: typing.Union[Unset, int] = Unset,
+        packs: typing.Union[Unset, typing.List[dict]] = Unset,
+        is_serial_trackable: typing.Union[Unset, bool] = Unset,
+        tracking_type: typing.Union[
+            Unset,
             typing.Literal[
                 "ELECTRONICS",
                 "LP_CLOTHES",
@@ -559,30 +576,32 @@ class UpdateProductRequest(types.ApiRequest):
                 "TIRES",
                 "TOBACCO",
                 "WATER",
-            ]
-        ] = None,
-        attributes: typing.Optional[typing.List[dict]] = None,
-        images: typing.Optional[typing.List[dict]] = None,
-        alcoholic: typing.Optional[dict] = None,
-        archived: typing.Optional[bool] = None,
-        country: typing.Optional[types.Meta] = None,
-        files: typing.Optional[typing.List[dict]] = None,
-        group: typing.Optional[types.Meta] = None,
-        minimum_balance: typing.Optional[int] = None,
-        owner: typing.Optional[types.Meta] = None,
-        partial_disposal: typing.Optional[bool] = None,
-        payment_item_type: typing.Optional[
+            ],
+        ] = Unset,
+        attributes: typing.Union[Unset, typing.List[dict]] = Unset,
+        images: typing.Union[Unset, typing.List[dict]] = Unset,
+        alcoholic: typing.Union[Unset, dict] = Unset,
+        archived: typing.Union[Unset, bool] = Unset,
+        country: typing.Union[Unset, types.Meta] = Unset,
+        files: typing.Union[Unset, typing.List[dict]] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        minimum_balance: typing.Union[Unset, int] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        partial_disposal: typing.Union[Unset, bool] = Unset,
+        payment_item_type: typing.Union[
+            Unset,
             typing.Literal[
                 "GOODS",
                 "EXCISABLE_GOOD",
                 "COMPOUND_PAYMENT_ITEM",
                 "ANOTHER_PAYMENT_ITEM",
-            ]
-        ] = None,
-        ppe_type: typing.Optional[str] = None,
-        product_folder: typing.Optional[types.Meta] = None,
-        shared: typing.Optional[bool] = None,
-        tax_system: typing.Optional[
+            ],
+        ] = Unset,
+        ppe_type: typing.Union[Unset, str] = Unset,
+        product_folder: typing.Union[Unset, types.Meta] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        tax_system: typing.Union[
+            Unset,
             typing.Literal[
                 "GENERAL_TAX_SYSTEM",
                 "PATENT_BASED",
@@ -591,11 +610,11 @@ class UpdateProductRequest(types.ApiRequest):
                 "SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME",
                 "TAX_SYSTEM_SAME_AS_GROUP",
                 "UNIFIED_AGRICULTURAL_TAX",
-            ]
-        ] = None,
-        things: typing.Optional[typing.List[str]] = None,
-        tnved: typing.Optional[str] = None,
-        use_parent_vat: typing.Optional[bool] = None,
+            ],
+        ] = Unset,
+        things: typing.Union[Unset, typing.List[str]] = Unset,
+        tnved: typing.Union[Unset, str] = Unset,
+        use_parent_vat: typing.Union[Unset, bool] = Unset,
     ):
         """
 
@@ -682,43 +701,43 @@ class UpdateProductRequest(types.ApiRequest):
             raise ValueError("Product ID is required")
 
         json_data = {}
-        if self.name is not None:
+        if self.name != Unset:
             json_data["name"] = self.name
-        if self.code is not None:
+        if self.code != Unset:
             json_data["code"] = self.code
-        if self.external_code is not None:
+        if self.external_code != Unset:
             json_data["externalCode"] = self.external_code
-        if self.description is not None:
+        if self.description != Unset:
             json_data["description"] = self.description
-        if self.vat is not None:
+        if self.vat != Unset:
             json_data["vat"] = self.vat
-        if self.effective_vat is not None:
+        if self.effective_vat != Unset:
             json_data["effectiveVat"] = self.effective_vat
-        if self.discount_prohibited is not None:
+        if self.discount_prohibited != Unset:
             json_data["discountProhibited"] = self.discount_prohibited
-        if self.uom is not None:
+        if self.uom != Unset:
             json_data["uom"] = self.uom
-        if self.supplier is not None:
+        if self.supplier != Unset:
             json_data["supplier"] = self.supplier
-        if self.min_price is not None:
+        if self.min_price != Unset:
             json_data["minPrice"] = self.min_price
-        if self.buy_price is not None:
+        if self.buy_price != Unset:
             json_data["buyPrice"] = self.buy_price
-        if self.sale_prices is not None:
+        if self.sale_prices != Unset:
             json_data["salePrices"] = self.sale_prices
-        if self.barcodes is not None:
+        if self.barcodes != Unset:
             json_data["barcodes"] = self.barcodes
-        if self.article is not None:
+        if self.article != Unset:
             json_data["article"] = self.article
-        if self.weight is not None:
+        if self.weight != Unset:
             json_data["weight"] = self.weight
-        if self.volume is not None:
+        if self.volume != Unset:
             json_data["volume"] = self.volume
-        if self.packs is not None:
+        if self.packs != Unset:
             json_data["packs"] = self.packs
-        if self.is_serial_trackable is not None:
+        if self.is_serial_trackable != Unset:
             json_data["isSerialTrackable"] = self.is_serial_trackable
-        if self.tracking_type is not None:
+        if self.tracking_type != Unset:
             if self.tracking_type not in [
                 "ELECTRONICS",
                 "LP_CLOTHES",
@@ -735,41 +754,51 @@ class UpdateProductRequest(types.ApiRequest):
             ]:
                 raise ValueError("Tracking type is not valid")
             json_data["trackingType"] = self.tracking_type
-        if self.attributes is not None:
+        if self.attributes != Unset:
             json_data["attributes"] = self.attributes
-        if self.images is not None:
+        if self.images != Unset:
             json_data["images"] = self.images
-        if self.alcoholic is not None:
+        if self.alcoholic != Unset:
             json_data["alcoholic"] = self.alcoholic
-        if self.archived is not None:
+        if self.archived != Unset:
             json_data["archived"] = self.archived
-        if self.country is not None:
-            json_data["country"] = {"meta": self.country}
-        if self.files is not None:
+        if self.country != Unset:
+            json_data["country"] = (
+                {"meta": self.country} if self.country is not None else None
+            )
+        if self.files != Unset:
             json_data["files"] = self.files
-        if self.group is not None:
-            json_data["group"] = {"meta": self.group}
-        if self.minimum_balance is not None:
+        if self.group != Unset:
+            json_data["group"] = (
+                {"meta": self.group} if self.group is not None else None
+            )
+        if self.minimum_balance != Unset:
             json_data["minimumBalance"] = self.minimum_balance
-        if self.owner is not None:
-            json_data["owner"] = {"meta": self.owner}
-        if self.partial_disposal is not None:
+        if self.owner != Unset:
+            json_data["owner"] = (
+                {"meta": self.owner} if self.owner is not None else None
+            )
+        if self.partial_disposal != Unset:
             json_data["partialDisposal"] = self.partial_disposal
-        if self.payment_item_type is not None:
+        if self.payment_item_type != Unset:
             json_data["paymentItemType"] = self.payment_item_type
-        if self.ppe_type is not None:
+        if self.ppe_type != Unset:
             json_data["ppeType"] = self.ppe_type
-        if self.product_folder is not None:
-            json_data["productFolder"] = {"meta": self.product_folder}
-        if self.shared is not None:
+        if self.product_folder != Unset:
+            json_data["productFolder"] = (
+                {"meta": self.product_folder}
+                if self.product_folder is not None
+                else None
+            )
+        if self.shared != Unset:
             json_data["shared"] = self.shared
-        if self.tax_system is not None:
+        if self.tax_system != Unset:
             json_data["taxSystem"] = self.tax_system
-        if self.things is not None:
+        if self.things != Unset:
             json_data["things"] = self.things
-        if self.tnved is not None:
+        if self.tnved != Unset:
             json_data["tnved"] = self.tnved
-        if self.use_parent_vat is not None:
+        if self.use_parent_vat != Unset:
             json_data["useParentVat"] = self.use_parent_vat
         # actually it would be good to place a check for len(json_data) > 1, to avoid extra requests,
         # but I don't think that should be done on library level

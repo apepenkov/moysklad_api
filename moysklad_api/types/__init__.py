@@ -1,3 +1,3 @@
-from .types import Meta, MetaArray, ApiRequest, Rate, MoySkladBaseClass
+from .types import Meta, MetaArray, ApiRequest, Rate, MoySkladBaseClass, Unset
 
-__all__ = ["Meta", "MetaArray", "ApiRequest", "Rate", "MoySkladBaseClass"]
+__all__ = ["Meta", "MetaArray", "ApiRequest", "Rate", "MoySkladBaseClass", "Unset"]

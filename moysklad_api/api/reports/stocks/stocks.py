@@ -1,6 +1,7 @@
 import typing
 import datetime
 from .... import types
+from ....types import Unset
 
 
 # https://dev.moysklad.ru/doc/api/remap/1.2/reports/#otchety-otchet-ostatki
@@ -124,12 +125,12 @@ class GetFullStockReportRequest(types.ApiRequest):
 
     def __init__(
         self,
-        limit: typing.Optional[int] = 1000,
-        offset: typing.Optional[int] = 0,
-        group_by: typing.Optional[
-            typing.Literal["product", "variant", "consignment"]
-        ] = None,
-        include_related: typing.Optional[bool] = None,
+        limit: typing.Union[Unset, int] = 1000,
+        offset: typing.Union[Unset, int] = 0,
+        group_by: typing.Union[
+            Unset, typing.Literal["product", "variant", "consignment"]
+        ] = Unset,
+        include_related: typing.Union[Unset, bool] = Unset,
     ):
         """
 
@@ -146,13 +147,13 @@ class GetFullStockReportRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         params = {}
-        if self.limit is not None:
+        if self.limit != Unset:
             params["limit"] = self.limit
-        if self.offset is not None:
+        if self.offset != Unset:
             params["offset"] = self.offset
-        if self.group_by is not None:
+        if self.group_by != Unset:
             params["groupBy"] = self.group_by
-        if self.include_related is not None:
+        if self.include_related != Unset:
             params["includeRelated"] = self.include_related
         return {
             "method": "GET",
@@ -207,13 +208,13 @@ class GetSmallStockReportCurrentRequest(types.ApiRequest):
 
     def __init__(
         self,
-        include: typing.Optional[str] = None,
-        changed_since: typing.Optional[datetime.datetime] = None,
-        stock_type: typing.Optional[
-            typing.Literal["stock", "freeStock", "quantity"]
-        ] = None,
-        filter_assortment_id: typing.Optional[typing.List[str]] = None,
-        filter_store_id: typing.Optional[typing.List[str]] = None,
+        include: typing.Union[Unset, str] = Unset,
+        changed_since: typing.Union[Unset, datetime.datetime] = Unset,
+        stock_type: typing.Union[
+            Unset, typing.Literal["stock", "freeStock", "quantity"]
+        ] = Unset,
+        filter_assortment_id: typing.Union[Unset, typing.List[str]] = Unset,
+        filter_store_id: typing.Union[Unset, typing.List[str]] = Unset,
     ):
         """
 
@@ -231,18 +232,18 @@ class GetSmallStockReportCurrentRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         params = {}
-        if self.include is not None:
+        if self.include != Unset:
             params["include"] = self.include
-        if self.changed_since is not None:
+        if self.changed_since != Unset:
             params["changedSince"] = self.changed_since.strftime("%Y-%m-%d %H:%M:%S")
-        if self.stock_type is not None:
+        if self.stock_type != Unset:
             params["stockType"] = self.stock_type
-        if self.filter_assortment_id is not None:
+        if self.filter_assortment_id != Unset:
             params["filter"] = []
             params["filter"].append(
                 "assortmentId={}".format(",".join(self.filter_assortment_id))
             )
-        if self.filter_store_id is not None:
+        if self.filter_store_id != Unset:
             if "filter" not in params:
                 params["filter"] = []
             params["filter"].append("storeId={}".format(",".join(self.filter_store_id)))

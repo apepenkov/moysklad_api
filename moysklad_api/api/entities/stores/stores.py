@@ -2,6 +2,7 @@ import datetime
 import typing
 
 from .... import types
+from ....types import Unset
 
 
 class Store(types.MoySkladBaseClass):
@@ -84,6 +85,82 @@ class Store(types.MoySkladBaseClass):
         return instance
 
 
+class StoreZone(types.MoySkladBaseClass):
+    """
+    https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-sklad-zony-sklada
+
+    Атрибуты сущности
+    Название 	    Тип 	 	        Описание
+    accountId 	    UUID 		        ID учетной записи                   Обязательное при ответе Только для чтения
+    externalCode 	String(255) 		Внешний код Зоны                    Обязательное при ответе
+    id          	UUID 		        ID Зоны                             Обязательное при ответе Только для чтения
+    meta 	        Meta 		        Метаданные Зоны                     Обязательное при ответе
+    name 	        String(255) 		Наименование Зоны                   Обязательное при ответе Необходимо при создании
+    updated 	    DateTime 		    Момент последнего обновления Зоны   Обязательное при ответе Только для чтения
+    """
+
+    def __init__(self):
+        self.account_id: str = None
+        self.external_code: str = None
+        self.id: str = None
+        self.meta: types.Meta = None
+        self.name: str = None
+        self.updated: datetime.datetime = None
+
+    @classmethod
+    def from_json(cls, dict_data: dict) -> "StoreZone":
+        instance = cls()
+        instance.account_id = dict_data.get("accountId")
+        instance.external_code = dict_data.get("externalCode")
+        instance.id = dict_data.get("id")
+        instance.meta = dict_data.get("meta")
+        instance.name = dict_data.get("name")
+        updated = dict_data.get("updated")
+        if updated:
+            instance.updated = datetime.datetime.fromisoformat(updated)
+        return instance
+
+
+class StoreSlot(types.MoySkladBaseClass):
+    """
+    https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-sklad-yachejki-sklada
+
+    Название 	    Тип 	 	    Описание
+    accountId 	    UUID 		    ID учетной записи                       Обязательное при ответе Только для чтения
+    externalCode 	String(255) 	Внешний код Ячейки                      Обязательное при ответе
+    id          	UUID 		    ID Ячейки                               Обязательное при ответе Только для чтения
+    meta 	        Meta 		    Метаданные Ячейки                       Обязательное при ответе
+    name 	        String(255) 	Наименование Ячейки                     Обязательное при ответе Необходимо при создании
+    updated 	    DateTime 		Момент последнего обновления Ячейки     Обязательное при ответе Только для чтения
+    zone 	        Meta 		    Зона ячейки. Подробнее тут https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-sklad-zony-sklada    Только для чтения Expand
+    """
+
+    def __init__(self):
+        self.account_id: str = None
+        self.external_code: str = None
+        self.id: str = None
+        self.meta: types.Meta = None
+        self.name: str = None
+        self.updated: datetime.datetime = None
+        self.zone: typing.Optional[types.Meta] = None
+
+    @classmethod
+    def from_json(cls, dict_data: dict) -> "StoreSlot":
+        instance = cls()
+        instance.account_id = dict_data.get("accountId")
+        instance.external_code = dict_data.get("externalCode")
+        instance.id = dict_data.get("id")
+        instance.meta = dict_data.get("meta")
+        instance.name = dict_data.get("name")
+        updated = dict_data.get("updated")
+        if updated:
+            instance.updated = datetime.datetime.fromisoformat(updated)
+        zone = dict_data.get("zone")
+        if zone:
+            instance.zone = zone["meta"]
+        return instance
+
+
 class GetStoresRequest(types.ApiRequest):
     """
     https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-sklad-poluchit-sklady
@@ -98,8 +175,8 @@ class GetStoresRequest(types.ApiRequest):
 
     def __init__(
         self,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Union[Unset, int] = Unset,
+        offset: typing.Union[Unset, int] = Unset,
     ):
         """
 
@@ -111,9 +188,9 @@ class GetStoresRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         params = {}
-        if self.limit:
+        if self.limit != Unset:
             params["limit"] = self.limit
-        if self.offset:
+        if self.offset != Unset:
             params["offset"] = self.offset
         return {
             "method": "GET",
@@ -161,19 +238,19 @@ class CreateStoreRequest(types.ApiRequest):
     def __init__(
         self,
         name: str,
-        address: typing.Optional[str] = None,
-        address_full: typing.Optional[AddressFull] = None,
-        archived: typing.Optional[bool] = None,
-        attributes: typing.Optional[typing.List[dict]] = None,
-        code: typing.Optional[str] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        group: typing.Optional[types.Meta] = None,
-        meta: typing.Optional[types.Meta] = None,
-        owner: typing.Optional[types.Meta] = None,
-        parent: typing.Optional[types.Meta] = None,
-        path_name: typing.Optional[str] = None,
-        shared: typing.Optional[bool] = None,
+        address: typing.Union[Unset, str] = Unset,
+        address_full: typing.Union[Unset, AddressFull] = Unset,
+        archived: typing.Union[Unset, bool] = Unset,
+        attributes: typing.Union[Unset, typing.List[dict]] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        meta: typing.Union[Unset, types.Meta] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        parent: typing.Union[Unset, types.Meta] = Unset,
+        path_name: typing.Union[Unset, str] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
     ):
         """
 
@@ -212,43 +289,43 @@ class CreateStoreRequest(types.ApiRequest):
             "name": self.name,
         }
 
-        if self.address:
+        if self.address != Unset:
             json_dict["address"] = self.address
 
-        if self.address_full:
+        if self.address_full != Unset:
             json_dict["addressFull"] = self.address_full
 
-        if self.archived:
+        if self.archived != Unset:
             json_dict["archived"] = self.archived
 
-        if self.attributes:
+        if self.attributes != Unset:
             json_dict["attributes"] = self.attributes
 
-        if self.code:
+        if self.code != Unset:
             json_dict["code"] = self.code
 
-        if self.description:
+        if self.description != Unset:
             json_dict["description"] = self.description
 
-        if self.external_code:
+        if self.external_code != Unset:
             json_dict["externalCode"] = self.external_code
 
-        if self.group:
+        if self.group != Unset:
             json_dict["group"] = {"meta": self.group}
 
-        if self.meta:
+        if self.meta != Unset:
             json_dict["meta"] = self.meta
 
-        if self.owner:
+        if self.owner != Unset:
             json_dict["owner"] = {"meta": self.owner}
 
-        if self.parent:
+        if self.parent != Unset:
             json_dict["parent"] = {"meta": self.parent}
 
-        if self.path_name:
+        if self.path_name != Unset:
             json_dict["pathName"] = self.path_name
 
-        if self.shared:
+        if self.shared != Unset:
             json_dict["shared"] = self.shared
 
         return {
@@ -328,19 +405,19 @@ class UpdateStoreRequest(types.ApiRequest):
         self,
         store_id: str,
         name: typing.Optional[str],
-        address: typing.Optional[str] = None,
-        address_full: typing.Optional[AddressFull] = None,
-        archived: typing.Optional[bool] = None,
-        attributes: typing.Optional[typing.List[dict]] = None,
-        code: typing.Optional[str] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        group: typing.Optional[types.Meta] = None,
-        meta: typing.Optional[types.Meta] = None,
-        owner: typing.Optional[types.Meta] = None,
-        parent: typing.Optional[types.Meta] = None,
-        path_name: typing.Optional[str] = None,
-        shared: typing.Optional[bool] = None,
+        address: typing.Union[Unset, str] = Unset,
+        address_full: typing.Union[Unset, AddressFull] = Unset,
+        archived: typing.Union[Unset, bool] = Unset,
+        attributes: typing.Union[Unset, typing.List[dict]] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        meta: typing.Union[Unset, types.Meta] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        parent: typing.Union[Unset, types.Meta] = Unset,
+        path_name: typing.Union[Unset, str] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
     ):
         """
         :param store_id: Store id. (Идентификатор склада.)
@@ -378,46 +455,46 @@ class UpdateStoreRequest(types.ApiRequest):
     def to_request(self) -> dict:
         json_dict = {}
 
-        if self.name:
+        if self.name != Unset:
             json_dict["name"] = self.name
 
-        if self.address:
+        if self.address != Unset:
             json_dict["address"] = self.address
 
-        if self.address_full:
+        if self.address_full != Unset:
             json_dict["addressFull"] = self.address_full
 
-        if self.archived:
+        if self.archived != Unset:
             json_dict["archived"] = self.archived
 
-        if self.attributes:
+        if self.attributes != Unset:
             json_dict["attributes"] = self.attributes
 
-        if self.code:
+        if self.code != Unset:
             json_dict["code"] = self.code
 
-        if self.description:
+        if self.description != Unset:
             json_dict["description"] = self.description
 
-        if self.external_code:
+        if self.external_code != Unset:
             json_dict["externalCode"] = self.external_code
 
-        if self.group:
+        if self.group != Unset:
             json_dict["group"] = {"meta": self.group}
 
-        if self.meta:
+        if self.meta != Unset:
             json_dict["meta"] = self.meta
 
-        if self.owner:
+        if self.owner != Unset:
             json_dict["owner"] = {"meta": self.owner}
 
-        if self.parent:
+        if self.parent != Unset:
             json_dict["parent"] = {"meta": self.parent}
 
-        if self.path_name:
+        if self.path_name != Unset:
             json_dict["pathName"] = self.path_name
 
-        if self.shared:
+        if self.shared != Unset:
             json_dict["shared"] = self.shared
 
         return {
@@ -428,42 +505,6 @@ class UpdateStoreRequest(types.ApiRequest):
 
     def from_response(self, result: dict) -> Store:
         return Store.from_json(result)
-
-
-class StoreZone(types.MoySkladBaseClass):
-    """
-    https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-sklad-zony-sklada
-
-    Атрибуты сущности
-    Название 	    Тип 	 	        Описание
-    accountId 	    UUID 		        ID учетной записи                   Обязательное при ответе Только для чтения
-    externalCode 	String(255) 		Внешний код Зоны                    Обязательное при ответе
-    id          	UUID 		        ID Зоны                             Обязательное при ответе Только для чтения
-    meta 	        Meta 		        Метаданные Зоны                     Обязательное при ответе
-    name 	        String(255) 		Наименование Зоны                   Обязательное при ответе Необходимо при создании
-    updated 	    DateTime 		    Момент последнего обновления Зоны   Обязательное при ответе Только для чтения
-    """
-
-    def __init__(self):
-        self.account_id: str = None
-        self.external_code: str = None
-        self.id: str = None
-        self.meta: types.Meta = None
-        self.name: str = None
-        self.updated: datetime.datetime = None
-
-    @classmethod
-    def from_json(cls, dict_data: dict) -> "StoreZone":
-        instance = cls()
-        instance.account_id = dict_data.get("accountId")
-        instance.external_code = dict_data.get("externalCode")
-        instance.id = dict_data.get("id")
-        instance.meta = dict_data.get("meta")
-        instance.name = dict_data.get("name")
-        updated = dict_data.get("updated")
-        if updated:
-            instance.updated = datetime.datetime.fromisoformat(updated)
-        return instance
 
 
 class GetStoreZonesRequest(types.ApiRequest):
@@ -482,8 +523,8 @@ class GetStoreZonesRequest(types.ApiRequest):
     def __init__(
         self,
         store_id: str,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Union[Unset, int] = Unset,
+        offset: typing.Union[Unset, int] = Unset,
     ):
         """
 
@@ -497,9 +538,9 @@ class GetStoreZonesRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         params = {}
-        if self.limit:
+        if self.limit != Unset:
             params["limit"] = self.limit
-        if self.offset:
+        if self.offset != Unset:
             params["offset"] = self.offset
 
         return {
@@ -524,8 +565,8 @@ class CreateStoreZoneRequest(types.ApiRequest):
         self,
         store_id: str,
         name: str,
-        external_code: typing.Optional[str] = None,
-        meta: typing.Optional[types.Meta] = None,
+        external_code: typing.Union[Unset, str] = Unset,
+        meta: typing.Union[Unset, types.Meta] = Unset,
     ):
         """
 
@@ -543,14 +584,45 @@ class CreateStoreZoneRequest(types.ApiRequest):
         json_data = {
             "name": self.name,
         }
-        if self.external_code:
+        if self.external_code != Unset:
             json_data["externalCode"] = self.external_code
-        if self.meta:
+        if self.meta != Unset:
             json_data["meta"] = self.meta
         return {
             "method": "POST",
             "url": f"https://online.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/zones",
             "json": json_data,
+        }
+
+    def from_response(self, result: dict) -> StoreZone:
+        return StoreZone.from_json(result)
+
+
+class GetStoreZoneRequest(types.ApiRequest):
+    """
+    https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-sklad-poluchit-zonu-sklada
+
+    Get store zone
+    Получить зону склада
+    """
+
+    def __init__(
+        self,
+        store_id: str,
+        zone_id: str,
+    ):
+        """
+
+        :param store_id: Store id. (ID склада.)
+        :param zone_id: Zone id. (ID зоны склада.)
+        """
+        self.store_id = store_id
+        self.zone_id = zone_id
+
+    def to_request(self) -> dict:
+        return {
+            "method": "GET",
+            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/zones/{self.zone_id}",
         }
 
     def from_response(self, result: dict) -> StoreZone:
@@ -585,37 +657,6 @@ class DeleteStoreZoneRequest(types.ApiRequest):
         return None
 
 
-class GetStoreZoneRequest(types.ApiRequest):
-    """
-    https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-sklad-poluchit-zonu-sklada
-
-    Get store zone
-    Получить зону склада
-    """
-
-    def __init__(
-        self,
-        store_id: str,
-        zone_id: str,
-    ):
-        """
-
-        :param store_id: Store id. (ID склада.)
-        :param zone_id: Zone id. (ID зоны склада.)
-        """
-        self.store_id = store_id
-        self.zone_id = zone_id
-
-    def to_request(self) -> dict:
-        return {
-            "method": "GET",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/zones/{self.zone_id}",
-        }
-
-    def from_response(self, result: dict) -> StoreZone:
-        return StoreZone.from_json(result)
-
-
 class UpdateStoreZoneRequest(types.ApiRequest):
     """
     https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-sklad-izmenit-zonu-sklada
@@ -628,9 +669,9 @@ class UpdateStoreZoneRequest(types.ApiRequest):
         self,
         store_id: str,
         zone_id: str,
-        name: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        meta: typing.Optional[types.Meta] = None,
+        name: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        meta: typing.Union[Unset, types.Meta] = Unset,
     ):
         """
 
@@ -648,11 +689,11 @@ class UpdateStoreZoneRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         json_data = {}
-        if self.name:
+        if self.name != Unset:
             json_data["name"] = self.name
-        if self.external_code:
+        if self.external_code != Unset:
             json_data["externalCode"] = self.external_code
-        if self.meta:
+        if self.meta != Unset:
             json_data["meta"] = self.meta
         return {
             "method": "PUT",
@@ -662,46 +703,6 @@ class UpdateStoreZoneRequest(types.ApiRequest):
 
     def from_response(self, result: dict) -> StoreZone:
         return StoreZone.from_json(result)
-
-
-class StoreSlot(types.MoySkladBaseClass):
-    """
-    https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-sklad-yachejki-sklada
-
-    Название 	    Тип 	 	    Описание
-    accountId 	    UUID 		    ID учетной записи                       Обязательное при ответе Только для чтения
-    externalCode 	String(255) 	Внешний код Ячейки                      Обязательное при ответе
-    id          	UUID 		    ID Ячейки                               Обязательное при ответе Только для чтения
-    meta 	        Meta 		    Метаданные Ячейки                       Обязательное при ответе
-    name 	        String(255) 	Наименование Ячейки                     Обязательное при ответе Необходимо при создании
-    updated 	    DateTime 		Момент последнего обновления Ячейки     Обязательное при ответе Только для чтения
-    zone 	        Meta 		    Зона ячейки. Подробнее тут https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-sklad-zony-sklada    Только для чтения Expand
-    """
-
-    def __init__(self):
-        self.account_id: str = None
-        self.external_code: str = None
-        self.id: str = None
-        self.meta: types.Meta = None
-        self.name: str = None
-        self.updated: datetime.datetime = None
-        self.zone: typing.Optional[types.Meta] = None
-
-    @classmethod
-    def from_json(cls, dict_data: dict) -> "StoreSlot":
-        instance = cls()
-        instance.account_id = dict_data.get("accountId")
-        instance.external_code = dict_data.get("externalCode")
-        instance.id = dict_data.get("id")
-        instance.meta = dict_data.get("meta")
-        instance.name = dict_data.get("name")
-        updated = dict_data.get("updated")
-        if updated:
-            instance.updated = datetime.datetime.fromisoformat(updated)
-        zone = dict_data.get("zone")
-        if zone:
-            instance.zone = zone["meta"]
-        return instance
 
 
 class GetStoreSlotsRequest(types.ApiRequest):
@@ -719,8 +720,8 @@ class GetStoreSlotsRequest(types.ApiRequest):
     def __init__(
         self,
         store_id: str,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Union[Unset, int] = Unset,
+        offset: typing.Union[Unset, int] = Unset,
     ):
         """
 
@@ -735,9 +736,9 @@ class GetStoreSlotsRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         params = {}
-        if self.limit:
+        if self.limit != Unset:
             params["limit"] = self.limit
-        if self.offset:
+        if self.offset != Unset:
             params["offset"] = self.offset
 
         return {
@@ -762,9 +763,9 @@ class CreateStoreSlotRequest(types.ApiRequest):
         self,
         store_id: str,
         name: str,
-        external_code: typing.Optional[str] = None,
-        meta: typing.Optional[types.Meta] = None,
-        zone: typing.Optional[types.Meta] = None,
+        external_code: typing.Union[Unset, str] = Unset,
+        meta: typing.Union[Unset, types.Meta] = Unset,
+        zone: typing.Union[Unset, types.Meta] = Unset,
     ):
         """
 
@@ -785,12 +786,12 @@ class CreateStoreSlotRequest(types.ApiRequest):
         json_data = {
             "name": self.name,
         }
-        if self.external_code:
+        if self.external_code != Unset:
             json_data["externalCode"] = self.external_code
-        if self.meta:
+        if self.meta != Unset:
             json_data["meta"] = self.meta
-        if self.zone:
-            json_data["zone"] = {"meta": self.zone}
+        if self.zone != Unset:
+            json_data["zone"] = {"meta": self.zone} if self.zone is not None else None
 
         return {
             "method": "POST",
@@ -836,14 +837,14 @@ class UpdateStoreSlotRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         json_data = {}
-        if self.name:
+        if self.name != Unset:
             json_data["name"] = self.name
-        if self.external_code:
+        if self.external_code != Unset:
             json_data["externalCode"] = self.external_code
-        if self.meta:
+        if self.meta != Unset:
             json_data["meta"] = self.meta
-        if self.zone:
-            json_data["zone"] = {"meta": self.zone}
+        if self.zone != Unset:
+            json_data["zone"] = {"meta": self.zone} if self.zone is not None else None
 
         return {
             "method": "PUT",

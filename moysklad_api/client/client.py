@@ -9,6 +9,7 @@ import aiohttp.client_exceptions
 
 from ..errors import MoySkladError
 from .. import types
+from ..types import Unset
 
 from ..api.entities import (
     internalorders as internalorders_api,
@@ -35,9 +36,9 @@ from ..api.documents import (
 class MoySkladClient:
     def __init__(
         self,
-        login: typing.Optional[str] = None,
-        password: typing.Optional[str] = None,
-        api_token: typing.Optional[str] = None,
+        login: typing.Union[Unset, str] = Unset,
+        password: typing.Union[Unset, str] = Unset,
+        api_token: typing.Union[Unset, str] = Unset,
         debug: bool = False,
         auto_retry_count: int = 5,
         auto_retry_delay: float = 1.0,
@@ -203,9 +204,9 @@ class MoySkladClient:
 
     async def get_internal_orders(
         self,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
-        search: typing.Optional[str] = None,
+        limit: typing.Union[Unset, int] = Unset,
+        offset: typing.Union[Unset, int] = Unset,
+        search: typing.Union[Unset, str] = Unset,
     ) -> typing.List[internalorders_api.InternalOrder]:
         """
         https://dev.moysklad.ru/doc/api/remap/1.2/documents/#dokumenty-vnutrennij-zakaz-poluchit-vnutrennie-zakazy
@@ -225,30 +226,30 @@ class MoySkladClient:
     async def create_internal_order(
         self,
         organization: types.Meta,
-        owner: typing.Optional[types.Meta] = None,
-        shared: typing.Optional[bool] = None,
-        group: typing.Optional[types.Meta] = None,
-        name: typing.Optional[str] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        moment: typing.Optional[typing.Union[str, datetime.datetime]] = None,
-        applicable: typing.Optional[bool] = None,
-        rate: typing.Optional[types.Rate] = None,
-        sum_: typing.Optional[int] = None,
-        store: typing.Optional[types.Meta] = None,
-        project: typing.Optional[types.Meta] = None,
-        state: typing.Optional[types.Meta] = None,
-        positions: typing.Optional[
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        name: typing.Union[Unset, str] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        moment: typing.Union[Unset, typing.Union[str, datetime.datetime]] = Unset,
+        applicable: typing.Union[Unset, bool] = Unset,
+        rate: typing.Union[Unset, types.Rate] = Unset,
+        sum_: typing.Union[Unset, int] = Unset,
+        store: typing.Union[Unset, types.Meta] = Unset,
+        project: typing.Union[Unset, types.Meta] = Unset,
+        state: typing.Union[Unset, types.Meta] = Unset,
+        positions: typing.Union[Unset,
             typing.List[internalorders_api.CreateInternalOrderRequest.CreatePosition]
-        ] = None,
-        attributes: typing.Optional[typing.List[dict]] = None,
-        code: typing.Optional[str] = None,
-        delivery_planned_moment: typing.Optional[datetime.datetime] = None,
-        files: typing.Optional[list] = None,
-        moves: typing.Optional[list] = None,
-        purchase_orders: typing.Optional[list] = None,
-        vat_enabled: typing.Optional[bool] = None,
-        vat_included: typing.Optional[bool] = None,
+        ] = Unset,
+        attributes: typing.Union[Unset, typing.List[dict]] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        delivery_planned_moment: typing.Union[Unset, datetime.datetime] = Unset,
+        files: typing.Union[Unset, list] = Unset,
+        moves: typing.Union[Unset, list] = Unset,
+        purchase_orders: typing.Union[Unset, list] = Unset,
+        vat_enabled: typing.Union[Unset, bool] = Unset,
+        vat_included: typing.Union[Unset, bool] = Unset,
     ) -> internalorders_api.InternalOrder:
         """
         https://dev.moysklad.ru/doc/api/remap/1.2/documents/#dokumenty-vnutrennij-zakaz-sozdat-vnutrennij-zakaz
@@ -321,31 +322,31 @@ class MoySkladClient:
     async def update_internal_order(
         self,
         id_: str,
-        organization: typing.Optional[types.Meta] = None,
-        owner: typing.Optional[types.Meta] = None,
-        shared: typing.Optional[bool] = None,
-        group: typing.Optional[types.Meta] = None,
-        name: typing.Optional[str] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        moment: typing.Optional[typing.Union[str, datetime.datetime]] = None,
-        applicable: typing.Optional[bool] = None,
-        rate: typing.Optional[types.Rate] = None,
-        sum_: typing.Optional[int] = None,
-        store: typing.Optional[types.Meta] = None,
-        project: typing.Optional[types.Meta] = None,
-        state: typing.Optional[types.Meta] = None,
-        positions: typing.Optional[
+        organization: typing.Union[Unset, types.Meta] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        name: typing.Union[Unset, str] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        moment: typing.Union[Unset, typing.Union[str, datetime.datetime]] = Unset,
+        applicable: typing.Union[Unset, bool] = Unset,
+        rate: typing.Union[Unset, types.Rate] = Unset,
+        sum_: typing.Union[Unset, int] = Unset,
+        store: typing.Union[Unset, types.Meta] = Unset,
+        project: typing.Union[Unset, types.Meta] = Unset,
+        state: typing.Union[Unset, types.Meta] = Unset,
+        positions: typing.Union[Unset,
             typing.List[internalorders_api.UpdateInternalOrderRequest.UpdatePosition]
-        ] = None,
-        attributes: typing.Optional[typing.List[dict]] = None,
-        code: typing.Optional[str] = None,
-        delivery_planned_moment: typing.Optional[datetime.datetime] = None,
-        files: typing.Optional[list] = None,
-        moves: typing.Optional[list] = None,
-        purchase_orders: typing.Optional[list] = None,
-        vat_enabled: typing.Optional[bool] = None,
-        vat_included: typing.Optional[bool] = None,
+        ] = Unset,
+        attributes: typing.Union[Unset, typing.List[dict]] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        delivery_planned_moment: typing.Union[Unset, datetime.datetime] = Unset,
+        files: typing.Union[Unset, list] = Unset,
+        moves: typing.Union[Unset, list] = Unset,
+        purchase_orders: typing.Union[Unset, list] = Unset,
+        vat_enabled: typing.Union[Unset, bool] = Unset,
+        vat_included: typing.Union[Unset, bool] = Unset,
     ) -> internalorders_api.InternalOrder:
         """
         https://dev.moysklad.ru/doc/api/remap/1.2/documents/#dokumenty-vnutrennij-zakaz-izmenit-vnutrennij-zakaz
@@ -409,9 +410,9 @@ class MoySkladClient:
     async def get_order_positions(
         self,
         id_: str,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
-        search: typing.Optional[str] = None,
+        limit: typing.Union[Unset, int] = Unset,
+        offset: typing.Union[Unset, int] = Unset,
+        search: typing.Union[Unset, str] = Unset,
     ) -> typing.List[internalorders_api.Position]:
         """
         https://dev.moysklad.ru/doc/api/remap/1.2/documents/#dokumenty-vnutrennij-zakaz-poluchit-pozicii-vnutrennego-zakaza
@@ -490,8 +491,8 @@ class MoySkladClient:
     # products_api
     async def get_product_list(
         self,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Union[Unset, int] = Unset,
+        offset: typing.Union[Unset, int] = Unset,
     ) -> typing.List[products_api.Product]:
         """
         https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-towar-poluchit-spisok-towarow
@@ -508,24 +509,24 @@ class MoySkladClient:
     async def create_product(
         self,
         name: str,
-        code: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        description: typing.Optional[str] = None,
-        vat: typing.Optional[int] = None,
-        effective_vat: typing.Optional[int] = None,
-        discount_prohibited: typing.Optional[bool] = None,
-        uom: typing.Optional[types.Meta] = None,
-        supplier: typing.Optional[types.Meta] = None,
-        min_price: typing.Optional[dict] = None,
-        buy_price: typing.Optional[dict] = None,
-        sale_prices: typing.Optional[typing.List[dict]] = None,
-        barcodes: typing.Optional[typing.List[dict]] = None,
-        article: typing.Optional[str] = None,
-        weight: typing.Optional[int] = None,
-        volume: typing.Optional[int] = None,
-        packs: typing.Optional[typing.List[dict]] = None,
-        is_serial_trackable: typing.Optional[bool] = None,
-        tracking_type: typing.Optional[
+        code: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        vat: typing.Union[Unset, int] = Unset,
+        effective_vat: typing.Union[Unset, int] = Unset,
+        discount_prohibited: typing.Union[Unset, bool] = Unset,
+        uom: typing.Union[Unset, types.Meta] = Unset,
+        supplier: typing.Union[Unset, types.Meta] = Unset,
+        min_price: typing.Union[Unset, dict] = Unset,
+        buy_price: typing.Union[Unset, dict] = Unset,
+        sale_prices: typing.Union[Unset, typing.List[dict]] = Unset,
+        barcodes: typing.Union[Unset, typing.List[dict]] = Unset,
+        article: typing.Union[Unset, str] = Unset,
+        weight: typing.Union[Unset, int] = Unset,
+        volume: typing.Union[Unset, int] = Unset,
+        packs: typing.Union[Unset, typing.List[dict]] = Unset,
+        is_serial_trackable: typing.Union[Unset, bool] = Unset,
+        tracking_type: typing.Union[Unset,
             typing.Literal[
                 "ELECTRONICS",
                 "LP_CLOTHES",
@@ -540,29 +541,29 @@ class MoySkladClient:
                 "TOBACCO",
                 "WATER",
             ]
-        ] = None,
-        attributes: typing.Optional[typing.List[dict]] = None,
-        images: typing.Optional[typing.List[dict]] = None,
-        alcoholic: typing.Optional[dict] = None,
-        archived: typing.Optional[bool] = None,
-        country: typing.Optional[types.Meta] = None,
-        files: typing.Optional[typing.List[dict]] = None,
-        group: typing.Optional[types.Meta] = None,
-        minimum_balance: typing.Optional[int] = None,
-        owner: typing.Optional[types.Meta] = None,
-        partial_disposal: typing.Optional[bool] = None,
-        payment_item_type: typing.Optional[
+        ] = Unset,
+        attributes: typing.Union[Unset, typing.List[dict]] = Unset,
+        images: typing.Union[Unset, typing.List[dict]] = Unset,
+        alcoholic: typing.Union[Unset, dict] = Unset,
+        archived: typing.Union[Unset, bool] = Unset,
+        country: typing.Union[Unset, types.Meta] = Unset,
+        files: typing.Union[Unset, typing.List[dict]] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        minimum_balance: typing.Union[Unset, int] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        partial_disposal: typing.Union[Unset, bool] = Unset,
+        payment_item_type: typing.Union[Unset,
             typing.Literal[
                 "GOODS",
                 "EXCISABLE_GOOD",
                 "COMPOUND_PAYMENT_ITEM",
                 "ANOTHER_PAYMENT_ITEM",
             ]
-        ] = None,
-        ppe_type: typing.Optional[str] = None,
-        product_folder: typing.Optional[types.Meta] = None,
-        shared: typing.Optional[bool] = None,
-        tax_system: typing.Optional[
+        ] = Unset,
+        ppe_type: typing.Union[Unset, str] = Unset,
+        product_folder: typing.Union[Unset, types.Meta] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        tax_system: typing.Union[Unset,
             typing.Literal[
                 "GENERAL_TAX_SYSTEM",
                 "PATENT_BASED",
@@ -572,10 +573,10 @@ class MoySkladClient:
                 "TAX_SYSTEM_SAME_AS_GROUP",
                 "UNIFIED_AGRICULTURAL_TAX",
             ]
-        ] = None,
-        things: typing.Optional[typing.List[str]] = None,
-        tnved: typing.Optional[str] = None,
-        use_parent_vat: typing.Optional[bool] = None,
+        ] = Unset,
+        things: typing.Union[Unset, typing.List[str]] = Unset,
+        tnved: typing.Union[Unset, str] = Unset,
+        use_parent_vat: typing.Union[Unset, bool] = Unset,
     ) -> products_api.Product:
         """
         https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-towar-sozdat-towar
@@ -682,25 +683,25 @@ class MoySkladClient:
     async def update_product(
         self,
         id_: str,
-        name: typing.Optional[str] = None,
-        code: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        description: typing.Optional[str] = None,
-        vat: typing.Optional[int] = None,
-        effective_vat: typing.Optional[int] = None,
-        discount_prohibited: typing.Optional[bool] = None,
-        uom: typing.Optional[types.Meta] = None,
-        supplier: typing.Optional[types.Meta] = None,
-        min_price: typing.Optional[dict] = None,
-        buy_price: typing.Optional[dict] = None,
-        sale_prices: typing.Optional[typing.List[dict]] = None,
-        barcodes: typing.Optional[typing.List[dict]] = None,
-        article: typing.Optional[str] = None,
-        weight: typing.Optional[int] = None,
-        volume: typing.Optional[int] = None,
-        packs: typing.Optional[typing.List[dict]] = None,
-        is_serial_trackable: typing.Optional[bool] = None,
-        tracking_type: typing.Optional[
+        name: typing.Union[Unset, str] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        vat: typing.Union[Unset, int] = Unset,
+        effective_vat: typing.Union[Unset, int] = Unset,
+        discount_prohibited: typing.Union[Unset, bool] = Unset,
+        uom: typing.Union[Unset, types.Meta] = Unset,
+        supplier: typing.Union[Unset, types.Meta] = Unset,
+        min_price: typing.Union[Unset, dict] = Unset,
+        buy_price: typing.Union[Unset, dict] = Unset,
+        sale_prices: typing.Union[Unset, typing.List[dict]] = Unset,
+        barcodes: typing.Union[Unset, typing.List[dict]] = Unset,
+        article: typing.Union[Unset, str] = Unset,
+        weight: typing.Union[Unset, int] = Unset,
+        volume: typing.Union[Unset, int] = Unset,
+        packs: typing.Union[Unset, typing.List[dict]] = Unset,
+        is_serial_trackable: typing.Union[Unset, bool] = Unset,
+        tracking_type: typing.Union[Unset,
             typing.Literal[
                 "ELECTRONICS",
                 "LP_CLOTHES",
@@ -715,29 +716,29 @@ class MoySkladClient:
                 "TOBACCO",
                 "WATER",
             ]
-        ] = None,
-        attributes: typing.Optional[typing.List[dict]] = None,
-        images: typing.Optional[typing.List[dict]] = None,
-        alcoholic: typing.Optional[dict] = None,
-        archived: typing.Optional[bool] = None,
-        country: typing.Optional[types.Meta] = None,
-        files: typing.Optional[typing.List[dict]] = None,
-        group: typing.Optional[types.Meta] = None,
-        minimum_balance: typing.Optional[int] = None,
-        owner: typing.Optional[types.Meta] = None,
-        partial_disposal: typing.Optional[bool] = None,
-        payment_item_type: typing.Optional[
+        ] = Unset,
+        attributes: typing.Union[Unset, typing.List[dict]] = Unset,
+        images: typing.Union[Unset, typing.List[dict]] = Unset,
+        alcoholic: typing.Union[Unset, dict] = Unset,
+        archived: typing.Union[Unset, bool] = Unset,
+        country: typing.Union[Unset, types.Meta] = Unset,
+        files: typing.Union[Unset, typing.List[dict]] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        minimum_balance: typing.Union[Unset, int] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        partial_disposal: typing.Union[Unset, bool] = Unset,
+        payment_item_type: typing.Union[Unset,
             typing.Literal[
                 "GOODS",
                 "EXCISABLE_GOOD",
                 "COMPOUND_PAYMENT_ITEM",
                 "ANOTHER_PAYMENT_ITEM",
             ]
-        ] = None,
-        ppe_type: typing.Optional[str] = None,
-        product_folder: typing.Optional[types.Meta] = None,
-        shared: typing.Optional[bool] = None,
-        tax_system: typing.Optional[
+        ] = Unset,
+        ppe_type: typing.Union[Unset, str] = Unset,
+        product_folder: typing.Union[Unset, types.Meta] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        tax_system: typing.Union[Unset,
             typing.Literal[
                 "GENERAL_TAX_SYSTEM",
                 "PATENT_BASED",
@@ -747,10 +748,10 @@ class MoySkladClient:
                 "TAX_SYSTEM_SAME_AS_GROUP",
                 "UNIFIED_AGRICULTURAL_TAX",
             ]
-        ] = None,
-        things: typing.Optional[typing.List[str]] = None,
-        tnved: typing.Optional[str] = None,
-        use_parent_vat: typing.Optional[bool] = None,
+        ] = Unset,
+        things: typing.Union[Unset, typing.List[str]] = Unset,
+        tnved: typing.Union[Unset, str] = Unset,
+        use_parent_vat: typing.Union[Unset, bool] = Unset,
     ) -> products_api.Product:
         """
         https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-towar-izmenit-towar
@@ -841,9 +842,9 @@ class MoySkladClient:
 
     async def get_moves(
         self,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
-        search: typing.Optional[str] = None,
+        limit: typing.Union[Unset, int] = Unset,
+        offset: typing.Union[Unset, int] = Unset,
+        search: typing.Union[Unset, str] = Unset,
     ) -> typing.List[moves_api.Move]:
         """
 
@@ -865,28 +866,28 @@ class MoySkladClient:
         organization: types.Meta,
         source_store: types.Meta,
         target_store: types.Meta,
-        applicable: typing.Optional[bool] = None,
-        attributes: typing.Optional[dict] = None,
-        code: typing.Optional[str] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        files: typing.Optional[types.MetaArray] = None,
-        group: typing.Optional[types.Meta] = None,
-        internal_order: typing.Optional[types.Meta] = None,
-        customer_order: typing.Optional[types.Meta] = None,
-        meta: typing.Optional[types.Meta] = None,
-        moment: typing.Optional[datetime.datetime] = None,
-        name: typing.Optional[str] = None,
-        overhead: typing.Optional[dict] = None,
-        owner: typing.Optional[types.Meta] = None,
-        positions: typing.Optional[
+        applicable: typing.Union[Unset, bool] = Unset,
+        attributes: typing.Union[Unset, dict] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        files: typing.Union[Unset, types.MetaArray] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        internal_order: typing.Union[Unset, types.Meta] = Unset,
+        customer_order: typing.Union[Unset, types.Meta] = Unset,
+        meta: typing.Union[Unset, types.Meta] = Unset,
+        moment: typing.Union[Unset, datetime.datetime] = Unset,
+        name: typing.Union[Unset, str] = Unset,
+        overhead: typing.Union[Unset, dict] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        positions: typing.Union[Unset,
             typing.List[moves_api.CreateMoveRequest.CreatePosition]
-        ] = None,
-        project: typing.Optional[types.Meta] = None,
-        rate: typing.Optional[types.Rate] = None,
-        shared: typing.Optional[bool] = None,
-        state: typing.Optional[types.Meta] = None,
-        sync_id: typing.Optional[str] = None,
+        ] = Unset,
+        project: typing.Union[Unset, types.Meta] = Unset,
+        rate: typing.Union[Unset, types.Rate] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        state: typing.Union[Unset, types.Meta] = Unset,
+        sync_id: typing.Union[Unset, str] = Unset,
     ) -> moves_api.Move:
         """
 
@@ -961,29 +962,29 @@ class MoySkladClient:
     async def update_move(
         self,
         move_id: str,
-        organization: typing.Optional[types.Meta] = None,
-        source_store: typing.Optional[types.Meta] = None,
-        target_store: typing.Optional[types.Meta] = None,
-        applicable: typing.Optional[bool] = None,
-        attributes: typing.Optional[dict] = None,
-        code: typing.Optional[str] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        files: typing.Optional[types.MetaArray] = None,
-        group: typing.Optional[types.Meta] = None,
-        internal_order: typing.Optional[types.Meta] = None,
-        customer_order: typing.Optional[types.Meta] = None,
-        meta: typing.Optional[types.Meta] = None,
-        moment: typing.Optional[datetime.datetime] = None,
-        name: typing.Optional[str] = None,
-        overhead: typing.Optional[dict] = None,
-        owner: typing.Optional[types.Meta] = None,
-        positions: typing.Optional[types.MetaArray] = None,
-        project: typing.Optional[types.Meta] = None,
-        rate: typing.Optional[types.Rate] = None,
-        shared: typing.Optional[bool] = None,
-        state: typing.Optional[types.Meta] = None,
-        sync_id: typing.Optional[str] = None,
+        organization: typing.Union[Unset, types.Meta] = Unset,
+        source_store: typing.Union[Unset, types.Meta] = Unset,
+        target_store: typing.Union[Unset, types.Meta] = Unset,
+        applicable: typing.Union[Unset, bool] = Unset,
+        attributes: typing.Union[Unset, dict] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        files: typing.Union[Unset, types.MetaArray] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        internal_order: typing.Union[Unset, types.Meta] = Unset,
+        customer_order: typing.Union[Unset, types.Meta] = Unset,
+        meta: typing.Union[Unset, types.Meta] = Unset,
+        moment: typing.Union[Unset, datetime.datetime] = Unset,
+        name: typing.Union[Unset, str] = Unset,
+        overhead: typing.Union[Unset, dict] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        positions: typing.Union[Unset, types.MetaArray] = Unset,
+        project: typing.Union[Unset, types.Meta] = Unset,
+        rate: typing.Union[Unset, types.Rate] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        state: typing.Union[Unset, types.Meta] = Unset,
+        sync_id: typing.Union[Unset, str] = Unset,
     ) -> moves_api.Move:
         """
 
@@ -1045,9 +1046,9 @@ class MoySkladClient:
     async def get_move_positions(
         self,
         move_id: str,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
-        search: typing.Optional[str] = None,
+        limit: typing.Union[Unset, int] = Unset,
+        offset: typing.Union[Unset, int] = Unset,
+        search: typing.Union[Unset, str] = Unset,
     ) -> typing.List[moves_api.MovePosition]:
         """
 
@@ -1068,8 +1069,8 @@ class MoySkladClient:
         move_id: str,
         assortment: types.Meta,
         quantity: float,
-        price: typing.Optional[int] = None,
-        overhead: typing.Optional[int] = None,
+        price: typing.Union[Unset, int] = Unset,
+        overhead: typing.Union[Unset, int] = Unset,
     ) -> moves_api.MovePosition:
         """
 
@@ -1105,10 +1106,10 @@ class MoySkladClient:
         self,
         move_id: str,
         position_id: str,
-        assortment: typing.Optional[types.Meta] = None,
-        quantity: typing.Optional[int] = None,
-        price: typing.Optional[int] = None,
-        overhead: typing.Optional[int] = None,
+        assortment: typing.Union[Unset, types.Meta] = Unset,
+        quantity: typing.Union[Unset, int] = Unset,
+        price: typing.Union[Unset, int] = Unset,
+        overhead: typing.Union[Unset, int] = Unset,
     ) -> moves_api.MovePosition:
         """
 
@@ -1162,38 +1163,38 @@ class MoySkladClient:
         self,
         organization: types.Meta,
         agent: types.Meta,
-        agent_account: typing.Optional[types.Meta] = None,
-        applicable: typing.Optional[bool] = None,
-        attributes: typing.Optional[typing.List[dict]] = None,
-        code: typing.Optional[str] = None,
-        contract: typing.Optional[types.Meta] = None,
-        delivery_planned_moment: typing.Optional[datetime.datetime] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        files: typing.Optional[types.MetaArray] = None,
-        group: typing.Optional[types.Meta] = None,
-        meta: typing.Optional[types.Meta] = None,
-        moment: typing.Optional[datetime.datetime] = None,
-        name: typing.Optional[str] = None,
-        organization_account: typing.Optional[types.Meta] = None,
-        owner: typing.Optional[types.Meta] = None,
-        positions: typing.Optional[
+        agent_account: typing.Union[Unset, types.Meta] = Unset,
+        applicable: typing.Union[Unset, bool] = Unset,
+        attributes: typing.Union[Unset, typing.List[dict]] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        contract: typing.Union[Unset, types.Meta] = Unset,
+        delivery_planned_moment: typing.Union[Unset, datetime.datetime] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        files: typing.Union[Unset, types.MetaArray] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        meta: typing.Union[Unset, types.Meta] = Unset,
+        moment: typing.Union[Unset, datetime.datetime] = Unset,
+        name: typing.Union[Unset, str] = Unset,
+        organization_account: typing.Union[Unset, types.Meta] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        positions: typing.Union[Unset,
             typing.List[purchaseorders_api.CreatePurchaseOrderRequest.CreatePosition]
-        ] = None,
-        project: typing.Optional[types.Meta] = None,
-        rate: typing.Optional[types.Rate] = None,
-        shared: typing.Optional[bool] = None,
-        state: typing.Optional[types.Meta] = None,
-        store: typing.Optional[types.Meta] = None,
-        sync_id: typing.Optional[str] = None,
-        vat_enabled: typing.Optional[bool] = None,
-        vat_included: typing.Optional[bool] = None,
-        wait_sum: typing.Optional[float] = None,
-        customer_orders: typing.Optional[typing.List[types.Meta]] = None,
-        invoices_in: typing.Optional[typing.List[types.Meta]] = None,
-        payments: typing.Optional[typing.List[types.Meta]] = None,
-        supplies: typing.Optional[typing.List[types.Meta]] = None,
-        internal_order: typing.Optional[types.Meta] = None,
+        ] = Unset,
+        project: typing.Union[Unset, types.Meta] = Unset,
+        rate: typing.Union[Unset, types.Rate] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        state: typing.Union[Unset, types.Meta] = Unset,
+        store: typing.Union[Unset, types.Meta] = Unset,
+        sync_id: typing.Union[Unset, str] = Unset,
+        vat_enabled: typing.Union[Unset, bool] = Unset,
+        vat_included: typing.Union[Unset, bool] = Unset,
+        wait_sum: typing.Union[Unset, float] = Unset,
+        customer_orders: typing.Union[Unset, typing.List[types.Meta]] = Unset,
+        invoices_in: typing.Union[Unset, typing.List[types.Meta]] = Unset,
+        payments: typing.Union[Unset, typing.List[types.Meta]] = Unset,
+        supplies: typing.Union[Unset, typing.List[types.Meta]] = Unset,
+        internal_order: typing.Union[Unset, types.Meta] = Unset,
     ) -> purchaseorders_api.PurchaseOrder:
         """
 
@@ -1289,40 +1290,40 @@ class MoySkladClient:
     async def update_purchase_order(
         self,
         order_id: str,
-        organization: typing.Optional[types.Meta] = None,
-        agent: typing.Optional[types.Meta] = None,
-        agent_account: typing.Optional[types.Meta] = None,
-        applicable: typing.Optional[bool] = None,
-        attributes: typing.Optional[typing.List[dict]] = None,
-        code: typing.Optional[str] = None,
-        contract: typing.Optional[types.Meta] = None,
-        delivery_planned_moment: typing.Optional[datetime.datetime] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        files: typing.Optional[types.MetaArray] = None,
-        group: typing.Optional[types.Meta] = None,
-        meta: typing.Optional[types.Meta] = None,
-        moment: typing.Optional[datetime.datetime] = None,
-        name: typing.Optional[str] = None,
-        organization_account: typing.Optional[types.Meta] = None,
-        owner: typing.Optional[types.Meta] = None,
-        positions: typing.Optional[
+        organization: typing.Union[Unset, types.Meta] = Unset,
+        agent: typing.Union[Unset, types.Meta] = Unset,
+        agent_account: typing.Union[Unset, types.Meta] = Unset,
+        applicable: typing.Union[Unset, bool] = Unset,
+        attributes: typing.Union[Unset, typing.List[dict]] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        contract: typing.Union[Unset, types.Meta] = Unset,
+        delivery_planned_moment: typing.Union[Unset, datetime.datetime] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        files: typing.Union[Unset, types.MetaArray] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        meta: typing.Union[Unset, types.Meta] = Unset,
+        moment: typing.Union[Unset, datetime.datetime] = Unset,
+        name: typing.Union[Unset, str] = Unset,
+        organization_account: typing.Union[Unset, types.Meta] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        positions: typing.Union[Unset,
             typing.List[purchaseorders_api.UpdatePurchaseOrderRequest.UpdatePosition]
-        ] = None,
-        project: typing.Optional[types.Meta] = None,
-        rate: typing.Optional[types.Rate] = None,
-        shared: typing.Optional[bool] = None,
-        state: typing.Optional[types.Meta] = None,
-        store: typing.Optional[types.Meta] = None,
-        sync_id: typing.Optional[str] = None,
-        vat_enabled: typing.Optional[bool] = None,
-        vat_included: typing.Optional[bool] = None,
-        wait_sum: typing.Optional[float] = None,
-        customer_orders: typing.Optional[typing.List[types.Meta]] = None,
-        invoices_in: typing.Optional[typing.List[types.Meta]] = None,
-        payments: typing.Optional[typing.List[types.Meta]] = None,
-        supplies: typing.Optional[typing.List[types.Meta]] = None,
-        internal_order: typing.Optional[types.Meta] = None,
+        ] = Unset,
+        project: typing.Union[Unset, types.Meta] = Unset,
+        rate: typing.Union[Unset, types.Rate] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        state: typing.Union[Unset, types.Meta] = Unset,
+        store: typing.Union[Unset, types.Meta] = Unset,
+        sync_id: typing.Union[Unset, str] = Unset,
+        vat_enabled: typing.Union[Unset, bool] = Unset,
+        vat_included: typing.Union[Unset, bool] = Unset,
+        wait_sum: typing.Union[Unset, float] = Unset,
+        customer_orders: typing.Union[Unset, typing.List[types.Meta]] = Unset,
+        invoices_in: typing.Union[Unset, typing.List[types.Meta]] = Unset,
+        payments: typing.Union[Unset, typing.List[types.Meta]] = Unset,
+        supplies: typing.Union[Unset, typing.List[types.Meta]] = Unset,
+        internal_order: typing.Union[Unset, types.Meta] = Unset,
     ) -> purchaseorders_api.PurchaseOrder:
         """
 
@@ -1420,12 +1421,12 @@ class MoySkladClient:
         self,
         order_id: str,
         position_id: str,
-        assortment: typing.Optional[types.Meta] = None,
-        quantity: typing.Optional[float] = None,
-        price: typing.Optional[float] = None,
-        vat: typing.Optional[float] = None,
-        in_transit: typing.Optional[int] = None,
-        discount: typing.Optional[float] = None,
+        assortment: typing.Union[Unset, types.Meta] = Unset,
+        quantity: typing.Union[Unset, float] = Unset,
+        price: typing.Union[Unset, float] = Unset,
+        vat: typing.Union[Unset, float] = Unset,
+        in_transit: typing.Union[Unset, int] = Unset,
+        discount: typing.Union[Unset, float] = Unset,
     ) -> purchaseorders_api.PurchaseOrderPosition:
         return await self(
             purchaseorders_api.UpdatePurchaseOrderPositionRequest(
@@ -1467,15 +1468,15 @@ class MoySkladClient:
     async def create_product_folder(
         self,
         name: str,
-        code: typing.Optional[str] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        group: typing.Optional[types.Meta] = None,
-        meta: typing.Optional[types.Meta] = None,
-        owner: typing.Optional[types.Meta] = None,
-        product_folder: typing.Optional[types.Meta] = None,
-        shared: typing.Optional[bool] = None,
-        tax_system: typing.Optional[
+        code: typing.Union[Unset, str] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        meta: typing.Union[Unset, types.Meta] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        product_folder: typing.Union[Unset, types.Meta] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        tax_system: typing.Union[Unset,
             typing.Literal[
                 "GENERAL_TAX_SYSTEM",
                 "PATENT_BASED",
@@ -1485,10 +1486,10 @@ class MoySkladClient:
                 "TAX_SYSTEM_SAME_AS_GROUP",
                 "UNIFIED_AGRICULTURAL_TAX",
             ]
-        ] = None,
-        use_parent_vat: typing.Optional[bool] = None,
-        vat: typing.Optional[int] = None,
-        vat_enabled: typing.Optional[bool] = None,
+        ] = Unset,
+        use_parent_vat: typing.Union[Unset, bool] = Unset,
+        vat: typing.Union[Unset, int] = Unset,
+        vat_enabled: typing.Union[Unset, bool] = Unset,
     ) -> productfolders_api.ProductFolder:
         """
         Create product folder (Создать папку товаров)
@@ -1556,16 +1557,16 @@ class MoySkladClient:
     async def update_product_folder(
         self,
         folder_id: str,
-        name: typing.Optional[str] = None,
-        code: typing.Optional[str] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        group: typing.Optional[types.Meta] = None,
-        meta: typing.Optional[types.Meta] = None,
-        owner: typing.Optional[types.Meta] = None,
-        product_folder: typing.Optional[types.Meta] = None,
-        shared: typing.Optional[bool] = None,
-        tax_system: typing.Optional[
+        name: typing.Union[Unset, str] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        meta: typing.Union[Unset, types.Meta] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        product_folder: typing.Union[Unset, types.Meta] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        tax_system: typing.Union[Unset,
             typing.Literal[
                 "GENERAL_TAX_SYSTEM",
                 "PATENT_BASED",
@@ -1575,10 +1576,10 @@ class MoySkladClient:
                 "TAX_SYSTEM_SAME_AS_GROUP",
                 "UNIFIED_AGRICULTURAL_TAX",
             ]
-        ] = None,
-        use_parent_vat: typing.Optional[bool] = None,
-        vat: typing.Optional[int] = None,
-        vat_enabled: typing.Optional[bool] = None,
+        ] = Unset,
+        use_parent_vat: typing.Union[Unset, bool] = Unset,
+        vat: typing.Union[Unset, int] = Unset,
+        vat_enabled: typing.Union[Unset, bool] = Unset,
     ) -> productfolders_api.ProductFolder:
         """
         Update product folder (Обновить папку товаров)
@@ -1620,9 +1621,9 @@ class MoySkladClient:
     # enters_api
     async def get_enters(
         self,
-        limit: typing.Optional[int] = 1000,
-        offset: typing.Optional[int] = 0,
-        search: typing.Optional[str] = None,
+        limit: typing.Union[Unset, int] = 1000,
+        offset: typing.Union[Unset, int] = 0,
+        search: typing.Union[Unset, str] = Unset,
     ) -> typing.List[enters_api.Enter]:
         """
 
@@ -1640,22 +1641,22 @@ class MoySkladClient:
         self,
         organization: types.Meta,
         store: types.Meta,
-        applicable: typing.Optional[bool] = None,
-        attributes: typing.Optional[list] = None,
-        code: typing.Optional[str] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        files: typing.Optional[types.MetaArray] = None,
-        group: typing.Optional[types.Meta] = None,
-        moment: typing.Optional[datetime.datetime] = None,
-        name: typing.Optional[str] = None,
-        overhead: typing.Optional[dict] = None,
-        positions: typing.Optional[
+        applicable: typing.Union[Unset, bool] = Unset,
+        attributes: typing.Union[Unset, list] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        files: typing.Union[Unset, types.MetaArray] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        moment: typing.Union[Unset, datetime.datetime] = Unset,
+        name: typing.Union[Unset, str] = Unset,
+        overhead: typing.Union[Unset, dict] = Unset,
+        positions: typing.Union[Unset,
             typing.List[enters_api.CreateEnterRequest.CreateEnterPosition]
-        ] = None,
-        project: typing.Optional[types.Meta] = None,
-        rate: typing.Optional[dict] = None,
-        shared: typing.Optional[bool] = None,
+        ] = Unset,
+        project: typing.Union[Unset, types.Meta] = Unset,
+        rate: typing.Union[Unset, dict] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
     ) -> enters_api.Enter:
         """
 
@@ -1716,24 +1717,24 @@ class MoySkladClient:
     async def update_enter(
         self,
         enter_id: str,
-        organization: typing.Optional[str] = None,
-        store: typing.Optional[str] = None,
-        applicable: typing.Optional[bool] = None,
-        attributes: typing.Optional[dict] = None,
-        code: typing.Optional[str] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        files: typing.Optional[dict] = None,
-        group: typing.Optional[str] = None,
-        moment: typing.Optional[datetime.datetime] = None,
-        name: typing.Optional[str] = None,
-        overhead: typing.Optional[dict] = None,
-        positions: typing.Optional[
+        organization: typing.Union[Unset, str] = Unset,
+        store: typing.Union[Unset, str] = Unset,
+        applicable: typing.Union[Unset, bool] = Unset,
+        attributes: typing.Union[Unset, dict] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        files: typing.Union[Unset, dict] = Unset,
+        group: typing.Union[Unset, str] = Unset,
+        moment: typing.Union[Unset, datetime.datetime] = Unset,
+        name: typing.Union[Unset, str] = Unset,
+        overhead: typing.Union[Unset, dict] = Unset,
+        positions: typing.Union[Unset,
             typing.List[enters_api.UpdateEnterRequest.UpdateEnterPosition]
-        ] = None,
-        project: typing.Optional[str] = None,
-        rate: typing.Optional[str] = None,
-        shared: typing.Optional[bool] = None,
+        ] = Unset,
+        project: typing.Union[Unset, str] = Unset,
+        rate: typing.Union[Unset, str] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
     ) -> enters_api.Enter:
         """
 
@@ -1781,8 +1782,8 @@ class MoySkladClient:
     async def get_enter_positions(
         self,
         enter_id: str,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Union[Unset, int] = Unset,
+        offset: typing.Union[Unset, int] = Unset,
     ) -> typing.List[enters_api.EnterPosition]:
         """
 
@@ -1844,13 +1845,13 @@ class MoySkladClient:
         assortment: types.Meta,
         price: float,
         quantity: float,
-        country: typing.Optional[types.Meta] = None,
-        gtd: typing.Optional[typing.Dict] = None,
-        pack: typing.Optional[typing.Dict] = None,
-        reason: typing.Optional[str] = None,
-        slot: typing.Optional[types.Meta] = None,
-        things: typing.Optional[typing.Dict] = None,
-        overhead: typing.Optional[int] = None,
+        country: typing.Union[Unset, types.Meta] = Unset,
+        gtd: typing.Union[Unset, typing.Dict] = Unset,
+        pack: typing.Union[Unset, typing.Dict] = Unset,
+        reason: typing.Union[Unset, str] = Unset,
+        slot: typing.Union[Unset, types.Meta] = Unset,
+        things: typing.Union[Unset, typing.Dict] = Unset,
+        overhead: typing.Union[Unset, int] = Unset,
     ) -> enters_api.EnterPosition:
         """
 
@@ -1907,12 +1908,12 @@ class MoySkladClient:
     # stocks
     async def get_full_stock_report(
         self,
-        limit: typing.Optional[int] = 1000,
-        offset: typing.Optional[int] = 0,
-        group_by: typing.Optional[
+        limit: typing.Union[Unset, int] = 1000,
+        offset: typing.Union[Unset, int] = 0,
+        group_by: typing.Union[Unset,
             typing.Literal["product", "variant", "consignment"]
-        ] = None,
-        include_related: typing.Optional[bool] = None,
+        ] = Unset,
+        include_related: typing.Union[Unset, bool] = Unset,
     ) -> typing.List[stocks_api.FullStockReport]:
         """
 
@@ -1933,13 +1934,13 @@ class MoySkladClient:
 
     async def get_small_stock_current_report(
         self,
-        include: typing.Optional[str] = None,
-        changed_since: typing.Optional[datetime.datetime] = None,
-        stock_type: typing.Optional[
+        include: typing.Union[Unset, str] = Unset,
+        changed_since: typing.Union[Unset, datetime.datetime] = Unset,
+        stock_type: typing.Union[Unset,
             typing.Literal["stock", "freeStock", "quantity"]
-        ] = None,
-        filter_assortment_id: typing.Optional[typing.List[str]] = None,
-        filter_store_id: typing.Optional[typing.List[str]] = None,
+        ] = Unset,
+        filter_assortment_id: typing.Union[Unset, typing.List[str]] = Unset,
+        filter_store_id: typing.Union[Unset, typing.List[str]] = Unset,
     ) -> typing.List[stocks_api.SmallStockReport]:
         """
 
@@ -1965,7 +1966,7 @@ class MoySkladClient:
     async def create_custom_entity(
         self,
         name: str,
-        meta: typing.Optional[types.Meta] = None,
+        meta: typing.Union[Unset, types.Meta] = Unset,
     ) -> custom_entities_api.CustomEntity:
         """
         Create custom entity (Создание пользовательского справочника)
@@ -1985,8 +1986,8 @@ class MoySkladClient:
     async def update_custom_entity(
         self,
         metadata_id: str,
-        name: typing.Optional[str] = None,
-        meta: typing.Optional[types.Meta] = None,
+        name: typing.Union[Unset, str] = Unset,
+        meta: typing.Union[Unset, types.Meta] = Unset,
     ) -> custom_entities_api.CustomEntity:
         """
         Update custom entity (Обновление пользовательского справочника)
@@ -2021,13 +2022,13 @@ class MoySkladClient:
         self,
         metadata_id: str,
         name: str,
-        code: typing.Optional[str] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        meta: typing.Optional[types.Meta] = None,
-        group: typing.Optional[types.Meta] = None,
-        owner: typing.Optional[types.Meta] = None,
-        shared: typing.Optional[bool] = None,
+        code: typing.Union[Unset, str] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        meta: typing.Union[Unset, types.Meta] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
     ) -> custom_entities_api.CustomEntityElement:
         """
         Create custom entity element (Создание элемента пользовательского справочника)
@@ -2061,14 +2062,14 @@ class MoySkladClient:
         self,
         metadata_id: str,
         element_id: str,
-        name: typing.Optional[str] = None,
-        code: typing.Optional[str] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        meta: typing.Optional[types.Meta] = None,
-        group: typing.Optional[types.Meta] = None,
-        owner: typing.Optional[types.Meta] = None,
-        shared: typing.Optional[bool] = None,
+        name: typing.Union[Unset, str] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        meta: typing.Union[Unset, types.Meta] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
     ) -> custom_entities_api.CustomEntityElement:
         """
         Update custom entity element (Обновление элемента пользовательского справочника)
@@ -2140,8 +2141,8 @@ class MoySkladClient:
     async def list_custom_entity_elements(
         self,
         metadata_id: str,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Union[Unset, int] = Unset,
+        offset: typing.Union[Unset, int] = Unset,
     ) -> typing.List[custom_entities_api.CustomEntityElement]:
         """
         List custom entity elements (Получение списка элементов пользовательского справочника)
@@ -2162,8 +2163,8 @@ class MoySkladClient:
     # stores
     async def get_stores(
         self,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Union[Unset, int] = Unset,
+        offset: typing.Union[Unset, int] = Unset,
     ) -> typing.List[stores_api.Store]:
         """
         Get stores (Получение списка складов)
@@ -2177,19 +2178,19 @@ class MoySkladClient:
     async def create_store(
         self,
         name: str,
-        address: typing.Optional[str] = None,
-        address_full: typing.Optional[stores_api.CreateStoreRequest.AddressFull] = None,
-        archived: typing.Optional[bool] = None,
-        attributes: typing.Optional[typing.List[dict]] = None,
-        code: typing.Optional[str] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        group: typing.Optional[types.Meta] = None,
-        meta: typing.Optional[types.Meta] = None,
-        owner: typing.Optional[types.Meta] = None,
-        parent: typing.Optional[types.Meta] = None,
-        path_name: typing.Optional[str] = None,
-        shared: typing.Optional[bool] = None,
+        address: typing.Union[Unset, str] = Unset,
+        address_full: typing.Union[Unset, stores_api.CreateStoreRequest.AddressFull] = Unset,
+        archived: typing.Union[Unset, bool] = Unset,
+        attributes: typing.Union[Unset, typing.List[dict]] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        meta: typing.Union[Unset, types.Meta] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        parent: typing.Union[Unset, types.Meta] = Unset,
+        path_name: typing.Union[Unset, str] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
     ) -> stores_api.Store:
         """
         Create store (Создание склада)
@@ -2233,20 +2234,20 @@ class MoySkladClient:
     async def update_store(
         self,
         store_id: str,
-        name: typing.Optional[str] = None,
-        address: typing.Optional[str] = None,
-        address_full: typing.Optional[stores_api.UpdateStoreRequest.AddressFull] = None,
-        archived: typing.Optional[bool] = None,
-        attributes: typing.Optional[typing.List[dict]] = None,
-        code: typing.Optional[str] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        group: typing.Optional[types.Meta] = None,
-        meta: typing.Optional[types.Meta] = None,
-        owner: typing.Optional[types.Meta] = None,
-        parent: typing.Optional[types.Meta] = None,
-        path_name: typing.Optional[str] = None,
-        shared: typing.Optional[bool] = None,
+        name: typing.Union[Unset, str] = Unset,
+        address: typing.Union[Unset, str] = Unset,
+        address_full: typing.Union[Unset, stores_api.UpdateStoreRequest.AddressFull] = Unset,
+        archived: typing.Union[Unset, bool] = Unset,
+        attributes: typing.Union[Unset, typing.List[dict]] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        meta: typing.Union[Unset, types.Meta] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        parent: typing.Union[Unset, types.Meta] = Unset,
+        path_name: typing.Union[Unset, str] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
     ) -> stores_api.Store:
         """
         Update store (Обновление склада)
@@ -2325,8 +2326,8 @@ class MoySkladClient:
     async def get_store_zones(
         self,
         store_id: str,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Union[Unset, int] = Unset,
+        offset: typing.Union[Unset, int] = Unset,
     ) -> typing.List[stores_api.StoreZone]:
         """
         Get store zones (Получение зон склада)
@@ -2349,8 +2350,8 @@ class MoySkladClient:
         self,
         store_id: str,
         name: str,
-        external_code: typing.Optional[str] = None,
-        meta: typing.Optional[types.Meta] = None,
+        external_code: typing.Union[Unset, str] = Unset,
+        meta: typing.Union[Unset, types.Meta] = Unset,
     ) -> stores_api.StoreZone:
         """
         Create store zone (Создание зоны склада)
@@ -2375,9 +2376,9 @@ class MoySkladClient:
         self,
         store_id: str,
         zone_id: str,
-        name: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        meta: typing.Optional[types.Meta] = None,
+        name: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        meta: typing.Union[Unset, types.Meta] = Unset,
     ) -> stores_api.StoreZone:
         """
         Update store zone (Обновление зоны склада)
@@ -2442,8 +2443,8 @@ class MoySkladClient:
     async def get_store_slots(
         self,
         store_id: str,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Union[Unset, int] = Unset,
+        offset: typing.Union[Unset, int] = Unset,
     ) -> typing.List[stores_api.StoreSlot]:
         """
         Get store slots (Получение ячеек склада)
@@ -2466,9 +2467,9 @@ class MoySkladClient:
         self,
         store_id: str,
         name: str,
-        external_code: typing.Optional[str] = None,
-        meta: typing.Optional[types.Meta] = None,
-        zone: typing.Optional[types.Meta] = None,
+        external_code: typing.Union[Unset, str] = Unset,
+        meta: typing.Union[Unset, types.Meta] = Unset,
+        zone: typing.Union[Unset, types.Meta] = Unset,
     ) -> stores_api.StoreSlot:
         """
         Create store slot (Создание ячейки склада)
@@ -2495,10 +2496,10 @@ class MoySkladClient:
         self,
         store_id: str,
         slot_id: str,
-        name: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        meta: typing.Optional[types.Meta] = None,
-        zone: typing.Optional[types.Meta] = None,
+        name: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        meta: typing.Union[Unset, types.Meta] = Unset,
+        zone: typing.Union[Unset, types.Meta] = Unset,
     ) -> stores_api.StoreSlot:
         """
         Update store slot (Обновление ячейки склада)
@@ -2565,9 +2566,9 @@ class MoySkladClient:
     # supplies
     async def get_supplies(
         self,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
-        search: typing.Optional[str] = None,
+        limit: typing.Union[Unset, int] = Unset,
+        offset: typing.Union[Unset, int] = Unset,
+        search: typing.Union[Unset, str] = Unset,
     ) -> typing.List[supplies_api.Supply]:
         """
         Get supplies ;ost (Получение списка приёмок)
@@ -2591,32 +2592,32 @@ class MoySkladClient:
         organization: types.Meta,
         agent: types.Meta,
         store: types.Meta,
-        agent_account: typing.Optional[types.Meta] = None,
-        applicable: typing.Optional[bool] = None,
-        attributes: typing.Optional[typing.List[dict]] = None,
-        code: typing.Optional[str] = None,
-        contract: typing.Optional[types.Meta] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        files: typing.Optional[types.MetaArray] = None,
-        group: typing.Optional[types.Meta] = None,
-        incoming_date: typing.Optional[datetime.datetime] = None,
-        incoming_number: typing.Optional[str] = None,
-        moment: typing.Optional[datetime.datetime] = None,
-        name: typing.Optional[str] = None,
-        organization_account: typing.Optional[types.Meta] = None,
-        overhead: typing.Optional[dict] = None,
-        owner: typing.Optional[types.Meta] = None,
-        positions: typing.Optional[
+        agent_account: typing.Union[Unset, types.Meta] = Unset,
+        applicable: typing.Union[Unset, bool] = Unset,
+        attributes: typing.Union[Unset, typing.List[dict]] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        contract: typing.Union[Unset, types.Meta] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        files: typing.Union[Unset, types.MetaArray] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        incoming_date: typing.Union[Unset, datetime.datetime] = Unset,
+        incoming_number: typing.Union[Unset, str] = Unset,
+        moment: typing.Union[Unset, datetime.datetime] = Unset,
+        name: typing.Union[Unset, str] = Unset,
+        organization_account: typing.Union[Unset, types.Meta] = Unset,
+        overhead: typing.Union[Unset, dict] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        positions: typing.Union[Unset,
             typing.List[supplies_api.CreateSupplyRequest.CreatePosition]
-        ] = None,
-        project: typing.Optional[types.Meta] = None,
-        rate: typing.Optional[dict] = None,
-        shared: typing.Optional[bool] = None,
-        state: typing.Optional[types.Meta] = None,
-        sync_id: typing.Optional[str] = None,
-        vat_enabled: typing.Optional[bool] = None,
-        vat_included: typing.Optional[bool] = None,
+        ] = Unset,
+        project: typing.Union[Unset, types.Meta] = Unset,
+        rate: typing.Union[Unset, dict] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        state: typing.Union[Unset, types.Meta] = Unset,
+        sync_id: typing.Union[Unset, str] = Unset,
+        vat_enabled: typing.Union[Unset, bool] = Unset,
+        vat_included: typing.Union[Unset, bool] = Unset,
     ) -> supplies_api.Supply:
         """
         Create supply (Создание приёмки)
@@ -2711,35 +2712,35 @@ class MoySkladClient:
     async def update_supply(
         self,
         supply_id: str,
-        organization: typing.Optional[types.Meta],
-        agent: typing.Optional[types.Meta],
-        store: typing.Optional[types.Meta],
-        agent_account: typing.Optional[types.Meta] = None,
-        applicable: typing.Optional[bool] = None,
-        attributes: typing.Optional[typing.List[dict]] = None,
-        code: typing.Optional[str] = None,
-        contract: typing.Optional[types.Meta] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        files: typing.Optional[types.MetaArray] = None,
-        group: typing.Optional[types.Meta] = None,
-        incoming_date: typing.Optional[datetime.datetime] = None,
-        incoming_number: typing.Optional[str] = None,
-        moment: typing.Optional[datetime.datetime] = None,
-        name: typing.Optional[str] = None,
-        organization_account: typing.Optional[types.Meta] = None,
-        overhead: typing.Optional[dict] = None,
-        owner: typing.Optional[types.Meta] = None,
-        positions: typing.Optional[
+        organization: typing.Union[Unset, types.Meta],
+        agent: typing.Union[Unset, types.Meta],
+        store: typing.Union[Unset, types.Meta],
+        agent_account: typing.Union[Unset, types.Meta] = Unset,
+        applicable: typing.Union[Unset, bool] = Unset,
+        attributes: typing.Union[Unset, typing.List[dict]] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        contract: typing.Union[Unset, types.Meta] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        files: typing.Union[Unset, types.MetaArray] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        incoming_date: typing.Union[Unset, datetime.datetime] = Unset,
+        incoming_number: typing.Union[Unset, str] = Unset,
+        moment: typing.Union[Unset, datetime.datetime] = Unset,
+        name: typing.Union[Unset, str] = Unset,
+        organization_account: typing.Union[Unset, types.Meta] = Unset,
+        overhead: typing.Union[Unset, dict] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        positions: typing.Union[Unset,
             typing.List[supplies_api.UpdateSupplyRequest.UpdatePosition]
-        ] = None,
-        project: typing.Optional[types.Meta] = None,
-        rate: typing.Optional[dict] = None,
-        shared: typing.Optional[bool] = None,
-        state: typing.Optional[types.Meta] = None,
-        sync_id: typing.Optional[str] = None,
-        vat_enabled: typing.Optional[bool] = None,
-        vat_included: typing.Optional[bool] = None,
+        ] = Unset,
+        project: typing.Union[Unset, types.Meta] = Unset,
+        rate: typing.Union[Unset, dict] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        state: typing.Union[Unset, types.Meta] = Unset,
+        sync_id: typing.Union[Unset, str] = Unset,
+        vat_enabled: typing.Union[Unset, bool] = Unset,
+        vat_included: typing.Union[Unset, bool] = Unset,
     ) -> supplies_api.Supply:
         """
         Update supply (Редактировать приемку)
@@ -2810,8 +2811,8 @@ class MoySkladClient:
     async def get_supply_positions(
         self,
         supply_id: str,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Union[Unset, int] = Unset,
+        offset: typing.Union[Unset, int] = Unset,
     ) -> typing.List[supplies_api.Position]:
         """
         Get supply positions
@@ -2835,11 +2836,11 @@ class MoySkladClient:
         supply_id: str,
         assortment: types.Meta,
         quantity: float,
-        price: typing.Optional[float] = None,
-        discount: typing.Optional[int] = None,
-        vat: typing.Optional[int] = None,
-        tracking_codes: typing.Optional[typing.List[dict]] = None,
-        overhead: typing.Optional[float] = None,
+        price: typing.Union[Unset, float] = Unset,
+        discount: typing.Union[Unset, int] = Unset,
+        vat: typing.Union[Unset, int] = Unset,
+        tracking_codes: typing.Union[Unset, typing.List[dict]] = Unset,
+        overhead: typing.Union[Unset, float] = Unset,
     ) -> supplies_api.Position:
         """
         Create supply position
@@ -2892,13 +2893,13 @@ class MoySkladClient:
         self,
         supply_id: str,
         position_id: str,
-        assortment: typing.Optional[types.Meta] = None,
-        quantity: typing.Optional[int] = None,
-        price: typing.Optional[float] = None,
-        discount: typing.Optional[int] = None,
-        vat: typing.Optional[int] = None,
-        tracking_codes: typing.Optional[typing.List[dict]] = None,
-        overhead: typing.Optional[float] = None,
+        assortment: typing.Union[Unset, types.Meta] = Unset,
+        quantity: typing.Union[Unset, int] = Unset,
+        price: typing.Union[Unset, float] = Unset,
+        discount: typing.Union[Unset, int] = Unset,
+        vat: typing.Union[Unset, int] = Unset,
+        tracking_codes: typing.Union[Unset, typing.List[dict]] = Unset,
+        overhead: typing.Union[Unset, float] = Unset,
     ) -> supplies_api.Position:
         """
         Update supply position
@@ -2954,33 +2955,33 @@ class MoySkladClient:
         organization: types.Meta,
         agent: types.Meta,
         store: types.Meta,
-        agent_account: typing.Optional[types.Meta] = None,
-        applicable: typing.Optional[bool] = None,
-        attributes: typing.Optional[list] = None,
-        code: typing.Optional[str] = None,
-        contract: typing.Optional[types.Meta] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        files: typing.Optional[types.MetaArray] = None,
-        group: typing.Optional[types.Meta] = None,
-        moment: typing.Optional[datetime.datetime] = None,
-        name: typing.Optional[str] = None,
-        organization_account: typing.Optional[bool] = None,
-        overhead: typing.Optional[dict] = None,
-        owner: typing.Optional[types.Meta] = None,
-        positions: typing.Optional[
+        agent_account: typing.Union[Unset, types.Meta] = Unset,
+        applicable: typing.Union[Unset, bool] = Unset,
+        attributes: typing.Union[Unset, list] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        contract: typing.Union[Unset, types.Meta] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        files: typing.Union[Unset, types.MetaArray] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        moment: typing.Union[Unset, datetime.datetime] = Unset,
+        name: typing.Union[Unset, str] = Unset,
+        organization_account: typing.Union[Unset, bool] = Unset,
+        overhead: typing.Union[Unset, dict] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        positions: typing.Union[Unset,
             demands_api.CreateDemandRequest.CreateDemandPosition
-        ] = None,
-        project: typing.Optional[types.Meta] = None,
-        rate: typing.Optional[dict] = None,
-        sales_channel: typing.Optional[bool] = None,
-        shared: typing.Optional[bool] = None,
-        shipment_address: typing.Optional[str] = None,
-        shipment_address_full: typing.Optional[dict] = None,
-        state: typing.Optional[types.Meta] = None,
-        sync_id: typing.Optional[str] = None,
-        vat_enabled: typing.Optional[bool] = None,
-        vat_included: typing.Optional[bool] = None,
+        ] = Unset,
+        project: typing.Union[Unset, types.Meta] = Unset,
+        rate: typing.Union[Unset, dict] = Unset,
+        sales_channel: typing.Union[Unset, bool] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        shipment_address: typing.Union[Unset, str] = Unset,
+        shipment_address_full: typing.Union[Unset, dict] = Unset,
+        state: typing.Union[Unset, types.Meta] = Unset,
+        sync_id: typing.Union[Unset, str] = Unset,
+        vat_enabled: typing.Union[Unset, bool] = Unset,
+        vat_included: typing.Union[Unset, bool] = Unset,
     ) -> demands_api.Demand:
         """
         Creates a demand
@@ -3062,9 +3063,9 @@ class MoySkladClient:
 
     async def get_demands(
         self,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
-        search: typing.Optional[str] = None,
+        limit: typing.Union[Unset, int] = Unset,
+        offset: typing.Union[Unset, int] = Unset,
+        search: typing.Union[Unset, str] = Unset,
     ) -> typing.List[demands_api.Demand]:
         """
         Get demands
@@ -3086,36 +3087,36 @@ class MoySkladClient:
     async def update_demand(
         self,
         demand_id: str,
-        organization: typing.Optional[types.Meta] = None,
-        agent: typing.Optional[types.Meta] = None,
-        store: typing.Optional[types.Meta] = None,
-        agent_account: typing.Optional[types.Meta] = None,
-        applicable: typing.Optional[bool] = None,
-        attributes: typing.Optional[list] = None,
-        code: typing.Optional[str] = None,
-        contract: typing.Optional[types.Meta] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        files: typing.Optional[types.MetaArray] = None,
-        group: typing.Optional[types.Meta] = None,
-        moment: typing.Optional[datetime.datetime] = None,
-        name: typing.Optional[str] = None,
-        organization_account: typing.Optional[bool] = None,
-        overhead: typing.Optional[dict] = None,
-        owner: typing.Optional[types.Meta] = None,
-        positions: typing.Optional[
+        organization: typing.Union[Unset, types.Meta] = Unset,
+        agent: typing.Union[Unset, types.Meta] = Unset,
+        store: typing.Union[Unset, types.Meta] = Unset,
+        agent_account: typing.Union[Unset, types.Meta] = Unset,
+        applicable: typing.Union[Unset, bool] = Unset,
+        attributes: typing.Union[Unset, list] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        contract: typing.Union[Unset, types.Meta] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        files: typing.Union[Unset, types.MetaArray] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        moment: typing.Union[Unset, datetime.datetime] = Unset,
+        name: typing.Union[Unset, str] = Unset,
+        organization_account: typing.Union[Unset, bool] = Unset,
+        overhead: typing.Union[Unset, dict] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        positions: typing.Union[Unset,
             demands_api.UpdateDemandRequest.UpdateDemandPosition
-        ] = None,
-        project: typing.Optional[types.Meta] = None,
-        rate: typing.Optional[dict] = None,
-        sales_channel: typing.Optional[bool] = None,
-        shared: typing.Optional[bool] = None,
-        shipment_address: typing.Optional[str] = None,
-        shipment_address_full: typing.Optional[dict] = None,
-        state: typing.Optional[types.Meta] = None,
-        sync_id: typing.Optional[str] = None,
-        vat_enabled: typing.Optional[bool] = None,
-        vat_included: typing.Optional[bool] = None,
+        ] = Unset,
+        project: typing.Union[Unset, types.Meta] = Unset,
+        rate: typing.Union[Unset, dict] = Unset,
+        sales_channel: typing.Union[Unset, bool] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        shipment_address: typing.Union[Unset, str] = Unset,
+        shipment_address_full: typing.Union[Unset, dict] = Unset,
+        state: typing.Union[Unset, types.Meta] = Unset,
+        sync_id: typing.Union[Unset, str] = Unset,
+        vat_enabled: typing.Union[Unset, bool] = Unset,
+        vat_included: typing.Union[Unset, bool] = Unset,
     ) -> demands_api.Demand:
         """
 
@@ -3292,8 +3293,8 @@ class MoySkladClient:
     # organizations
     async def get_organizations(
         self,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Union[Unset, int] = Unset,
+        offset: typing.Union[Unset, int] = Unset,
     ) -> typing.List[organizations_api.Organization]:
         """
 
@@ -3320,21 +3321,21 @@ class MoySkladClient:
     async def create_organization(
         self,
         name: str,
-        actual_address: typing.Optional[str] = None,
-        actual_address_full: typing.Optional[dict] = None,
+        actual_address: typing.Union[Unset, str] = Unset,
+        actual_address_full: typing.Union[Unset, dict] = Unset,
         archived: bool = None,
-        attributes: typing.Optional[typing.List[dict]] = None,
-        bonus_program: typing.Optional[types.Meta] = None,
-        code: typing.Optional[str] = None,
-        company_type: typing.Literal["legal", "entrepreneur", "individual"] = None,
-        description: typing.Optional[str] = None,
+        attributes: typing.Union[Unset, typing.List[dict]] = Unset,
+        bonus_program: typing.Union[Unset, types.Meta] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        company_type: typing.Literal["legal", "entrepreneur", "individual"] = Unset,
+        description: typing.Union[Unset, str] = Unset,
         external_code: str = None,
         group: types.Meta = None,
-        owner: typing.Optional[types.Meta] = None,
+        owner: typing.Union[Unset, types.Meta] = Unset,
         shared: bool = None,
-        sync_id: typing.Optional[str] = None,
-        tracking_contract_date: typing.Optional[datetime.datetime] = None,
-        tracking_contract_number: typing.Optional[str] = None,
+        sync_id: typing.Union[Unset, str] = Unset,
+        tracking_contract_date: typing.Union[Unset, datetime.datetime] = Unset,
+        tracking_contract_number: typing.Union[Unset, str] = Unset,
     ) -> organizations_api.Organization:
         """
 
@@ -3380,22 +3381,22 @@ class MoySkladClient:
     async def update_organization(
         self,
         organization_id: str,
-        name: typing.Optional[str] = None,
-        actual_address: typing.Optional[str] = None,
-        actual_address_full: typing.Optional[dict] = None,
+        name: typing.Union[Unset, str] = Unset,
+        actual_address: typing.Union[Unset, str] = Unset,
+        actual_address_full: typing.Union[Unset, dict] = Unset,
         archived: bool = None,
-        attributes: typing.Optional[typing.List[dict]] = None,
-        bonus_program: typing.Optional[types.Meta] = None,
-        code: typing.Optional[str] = None,
-        company_type: typing.Literal["legal", "entrepreneur", "individual"] = None,
-        description: typing.Optional[str] = None,
+        attributes: typing.Union[Unset, typing.List[dict]] = Unset,
+        bonus_program: typing.Union[Unset, types.Meta] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        company_type: typing.Literal["legal", "entrepreneur", "individual"] = Unset,
+        description: typing.Union[Unset, str] = Unset,
         external_code: str = None,
         group: types.Meta = None,
-        owner: typing.Optional[types.Meta] = None,
+        owner: typing.Union[Unset, types.Meta] = Unset,
         shared: bool = None,
-        sync_id: typing.Optional[str] = None,
-        tracking_contract_date: typing.Optional[datetime.datetime] = None,
-        tracking_contract_number: typing.Optional[str] = None,
+        sync_id: typing.Union[Unset, str] = Unset,
+        tracking_contract_date: typing.Union[Unset, datetime.datetime] = Unset,
+        tracking_contract_number: typing.Union[Unset, str] = Unset,
     ) -> organizations_api.Organization:
         """
 
@@ -3455,7 +3456,7 @@ class MoySkladClient:
         url: str,
         entity_type: str,
         action: str,
-        diff_type: typing.Optional[str] = None,
+        diff_type: typing.Union[Unset, str] = Unset,
     ) -> webhooks_api.Webhook:
         """
         Create a webhook
@@ -3499,10 +3500,10 @@ class MoySkladClient:
     async def update_webhook(
         self,
         webhook_id: str,
-        url: typing.Optional[str] = None,
-        entity_type: typing.Optional[str] = None,
-        action: typing.Optional[str] = None,
-        diff_type: typing.Optional[str] = None,
+        url: typing.Union[Unset, str] = Unset,
+        entity_type: typing.Union[Unset, str] = Unset,
+        action: typing.Union[Unset, str] = Unset,
+        diff_type: typing.Union[Unset, str] = Unset,
     ) -> webhooks_api.Webhook:
         """
         Update a webhook
@@ -3526,9 +3527,9 @@ class MoySkladClient:
     # invoice in
     async def get_invoices_in(
         self,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
-        search: typing.Optional[str] = None,
+        limit: typing.Union[Unset, int] = Unset,
+        offset: typing.Union[Unset, int] = Unset,
+        search: typing.Union[Unset, str] = Unset,
     ) -> typing.List[invoice_in_api.InvoiceIn]:
         """
         Get invoices in
@@ -3552,32 +3553,32 @@ class MoySkladClient:
         name: str,
         organization: types.Meta,
         agent: types.Meta,
-        agent_account: typing.Optional[types.Meta] = None,
-        applicable: typing.Optional[bool] = None,
-        attributes: typing.Optional[typing.List[dict]] = None,
-        code: typing.Optional[str] = None,
-        contract: typing.Optional[types.Meta] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        files: typing.Optional[types.MetaArray] = None,
-        group: typing.Optional[types.Meta] = None,
-        incoming_date: typing.Optional[datetime.datetime] = None,
-        incoming_number: typing.Optional[float] = None,
-        moment: typing.Optional[datetime.datetime] = None,
-        organization_account: typing.Optional[types.Meta] = None,
-        owner: typing.Optional[types.Meta] = None,
-        payed_sum: typing.Optional[float] = None,
-        payment_planned_moment: typing.Optional[datetime.datetime] = None,
-        positions: typing.Optional[
+        agent_account: typing.Union[Unset, types.Meta] = Unset,
+        applicable: typing.Union[Unset, bool] = Unset,
+        attributes: typing.Union[Unset, typing.List[dict]] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        contract: typing.Union[Unset, types.Meta] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        files: typing.Union[Unset, types.MetaArray] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        incoming_date: typing.Union[Unset, datetime.datetime] = Unset,
+        incoming_number: typing.Union[Unset, float] = Unset,
+        moment: typing.Union[Unset, datetime.datetime] = Unset,
+        organization_account: typing.Union[Unset, types.Meta] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        payed_sum: typing.Union[Unset, float] = Unset,
+        payment_planned_moment: typing.Union[Unset, datetime.datetime] = Unset,
+        positions: typing.Union[Unset,
             typing.List[invoice_in_api.CreateInvoiceInRequest.CreateInvoiceInPosition]
-        ] = None,
-        project: typing.Optional[types.Meta] = None,
-        rate: typing.Optional[dict] = None,
-        shared: typing.Optional[bool] = None,
-        state: typing.Optional[types.Meta] = None,
-        store: typing.Optional[types.Meta] = None,
-        vat_enabled: typing.Optional[bool] = None,
-        vat_included: typing.Optional[bool] = None,
+        ] = Unset,
+        project: typing.Union[Unset, types.Meta] = Unset,
+        rate: typing.Union[Unset, dict] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        state: typing.Union[Unset, types.Meta] = Unset,
+        store: typing.Union[Unset, types.Meta] = Unset,
+        vat_enabled: typing.Union[Unset, bool] = Unset,
+        vat_included: typing.Union[Unset, bool] = Unset,
     ) -> typing.List[invoice_in_api.InvoiceIn]:
         """
         Создание счета поставщика
@@ -3665,35 +3666,35 @@ class MoySkladClient:
     async def update_invoice_in(
         self,
         invoice_in_id: str,
-        name: typing.Optional[str],
-        organization: typing.Optional[types.Meta],
-        agent: typing.Optional[types.Meta],
-        agent_account: typing.Optional[types.Meta] = None,
-        applicable: typing.Optional[bool] = None,
-        attributes: typing.Optional[typing.List[dict]] = None,
-        code: typing.Optional[str] = None,
-        contract: typing.Optional[types.Meta] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        files: typing.Optional[types.MetaArray] = None,
-        group: typing.Optional[types.Meta] = None,
-        incoming_date: typing.Optional[datetime.datetime] = None,
-        incoming_number: typing.Optional[float] = None,
-        moment: typing.Optional[datetime.datetime] = None,
-        organization_account: typing.Optional[types.Meta] = None,
-        owner: typing.Optional[types.Meta] = None,
-        payed_sum: typing.Optional[float] = None,
-        payment_planned_moment: typing.Optional[datetime.datetime] = None,
-        positions: typing.Optional[
+        name: typing.Union[Unset, str],
+        organization: typing.Union[Unset, types.Meta],
+        agent: typing.Union[Unset, types.Meta],
+        agent_account: typing.Union[Unset, types.Meta] = Unset,
+        applicable: typing.Union[Unset, bool] = Unset,
+        attributes: typing.Union[Unset, typing.List[dict]] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        contract: typing.Union[Unset, types.Meta] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        files: typing.Union[Unset, types.MetaArray] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        incoming_date: typing.Union[Unset, datetime.datetime] = Unset,
+        incoming_number: typing.Union[Unset, float] = Unset,
+        moment: typing.Union[Unset, datetime.datetime] = Unset,
+        organization_account: typing.Union[Unset, types.Meta] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        payed_sum: typing.Union[Unset, float] = Unset,
+        payment_planned_moment: typing.Union[Unset, datetime.datetime] = Unset,
+        positions: typing.Union[Unset,
             typing.List[invoice_in_api.UpdateInvoiceInRequest.UpdateInvoiceInPosition]
-        ] = None,
-        project: typing.Optional[types.Meta] = None,
-        rate: typing.Optional[dict] = None,
-        shared: typing.Optional[bool] = None,
-        state: typing.Optional[types.Meta] = None,
-        store: typing.Optional[types.Meta] = None,
-        vat_enabled: typing.Optional[bool] = None,
-        vat_included: typing.Optional[bool] = None,
+        ] = Unset,
+        project: typing.Union[Unset, types.Meta] = Unset,
+        rate: typing.Union[Unset, dict] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        state: typing.Union[Unset, types.Meta] = Unset,
+        store: typing.Union[Unset, types.Meta] = Unset,
+        vat_enabled: typing.Union[Unset, bool] = Unset,
+        vat_included: typing.Union[Unset, bool] = Unset,
     ) -> invoice_in_api.InvoiceIn:
         """
         Изменение счета поставщика
@@ -3763,8 +3764,8 @@ class MoySkladClient:
     async def get_invoice_in_positions(
         self,
         invoice_in_id: str,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Union[Unset, int] = Unset,
+        offset: typing.Union[Unset, int] = Unset,
     ) -> typing.List[invoice_in_api.InvoiceInPosition]:
         """
         Get invoice in positions
@@ -3808,9 +3809,9 @@ class MoySkladClient:
         invoice_in_id: str,
         quantity: float,
         assortment: types.Meta,
-        price: typing.Optional[float] = None,
-        discount: typing.Optional[float] = None,
-        vat: typing.Optional[float] = None,
+        price: typing.Union[Unset, float] = Unset,
+        discount: typing.Union[Unset, float] = Unset,
+        vat: typing.Union[Unset, float] = Unset,
     ) -> invoice_in_api.InvoiceInPosition:
         """
         Добавить позицию счета поставщика
@@ -3857,11 +3858,11 @@ class MoySkladClient:
         self,
         invoice_in_id: str,
         position_id: str,
-        quantity: typing.Optional[float] = None,
-        assortment: typing.Optional[types.Meta] = None,
-        price: typing.Optional[float] = None,
-        discount: typing.Optional[float] = None,
-        vat: typing.Optional[float] = None,
+        quantity: typing.Union[Unset, float] = Unset,
+        assortment: typing.Union[Unset, types.Meta] = Unset,
+        price: typing.Union[Unset, float] = Unset,
+        discount: typing.Union[Unset, float] = Unset,
+        vat: typing.Union[Unset, float] = Unset,
     ) -> invoice_in_api.InvoiceInPosition:
         """
         Изменить позицию счета поставщика

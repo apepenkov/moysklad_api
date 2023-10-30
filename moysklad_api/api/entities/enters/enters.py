@@ -1,6 +1,7 @@
 import typing
 import datetime
 from .... import types
+from ....types import Unset
 
 
 class Enter(types.MoySkladBaseClass):
@@ -207,7 +208,7 @@ class GetEntersRequest(types.ApiRequest):
         self,
         limit: typing.Optional[int] = 1000,
         offset: typing.Optional[int] = 0,
-        search: typing.Optional[str] = None,
+        search: typing.Union[Unset, str] = Unset,
     ):
         """
 
@@ -221,11 +222,11 @@ class GetEntersRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         params = {}
-        if self.limit is not None:
+        if self.limit != Unset:
             params["limit"] = self.limit
-        if self.offset is not None:
+        if self.offset != Unset:
             params["offset"] = self.offset
-        if self.search is not None:
+        if self.search != Unset:
             params["search"] = self.search
         return {
             "method": "GET",
@@ -294,20 +295,20 @@ class CreateEnterRequest(types.ApiRequest):
         self,
         organization: types.Meta,
         store: types.Meta,
-        applicable: typing.Optional[bool] = None,
-        attributes: typing.Optional[list] = None,
-        code: typing.Optional[str] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        files: typing.Optional[types.MetaArray] = None,
-        group: typing.Optional[types.Meta] = None,
-        moment: typing.Optional[datetime.datetime] = None,
-        name: typing.Optional[str] = None,
-        overhead: typing.Optional[dict] = None,
-        positions: typing.Optional[typing.List[CreateEnterPosition]] = None,
-        project: typing.Optional[types.Meta] = None,
-        rate: typing.Optional[dict] = None,
-        shared: typing.Optional[bool] = None,
+        applicable: typing.Union[Unset, bool] = Unset,
+        attributes: typing.Union[Unset, list] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        files: typing.Union[Unset, types.MetaArray] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        moment: typing.Union[Unset, datetime.datetime] = Unset,
+        name: typing.Union[Unset, str] = Unset,
+        overhead: typing.Union[Unset, dict] = Unset,
+        positions: typing.Union[Unset, typing.List[CreateEnterPosition]] = Unset,
+        project: typing.Union[Unset, types.Meta] = Unset,
+        rate: typing.Union[Unset, dict] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
     ):
         """
 
@@ -350,72 +351,76 @@ class CreateEnterRequest(types.ApiRequest):
             "organization": {"meta": self.organization},
             "store": {"meta": self.store},
         }
-        if self.applicable is not None:
+        if self.applicable != Unset:
             json_data["applicable"] = self.applicable
-        if self.attributes is not None:
+        if self.attributes != Unset:
             json_data["attributes"] = self.attributes
-        if self.code is not None:
+        if self.code != Unset:
             json_data["code"] = self.code
-        if self.description is not None:
+        if self.description != Unset:
             json_data["description"] = self.description
-        if self.external_code is not None:
+        if self.external_code != Unset:
             json_data["externalCode"] = self.external_code
-        if self.files is not None:
+        if self.files != Unset:
             json_data["files"] = self.files
-        if self.group is not None:
-            json_data["group"] = {"meta": self.group}
-        if self.moment is not None:
+        if self.group != Unset:
+            json_data["group"] = (
+                {"meta": self.group} if self.group is not None else None
+            )
+        if self.moment != Unset:
             json_data["moment"] = self.moment.strftime("%Y-%m-%d %H:%M:%S")
-        if self.name is not None:
+        if self.name != Unset:
             json_data["name"] = self.name
-        if self.overhead is not None:
+        if self.overhead != Unset:
             json_data["overhead"] = self.overhead
-        if self.positions is not None:
+        if self.positions != Unset:
             json_data["positions"] = []
             for position in self.positions:
                 pos = {}
                 assortment = position.get("assortment")
-                if assortment is not None:
+                if assortment != Unset:
                     pos["assortment"] = {"meta": assortment}
                 else:
                     raise ValueError("Assortment is required for position")
                 price = position.get("price")
-                if price is not None:
+                if price != Unset:
                     pos["price"] = price
                 else:
                     raise ValueError("Price is required for position")
                 quantity = position.get("quantity")
-                if quantity is not None:
+                if quantity != Unset:
                     pos["quantity"] = quantity
                 else:
                     raise ValueError("Quantity is required for position")
                 country = position.get("country")
-                if country is not None:
+                if country != Unset:
                     pos["country"] = {"meta": country}
                 gtd = position.get("gtd")
-                if gtd is not None:
+                if gtd != Unset:
                     pos["gtd"] = gtd
                 pack = position.get("pack")
-                if pack is not None:
+                if pack != Unset:
                     pos["pack"] = pack
                 reason = position.get("reason")
-                if reason is not None:
+                if reason != Unset:
                     pos["reason"] = {"meta": reason}
                 slot = position.get("slot")
-                if slot is not None:
+                if slot != Unset:
                     pos["slot"] = {"meta": slot}
                 things = position.get("things")
-                if things is not None:
+                if things != Unset:
                     pos["things"] = things
                 pos_overhead = position.get("overhead")
-                if pos_overhead is not None:
+                if pos_overhead != Unset:
                     pos["overhead"] = pos_overhead
                 json_data["positions"].append(pos)
-        if self.project is not None:
-            json_data["project"] = {"meta": self.project}
-        if self.rate is not None:
+        if self.project != Unset:
+            json_data["project"] = (
+                {"meta": self.project} if self.project is not None else None
+            )
+        if self.rate != Unset:
             json_data["rate"] = self.rate
-        if self.shared is not None:
+        if self.shared != Unset:
             json_data["shared"] = self.shared
         return {
             "method": "POST",
@@ -490,22 +495,22 @@ class UpdateEnterRequest(types.ApiRequest):
     def __init__(
         self,
         enter_id: str,
-        organization: typing.Optional[str] = None,
-        store: typing.Optional[str] = None,
-        applicable: typing.Optional[bool] = None,
-        attributes: typing.Optional[dict] = None,
-        code: typing.Optional[str] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        files: typing.Optional[dict] = None,
-        group: typing.Optional[str] = None,
-        moment: typing.Optional[datetime.datetime] = None,
-        name: typing.Optional[str] = None,
-        overhead: typing.Optional[dict] = None,
-        positions: typing.Optional[typing.List[UpdateEnterPosition]] = None,
-        project: typing.Optional[str] = None,
-        rate: typing.Optional[str] = None,
-        shared: typing.Optional[bool] = None,
+        organization: typing.Union[Unset, str] = Unset,
+        store: typing.Union[Unset, str] = Unset,
+        applicable: typing.Union[Unset, bool] = Unset,
+        attributes: typing.Union[Unset, dict] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        files: typing.Union[Unset, dict] = Unset,
+        group: typing.Union[Unset, str] = Unset,
+        moment: typing.Union[Unset, datetime.datetime] = Unset,
+        name: typing.Union[Unset, str] = Unset,
+        overhead: typing.Union[Unset, dict] = Unset,
+        positions: typing.Union[Unset, typing.List[UpdateEnterPosition]] = Unset,
+        project: typing.Union[Unset, str] = Unset,
+        rate: typing.Union[Unset, str] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
     ):
         """
 
@@ -547,76 +552,84 @@ class UpdateEnterRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         json_data = {}
-        if self.organization is not None:
-            json_data["organization"] = {"meta": self.organization}
-        if self.store is not None:
-            json_data["store"] = {"meta": self.store}
-        if self.applicable is not None:
+        if self.organization != Unset:
+            json_data["organization"] = (
+                {"meta": self.organization} if self.organization is not None else None
+            )
+        if self.store != Unset:
+            json_data["store"] = (
+                {"meta": self.store} if self.store is not None else None
+            )
+        if self.applicable != Unset:
             json_data["applicable"] = self.applicable
-        if self.attributes is not None:
+        if self.attributes != Unset:
             json_data["attributes"] = self.attributes
-        if self.code is not None:
+        if self.code != Unset:
             json_data["code"] = self.code
-        if self.description is not None:
+        if self.description != Unset:
             json_data["description"] = self.description
-        if self.external_code is not None:
+        if self.external_code != Unset:
             json_data["externalCode"] = self.external_code
-        if self.files is not None:
+        if self.files != Unset:
             json_data["files"] = self.files
-        if self.group is not None:
-            json_data["group"] = {"meta": self.group}
-        if self.moment is not None:
+        if self.group != Unset:
+            json_data["group"] = (
+                {"meta": self.group} if self.group is not None else None
+            )
+        if self.moment != Unset:
             json_data["moment"] = self.moment.strftime("%Y-%m-%d %H:%M:%S")
-        if self.name is not None:
+        if self.name != Unset:
             json_data["name"] = self.name
-        if self.overhead is not None:
+        if self.overhead != Unset:
             json_data["overhead"] = self.overhead
-        if self.positions is not None:
+        if self.positions != Unset:
             json_data["positions"] = []
             for position in self.positions:
                 pos = {}
                 assortment = position.get("assortment")
-                if assortment is not None:
+                if assortment != Unset:
                     pos["assortment"] = {"meta": assortment}
                 else:
                     raise ValueError("Assortment is required for position")
                 price = position.get("price")
-                if price is not None:
+                if price != Unset:
                     pos["price"] = price
                 else:
                     raise ValueError("Price is required for position")
                 quantity = position.get("quantity")
-                if quantity is not None:
+                if quantity != Unset:
                     pos["quantity"] = quantity
                 else:
                     raise ValueError("Quantity is required for position")
                 country = position.get("country")
-                if country is not None:
+                if country != Unset:
                     pos["country"] = {"meta": country}
                 gtd = position.get("gtd")
-                if gtd is not None:
+                if gtd != Unset:
                     pos["gtd"] = gtd
                 pack = position.get("pack")
-                if pack is not None:
+                if pack != Unset:
                     pos["pack"] = pack
                 reason = position.get("reason")
-                if reason is not None:
+                if reason != Unset:
                     pos["reason"] = {"meta": reason}
                 slot = position.get("slot")
-                if slot is not None:
+                if slot != Unset:
                     pos["slot"] = {"meta": slot}
                 things = position.get("things")
-                if things is not None:
+                if things != Unset:
                     pos["things"] = things
                 pos_overhead = position.get("overhead")
-                if pos_overhead is not None:
+                if pos_overhead != Unset:
                     pos["overhead"] = pos_overhead
                 json_data["positions"].append(pos)
-        if self.project is not None:
-            json_data["project"] = {"meta": self.project}
-        if self.rate is not None:
+        if self.project != Unset:
+            json_data["project"] = (
+                {"meta": self.project} if self.project is not None else None
+            )
+        if self.rate != Unset:
             json_data["rate"] = self.rate
-        if self.shared is not None:
+        if self.shared != Unset:
             json_data["shared"] = self.shared
         return {
             "method": "PUT",
@@ -656,9 +669,9 @@ class GetEnterPositionsRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         params = {}
-        if self.limit is not None:
+        if self.limit != Unset:
             params["limit"] = self.limit
-        if self.offset is not None:
+        if self.offset != Unset:
             params["offset"] = self.offset
         return {
             "method": "GET",
@@ -698,40 +711,40 @@ class CreateEnterPositionRequest(types.ApiRequest):
         for position in self.positions:
             pos = {}
             assortment = position.get("assortment")
-            if assortment is not None:
+            if assortment != Unset:
                 pos["assortment"] = {"meta": assortment}
             else:
                 raise ValueError("Assortment is required for position")
             price = position.get("price")
-            if price is not None:
+            if price != Unset:
                 pos["price"] = price
             else:
                 raise ValueError("Price is required for position")
             quantity = position.get("quantity")
-            if quantity is not None:
+            if quantity != Unset:
                 pos["quantity"] = quantity
             else:
                 raise ValueError("Quantity is required for position")
             country = position.get("country")
-            if country is not None:
+            if country != Unset:
                 pos["country"] = {"meta": country}
             gtd = position.get("gtd")
-            if gtd is not None:
+            if gtd != Unset:
                 pos["gtd"] = gtd
             pack = position.get("pack")
-            if pack is not None:
+            if pack != Unset:
                 pos["pack"] = pack
             reason = position.get("reason")
-            if reason is not None:
+            if reason != Unset:
                 pos["reason"] = {"meta": reason}
             slot = position.get("slot")
-            if slot is not None:
+            if slot != Unset:
                 pos["slot"] = {"meta": slot}
             things = position.get("things")
-            if things is not None:
+            if things != Unset:
                 pos["things"] = things
             pos_overhead = position.get("overhead")
-            if pos_overhead is not None:
+            if pos_overhead != Unset:
                 pos["overhead"] = pos_overhead
             json_data.append(pos)
         return {
@@ -806,13 +819,13 @@ class UpdateEnterPositionRequest(types.ApiRequest):
         assortment: types.Meta,
         price: float,
         quantity: float,
-        country: typing.Optional[types.Meta] = None,
-        gtd: typing.Optional[typing.Dict] = None,
-        pack: typing.Optional[typing.Dict] = None,
-        reason: typing.Optional[str] = None,
-        slot: typing.Optional[types.Meta] = None,
-        things: typing.Optional[typing.Dict] = None,
-        overhead: typing.Optional[int] = None,
+        country: typing.Union[Unset, types.Meta] = Unset,
+        gtd: typing.Union[Unset, typing.Dict] = Unset,
+        pack: typing.Union[Unset, typing.Dict] = Unset,
+        reason: typing.Union[Unset, str] = Unset,
+        slot: typing.Union[Unset, types.Meta] = Unset,
+        things: typing.Union[Unset, typing.Dict] = Unset,
+        overhead: typing.Union[Unset, int] = Unset,
     ):
         """
 

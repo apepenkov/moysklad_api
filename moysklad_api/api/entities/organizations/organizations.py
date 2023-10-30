@@ -2,6 +2,7 @@ import datetime
 import typing
 
 from .... import types
+from ....types import Unset
 
 
 class Organization(types.MoySkladBaseClass):
@@ -110,8 +111,8 @@ class GetOrganizationsRequest(types.ApiRequest):
 
     def __init__(
         self,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Union[Unset, int] = Unset,
+        offset: typing.Union[Unset, int] = Unset,
     ):
         """
 
@@ -123,9 +124,9 @@ class GetOrganizationsRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         params = {}
-        if self.limit is not None:
+        if self.limit != Unset:
             params["limit"] = self.limit
-        if self.offset is not None:
+        if self.offset != Unset:
             params["offset"] = self.offset
 
         return {
@@ -147,21 +148,21 @@ class CreateOrganizationRequest(types.ApiRequest):
     def __init__(
         self,
         name: str,
-        actual_address: typing.Optional[str] = None,
-        actual_address_full: typing.Optional[dict] = None,
-        archived: bool = None,
-        attributes: typing.Optional[typing.List[dict]] = None,
-        bonus_program: typing.Optional[types.Meta] = None,
-        code: typing.Optional[str] = None,
-        company_type: typing.Literal["legal", "entrepreneur", "individual"] = None,
-        description: typing.Optional[str] = None,
-        external_code: str = None,
-        group: types.Meta = None,
-        owner: typing.Optional[types.Meta] = None,
-        shared: bool = None,
-        sync_id: typing.Optional[str] = None,
-        tracking_contract_date: typing.Optional[datetime.datetime] = None,
-        tracking_contract_number: typing.Optional[str] = None,
+        actual_address: typing.Union[Unset, str] = Unset,
+        actual_address_full: typing.Union[Unset, dict] = Unset,
+        archived: bool = Unset,
+        attributes: typing.Union[Unset, typing.List[dict]] = Unset,
+        bonus_program: typing.Union[Unset, types.Meta] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        company_type: typing.Literal["legal", "entrepreneur", "individual"] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: str = Unset,
+        group: types.Meta = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        shared: bool = Unset,
+        sync_id: typing.Union[Unset, str] = Unset,
+        tracking_contract_date: typing.Union[Unset, datetime.datetime] = Unset,
+        tracking_contract_number: typing.Union[Unset, str] = Unset,
     ):
         """
 
@@ -203,37 +204,43 @@ class CreateOrganizationRequest(types.ApiRequest):
         json_data = {
             "name": self.name,
         }
-        if self.actual_address is not None:
+        if self.actual_address != Unset:
             json_data["actualAddress"] = self.actual_address
-        if self.actual_address_full is not None:
+        if self.actual_address_full != Unset:
             json_data["actualAddressFull"] = self.actual_address_full
-        if self.archived is not None:
+        if self.archived != Unset:
             json_data["archived"] = self.archived
-        if self.attributes is not None:
+        if self.attributes != Unset:
             json_data["attributes"] = self.attributes
-        if self.bonus_program is not None:
-            json_data["bonusProgram"] = {"meta": self.bonus_program}
-        if self.code is not None:
+        if self.bonus_program != Unset:
+            json_data["bonusProgram"] = (
+                {"meta": self.bonus_program} if self.bonus_program is not None else None
+            )
+        if self.code != Unset:
             json_data["code"] = self.code
-        if self.company_type is not None:
+        if self.company_type != Unset:
             json_data["companyType"] = self.company_type
-        if self.description is not None:
+        if self.description != Unset:
             json_data["description"] = self.description
-        if self.external_code is not None:
+        if self.external_code != Unset:
             json_data["externalCode"] = self.external_code
-        if self.group is not None:
-            json_data["group"] = {"meta": self.group}
-        if self.owner is not None:
-            json_data["owner"] = {"meta": self.owner}
-        if self.shared is not None:
+        if self.group != Unset:
+            json_data["group"] = (
+                {"meta": self.group} if self.group is not None else None
+            )
+        if self.owner != Unset:
+            json_data["owner"] = (
+                {"meta": self.owner} if self.owner is not None else None
+            )
+        if self.shared != Unset:
             json_data["shared"] = self.shared
-        if self.sync_id is not None:
+        if self.sync_id != Unset:
             json_data["syncId"] = self.sync_id
-        if self.tracking_contract_date is not None:
+        if self.tracking_contract_date != Unset:
             json_data["trackingContractDate"] = self.tracking_contract_date.strftime(
                 "%Y-%m-%d %H:%M:%S"
             )
-        if self.tracking_contract_number is not None:
+        if self.tracking_contract_number != Unset:
             json_data["trackingContractNumber"] = self.tracking_contract_number
 
         return {
@@ -294,22 +301,22 @@ class UpdateOrganizationRequest(types.ApiRequest):
     def __init__(
         self,
         organization_id: str,
-        name: typing.Optional[str] = None,
-        actual_address: typing.Optional[str] = None,
-        actual_address_full: typing.Optional[dict] = None,
-        archived: bool = None,
-        attributes: typing.Optional[typing.List[dict]] = None,
-        bonus_program: typing.Optional[types.Meta] = None,
-        code: typing.Optional[str] = None,
-        company_type: typing.Literal["legal", "entrepreneur", "individual"] = None,
-        description: typing.Optional[str] = None,
-        external_code: str = None,
-        group: types.Meta = None,
-        owner: typing.Optional[types.Meta] = None,
-        shared: bool = None,
-        sync_id: typing.Optional[str] = None,
-        tracking_contract_date: typing.Optional[datetime.datetime] = None,
-        tracking_contract_number: typing.Optional[str] = None,
+        name: typing.Union[Unset, str] = Unset,
+        actual_address: typing.Union[Unset, str] = Unset,
+        actual_address_full: typing.Union[Unset, dict] = Unset,
+        archived: typing.Union[Unset, bool] = Unset,
+        attributes: typing.Union[Unset, typing.List[dict]] = Unset,
+        bonus_program: typing.Union[Unset, types.Meta] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        company_type: typing.Literal["legal", "entrepreneur", "individual"] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        group: types.Meta = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        sync_id: typing.Union[Unset, str] = Unset,
+        tracking_contract_date: typing.Union[Unset, datetime.datetime] = Unset,
+        tracking_contract_number: typing.Union[Unset, str] = Unset,
     ):
         """
 
@@ -351,39 +358,45 @@ class UpdateOrganizationRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         json_data = {}
-        if self.name is not None:
+        if self.name != Unset:
             json_data["name"] = self.name
-        if self.actual_address is not None:
+        if self.actual_address != Unset:
             json_data["actualAddress"] = self.actual_address
-        if self.actual_address_full is not None:
+        if self.actual_address_full != Unset:
             json_data["actualAddressFull"] = self.actual_address_full
-        if self.archived is not None:
+        if self.archived != Unset:
             json_data["archived"] = self.archived
-        if self.attributes is not None:
+        if self.attributes != Unset:
             json_data["attributes"] = self.attributes
-        if self.bonus_program is not None:
-            json_data["bonusProgram"] = {"meta": self.bonus_program}
-        if self.code is not None:
+        if self.bonus_program != Unset:
+            json_data["bonusProgram"] = (
+                {"meta": self.bonus_program} if self.bonus_program is not None else None
+            )
+        if self.code != Unset:
             json_data["code"] = self.code
-        if self.company_type is not None:
+        if self.company_type != Unset:
             json_data["companyType"] = self.company_type
-        if self.description is not None:
+        if self.description != Unset:
             json_data["description"] = self.description
-        if self.external_code is not None:
+        if self.external_code != Unset:
             json_data["externalCode"] = self.external_code
-        if self.group is not None:
-            json_data["group"] = {"meta": self.group}
-        if self.owner is not None:
-            json_data["owner"] = {"meta": self.owner}
-        if self.shared is not None:
+        if self.group != Unset:
+            json_data["group"] = (
+                {"meta": self.group} if self.group is not None else None
+            )
+        if self.owner != Unset:
+            json_data["owner"] = (
+                {"meta": self.owner} if self.owner is not None else None
+            )
+        if self.shared != Unset:
             json_data["shared"] = self.shared
-        if self.sync_id is not None:
+        if self.sync_id != Unset:
             json_data["syncId"] = self.sync_id
-        if self.tracking_contract_date is not None:
+        if self.tracking_contract_date != Unset:
             json_data["trackingContractDate"] = self.tracking_contract_date.strftime(
                 "%Y-%m-%d %H:%M:%S"
             )
-        if self.tracking_contract_number is not None:
+        if self.tracking_contract_number != Unset:
             json_data["trackingContractNumber"] = self.tracking_contract_number
 
         return {

@@ -1,6 +1,7 @@
 import typing
 import datetime
 from .... import types
+from ....types import Unset
 
 
 class ProductFolder(types.MoySkladBaseClass):
@@ -132,9 +133,9 @@ class GetProductFoldersRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         params = {}
-        if self.limit is not None:
+        if self.limit != Unset:
             params["limit"] = self.limit
-        if self.offset is not None:
+        if self.offset != Unset:
             params["offset"] = self.offset
         return {
             "method": "GET",
@@ -169,15 +170,16 @@ class CreateProductFolderRequest(types.ApiRequest):
     def __init__(
         self,
         name: str,
-        code: typing.Optional[str] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        group: typing.Optional[types.Meta] = None,
-        meta: typing.Optional[types.Meta] = None,
-        owner: typing.Optional[types.Meta] = None,
-        product_folder: typing.Optional[types.Meta] = None,
-        shared: typing.Optional[bool] = None,
-        tax_system: typing.Optional[
+        code: typing.Union[Unset, str] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        meta: typing.Union[Unset, types.Meta] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        product_folder: typing.Union[Unset, types.Meta] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        tax_system: typing.Union[
+            Unset,
             typing.Literal[
                 "GENERAL_TAX_SYSTEM",
                 "PATENT_BASED",
@@ -186,11 +188,11 @@ class CreateProductFolderRequest(types.ApiRequest):
                 "SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME",
                 "TAX_SYSTEM_SAME_AS_GROUP",
                 "UNIFIED_AGRICULTURAL_TAX",
-            ]
-        ] = None,
-        use_parent_vat: typing.Optional[bool] = None,
-        vat: typing.Optional[int] = None,
-        vat_enabled: typing.Optional[bool] = None,
+            ],
+        ] = Unset,
+        use_parent_vat: typing.Union[Unset, bool] = Unset,
+        vat: typing.Union[Unset, int] = Unset,
+        vat_enabled: typing.Union[Unset, bool] = Unset,
     ):
         """
 
@@ -226,29 +228,37 @@ class CreateProductFolderRequest(types.ApiRequest):
         json_data = {
             "name": self.name,
         }
-        if self.code is not None:
+        if self.code != Unset:
             json_data["code"] = self.code
-        if self.description is not None:
+        if self.description != Unset:
             json_data["description"] = self.description
-        if self.external_code is not None:
+        if self.external_code != Unset:
             json_data["externalCode"] = self.external_code
-        if self.group is not None:
-            json_data["group"] = {"meta": self.group}
-        if self.meta is not None:
+        if self.group != Unset:
+            json_data["group"] = (
+                {"meta": self.group} if self.group is not None else None
+            )
+        if self.meta != Unset:
             json_data["meta"] = self.meta
-        if self.owner is not None:
-            json_data["owner"] = {"meta": self.owner}
-        if self.product_folder is not None:
-            json_data["productFolder"] = {"meta": self.product_folder}
-        if self.shared is not None:
+        if self.owner != Unset:
+            json_data["owner"] = (
+                {"meta": self.owner} if self.owner is not None else None
+            )
+        if self.product_folder != Unset:
+            json_data["productFolder"] = (
+                {"meta": self.product_folder}
+                if self.product_folder is not None
+                else None
+            )
+        if self.shared != Unset:
             json_data["shared"] = self.shared
-        if self.tax_system is not None:
+        if self.tax_system != Unset:
             json_data["taxSystem"] = self.tax_system
-        if self.use_parent_vat is not None:
+        if self.use_parent_vat != Unset:
             json_data["useParentVat"] = self.use_parent_vat
-        if self.vat is not None:
+        if self.vat != Unset:
             json_data["vat"] = self.vat
-        if self.vat_enabled is not None:
+        if self.vat_enabled != Unset:
             json_data["vatEnabled"] = self.vat_enabled
 
         return {
@@ -338,19 +348,19 @@ class UpdateProductFolderRequest(types.ApiRequest):
     def __init__(
         self,
         folder_id: str,
-        name: typing.Optional[str] = None,
-        code: typing.Optional[str] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        group: typing.Optional[types.Meta] = None,
-        meta: typing.Optional[types.Meta] = None,
-        owner: typing.Optional[types.Meta] = None,
-        product_folder: typing.Optional[types.Meta] = None,
-        shared: typing.Optional[bool] = None,
-        tax_system: typing.Optional[str] = None,
-        use_parent_vat: typing.Optional[bool] = None,
-        vat: typing.Optional[int] = None,
-        vat_enabled: typing.Optional[bool] = None,
+        name: typing.Union[Unset, str] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        meta: typing.Union[Unset, types.Meta] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        product_folder: typing.Union[Unset, types.Meta] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        tax_system: typing.Union[Unset, str] = Unset,
+        use_parent_vat: typing.Union[Unset, bool] = Unset,
+        vat: typing.Union[Unset, int] = Unset,
+        vat_enabled: typing.Union[Unset, bool] = Unset,
     ):
         """
 
@@ -386,31 +396,39 @@ class UpdateProductFolderRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         json_data = {}
-        if self.name is not None:
+        if self.name != Unset:
             json_data["name"] = self.name
-        if self.code is not None:
+        if self.code != Unset:
             json_data["code"] = self.code
-        if self.description is not None:
+        if self.description != Unset:
             json_data["description"] = self.description
-        if self.external_code is not None:
+        if self.external_code != Unset:
             json_data["externalCode"] = self.external_code
-        if self.group is not None:
-            json_data["group"] = {"meta": self.group}
-        if self.meta is not None:
+        if self.group != Unset:
+            json_data["group"] = (
+                {"meta": self.group} if self.group is not None else None
+            )
+        if self.meta != Unset:
             json_data["meta"] = self.meta
-        if self.owner is not None:
-            json_data["owner"] = {"meta": self.owner}
-        if self.product_folder is not None:
-            json_data["productFolder"] = {"meta": self.product_folder}
-        if self.shared is not None:
+        if self.owner != Unset:
+            json_data["owner"] = (
+                {"meta": self.owner} if self.owner is not None else None
+            )
+        if self.product_folder != Unset:
+            json_data["productFolder"] = (
+                {"meta": self.product_folder}
+                if self.product_folder is not None
+                else None
+            )
+        if self.shared != Unset:
             json_data["shared"] = self.shared
-        if self.tax_system is not None:
+        if self.tax_system != Unset:
             json_data["taxSystem"] = self.tax_system
-        if self.use_parent_vat is not None:
+        if self.use_parent_vat != Unset:
             json_data["useParentVat"] = self.use_parent_vat
-        if self.vat is not None:
+        if self.vat != Unset:
             json_data["vat"] = self.vat
-        if self.vat_enabled is not None:
+        if self.vat_enabled != Unset:
             json_data["vatEnabled"] = self.vat_enabled
         return {
             "method": "PUT",

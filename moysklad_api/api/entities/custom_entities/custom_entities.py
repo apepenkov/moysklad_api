@@ -2,6 +2,7 @@ import datetime
 import typing
 
 from .... import types
+from ....types import Unset
 
 
 class CustomEntity(types.MoySkladBaseClass):
@@ -27,98 +28,6 @@ class CustomEntity(types.MoySkladBaseClass):
         instance.meta = dict_data.get("meta")
         instance.name = dict_data.get("name")
         return instance
-
-
-class CreateCustomEntityRequest(types.ApiRequest):
-    """
-    https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-pol-zowatel-skij-sprawochnik-sozdat-sprawochnik
-    """
-
-    def __init__(
-        self,
-        name: str,
-        meta: typing.Optional[types.Meta] = None,
-    ):
-        """
-
-        :param name: Name of custom entity (Наименование Пользовательского справочника)
-        :param meta: Meta of custom entity (Метаданные Пользовательского справочника)
-        """
-        self.name = name
-        self.meta = meta
-
-    def to_request(self) -> dict:
-        json_request = {"name": self.name}
-        if self.meta is not None:
-            json_request["meta"] = self.meta
-        return {
-            "method": "POST",
-            "url": "https://online.moysklad.ru/api/remap/1.2/entity/customentity",
-            "json": json_request,
-        }
-
-    def from_response(self, result: dict) -> CustomEntity:
-        return CustomEntity.from_json(result)
-
-
-class UpdateCustomEntityRequest(types.ApiRequest):
-    """
-    https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-pol-zowatel-skij-sprawochnik-izmenit-sprawochnik
-    """
-
-    def __init__(
-        self,
-        metadata_id: str,
-        name: typing.Optional[str] = None,
-        meta: typing.Optional[types.Meta] = None,
-    ):
-        """
-
-        :param metadata_id: ID of custom entity (ID Пользовательского справочника)
-        :param name: Name of custom entity (Наименование Пользовательского справочника)
-        :param meta: Meta of custom entity (Метаданные Пользовательского справочника)
-        """
-        self.id = metadata_id
-        self.name = name
-        self.meta = meta
-
-    def to_request(self) -> dict:
-        json_request = {}
-        if self.name is not None:
-            json_request["name"] = self.name
-        if self.meta is not None:
-            json_request["meta"] = self.meta
-        return {
-            "method": "PUT",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/customentity/{self.id}",
-            "json": json_request,
-        }
-
-    def from_response(self, result: dict) -> CustomEntity:
-        return CustomEntity.from_json(result)
-
-
-class DeleteCustomEntityRequest(types.ApiRequest):
-    """
-    https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-pol-zowatel-skij-sprawochnik-udalit-sprawochnik
-    """
-
-    def __init__(self, metadata_id: str):
-        """
-
-        :param metadata_id: ID of custom entity (ID Пользовательского справочника)
-        """
-        self.id = metadata_id
-
-    def to_request(self) -> dict:
-        return {
-            "method": "DELETE",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/customentity/{self.id}",
-            "allow_non_json": True,
-        }
-
-    def from_response(self, result: dict) -> None:
-        return None
 
 
 class CustomEntityElement(types.MoySkladBaseClass):
@@ -173,6 +82,98 @@ class CustomEntityElement(types.MoySkladBaseClass):
         return instance
 
 
+class CreateCustomEntityRequest(types.ApiRequest):
+    """
+    https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-pol-zowatel-skij-sprawochnik-sozdat-sprawochnik
+    """
+
+    def __init__(
+        self,
+        name: str,
+        meta: typing.Union[Unset, types.Meta] = Unset,
+    ):
+        """
+
+        :param name: Name of custom entity (Наименование Пользовательского справочника)
+        :param meta: Meta of custom entity (Метаданные Пользовательского справочника)
+        """
+        self.name = name
+        self.meta = meta
+
+    def to_request(self) -> dict:
+        json_request = {"name": self.name}
+        if self.meta != Unset:
+            json_request["meta"] = self.meta
+        return {
+            "method": "POST",
+            "url": "https://online.moysklad.ru/api/remap/1.2/entity/customentity",
+            "json": json_request,
+        }
+
+    def from_response(self, result: dict) -> CustomEntity:
+        return CustomEntity.from_json(result)
+
+
+class UpdateCustomEntityRequest(types.ApiRequest):
+    """
+    https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-pol-zowatel-skij-sprawochnik-izmenit-sprawochnik
+    """
+
+    def __init__(
+        self,
+        metadata_id: str,
+        name: typing.Union[Unset, str] = Unset,
+        meta: typing.Union[Unset, types.Meta] = Unset,
+    ):
+        """
+
+        :param metadata_id: ID of custom entity (ID Пользовательского справочника)
+        :param name: Name of custom entity (Наименование Пользовательского справочника)
+        :param meta: Meta of custom entity (Метаданные Пользовательского справочника)
+        """
+        self.id = metadata_id
+        self.name = name
+        self.meta = meta
+
+    def to_request(self) -> dict:
+        json_request = {}
+        if self.name != Unset:
+            json_request["name"] = self.name
+        if self.meta != Unset:
+            json_request["meta"] = self.meta
+        return {
+            "method": "PUT",
+            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/customentity/{self.id}",
+            "json": json_request,
+        }
+
+    def from_response(self, result: dict) -> CustomEntity:
+        return CustomEntity.from_json(result)
+
+
+class DeleteCustomEntityRequest(types.ApiRequest):
+    """
+    https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-pol-zowatel-skij-sprawochnik-udalit-sprawochnik
+    """
+
+    def __init__(self, metadata_id: str):
+        """
+
+        :param metadata_id: ID of custom entity (ID Пользовательского справочника)
+        """
+        self.id = metadata_id
+
+    def to_request(self) -> dict:
+        return {
+            "method": "DELETE",
+            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/customentity/{self.id}",
+            "allow_non_json": True,
+        }
+
+    def from_response(self, result: dict) -> None:
+        return None
+
+
 class CreateCustomEntityElementRequest(types.ApiRequest):
     """
     https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-pol-zowatel-skij-sprawochnik-sozdat-alement-sprawochnika
@@ -183,13 +184,13 @@ class CreateCustomEntityElementRequest(types.ApiRequest):
         self,
         metadata_id: str,
         name: str,
-        code: typing.Optional[str] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        meta: typing.Optional[types.Meta] = None,
-        group: typing.Optional[types.Meta] = None,
-        owner: typing.Optional[types.Meta] = None,
-        shared: typing.Optional[bool] = None,
+        code: typing.Union[Unset, str] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        meta: typing.Union[Unset, types.Meta] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
     ):
         """
 
@@ -217,19 +218,23 @@ class CreateCustomEntityElementRequest(types.ApiRequest):
         json_data = {
             "name": self.name,
         }
-        if self.code is not None:
+        if self.code != Unset:
             json_data["code"] = self.code
-        if self.description is not None:
+        if self.description != Unset:
             json_data["description"] = self.description
-        if self.external_code is not None:
+        if self.external_code != Unset:
             json_data["externalCode"] = self.external_code
-        if self.meta is not None:
+        if self.meta != Unset:
             json_data["meta"] = self.meta
-        if self.group is not None:
-            json_data["group"] = {"meta": self.group}
-        if self.owner is not None:
-            json_data["owner"] = {"meta": self.owner}
-        if self.shared is not None:
+        if self.group != Unset:
+            json_data["group"] = (
+                {"meta": self.group} if self.group is not None else None
+            )
+        if self.owner != Unset:
+            json_data["owner"] = (
+                {"meta": self.owner} if self.owner is not None else None
+            )
+        if self.shared != Unset:
             json_data["shared"] = self.shared
         return {
             "method": "POST",
@@ -251,14 +256,14 @@ class UpdateCustomEntityElementRequest(types.ApiRequest):
         self,
         metadata_id: str,
         element_id: str,
-        name: typing.Optional[str] = None,
-        code: typing.Optional[str] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        meta: typing.Optional[types.Meta] = None,
-        group: typing.Optional[types.Meta] = None,
-        owner: typing.Optional[types.Meta] = None,
-        shared: typing.Optional[bool] = None,
+        name: typing.Union[Unset, str] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        meta: typing.Union[Unset, types.Meta] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
     ):
         """
 
@@ -286,21 +291,25 @@ class UpdateCustomEntityElementRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         json_data = {}
-        if self.name is not None:
+        if self.name != Unset:
             json_data["name"] = self.name
-        if self.code is not None:
+        if self.code != Unset:
             json_data["code"] = self.code
-        if self.description is not None:
+        if self.description != Unset:
             json_data["description"] = self.description
-        if self.external_code is not None:
+        if self.external_code != Unset:
             json_data["externalCode"] = self.external_code
-        if self.meta is not None:
+        if self.meta != Unset:
             json_data["meta"] = self.meta
-        if self.group is not None:
-            json_data["group"] = {"meta": self.group}
-        if self.owner is not None:
-            json_data["owner"] = {"meta": self.owner}
-        if self.shared is not None:
+        if self.group != Unset:
+            json_data["group"] = (
+                {"meta": self.group} if self.group is not None else None
+            )
+        if self.owner != Unset:
+            json_data["owner"] = (
+                {"meta": self.owner} if self.owner is not None else None
+            )
+        if self.shared != Unset:
             json_data["shared"] = self.shared
         return {
             "method": "PUT",
@@ -372,8 +381,8 @@ class GetCustomEntityElementsRequest(types.ApiRequest):
     def __init__(
         self,
         metadata_id: str,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Union[Unset, int] = Unset,
+        offset: typing.Union[Unset, int] = Unset,
     ):
         """
 
@@ -387,9 +396,9 @@ class GetCustomEntityElementsRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         params = {}
-        if self.limit is not None:
+        if self.limit != Unset:
             params["limit"] = self.limit
-        if self.offset is not None:
+        if self.offset != Unset:
             params["offset"] = self.offset
         return {
             "method": "GET",

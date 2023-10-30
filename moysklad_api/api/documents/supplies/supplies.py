@@ -2,6 +2,7 @@ import datetime
 import typing
 
 from .... import types, helpers
+from ....types import Unset
 
 
 class Supply(types.MoySkladBaseClass):
@@ -173,6 +174,70 @@ class Supply(types.MoySkladBaseClass):
         return instance
 
 
+class Position(types.MoySkladBaseClass):
+    """
+    https://dev.moysklad.ru/doc/api/remap/1.2/documents/#dokumenty-priemka-priemki
+
+    Название 	        Тип 	        Описание
+    accountId 	        UUID 	        ID учетной записи                                                                   Обязательное при ответе Только для чтения Change-handler
+    assortment 	        Meta 	        Метаданные товара/услуги/серии/модификации, которую представляет собой позиция      Обязательное при ответе Expand Change-handler Update-provider
+    country 	        Meta 	        Метаданные страны                                                                   Expand
+    discount 	        Int 	        Процент скидки или наценки. Наценка указывается отрицательным числом, т.е. -10 создаст наценку в 10% Обязательное при ответе Change-handler Update-provider
+    gtd 	            Object 	        ГТД. Подробнее тут https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-gruzowaq-tamozhennaq-deklaraciq-gtd
+    id 	                UUID 	        ID позиции                                                                          Обязательное при ответе Только для чтения Change-handler
+    pack 	            Object 	        Упаковка Товара. Подробнее тут https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-towar-towary-atributy-wlozhennyh-suschnostej-upakowki-towara  Change-handler Update-provider
+    price 	            Float 	        Цена товара/услуги в копейках                                                       Обязательное при ответе Change-handler Update-provider
+    quantity 	        Int 	        Количество товаров/услуг данного вида в позиции. Если позиция - товар, у которого включен учет по серийным номерам, то значение в этом поле всегда будет равно количеству серийных номеров для данной позиции в документе. Обязательное при ответе Change-handler Update-provider
+    slot 	            Meta 	        Ячейка на складе. Подробнее тут                                                     Expand
+    things 	            Array(String) 	Серийные номера. Значение данного атрибута игнорируется, если товар позиции не находится на серийном учете. В ином случае количество товаров в позиции будет равно количеству серийных номеров, переданных в значении атрибута.
+    trackingCodes 	    Array(Object) 	Коды маркировки товаров и транспортных упаковок. Подробнее тут
+    overhead 	        Int 	        Накладные расходы. Подробнее тут. Если Позиции Приемки не заданы, то накладные расходы нельзя задать.       Обязательное при ответе Только для чтения
+    vat 	            Boolean 	НДС, которым облагается текущая позиция                                                 Обязательное при ответе Change-handler Update-provider
+    vatEnabled 	        Boolean 	Включен ли НДС для позиции. С помощью этого флага для позиции можно выставлять НДС = 0 или НДС = "без НДС". (vat = 0, vatEnabled = false) -> vat = "без НДС", (vat = 0, vatEnabled = true) -> vat = 0%. Обязательное при ответе Change-handler Update-provider
+    """
+
+    def __init__(self):
+        self.account_id: str = None
+        self.assortment: types.Meta = None
+        self.country: typing.Optional[types.Meta] = None
+        self.discount: int = None
+        self.gtd: typing.Optional[dict] = None
+        self.id: str = None
+        self.pack: typing.Optional[dict] = None
+        self.price: float = None
+        self.quantity: float = None
+        self.slot: typing.Optional[int] = None
+        self.things: typing.Optional[typing.List[str]] = None
+        self.overhead: int
+        self.vat: bool = None
+        self.vat_enabled: bool = None
+
+    @classmethod
+    def from_json(cls, dict_data: dict) -> "Position":
+        instance = cls()
+        instance.account_id = dict_data.get("accountId")
+        assortment = dict_data.get("assortment")
+        if assortment != Unset:
+            instance.assortment = assortment["meta"]
+        country = dict_data.get("country")
+        if country != Unset:
+            instance.country = country["meta"]
+        instance.discount = dict_data.get("discount")
+        instance.gtd = dict_data.get("gtd")
+        instance.id = dict_data.get("id")
+        instance.pack = dict_data.get("pack")
+        instance.price = dict_data.get("price")
+        instance.quantity = dict_data.get("quantity")
+        slot = dict_data.get("slot")
+        if slot != Unset:
+            instance.slot = slot["meta"]
+        instance.things = dict_data.get("things")
+        instance.overhead = dict_data.get("overhead")
+        instance.vat = dict_data.get("vat")
+        instance.vat_enabled = dict_data.get("vatEnabled")
+        return instance
+
+
 class GetSuppliesRequest(types.ApiRequest):
     """
     https://dev.moysklad.ru/doc/api/remap/1.2/documents/#dokumenty-priemka-poluchit-spisok-priemok
@@ -186,9 +251,9 @@ class GetSuppliesRequest(types.ApiRequest):
 
     def __init__(
         self,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
-        search: typing.Optional[str] = None,
+        limit: typing.Union[Unset, int] = Unset,
+        offset: typing.Union[Unset, int] = Unset,
+        search: typing.Union[Unset, str] = Unset,
     ):
         """
 
@@ -202,11 +267,11 @@ class GetSuppliesRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         params = {}
-        if self.limit is not None:
+        if self.limit != Unset:
             params["limit"] = self.limit
-        if self.offset is not None:
+        if self.offset != Unset:
             params["offset"] = self.offset
-        if self.search is not None:
+        if self.search != Unset:
             params["search"] = self.search
         return {
             "method": "GET",
@@ -239,30 +304,30 @@ class CreateSupplyRequest(types.ApiRequest):
         organization: types.Meta,
         agent: types.Meta,
         store: types.Meta,
-        agent_account: typing.Optional[types.Meta] = None,
-        applicable: typing.Optional[bool] = None,
-        attributes: typing.Optional[typing.List[dict]] = None,
-        code: typing.Optional[str] = None,
-        contract: typing.Optional[types.Meta] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        files: typing.Optional[types.MetaArray] = None,
-        group: typing.Optional[types.Meta] = None,
-        incoming_date: typing.Optional[datetime.datetime] = None,
-        incoming_number: typing.Optional[str] = None,
-        moment: typing.Optional[datetime.datetime] = None,
-        name: typing.Optional[str] = None,
-        organization_account: typing.Optional[types.Meta] = None,
-        overhead: typing.Optional[dict] = None,
-        owner: typing.Optional[types.Meta] = None,
-        positions: typing.Optional[typing.List[CreatePosition]] = None,
-        project: typing.Optional[types.Meta] = None,
-        rate: typing.Optional[dict] = None,
-        shared: typing.Optional[bool] = None,
-        state: typing.Optional[types.Meta] = None,
-        sync_id: typing.Optional[str] = None,
-        vat_enabled: typing.Optional[bool] = None,
-        vat_included: typing.Optional[bool] = None,
+        agent_account: typing.Union[Unset, types.Meta] = Unset,
+        applicable: typing.Union[Unset, bool] = Unset,
+        attributes: typing.Union[Unset, typing.List[dict]] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        contract: typing.Union[Unset, types.Meta] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        files: typing.Union[Unset, types.MetaArray] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        incoming_date: typing.Union[Unset, datetime.datetime] = Unset,
+        incoming_number: typing.Union[Unset, str] = Unset,
+        moment: typing.Union[Unset, datetime.datetime] = Unset,
+        name: typing.Union[Unset, str] = Unset,
+        organization_account: typing.Union[Unset, types.Meta] = Unset,
+        overhead: typing.Union[Unset, dict] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        positions: typing.Union[Unset, typing.List[CreatePosition]] = Unset,
+        project: typing.Union[Unset, types.Meta] = Unset,
+        rate: typing.Union[Unset, dict] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        state: typing.Union[Unset, types.Meta] = Unset,
+        sync_id: typing.Union[Unset, str] = Unset,
+        vat_enabled: typing.Union[Unset, bool] = Unset,
+        vat_included: typing.Union[Unset, bool] = Unset,
     ):
         """
 
@@ -328,57 +393,99 @@ class CreateSupplyRequest(types.ApiRequest):
             "agent": {"meta": self.agent},
             "store": {"meta": self.store},
         }
-        if self.agent_account is not None:
-            json_data["agentAccount"] = {"meta": self.agent_account}
-        if self.applicable is not None:
+        if self.agent_account != Unset:
+            json_data["agentAccount"] = (
+                {"meta": self.agent_account}
+                if self.agent_account is not None
+                else None
+                if self.agent_account is not None
+                else None
+            )
+        if self.applicable != Unset:
             json_data["applicable"] = self.applicable
-        if self.attributes is not None:
+        if self.attributes != Unset:
             json_data["attributes"] = self.attributes
-        if self.code is not None:
+        if self.code != Unset:
             json_data["code"] = self.code
-        if self.contract is not None:
-            json_data["contract"] = {"meta": self.contract}
-        if self.description is not None:
+        if self.contract != Unset:
+            json_data["contract"] = (
+                {"meta": self.contract}
+                if self.contract is not None
+                else None
+                if self.contract is not None
+                else None
+            )
+        if self.description != Unset:
             json_data["description"] = self.description
-        if self.external_code is not None:
+        if self.external_code != Unset:
             json_data["externalCode"] = self.external_code
-        if self.files is not None:
+        if self.files != Unset:
             json_data["files"] = self.files
-        if self.group is not None:
-            json_data["group"] = {"meta": self.group}
-        if self.incoming_date is not None:
+        if self.group != Unset:
+            json_data["group"] = (
+                {"meta": self.group}
+                if self.group is not None
+                else None
+                if self.group is not None
+                else None
+            )
+        if self.incoming_date != Unset:
             json_data["incomingDate"] = self.incoming_date.strftime("%Y-%m-%d %H:%M:%S")
-        if self.incoming_number is not None:
+        if self.incoming_number != Unset:
             json_data["incomingNumber"] = self.incoming_number
-        if self.moment is not None:
+        if self.moment != Unset:
             json_data["moment"] = self.moment.strftime("%Y-%m-%d %H:%M:%S")
-        if self.name is not None:
+        if self.name != Unset:
             json_data["name"] = self.name
-        if self.organization_account is not None:
-            json_data["organizationAccount"] = {"meta": self.organization_account}
-        if self.overhead is not None:
+        if self.organization_account != Unset:
+            json_data["organizationAccount"] = (
+                {"meta": self.organization_account}
+                if self.organization_account is not None
+                else None
+                if self.organization_account is not None
+                else None
+            )
+        if self.overhead != Unset:
             json_data["overhead"] = self.overhead
-        if self.owner is not None:
-            json_data["owner"] = {"meta": self.owner}
-        if self.positions is not None:
+        if self.owner != Unset:
+            json_data["owner"] = (
+                {"meta": self.owner}
+                if self.owner is not None
+                else None
+                if self.owner is not None
+                else None
+            )
+        if self.positions != Unset:
             json_data["positions"] = []
             for position in self.positions:
                 new_position: dict = position.copy()
                 new_position["assortment"] = {"meta": new_position["assortment"]}
                 json_data["positions"].append(new_position)
-        if self.project is not None:
-            json_data["project"] = {"meta": self.project}
-        if self.rate is not None:
+        if self.project != Unset:
+            json_data["project"] = (
+                {"meta": self.project}
+                if self.project is not None
+                else None
+                if self.project is not None
+                else None
+            )
+        if self.rate != Unset:
             json_data["rate"] = self.rate
-        if self.shared is not None:
+        if self.shared != Unset:
             json_data["shared"] = self.shared
-        if self.state is not None:
-            json_data["state"] = {"meta": self.state}
-        if self.sync_id is not None:
+        if self.state != Unset:
+            json_data["state"] = (
+                {"meta": self.state}
+                if self.state is not None
+                else None
+                if self.state is not None
+                else None
+            )
+        if self.sync_id != Unset:
             json_data["syncId"] = self.sync_id
-        if self.vat_enabled is not None:
+        if self.vat_enabled != Unset:
             json_data["vatEnabled"] = self.vat_enabled
-        if self.vat_included is not None:
+        if self.vat_included != Unset:
             json_data["vatIncluded"] = self.vat_included
         return {
             "method": "POST",
@@ -453,33 +560,33 @@ class UpdateSupplyRequest(types.ApiRequest):
     def __init__(
         self,
         supply_id: str,
-        organization: typing.Optional[types.Meta] = None,
-        agent: typing.Optional[types.Meta] = None,
-        store: typing.Optional[types.Meta] = None,
-        agent_account: typing.Optional[types.Meta] = None,
-        applicable: typing.Optional[bool] = None,
-        attributes: typing.Optional[typing.List[dict]] = None,
-        code: typing.Optional[str] = None,
-        contract: typing.Optional[types.Meta] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        files: typing.Optional[types.MetaArray] = None,
-        group: typing.Optional[types.Meta] = None,
-        incoming_date: typing.Optional[datetime.datetime] = None,
-        incoming_number: typing.Optional[str] = None,
-        moment: typing.Optional[datetime.datetime] = None,
-        name: typing.Optional[str] = None,
-        organization_account: typing.Optional[types.Meta] = None,
-        overhead: typing.Optional[dict] = None,
-        owner: typing.Optional[types.Meta] = None,
-        positions: typing.Optional[typing.List[UpdatePosition]] = None,
-        project: typing.Optional[types.Meta] = None,
-        rate: typing.Optional[dict] = None,
-        shared: typing.Optional[bool] = None,
-        state: typing.Optional[types.Meta] = None,
-        sync_id: typing.Optional[str] = None,
-        vat_enabled: typing.Optional[bool] = None,
-        vat_included: typing.Optional[bool] = None,
+        organization: typing.Union[Unset, types.Meta] = Unset,
+        agent: typing.Union[Unset, types.Meta] = Unset,
+        store: typing.Union[Unset, types.Meta] = Unset,
+        agent_account: typing.Union[Unset, types.Meta] = Unset,
+        applicable: typing.Union[Unset, bool] = Unset,
+        attributes: typing.Union[Unset, typing.List[dict]] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        contract: typing.Union[Unset, types.Meta] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        files: typing.Union[Unset, types.MetaArray] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        incoming_date: typing.Union[Unset, datetime.datetime] = Unset,
+        incoming_number: typing.Union[Unset, str] = Unset,
+        moment: typing.Union[Unset, datetime.datetime] = Unset,
+        name: typing.Union[Unset, str] = Unset,
+        organization_account: typing.Union[Unset, types.Meta] = Unset,
+        overhead: typing.Union[Unset, dict] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        positions: typing.Union[Unset, typing.List[UpdatePosition]] = Unset,
+        project: typing.Union[Unset, types.Meta] = Unset,
+        rate: typing.Union[Unset, dict] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        state: typing.Union[Unset, types.Meta] = Unset,
+        sync_id: typing.Union[Unset, str] = Unset,
+        vat_enabled: typing.Union[Unset, bool] = Unset,
+        vat_included: typing.Union[Unset, bool] = Unset,
     ):
         """
 
@@ -543,63 +650,123 @@ class UpdateSupplyRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         json_data = {}
-        if self.organization is not None:
-            json_data["organization"] = {"meta": self.organization}
-        if self.agent is not None:
-            json_data["agent"] = {"meta": self.agent}
-        if self.store is not None:
-            json_data["store"] = {"meta": self.store}
-        if self.agent_account is not None:
-            json_data["agentAccount"] = {"meta": self.agent_account}
-        if self.applicable is not None:
+        if self.organization != Unset:
+            json_data["organization"] = (
+                {"meta": self.organization}
+                if self.organization is not None
+                else None
+                if self.organization is not None
+                else None
+            )
+        if self.agent != Unset:
+            json_data["agent"] = (
+                {"meta": self.agent}
+                if self.agent is not None
+                else None
+                if self.agent is not None
+                else None
+            )
+        if self.store != Unset:
+            json_data["store"] = (
+                {"meta": self.store}
+                if self.store is not None
+                else None
+                if self.store is not None
+                else None
+            )
+        if self.agent_account != Unset:
+            json_data["agentAccount"] = (
+                {"meta": self.agent_account}
+                if self.agent_account is not None
+                else None
+                if self.agent_account is not None
+                else None
+            )
+        if self.applicable != Unset:
             json_data["applicable"] = self.applicable
-        if self.attributes is not None:
+        if self.attributes != Unset:
             json_data["attributes"] = self.attributes
-        if self.code is not None:
+        if self.code != Unset:
             json_data["code"] = self.code
-        if self.contract is not None:
-            json_data["contract"] = {"meta": self.contract}
-        if self.description is not None:
+        if self.contract != Unset:
+            json_data["contract"] = (
+                {"meta": self.contract}
+                if self.contract is not None
+                else None
+                if self.contract is not None
+                else None
+            )
+        if self.description != Unset:
             json_data["description"] = self.description
-        if self.external_code is not None:
+        if self.external_code != Unset:
             json_data["externalCode"] = self.external_code
-        if self.files is not None:
+        if self.files != Unset:
             json_data["files"] = self.files
-        if self.group is not None:
-            json_data["group"] = {"meta": self.group}
-        if self.incoming_date is not None:
+        if self.group != Unset:
+            json_data["group"] = (
+                {"meta": self.group}
+                if self.group is not None
+                else None
+                if self.group is not None
+                else None
+            )
+        if self.incoming_date != Unset:
             json_data["incomingDate"] = self.incoming_date.strftime("%Y-%m-%d %H:%M:%S")
-        if self.incoming_number is not None:
+        if self.incoming_number != Unset:
             json_data["incomingNumber"] = self.incoming_number
-        if self.moment is not None:
+        if self.moment != Unset:
             json_data["moment"] = self.moment.strftime("%Y-%m-%d %H:%M:%S")
-        if self.name is not None:
+        if self.name != Unset:
             json_data["name"] = self.name
-        if self.organization_account is not None:
-            json_data["organizationAccount"] = {"meta": self.organization_account}
-        if self.overhead is not None:
+        if self.organization_account != Unset:
+            json_data["organizationAccount"] = (
+                {"meta": self.organization_account}
+                if self.organization_account is not None
+                else None
+                if self.organization_account is not None
+                else None
+            )
+        if self.overhead != Unset:
             json_data["overhead"] = self.overhead
-        if self.owner is not None:
-            json_data["owner"] = {"meta": self.owner}
-        if self.positions is not None:
+        if self.owner != Unset:
+            json_data["owner"] = (
+                {"meta": self.owner}
+                if self.owner is not None
+                else None
+                if self.owner is not None
+                else None
+            )
+        if self.positions != Unset:
             json_data["positions"] = []
             for position in self.positions:
                 new_position: dict = position.copy()
                 new_position["assortment"] = {"meta": new_position["assortment"]}
                 json_data["positions"].append(new_position)
-        if self.project is not None:
-            json_data["project"] = {"meta": self.project}
-        if self.rate is not None:
+        if self.project != Unset:
+            json_data["project"] = (
+                {"meta": self.project}
+                if self.project is not None
+                else None
+                if self.project is not None
+                else None
+            )
+        if self.rate != Unset:
             json_data["rate"] = self.rate
-        if self.shared is not None:
+        if self.shared != Unset:
             json_data["shared"] = self.shared
-        if self.state is not None:
-            json_data["state"] = {"meta": self.state}
-        if self.sync_id is not None:
+        if self.state != Unset:
+            json_data["state"] = (
+                {"meta": self.state}
+                if self.state is not None
+                else None
+                if self.state is not None
+                else None
+            )
+        if self.sync_id != Unset:
             json_data["syncId"] = self.sync_id
-        if self.vat_enabled is not None:
+        if self.vat_enabled != Unset:
             json_data["vatEnabled"] = self.vat_enabled
-        if self.vat_included is not None:
+        if self.vat_included != Unset:
             json_data["vatIncluded"] = self.vat_included
 
         return {
@@ -610,70 +777,6 @@ class UpdateSupplyRequest(types.ApiRequest):
 
     def from_response(self, result: dict) -> Supply:
         return Supply.from_json(result)
-
-
-class Position(types.MoySkladBaseClass):
-    """
-    https://dev.moysklad.ru/doc/api/remap/1.2/documents/#dokumenty-priemka-priemki
-
-    Название 	        Тип 	        Описание
-    accountId 	        UUID 	        ID учетной записи                                                                   Обязательное при ответе Только для чтения Change-handler
-    assortment 	        Meta 	        Метаданные товара/услуги/серии/модификации, которую представляет собой позиция      Обязательное при ответе Expand Change-handler Update-provider
-    country 	        Meta 	        Метаданные страны                                                                   Expand
-    discount 	        Int 	        Процент скидки или наценки. Наценка указывается отрицательным числом, т.е. -10 создаст наценку в 10% Обязательное при ответе Change-handler Update-provider
-    gtd 	            Object 	        ГТД. Подробнее тут https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-gruzowaq-tamozhennaq-deklaraciq-gtd
-    id 	                UUID 	        ID позиции                                                                          Обязательное при ответе Только для чтения Change-handler
-    pack 	            Object 	        Упаковка Товара. Подробнее тут https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-towar-towary-atributy-wlozhennyh-suschnostej-upakowki-towara  Change-handler Update-provider
-    price 	            Float 	        Цена товара/услуги в копейках                                                       Обязательное при ответе Change-handler Update-provider
-    quantity 	        Int 	        Количество товаров/услуг данного вида в позиции. Если позиция - товар, у которого включен учет по серийным номерам, то значение в этом поле всегда будет равно количеству серийных номеров для данной позиции в документе. Обязательное при ответе Change-handler Update-provider
-    slot 	            Meta 	        Ячейка на складе. Подробнее тут                                                     Expand
-    things 	            Array(String) 	Серийные номера. Значение данного атрибута игнорируется, если товар позиции не находится на серийном учете. В ином случае количество товаров в позиции будет равно количеству серийных номеров, переданных в значении атрибута.
-    trackingCodes 	    Array(Object) 	Коды маркировки товаров и транспортных упаковок. Подробнее тут
-    overhead 	        Int 	        Накладные расходы. Подробнее тут. Если Позиции Приемки не заданы, то накладные расходы нельзя задать.       Обязательное при ответе Только для чтения
-    vat 	            Boolean 	НДС, которым облагается текущая позиция                                                 Обязательное при ответе Change-handler Update-provider
-    vatEnabled 	        Boolean 	Включен ли НДС для позиции. С помощью этого флага для позиции можно выставлять НДС = 0 или НДС = "без НДС". (vat = 0, vatEnabled = false) -> vat = "без НДС", (vat = 0, vatEnabled = true) -> vat = 0%. Обязательное при ответе Change-handler Update-provider
-    """
-
-    def __init__(self):
-        self.account_id: str = None
-        self.assortment: types.Meta = None
-        self.country: typing.Optional[types.Meta] = None
-        self.discount: int = None
-        self.gtd: typing.Optional[dict] = None
-        self.id: str = None
-        self.pack: typing.Optional[dict] = None
-        self.price: float = None
-        self.quantity: float = None
-        self.slot: typing.Optional[int] = None
-        self.things: typing.Optional[typing.List[str]] = None
-        self.overhead: int
-        self.vat: bool = None
-        self.vat_enabled: bool = None
-
-    @classmethod
-    def from_json(cls, dict_data: dict) -> "Position":
-        instance = cls()
-        instance.account_id = dict_data.get("accountId")
-        assortment = dict_data.get("assortment")
-        if assortment is not None:
-            instance.assortment = assortment["meta"]
-        country = dict_data.get("country")
-        if country is not None:
-            instance.country = country["meta"]
-        instance.discount = dict_data.get("discount")
-        instance.gtd = dict_data.get("gtd")
-        instance.id = dict_data.get("id")
-        instance.pack = dict_data.get("pack")
-        instance.price = dict_data.get("price")
-        instance.quantity = dict_data.get("quantity")
-        slot = dict_data.get("slot")
-        if slot is not None:
-            instance.slot = slot["meta"]
-        instance.things = dict_data.get("things")
-        instance.overhead = dict_data.get("overhead")
-        instance.vat = dict_data.get("vat")
-        instance.vat_enabled = dict_data.get("vatEnabled")
-        return instance
 
 
 class GetSupplyPositionsRequest(types.ApiRequest):
@@ -689,8 +792,8 @@ class GetSupplyPositionsRequest(types.ApiRequest):
     def __init__(
         self,
         supply_id: str,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
+        limit: typing.Union[Unset, int] = Unset,
+        offset: typing.Union[Unset, int] = Unset,
     ):
         """
         Get supply positions
@@ -706,9 +809,9 @@ class GetSupplyPositionsRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         params = {}
-        if self.limit is not None:
+        if self.limit != Unset:
             params["limit"] = self.limit
-        if self.offset is not None:
+        if self.offset != Unset:
             params["offset"] = self.offset
         return {
             "method": "GET",
@@ -733,11 +836,11 @@ class CreateSupplyPositionRequest(types.ApiRequest):
         supply_id: str,
         assortment: types.Meta,
         quantity: float,
-        price: typing.Optional[float] = None,
-        discount: typing.Optional[int] = None,
-        vat: typing.Optional[int] = None,
-        tracking_codes: typing.Optional[typing.List[dict]] = None,
-        overhead: typing.Optional[float] = None,
+        price: typing.Union[Unset, float] = Unset,
+        discount: typing.Union[Unset, int] = Unset,
+        vat: typing.Union[Unset, int] = Unset,
+        tracking_codes: typing.Union[Unset, typing.List[dict]] = Unset,
+        overhead: typing.Union[Unset, float] = Unset,
     ):
         """
         Create supply position
@@ -766,15 +869,15 @@ class CreateSupplyPositionRequest(types.ApiRequest):
             "assortment": {"meta": self.assortment},
             "quantity": self.quantity,
         }
-        if self.price is not None:
+        if self.price != Unset:
             json_data["price"] = self.price
-        if self.discount is not None:
+        if self.discount != Unset:
             json_data["discount"] = self.discount
-        if self.vat is not None:
+        if self.vat != Unset:
             json_data["vat"] = self.vat
-        if self.tracking_codes is not None:
+        if self.tracking_codes != Unset:
             json_data["trackingCodes"] = self.tracking_codes
-        if self.overhead is not None:
+        if self.overhead != Unset:
             json_data["overhead"] = self.overhead
         return {
             "method": "POST",
@@ -835,13 +938,13 @@ class UpdateSupplyPositionRequest(types.ApiRequest):
         self,
         supply_id: str,
         position_id: str,
-        assortment: typing.Optional[types.Meta] = None,
-        quantity: typing.Optional[int] = None,
-        price: typing.Optional[float] = None,
-        discount: typing.Optional[int] = None,
-        vat: typing.Optional[int] = None,
-        tracking_codes: typing.Optional[typing.List[dict]] = None,
-        overhead: typing.Optional[float] = None,
+        assortment: typing.Union[Unset, types.Meta] = Unset,
+        quantity: typing.Union[Unset, int] = Unset,
+        price: typing.Union[Unset, float] = Unset,
+        discount: typing.Union[Unset, int] = Unset,
+        vat: typing.Union[Unset, int] = Unset,
+        tracking_codes: typing.Union[Unset, typing.List[dict]] = Unset,
+        overhead: typing.Union[Unset, float] = Unset,
     ):
         """
         Update supply position
@@ -869,19 +972,25 @@ class UpdateSupplyPositionRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         json_data = {}
-        if self.assortment is not None:
-            json_data["assortment"] = {"meta": self.assortment}
-        if self.quantity is not None:
+        if self.assortment != Unset:
+            json_data["assortment"] = (
+                {"meta": self.assortment}
+                if self.assortment is not None
+                else None
+                if self.assortment is not None
+                else None
+            )
+        if self.quantity != Unset:
             json_data["quantity"] = self.quantity
-        if self.price is not None:
+        if self.price != Unset:
             json_data["price"] = self.price
-        if self.discount is not None:
+        if self.discount != Unset:
             json_data["discount"] = self.discount
-        if self.vat is not None:
+        if self.vat != Unset:
             json_data["vat"] = self.vat
-        if self.tracking_codes is not None:
+        if self.tracking_codes != Unset:
             json_data["trackingCodes"] = self.tracking_codes
-        if self.overhead is not None:
+        if self.overhead != Unset:
             json_data["overhead"] = self.overhead
         return {
             "method": "PUT",

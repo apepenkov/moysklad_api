@@ -2,6 +2,7 @@ import typing
 import datetime
 from .... import types
 from .... import helpers
+from ....types import Unset
 
 
 class InvoiceIn(types.MoySkladBaseClass):
@@ -192,6 +193,32 @@ class GetInvoicesInRequest(types.ApiRequest):
         return [InvoiceIn.from_json(obj_json) for obj_json in result["rows"]]
 
 
+class GetInvoiceInRequest(types.ApiRequest):
+    """
+    https://dev.moysklad.ru/doc/api/remap/1.2/documents/#dokumenty-schet-postawschika-poluchit-schet-postawschika-po-id
+
+    Параметры
+    Параметр 	Описание
+    id 	string (required) Example: 3b7e6a5d-9e2c-11e7-7a34-8f550003f9a9 ID Счета поставщика
+    """
+
+    def __init__(self, invoice_id: str):
+        """
+
+        :param invoice_id: Invoice ID (ID Счета поставщика)
+        """
+        self.uuid = invoice_id
+
+    def to_request(self) -> dict:
+        return {
+            "method": "GET",
+            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/invoicein/{self.uuid}",
+        }
+
+    def from_response(self, response: dict) -> InvoiceIn:
+        return InvoiceIn.from_json(response)
+
+
 class CreateInvoiceInRequest(types.ApiRequest):
     """
     https://dev.moysklad.ru/doc/api/remap/1.2/documents/#dokumenty-schet-postawschika-sozdat-schet-postawschika
@@ -253,30 +280,30 @@ class CreateInvoiceInRequest(types.ApiRequest):
         name: str,
         organization: types.Meta,
         agent: types.Meta,
-        agent_account: typing.Optional[types.Meta] = None,
-        applicable: typing.Optional[bool] = None,
-        attributes: typing.Optional[typing.List[dict]] = None,
-        code: typing.Optional[str] = None,
-        contract: typing.Optional[types.Meta] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        files: typing.Optional[types.MetaArray] = None,
-        group: typing.Optional[types.Meta] = None,
-        incoming_date: typing.Optional[datetime.datetime] = None,
-        incoming_number: typing.Optional[float] = None,
-        moment: typing.Optional[datetime.datetime] = None,
-        organization_account: typing.Optional[types.Meta] = None,
-        owner: typing.Optional[types.Meta] = None,
-        payed_sum: typing.Optional[float] = None,
-        payment_planned_moment: typing.Optional[datetime.datetime] = None,
-        positions: typing.Optional[typing.List[CreateInvoiceInPosition]] = None,
-        project: typing.Optional[types.Meta] = None,
-        rate: typing.Optional[dict] = None,
-        shared: typing.Optional[bool] = None,
-        state: typing.Optional[types.Meta] = None,
-        store: typing.Optional[types.Meta] = None,
-        vat_enabled: typing.Optional[bool] = None,
-        vat_included: typing.Optional[bool] = None,
+        agent_account: typing.Union[Unset, types.Meta] = Unset,
+        applicable: typing.Union[Unset, bool] = Unset,
+        attributes: typing.Union[Unset, typing.List[dict]] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        contract: typing.Union[Unset, types.Meta] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        files: typing.Union[Unset, types.MetaArray] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        incoming_date: typing.Union[Unset, datetime.datetime] = Unset,
+        incoming_number: typing.Union[Unset, float] = Unset,
+        moment: typing.Union[Unset, datetime.datetime] = Unset,
+        organization_account: typing.Union[Unset, types.Meta] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        payed_sum: typing.Union[Unset, float] = Unset,
+        payment_planned_moment: typing.Union[Unset, datetime.datetime] = Unset,
+        positions: typing.Union[Unset, typing.List[CreateInvoiceInPosition]] = Unset,
+        project: typing.Union[Unset, types.Meta] = Unset,
+        rate: typing.Union[Unset, dict] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        state: typing.Union[Unset, types.Meta] = Unset,
+        store: typing.Union[Unset, types.Meta] = Unset,
+        vat_enabled: typing.Union[Unset, bool] = Unset,
+        vat_included: typing.Union[Unset, bool] = Unset,
     ):
         """
         Создание счета поставщика
@@ -344,37 +371,49 @@ class CreateInvoiceInRequest(types.ApiRequest):
             "organization": {"meta": self.organization},
             "agent": {"meta": self.agent},
         }
-        if self.agent_account is not None:
-            json_data["agentAccount"] = {"meta": self.agent_account}
-        if self.applicable is not None:
+        if self.agent_account != Unset:
+            json_data["agentAccount"] = (
+                {"meta": self.agent_account} if self.agent_account is not None else None
+            )
+        if self.applicable != Unset:
             json_data["applicable"] = self.applicable
-        if self.attributes is not None:
+        if self.attributes != Unset:
             json_data["attributes"] = self.attributes
-        if self.code is not None:
+        if self.code != Unset:
             json_data["code"] = self.code
-        if self.contract is not None:
-            json_data["contract"] = {"meta": self.contract}
-        if self.description is not None:
+        if self.contract != Unset:
+            json_data["contract"] = (
+                {"meta": self.contract} if self.contract is not None else None
+            )
+        if self.description != Unset:
             json_data["description"] = self.description
-        if self.external_code is not None:
+        if self.external_code != Unset:
             json_data["externalCode"] = self.external_code
-        if self.files is not None:
+        if self.files != Unset:
             json_data["files"] = self.files
-        if self.group is not None:
-            json_data["group"] = {"meta": self.group}
-        if self.incoming_date is not None:
+        if self.group != Unset:
+            json_data["group"] = (
+                {"meta": self.group} if self.group is not None else None
+            )
+        if self.incoming_date != Unset:
             json_data["incomingDate"] = self.incoming_date.strftime("%Y-%m-%d %H:%M:%S")
-        if self.incoming_number is not None:
+        if self.incoming_number != Unset:
             json_data["incomingNumber"] = self.incoming_number
-        if self.moment is not None:
+        if self.moment != Unset:
             json_data["moment"] = self.moment.strftime("%Y-%m-%d %H:%M:%S")
-        if self.organization_account is not None:
-            json_data["organizationAccount"] = {"meta": self.organization_account}
-        if self.owner is not None:
-            json_data["owner"] = {"meta": self.owner}
-        if self.payed_sum is not None:
+        if self.organization_account != Unset:
+            json_data["organizationAccount"] = (
+                {"meta": self.organization_account}
+                if self.organization_account is not None
+                else None
+            )
+        if self.owner != Unset:
+            json_data["owner"] = (
+                {"meta": self.owner} if self.owner is not None else None
+            )
+        if self.payed_sum != Unset:
             json_data["payedSum"] = self.payed_sum
-        if self.payment_planned_moment is not None:
+        if self.payment_planned_moment != Unset:
             json_data["paymentPlannedMoment"] = self.payment_planned_moment.strftime(
                 "%Y-%m-%d %H:%M:%S"
             )
@@ -383,15 +422,15 @@ class CreateInvoiceInRequest(types.ApiRequest):
             for position in self.positions:
                 pos = {}
                 assortment = position.get("assortment")
-                if assortment is not None:
+                if assortment != Unset:
                     pos["assortment"] = {"meta": assortment}
                 else:
                     raise ValueError("Assortment is required for position")
                 price = position.get("price")
-                if price is not None:
+                if price != Unset:
                     pos["price"] = price
                 quantity = position.get("quantity")
-                if quantity is not None:
+                if quantity != Unset:
                     pos["quantity"] = quantity
                 else:
                     raise ValueError("Quantity is required for position")
@@ -400,19 +439,25 @@ class CreateInvoiceInRequest(types.ApiRequest):
                 if "vat" in position:
                     pos["vat"] = position["vat"]
                 json_data["positions"].append(pos)
-        if self.project is not None:
-            json_data["project"] = {"meta": self.project}
-        if self.rate is not None:
+        if self.project != Unset:
+            json_data["project"] = (
+                {"meta": self.project} if self.project is not None else None
+            )
+        if self.rate != Unset:
             json_data["rate"] = self.rate
-        if self.shared is not None:
+        if self.shared != Unset:
             json_data["shared"] = self.shared
-        if self.state is not None:
-            json_data["state"] = {"meta": self.state}
-        if self.store is not None:
-            json_data["store"] = {"meta": self.store}
-        if self.vat_enabled is not None:
+        if self.state != Unset:
+            json_data["state"] = (
+                {"meta": self.state} if self.state is not None else None
+            )
+        if self.store != Unset:
+            json_data["store"] = (
+                {"meta": self.store} if self.store is not None else None
+            )
+        if self.vat_enabled != Unset:
             json_data["vatEnabled"] = self.vat_enabled
-        if self.vat_included is not None:
+        if self.vat_included != Unset:
             json_data["vatIncluded"] = self.vat_included
         return {
             "method": "POST",
@@ -422,6 +467,34 @@ class CreateInvoiceInRequest(types.ApiRequest):
 
     def from_response(self, response: dict) -> InvoiceIn:
         return InvoiceIn.from_json(response)
+
+
+class InvoiceInPosition(types.MoySkladBaseClass):
+    # https://dev.moysklad.ru/doc/api/remap/1.2/documents/#dokumenty-schet-postawschika-poziciq-scheta-postawschika
+    def __init__(self):
+        self.meta: typing.Union[Unset, types.Meta] = Unset
+        self.id: typing.Union[Unset, str] = Unset
+        self.account_id: typing.Union[Unset, str] = Unset
+        self.quantity: typing.Union[Unset, float] = Unset
+        self.price: typing.Union[Unset, float] = Unset
+        self.discount: typing.Union[Unset, float] = Unset
+        self.vat: typing.Union[Unset, float] = Unset
+        self.vat_enabled: typing.Union[Unset, bool] = Unset
+        self.assortment: typing.Union[Unset, types.Meta] = Unset
+
+    @classmethod
+    def from_json(cls, data: dict) -> "InvoiceInPosition":
+        position = cls()
+        position.meta = data.get("meta")
+        position.id = data.get("id")
+        position.account_id = data.get("accountId")
+        position.quantity = data.get("quantity")
+        position.price = data.get("price")
+        position.discount = data.get("discount")
+        position.vat = data.get("vat")
+        position.vat_enabled = data.get("vatEnabled")
+        position.assortment = helpers.get_meta(data.get("assortment"))
+        return position
 
 
 class DeleteInvoiceInRequest(types.ApiRequest):
@@ -441,32 +514,6 @@ class DeleteInvoiceInRequest(types.ApiRequest):
 
     def from_response(self, response):
         return None
-
-
-class GetInvoiceInRequest(types.ApiRequest):
-    """
-    https://dev.moysklad.ru/doc/api/remap/1.2/documents/#dokumenty-schet-postawschika-poluchit-schet-postawschika-po-id
-
-    Параметры
-    Параметр 	Описание
-    id 	string (required) Example: 3b7e6a5d-9e2c-11e7-7a34-8f550003f9a9 ID Счета поставщика
-    """
-
-    def __init__(self, invoice_id: str):
-        """
-
-        :param invoice_id: Invoice ID (ID Счета поставщика)
-        """
-        self.uuid = invoice_id
-
-    def to_request(self) -> dict:
-        return {
-            "method": "GET",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/invoicein/{self.uuid}",
-        }
-
-    def from_response(self, response: dict) -> InvoiceIn:
-        return InvoiceIn.from_json(response)
 
 
 class UpdateInvoiceInRequest(types.ApiRequest):
@@ -512,33 +559,33 @@ class UpdateInvoiceInRequest(types.ApiRequest):
     def __init__(
         self,
         invoice_in_id: str,
-        name: typing.Optional[str] = None,
-        organization: typing.Optional[types.Meta] = None,
-        agent: typing.Optional[types.Meta] = None,
-        agent_account: typing.Optional[types.Meta] = None,
-        applicable: typing.Optional[bool] = None,
-        attributes: typing.Optional[typing.List[dict]] = None,
-        code: typing.Optional[str] = None,
-        contract: typing.Optional[types.Meta] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        files: typing.Optional[types.MetaArray] = None,
-        group: typing.Optional[types.Meta] = None,
-        incoming_date: typing.Optional[datetime.datetime] = None,
-        incoming_number: typing.Optional[float] = None,
-        moment: typing.Optional[datetime.datetime] = None,
-        organization_account: typing.Optional[types.Meta] = None,
-        owner: typing.Optional[types.Meta] = None,
-        payed_sum: typing.Optional[float] = None,
-        payment_planned_moment: typing.Optional[datetime.datetime] = None,
-        positions: typing.Optional[typing.List[UpdateInvoiceInPosition]] = None,
-        project: typing.Optional[types.Meta] = None,
-        rate: typing.Optional[dict] = None,
-        shared: typing.Optional[bool] = None,
-        state: typing.Optional[types.Meta] = None,
-        store: typing.Optional[types.Meta] = None,
-        vat_enabled: typing.Optional[bool] = None,
-        vat_included: typing.Optional[bool] = None,
+        name: typing.Union[Unset, str] = Unset,
+        organization: typing.Union[Unset, types.Meta] = Unset,
+        agent: typing.Union[Unset, types.Meta] = Unset,
+        agent_account: typing.Union[Unset, types.Meta] = Unset,
+        applicable: typing.Union[Unset, bool] = Unset,
+        attributes: typing.Union[Unset, typing.List[dict]] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        contract: typing.Union[Unset, types.Meta] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        files: typing.Union[Unset, types.MetaArray] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        incoming_date: typing.Union[Unset, datetime.datetime] = Unset,
+        incoming_number: typing.Union[Unset, float] = Unset,
+        moment: typing.Union[Unset, datetime.datetime] = Unset,
+        organization_account: typing.Union[Unset, types.Meta] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        payed_sum: typing.Union[Unset, float] = Unset,
+        payment_planned_moment: typing.Union[Unset, datetime.datetime] = Unset,
+        positions: typing.Union[Unset, typing.List[UpdateInvoiceInPosition]] = Unset,
+        project: typing.Union[Unset, types.Meta] = Unset,
+        rate: typing.Union[Unset, dict] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        state: typing.Union[Unset, types.Meta] = Unset,
+        store: typing.Union[Unset, types.Meta] = Unset,
+        vat_enabled: typing.Union[Unset, bool] = Unset,
+        vat_included: typing.Union[Unset, bool] = Unset,
     ):
         """
         Изменение счета поставщика
@@ -603,43 +650,59 @@ class UpdateInvoiceInRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         json_data = {}
-        if self.name is not None:
+        if self.name != Unset:
             json_data["name"] = self.name
-        if self.organization is not None:
-            json_data["organization"] = {"meta": self.organization}
-        if self.agent is not None:
-            json_data["agent"] = {"meta": self.agent}
-        if self.agent_account is not None:
-            json_data["agentAccount"] = {"meta": self.agent_account}
-        if self.applicable is not None:
+        if self.organization != Unset:
+            json_data["organization"] = (
+                {"meta": self.organization} if self.organization is not None else None
+            )
+        if self.agent != Unset:
+            json_data["agent"] = (
+                {"meta": self.agent} if self.agent is not None else None
+            )
+        if self.agent_account != Unset:
+            json_data["agentAccount"] = (
+                {"meta": self.agent_account} if self.agent_account is not None else None
+            )
+        if self.applicable != Unset:
             json_data["applicable"] = self.applicable
-        if self.attributes is not None:
+        if self.attributes != Unset:
             json_data["attributes"] = self.attributes
-        if self.code is not None:
+        if self.code != Unset:
             json_data["code"] = self.code
-        if self.contract is not None:
-            json_data["contract"] = {"meta": self.contract}
-        if self.description is not None:
+        if self.contract != Unset:
+            json_data["contract"] = (
+                {"meta": self.contract} if self.contract is not None else None
+            )
+        if self.description != Unset:
             json_data["description"] = self.description
-        if self.external_code is not None:
+        if self.external_code != Unset:
             json_data["externalCode"] = self.external_code
-        if self.files is not None:
+        if self.files != Unset:
             json_data["files"] = self.files
-        if self.group is not None:
-            json_data["group"] = {"meta": self.group}
-        if self.incoming_date is not None:
+        if self.group != Unset:
+            json_data["group"] = (
+                {"meta": self.group} if self.group is not None else None
+            )
+        if self.incoming_date != Unset:
             json_data["incomingDate"] = self.incoming_date.strftime("%Y-%m-%d %H:%M:%S")
-        if self.incoming_number is not None:
+        if self.incoming_number != Unset:
             json_data["incomingNumber"] = self.incoming_number
-        if self.moment is not None:
+        if self.moment != Unset:
             json_data["moment"] = self.moment.strftime("%Y-%m-%d %H:%M:%S")
-        if self.organization_account is not None:
-            json_data["organizationAccount"] = {"meta": self.organization_account}
-        if self.owner is not None:
-            json_data["owner"] = {"meta": self.owner}
-        if self.payed_sum is not None:
+        if self.organization_account != Unset:
+            json_data["organizationAccount"] = (
+                {"meta": self.organization_account}
+                if self.organization_account is not None
+                else None
+            )
+        if self.owner != Unset:
+            json_data["owner"] = (
+                {"meta": self.owner} if self.owner is not None else None
+            )
+        if self.payed_sum != Unset:
             json_data["payedSum"] = self.payed_sum
-        if self.payment_planned_moment is not None:
+        if self.payment_planned_moment != Unset:
             json_data["paymentPlannedMoment"] = self.payment_planned_moment.strftime(
                 "%Y-%m-%d %H:%M:%S"
             )
@@ -648,15 +711,15 @@ class UpdateInvoiceInRequest(types.ApiRequest):
             for position in self.positions:
                 pos = {}
                 assortment = position.get("assortment")
-                if assortment is not None:
+                if assortment != Unset:
                     pos["assortment"] = {"meta": assortment}
                 else:
                     raise ValueError("Assortment is required for position")
                 price = position.get("price")
-                if price is not None:
+                if price != Unset:
                     pos["price"] = price
                 quantity = position.get("quantity")
-                if quantity is not None:
+                if quantity != Unset:
                     pos["quantity"] = quantity
                 else:
                     raise ValueError("Quantity is required for position")
@@ -665,19 +728,25 @@ class UpdateInvoiceInRequest(types.ApiRequest):
                 if "vat" in position:
                     pos["vat"] = position["vat"]
                 json_data["positions"].append(pos)
-        if self.project is not None:
-            json_data["project"] = {"meta": self.project}
-        if self.rate is not None:
+        if self.project != Unset:
+            json_data["project"] = (
+                {"meta": self.project} if self.project is not None else None
+            )
+        if self.rate != Unset:
             json_data["rate"] = self.rate
-        if self.shared is not None:
+        if self.shared != Unset:
             json_data["shared"] = self.shared
-        if self.state is not None:
-            json_data["state"] = {"meta": self.state}
-        if self.store is not None:
-            json_data["store"] = {"meta": self.store}
-        if self.vat_enabled is not None:
+        if self.state != Unset:
+            json_data["state"] = (
+                {"meta": self.state} if self.state is not None else None
+            )
+        if self.store != Unset:
+            json_data["store"] = (
+                {"meta": self.store} if self.store is not None else None
+            )
+        if self.vat_enabled != Unset:
             json_data["vatEnabled"] = self.vat_enabled
-        if self.vat_included is not None:
+        if self.vat_included != Unset:
             json_data["vatIncluded"] = self.vat_included
 
         if len(json_data) == 0:
@@ -690,34 +759,6 @@ class UpdateInvoiceInRequest(types.ApiRequest):
 
     def from_response(self, response: dict) -> InvoiceIn:
         return InvoiceIn.from_json(response)
-
-
-class InvoiceInPosition(types.MoySkladBaseClass):
-    # https://dev.moysklad.ru/doc/api/remap/1.2/documents/#dokumenty-schet-postawschika-poziciq-scheta-postawschika
-    def __init__(self):
-        self.meta: types.Meta = None
-        self.id: str = None
-        self.account_id: str = None
-        self.quantity: float = None
-        self.price: float = None
-        self.discount: float = None
-        self.vat: float = None
-        self.vat_enabled: bool = None
-        self.assortment: types.Meta = None
-
-    @classmethod
-    def from_json(cls, data: dict) -> "InvoiceInPosition":
-        position = cls()
-        position.meta = data.get("meta")
-        position.id = data.get("id")
-        position.account_id = data.get("accountId")
-        position.quantity = data.get("quantity")
-        position.price = data.get("price")
-        position.discount = data.get("discount")
-        position.vat = data.get("vat")
-        position.vat_enabled = data.get("vatEnabled")
-        position.assortment = helpers.get_meta(data.get("assortment"))
-        return position
 
 
 class GetInvoiceInPositionRequest(types.ApiRequest):
@@ -778,9 +819,9 @@ class CreateInvoiceInPositionRequest(types.ApiRequest):
         invoice_in_id: str,
         quantity: float,
         assortment: types.Meta,
-        price: typing.Optional[float] = None,
-        discount: typing.Optional[float] = None,
-        vat: typing.Optional[float] = None,
+        price: typing.Union[Unset, float] = Unset,
+        discount: typing.Union[Unset, float] = Unset,
+        vat: typing.Union[Unset, float] = Unset,
     ):
         """
         Добавить позицию счета поставщика
@@ -801,11 +842,11 @@ class CreateInvoiceInPositionRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         json_data = {"quantity": self.quantity, "assortment": {"meta": self.assortment}}
-        if self.price is not None:
+        if self.price != Unset:
             json_data["price"] = self.price
-        if self.discount is not None:
+        if self.discount != Unset:
             json_data["discount"] = self.discount
-        if self.vat is not None:
+        if self.vat != Unset:
             json_data["vat"] = self.vat
         return {
             "method": "POST",
@@ -848,11 +889,11 @@ class UpdateInvoiceInPositionRequest(types.ApiRequest):
         self,
         invoice_in_id: str,
         position_id: str,
-        quantity: typing.Optional[float] = None,
-        assortment: typing.Optional[types.Meta] = None,
-        price: typing.Optional[float] = None,
-        discount: typing.Optional[float] = None,
-        vat: typing.Optional[float] = None,
+        quantity: typing.Union[Unset, float] = Unset,
+        assortment: typing.Union[Unset, types.Meta] = Unset,
+        price: typing.Union[Unset, float] = Unset,
+        discount: typing.Union[Unset, float] = Unset,
+        vat: typing.Union[Unset, float] = Unset,
     ):
         """
         Изменить позицию счета поставщика
@@ -875,15 +916,17 @@ class UpdateInvoiceInPositionRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         json_data = {}
-        if self.quantity is not None:
+        if self.quantity != Unset:
             json_data["quantity"] = self.quantity
-        if self.assortment is not None:
-            json_data["assortment"] = {"meta": self.assortment}
-        if self.price is not None:
+        if self.assortment != Unset:
+            json_data["assortment"] = (
+                {"meta": self.assortment} if self.assortment is not None else None
+            )
+        if self.price != Unset:
             json_data["price"] = self.price
-        if self.discount is not None:
+        if self.discount != Unset:
             json_data["discount"] = self.discount
-        if self.vat is not None:
+        if self.vat != Unset:
             json_data["vat"] = self.vat
         if len(json_data) == 0:
             raise ValueError("No data to update")

@@ -60,3 +60,18 @@ class ApiRequest:
 
     def from_response(self, result: dict):
         raise NotImplementedError
+
+
+class Unset:
+    _singleton = None
+
+    def __new__(cls):
+        if cls._singleton is None:
+            cls._singleton = super(Unset, cls).__new__(cls)
+        return cls._singleton
+
+    def __repr__(self):
+        return "Unset"
+
+    def __bool__(self):
+        return False

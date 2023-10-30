@@ -1,6 +1,7 @@
 import typing
 import datetime
 from .... import types
+from ....types import Unset
 
 
 class Move(types.MoySkladBaseClass):
@@ -198,9 +199,9 @@ class GetMovesRequest(types.ApiRequest):
 
     def __init__(
         self,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
-        search: typing.Optional[str] = None,
+        limit: typing.Union[Unset, int] = Unset,
+        offset: typing.Union[Unset, int] = Unset,
+        search: typing.Union[Unset, str] = Unset,
     ):
         """
 
@@ -249,26 +250,26 @@ class CreateMoveRequest(types.ApiRequest):
         organization: types.Meta,
         source_store: types.Meta,
         target_store: types.Meta,
-        applicable: typing.Optional[bool] = None,
-        attributes: typing.Optional[dict] = None,
-        code: typing.Optional[str] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        files: typing.Optional[types.MetaArray] = None,
-        group: typing.Optional[types.Meta] = None,
-        internal_order: typing.Optional[types.Meta] = None,
-        customer_order: typing.Optional[types.Meta] = None,
-        meta: typing.Optional[types.Meta] = None,
-        moment: typing.Optional[datetime.datetime] = None,
-        name: typing.Optional[str] = None,
-        overhead: typing.Optional[dict] = None,
-        owner: typing.Optional[types.Meta] = None,
-        positions: typing.Optional[typing.List[CreatePosition]] = None,
-        project: typing.Optional[types.Meta] = None,
-        rate: typing.Optional[types.Rate] = None,
-        shared: typing.Optional[bool] = None,
-        state: typing.Optional[types.Meta] = None,
-        sync_id: typing.Optional[str] = None,
+        applicable: typing.Union[Unset, bool] = Unset,
+        attributes: typing.Union[Unset, dict] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        files: typing.Union[Unset, types.MetaArray] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        internal_order: typing.Union[Unset, types.Meta] = Unset,
+        customer_order: typing.Union[Unset, types.Meta] = Unset,
+        meta: typing.Union[Unset, types.Meta] = Unset,
+        moment: typing.Union[Unset, datetime.datetime] = Unset,
+        name: typing.Union[Unset, str] = Unset,
+        overhead: typing.Union[Unset, dict] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        positions: typing.Union[Unset, typing.List[CreatePosition]] = Unset,
+        project: typing.Union[Unset, types.Meta] = Unset,
+        rate: typing.Union[Unset, types.Rate] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        state: typing.Union[Unset, types.Meta] = Unset,
+        sync_id: typing.Union[Unset, str] = Unset,
     ):
         """
 
@@ -443,29 +444,29 @@ class UpdateMoveRequest(types.ApiRequest):
     def __init__(
         self,
         move_id: str,
-        organization: typing.Optional[types.Meta] = None,
-        source_store: typing.Optional[types.Meta] = None,
-        target_store: typing.Optional[types.Meta] = None,
-        applicable: typing.Optional[bool] = None,
-        attributes: typing.Optional[dict] = None,
-        code: typing.Optional[str] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        files: typing.Optional[types.MetaArray] = None,
-        group: typing.Optional[types.Meta] = None,
-        internal_order: typing.Optional[types.Meta] = None,
-        customer_order: typing.Optional[types.Meta] = None,
-        meta: typing.Optional[types.Meta] = None,
-        moment: typing.Optional[datetime.datetime] = None,
-        name: typing.Optional[str] = None,
-        overhead: typing.Optional[dict] = None,
-        owner: typing.Optional[types.Meta] = None,
-        positions: typing.Optional[types.MetaArray] = None,
-        project: typing.Optional[types.Meta] = None,
-        rate: typing.Optional[types.Rate] = None,
-        shared: typing.Optional[bool] = None,
-        state: typing.Optional[types.Meta] = None,
-        sync_id: typing.Optional[str] = None,
+        organization: typing.Union[Unset, types.Meta] = Unset,
+        source_store: typing.Union[Unset, types.Meta] = Unset,
+        target_store: typing.Union[Unset, types.Meta] = Unset,
+        applicable: typing.Union[Unset, bool] = Unset,
+        attributes: typing.Union[Unset, dict] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        files: typing.Union[Unset, types.MetaArray] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        internal_order: typing.Union[Unset, types.Meta] = Unset,
+        customer_order: typing.Union[Unset, types.Meta] = Unset,
+        meta: typing.Union[Unset, types.Meta] = Unset,
+        moment: typing.Union[Unset, datetime.datetime] = Unset,
+        name: typing.Union[Unset, str] = Unset,
+        overhead: typing.Union[Unset, dict] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        positions: typing.Union[Unset, types.MetaArray] = Unset,
+        project: typing.Union[Unset, types.Meta] = Unset,
+        rate: typing.Union[Unset, types.Rate] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        state: typing.Union[Unset, types.Meta] = Unset,
+        sync_id: typing.Union[Unset, str] = Unset,
     ):
         """
 
@@ -523,51 +524,73 @@ class UpdateMoveRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         json_data = {}
-        if self.organization is not None:
-            json_data["organization"] = {"meta": self.organization}
-        if self.source_store is not None:
-            json_data["sourceStore"] = {"meta": self.source_store}
-        if self.target_store is not None:
-            json_data["targetStore"] = {"meta": self.target_store}
-        if self.applicable is not None:
+        if self.organization != Unset:
+            json_data["organization"] = (
+                {"meta": self.organization} if self.organization is not None else None
+            )
+        if self.source_store != Unset:
+            json_data["sourceStore"] = (
+                {"meta": self.source_store} if self.source_store is not None else None
+            )
+        if self.target_store != Unset:
+            json_data["targetStore"] = (
+                {"meta": self.target_store} if self.target_store is not None else None
+            )
+        if self.applicable != Unset:
             json_data["applicable"] = self.applicable
-        if self.attributes is not None:
+        if self.attributes != Unset:
             json_data["attributes"] = self.attributes
-        if self.code is not None:
+        if self.code != Unset:
             json_data["code"] = self.code
-        if self.description is not None:
+        if self.description != Unset:
             json_data["description"] = self.description
-        if self.external_code is not None:
+        if self.external_code != Unset:
             json_data["externalCode"] = self.external_code
-        if self.files is not None:
+        if self.files != Unset:
             json_data["files"] = self.files
-        if self.group is not None:
-            json_data["group"] = {"meta": self.group}
-        if self.internal_order is not None:
-            json_data["internalOrder"] = {"meta": self.internal_order}
-        if self.customer_order is not None:
-            json_data["order"] = {"meta": self.customer_order}
-        if self.meta is not None:
+        if self.group != Unset:
+            json_data["group"] = (
+                {"meta": self.group} if self.group is not None else None
+            )
+        if self.internal_order != Unset:
+            json_data["internalOrder"] = (
+                {"meta": self.internal_order}
+                if self.internal_order is not None
+                else None
+            )
+        if self.customer_order != Unset:
+            json_data["order"] = (
+                {"meta": self.customer_order}
+                if self.customer_order is not None
+                else None
+            )
+        if self.meta != Unset:
             json_data["meta"] = self.meta
-        if self.moment is not None:
+        if self.moment != Unset:
             json_data["moment"] = self.moment.strftime("%Y-%m-%d %H:%M:%S")
-        if self.name is not None:
+        if self.name != Unset:
             json_data["name"] = self.name
-        if self.overhead is not None:
+        if self.overhead != Unset:
             json_data["overhead"] = self.overhead
-        if self.owner is not None:
-            json_data["owner"] = {"meta": self.owner}
-        if self.positions is not None:
+        if self.owner != Unset:
+            json_data["owner"] = (
+                {"meta": self.owner} if self.owner is not None else None
+            )
+        if self.positions != Unset:
             json_data["positions"] = self.positions
-        if self.project is not None:
-            json_data["project"] = {"meta": self.project}
-        if self.rate is not None:
+        if self.project != Unset:
+            json_data["project"] = (
+                {"meta": self.project} if self.project is not None else None
+            )
+        if self.rate != Unset:
             json_data["rate"] = self.rate
-        if self.shared is not None:
+        if self.shared != Unset:
             json_data["shared"] = self.shared
-        if self.state is not None:
-            json_data["state"] = {"meta": self.state}
-        if self.sync_id is not None:
+        if self.state != Unset:
+            json_data["state"] = (
+                {"meta": self.state} if self.state is not None else None
+            )
+        if self.sync_id != Unset:
             json_data["syncId"] = self.sync_id
         return {
             "method": "PUT",
@@ -593,9 +616,9 @@ class GetMovePositionsRequest(types.ApiRequest):
     def __init__(
         self,
         move_id: str,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
-        search: typing.Optional[str] = None,
+        limit: typing.Union[Unset, int] = Unset,
+        offset: typing.Union[Unset, int] = Unset,
+        search: typing.Union[Unset, str] = Unset,
     ):
         """
 
@@ -612,11 +635,11 @@ class GetMovePositionsRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         params = {}
-        if self.limit is not None:
+        if self.limit != Unset:
             params["limit"] = self.limit
-        if self.offset is not None:
+        if self.offset != Unset:
             params["offset"] = self.offset
-        if self.search is not None:
+        if self.search != Unset:
             params["search"] = self.search
 
         return {
@@ -647,8 +670,8 @@ class CreateMovePositionRequest(types.ApiRequest):
         move_id: str,
         assortment: types.Meta,
         quantity: float,
-        price: typing.Optional[int] = None,
-        overhead: typing.Optional[int] = None,
+        price: typing.Union[Unset, int] = Unset,
+        overhead: typing.Union[Unset, int] = Unset,
     ):
         """
 
@@ -669,9 +692,9 @@ class CreateMovePositionRequest(types.ApiRequest):
             "assortment": {"meta": self.assortment},
             "quantity": self.quantity,
         }
-        if self.price is not None:
+        if self.price != Unset:
             json_data["price"] = self.price
-        if self.overhead is not None:
+        if self.overhead != Unset:
             json_data["overhead"] = self.overhead
 
         return {
@@ -732,10 +755,10 @@ class UpdateMovePositionRequest(types.ApiRequest):
         self,
         move_id: str,
         position_id: str,
-        assortment: typing.Optional[types.Meta] = None,
-        quantity: typing.Optional[int] = None,
-        price: typing.Optional[int] = None,
-        overhead: typing.Optional[int] = None,
+        assortment: typing.Union[Unset, types.Meta] = Unset,
+        quantity: typing.Union[Unset, int] = Unset,
+        price: typing.Union[Unset, int] = Unset,
+        overhead: typing.Union[Unset, int] = Unset,
     ):
         """
 
@@ -756,13 +779,15 @@ class UpdateMovePositionRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         json_data = {}
-        if self.assortment is not None:
-            json_data["assortment"] = {"meta": self.assortment}
-        if self.quantity is not None:
+        if self.assortment != Unset:
+            json_data["assortment"] = (
+                {"meta": self.assortment} if self.assortment is not None else None
+            )
+        if self.quantity != Unset:
             json_data["quantity"] = self.quantity
-        if self.price is not None:
+        if self.price != Unset:
             json_data["price"] = self.price
-        if self.overhead is not None:
+        if self.overhead != Unset:
             json_data["overhead"] = self.overhead
 
         return {

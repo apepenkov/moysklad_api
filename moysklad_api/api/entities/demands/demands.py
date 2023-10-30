@@ -2,6 +2,7 @@ import datetime
 import typing
 
 from .... import types
+from ....types import Unset
 
 
 class Demand(types.MoySkladBaseClass):
@@ -281,31 +282,31 @@ class CreateDemandRequest(types.ApiRequest):
         organization: types.Meta,
         agent: types.Meta,
         store: types.Meta,
-        agent_account: typing.Optional[types.Meta] = None,
-        applicable: typing.Optional[bool] = None,
-        attributes: typing.Optional[list] = None,
-        code: typing.Optional[str] = None,
-        contract: typing.Optional[types.Meta] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        files: typing.Optional[types.MetaArray] = None,
-        group: typing.Optional[types.Meta] = None,
-        moment: typing.Optional[datetime.datetime] = None,
-        name: typing.Optional[str] = None,
-        organization_account: typing.Optional[bool] = None,
-        overhead: typing.Optional[dict] = None,
-        owner: typing.Optional[types.Meta] = None,
-        positions: typing.Optional[CreateDemandPosition] = None,
-        project: typing.Optional[types.Meta] = None,
-        rate: typing.Optional[dict] = None,
-        sales_channel: typing.Optional[bool] = None,
-        shared: typing.Optional[bool] = None,
-        shipment_address: typing.Optional[str] = None,
-        shipment_address_full: typing.Optional[dict] = None,
-        state: typing.Optional[types.Meta] = None,
-        sync_id: typing.Optional[str] = None,
-        vat_enabled: typing.Optional[bool] = None,
-        vat_included: typing.Optional[bool] = None,
+        agent_account: typing.Union[Unset, types.Meta] = Unset,
+        applicable: typing.Union[Unset, bool] = Unset,
+        attributes: typing.Union[Unset, list] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        contract: typing.Union[Unset, types.Meta] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        files: typing.Union[Unset, types.MetaArray] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        moment: typing.Union[Unset, datetime.datetime] = Unset,
+        name: typing.Union[Unset, str] = Unset,
+        organization_account: typing.Union[Unset, bool] = Unset,
+        overhead: typing.Union[Unset, dict] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        positions: typing.Union[Unset, CreateDemandPosition] = Unset,
+        project: typing.Union[Unset, types.Meta] = Unset,
+        rate: typing.Union[Unset, dict] = Unset,
+        sales_channel: typing.Union[Unset, bool] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        shipment_address: typing.Union[Unset, str] = Unset,
+        shipment_address_full: typing.Union[Unset, dict] = Unset,
+        state: typing.Union[Unset, types.Meta] = Unset,
+        sync_id: typing.Union[Unset, str] = Unset,
+        vat_enabled: typing.Union[Unset, bool] = Unset,
+        vat_included: typing.Union[Unset, bool] = Unset,
     ):
         """
 
@@ -373,55 +374,67 @@ class CreateDemandRequest(types.ApiRequest):
             "agent": {"meta": self.agent},
             "store": {"meta": self.store},
         }
-        if self.agent_account is not None:
-            json_data["agenAccount"] = {"meta": self.agent_account}
-        if self.applicable is not None:
+        if self.agent_account != Unset:
+            json_data["agenAccount"] = (
+                {"meta": self.agent_account} if self.agent_account is not None else None
+            )
+        if self.applicable != Unset:
             json_data["applicable"] = self.applicable
-        if self.attributes is not None:
+        if self.attributes != Unset:
             json_data["attributes"] = self.attributes
-        if self.code is not None:
+        if self.code != Unset:
             json_data["code"] = self.code
-        if self.contract is not None:
-            json_data["contract"] = {"meta": self.contract}
-        if self.description is not None:
+        if self.contract != Unset:
+            json_data["contract"] = (
+                {"meta": self.contract} if self.contract is not None else None
+            )
+        if self.description != Unset:
             json_data["description"] = self.description
-        if self.external_code is not None:
+        if self.external_code != Unset:
             json_data["externalCode"] = self.external_code
-        if self.files is not None:
+        if self.files != Unset:
             json_data["files"] = self.files
-        if self.group is not None:
-            json_data["group"] = {"meta": self.group}
-        if self.moment is not None:
+        if self.group != Unset:
+            json_data["group"] = (
+                {"meta": self.group} if self.group is not None else None
+            )
+        if self.moment != Unset:
             json_data["moment"] = self.moment.strftime("%Y-%m-%d %H:%M:%S")
-        if self.name is not None:
+        if self.name != Unset:
             json_data["name"] = self.name
-        if self.organization_account is not None:
+        if self.organization_account != Unset:
             json_data["organizationAccount"] = self.organization_account
-        if self.overhead is not None:
+        if self.overhead != Unset:
             json_data["overhead"] = self.overhead
-        if self.owner is not None:
-            json_data["owner"] = {"meta": self.owner}
-        if self.positions is not None:
+        if self.owner != Unset:
+            json_data["owner"] = (
+                {"meta": self.owner} if self.owner is not None else None
+            )
+        if self.positions != Unset:
             json_data["positions"] = self.positions
-        if self.project is not None:
-            json_data["project"] = {"meta": self.project}
-        if self.rate is not None:
+        if self.project != Unset:
+            json_data["project"] = (
+                {"meta": self.project} if self.project is not None else None
+            )
+        if self.rate != Unset:
             json_data["rate"] = self.rate
-        if self.sales_channel is not None:
+        if self.sales_channel != Unset:
             json_data["salesChannel"] = self.sales_channel
-        if self.shared is not None:
+        if self.shared != Unset:
             json_data["shared"] = self.shared
-        if self.shipment_address is not None:
+        if self.shipment_address != Unset:
             json_data["shipmentAddress"] = self.shipment_address
-        if self.shipment_address_full is not None:
+        if self.shipment_address_full != Unset:
             json_data["shipmentAddressFull"] = self.shipment_address_full
-        if self.state is not None:
-            json_data["state"] = {"meta": self.state}
-        if self.sync_id is not None:
+        if self.state != Unset:
+            json_data["state"] = (
+                {"meta": self.state} if self.state is not None else None
+            )
+        if self.sync_id != Unset:
             json_data["syncId"] = self.sync_id
-        if self.vat_enabled is not None:
+        if self.vat_enabled != Unset:
             json_data["vatEnabled"] = self.vat_enabled
-        if self.vat_included is not None:
+        if self.vat_included != Unset:
             json_data["vatIncluded"] = self.vat_included
 
         return {
@@ -447,9 +460,9 @@ class GetDemandsRequest(types.ApiRequest):
 
     def __init__(
         self,
-        limit: typing.Optional[int] = None,
-        offset: typing.Optional[int] = None,
-        search: typing.Optional[str] = None,
+        limit: typing.Union[Unset, int] = Unset,
+        offset: typing.Union[Unset, int] = Unset,
+        search: typing.Union[Unset, str] = Unset,
     ):
         """
 
@@ -463,11 +476,11 @@ class GetDemandsRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         params = {}
-        if self.limit is not None:
+        if self.limit != Unset:
             params["limit"] = self.limit
-        if self.offset is not None:
+        if self.offset != Unset:
             params["offset"] = self.offset
-        if self.search is not None:
+        if self.search != Unset:
             params["search"] = self.search
 
         return {
@@ -572,34 +585,34 @@ class UpdateDemandRequest(types.ApiRequest):
     def __init__(
         self,
         demand_id: str,
-        organization: typing.Optional[types.Meta] = None,
-        agent: typing.Optional[types.Meta] = None,
-        store: typing.Optional[types.Meta] = None,
-        agent_account: typing.Optional[types.Meta] = None,
-        applicable: typing.Optional[bool] = None,
-        attributes: typing.Optional[list] = None,
-        code: typing.Optional[str] = None,
-        contract: typing.Optional[types.Meta] = None,
-        description: typing.Optional[str] = None,
-        external_code: typing.Optional[str] = None,
-        files: typing.Optional[types.MetaArray] = None,
-        group: typing.Optional[types.Meta] = None,
-        moment: typing.Optional[datetime.datetime] = None,
-        name: typing.Optional[str] = None,
-        organization_account: typing.Optional[bool] = None,
-        overhead: typing.Optional[dict] = None,
-        owner: typing.Optional[types.Meta] = None,
-        positions: typing.Optional[UpdateDemandPosition] = None,
-        project: typing.Optional[types.Meta] = None,
-        rate: typing.Optional[dict] = None,
-        sales_channel: typing.Optional[bool] = None,
-        shared: typing.Optional[bool] = None,
-        shipment_address: typing.Optional[str] = None,
-        shipment_address_full: typing.Optional[dict] = None,
-        state: typing.Optional[types.Meta] = None,
-        sync_id: typing.Optional[str] = None,
-        vat_enabled: typing.Optional[bool] = None,
-        vat_included: typing.Optional[bool] = None,
+        organization: typing.Union[Unset, types.Meta] = Unset,
+        agent: typing.Union[Unset, types.Meta] = Unset,
+        store: typing.Union[Unset, types.Meta] = Unset,
+        agent_account: typing.Union[Unset, types.Meta] = Unset,
+        applicable: typing.Union[Unset, bool] = Unset,
+        attributes: typing.Union[Unset, list] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        contract: typing.Union[Unset, types.Meta] = Unset,
+        description: typing.Union[Unset, str] = Unset,
+        external_code: typing.Union[Unset, str] = Unset,
+        files: typing.Union[Unset, types.MetaArray] = Unset,
+        group: typing.Union[Unset, types.Meta] = Unset,
+        moment: typing.Union[Unset, datetime.datetime] = Unset,
+        name: typing.Union[Unset, str] = Unset,
+        organization_account: typing.Union[Unset, bool] = Unset,
+        overhead: typing.Union[Unset, dict] = Unset,
+        owner: typing.Union[Unset, types.Meta] = Unset,
+        positions: typing.Union[Unset, UpdateDemandPosition] = Unset,
+        project: typing.Union[Unset, types.Meta] = Unset,
+        rate: typing.Union[Unset, dict] = Unset,
+        sales_channel: typing.Union[Unset, bool] = Unset,
+        shared: typing.Union[Unset, bool] = Unset,
+        shipment_address: typing.Union[Unset, str] = Unset,
+        shipment_address_full: typing.Union[Unset, dict] = Unset,
+        state: typing.Union[Unset, types.Meta] = Unset,
+        sync_id: typing.Union[Unset, str] = Unset,
+        vat_enabled: typing.Union[Unset, bool] = Unset,
+        vat_included: typing.Union[Unset, bool] = Unset,
     ):
         """
 
@@ -665,61 +678,79 @@ class UpdateDemandRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         json_data = {}
-        if self.organization is not None:
-            json_data["organization"] = {"meta": self.organization}
-        if self.agent is not None:
-            json_data["agent"] = {"meta": self.agent}
-        if self.store is not None:
-            json_data["store"] = {"meta": self.store}
-        if self.agent_account is not None:
-            json_data["agenAccount"] = {"meta": self.agent_account}
-        if self.applicable is not None:
+        if self.organization != Unset:
+            json_data["organization"] = (
+                {"meta": self.organization} if self.organization is not None else None
+            )
+        if self.agent != Unset:
+            json_data["agent"] = (
+                {"meta": self.agent} if self.agent is not None else None
+            )
+        if self.store != Unset:
+            json_data["store"] = (
+                {"meta": self.store} if self.store is not None else None
+            )
+        if self.agent_account != Unset:
+            json_data["agenAccount"] = (
+                {"meta": self.agent_account} if self.agent_account is not None else None
+            )
+        if self.applicable != Unset:
             json_data["applicable"] = self.applicable
-        if self.attributes is not None:
+        if self.attributes != Unset:
             json_data["attributes"] = self.attributes
-        if self.code is not None:
+        if self.code != Unset:
             json_data["code"] = self.code
-        if self.contract is not None:
-            json_data["contract"] = {"meta": self.contract}
-        if self.description is not None:
+        if self.contract != Unset:
+            json_data["contract"] = (
+                {"meta": self.contract} if self.contract is not None else None
+            )
+        if self.description != Unset:
             json_data["description"] = self.description
-        if self.external_code is not None:
+        if self.external_code != Unset:
             json_data["externalCode"] = self.external_code
-        if self.files is not None:
+        if self.files != Unset:
             json_data["files"] = self.files
-        if self.group is not None:
-            json_data["group"] = {"meta": self.group}
-        if self.moment is not None:
+        if self.group != Unset:
+            json_data["group"] = (
+                {"meta": self.group} if self.group is not None else None
+            )
+        if self.moment != Unset:
             json_data["moment"] = self.moment.strftime("%Y-%m-%d %H:%M:%S")
-        if self.name is not None:
+        if self.name != Unset:
             json_data["name"] = self.name
-        if self.organization_account is not None:
+        if self.organization_account != Unset:
             json_data["organizationAccount"] = self.organization_account
-        if self.overhead is not None:
+        if self.overhead != Unset:
             json_data["overhead"] = self.overhead
-        if self.owner is not None:
-            json_data["owner"] = {"meta": self.owner}
-        if self.positions is not None:
+        if self.owner != Unset:
+            json_data["owner"] = (
+                {"meta": self.owner} if self.owner is not None else None
+            )
+        if self.positions != Unset:
             json_data["positions"] = self.positions
-        if self.project is not None:
-            json_data["project"] = {"meta": self.project}
-        if self.rate is not None:
+        if self.project != Unset:
+            json_data["project"] = (
+                {"meta": self.project} if self.project is not None else None
+            )
+        if self.rate != Unset:
             json_data["rate"] = self.rate
-        if self.sales_channel is not None:
+        if self.sales_channel != Unset:
             json_data["salesChannel"] = self.sales_channel
-        if self.shared is not None:
+        if self.shared != Unset:
             json_data["shared"] = self.shared
-        if self.shipment_address is not None:
+        if self.shipment_address != Unset:
             json_data["shipmentAddress"] = self.shipment_address
-        if self.shipment_address_full is not None:
+        if self.shipment_address_full != Unset:
             json_data["shipmentAddressFull"] = self.shipment_address_full
-        if self.state is not None:
-            json_data["state"] = {"meta": self.state}
-        if self.sync_id is not None:
+        if self.state != Unset:
+            json_data["state"] = (
+                {"meta": self.state} if self.state is not None else None
+            )
+        if self.sync_id != Unset:
             json_data["syncId"] = self.sync_id
-        if self.vat_enabled is not None:
+        if self.vat_enabled != Unset:
             json_data["vatEnabled"] = self.vat_enabled
-        if self.vat_included is not None:
+        if self.vat_included != Unset:
             json_data["vatIncluded"] = self.vat_included
 
         return {
@@ -757,9 +788,9 @@ class GetDemandPositionsRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         params = {}
-        if self.limit is not None:
+        if self.limit != Unset:
             params["limit"] = self.limit
-        if self.offset is not None:
+        if self.offset != Unset:
             params["offset"] = self.offset
         return {
             "method": "GET",
