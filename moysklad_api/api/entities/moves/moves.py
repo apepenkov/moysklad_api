@@ -215,11 +215,11 @@ class GetMovesRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         params = {}
-        if self.limit:
+        if self.limit != Unset:
             params["limit"] = self.limit
-        if self.offset:
+        if self.offset != Unset:
             params["offset"] = self.offset
-        if self.search:
+        if self.search != Unset:
             params["search"] = self.search
 
         return {
@@ -330,49 +330,49 @@ class CreateMoveRequest(types.ApiRequest):
             "sourceStore": {"meta": self.source_store},
             "targetStore": {"meta": self.target_store},
         }
-        if self.applicable:
+        if self.applicable != Unset:
             json_data["applicable"] = self.applicable
-        if self.attributes:
+        if self.attributes != Unset:
             json_data["attributes"] = self.attributes
-        if self.code:
+        if self.code != Unset:
             json_data["code"] = self.code
-        if self.description:
+        if self.description != Unset:
             json_data["description"] = self.description
-        if self.external_code:
+        if self.external_code != Unset:
             json_data["externalCode"] = self.external_code
-        if self.files:
+        if self.files != Unset:
             json_data["files"] = self.files
-        if self.group:
+        if self.group != Unset:
             json_data["group"] = {"meta": self.group}
-        if self.internal_order:
+        if self.internal_order != Unset:
             json_data["internalOrder"] = {"meta": self.internal_order}
-        if self.customer_order:
+        if self.customer_order != Unset:
             json_data["customerOrder"] = {"meta": self.customer_order}
-        if self.meta:
+        if self.meta != Unset:
             json_data["meta"] = self.meta
-        if self.moment:
+        if self.moment != Unset:
             json_data["moment"] = self.moment.strftime("%Y-%m-%d %H:%M:%S")
-        if self.name:
+        if self.name != Unset:
             json_data["name"] = self.name
-        if self.overhead:
+        if self.overhead != Unset:
             json_data["overhead"] = self.overhead
-        if self.owner:
+        if self.owner != Unset:
             json_data["owner"] = {"meta": self.owner}
-        if self.positions:
+        if self.positions != Unset:
             json_data["positions"] = []
             for position in self.positions:
                 new_position: dict = position.copy()
                 new_position["assortment"] = {"meta": new_position["assortment"]}
                 json_data["positions"].append(new_position)
-        if self.project:
+        if self.project != Unset:
             json_data["project"] = {"meta": self.project}
-        if self.rate:
+        if self.rate != Unset:
             json_data["rate"] = self.rate
-        if self.shared:
+        if self.shared != Unset:
             json_data["shared"] = self.shared
-        if self.state:
+        if self.state != Unset:
             json_data["state"] = {"meta": self.state}
-        if self.sync_id:
+        if self.sync_id != Unset:
             json_data["syncId"] = self.sync_id
 
         return {

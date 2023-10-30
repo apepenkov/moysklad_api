@@ -107,7 +107,7 @@ class CreateWebhookRequest(types.ApiRequest):
             "entityType": self.entity_type,
             "action": self.action,
         }
-        if self.diff_type:
+        if self.diff_type != Unset:
             json_data["diffType"] = self.diff_type
 
         return {

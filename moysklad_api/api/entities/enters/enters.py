@@ -861,19 +861,19 @@ class UpdateEnterPositionRequest(types.ApiRequest):
             "price": self.price,
             "quantity": self.quantity,
         }
-        if self.country:
+        if self.country != Unset:
             json_data["country"] = {"meta": self.country}
-        if self.gtd:
+        if self.gtd != Unset:
             json_data["gtd"] = self.gtd
-        if self.pack:
+        if self.pack != Unset:
             json_data["pack"] = self.pack
-        if self.reason:
+        if self.reason != Unset:
             json_data["reason"] = self.reason
-        if self.slot:
+        if self.slot != Unset:
             json_data["slot"] = {"meta": self.slot}
-        if self.things:
+        if self.things != Unset:
             json_data["things"] = self.things
-        if self.overhead:
+        if self.overhead != Unset:
             json_data["overhead"] = self.overhead
         return {
             "method": "PUT",

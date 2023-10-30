@@ -417,7 +417,7 @@ class CreateInvoiceInRequest(types.ApiRequest):
             json_data["paymentPlannedMoment"] = self.payment_planned_moment.strftime(
                 "%Y-%m-%d %H:%M:%S"
             )
-        if self.positions:
+        if self.positions != Unset:
             json_data["positions"] = []
             for position in self.positions:
                 pos = {}
@@ -706,7 +706,7 @@ class UpdateInvoiceInRequest(types.ApiRequest):
             json_data["paymentPlannedMoment"] = self.payment_planned_moment.strftime(
                 "%Y-%m-%d %H:%M:%S"
             )
-        if self.positions:
+        if self.positions != Unset:
             json_data["positions"] = []
             for position in self.positions:
                 pos = {}

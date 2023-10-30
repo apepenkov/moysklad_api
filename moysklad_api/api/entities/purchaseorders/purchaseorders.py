@@ -278,11 +278,11 @@ class GetPurchaseOrderListRequest(types.ApiRequest):
 
     def to_request(self) -> dict:
         params = {}
-        if self.limit:
+        if self.limit != Unset:
             params["limit"] = self.limit
-        if self.offset:
+        if self.offset != Unset:
             params["offset"] = self.offset
-        if self.search:
+        if self.search != Unset:
             params["search"] = self.search
         return {
             "method": "GET",
