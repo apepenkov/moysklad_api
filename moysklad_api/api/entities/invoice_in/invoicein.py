@@ -91,7 +91,7 @@ class InvoiceIn(types.MoySkladBaseClass):
         self.vat_enabled: bool = None
         self.vat_included: typing.Optional[bool] = None
         self.vat_sum: float = None
-        self.supplies: typing.List[dict] = None
+        self.supplies: typing.List[types.Meta] = None
 
     @classmethod
     def from_json(cls, dict_data: dict) -> "InvoiceIn":
@@ -139,7 +139,11 @@ class InvoiceIn(types.MoySkladBaseClass):
         instance.vat_enabled = dict_data.get("vatEnabled", False)
         instance.vat_included = dict_data.get("vatIncluded", False)
         instance.vat_sum = dict_data.get("vatSum", None)
-        instance.supplies = dict_data.get("supplies", [])
+        instance.supplies = []
+
+        instance.supplies = [
+            helpers.get_meta(x, must=True) for x in dict_data.get("supplies", [])
+        ]
         return instance
 
 
@@ -180,7 +184,7 @@ class GetInvoicesInRequest(types.ApiRequest):
             params["search"] = self.search
         return {
             "method": "GET",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/invoicein",
+            "url": "https://online.moysklad.ru/api/remap/1.2/entity/invoicein",
             "params": params,
         }
 
@@ -412,7 +416,7 @@ class CreateInvoiceInRequest(types.ApiRequest):
             json_data["vatIncluded"] = self.vat_included
         return {
             "method": "POST",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/invoicein",
+            "url": "https://online.moysklad.ru/api/remap/1.2/entity/invoicein",
             "json": json_data,
         }
 
@@ -431,7 +435,7 @@ class DeleteInvoiceInRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "DELETE",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/invoicein/{self.uuid}",
+            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/invoicein/{self.uuid}",
             "allow_non_json": True,
         }
 
@@ -458,7 +462,7 @@ class GetInvoiceInRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/invoicein/{self.uuid}",
+            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/invoicein/{self.uuid}",
         }
 
     def from_response(self, response: dict) -> InvoiceIn:
@@ -508,9 +512,9 @@ class UpdateInvoiceInRequest(types.ApiRequest):
     def __init__(
         self,
         invoice_in_id: str,
-        name: typing.Optional[str],
-        organization: typing.Optional[types.Meta],
-        agent: typing.Optional[types.Meta],
+        name: typing.Optional[str] = None,
+        organization: typing.Optional[types.Meta] = None,
+        agent: typing.Optional[types.Meta] = None,
         agent_account: typing.Optional[types.Meta] = None,
         applicable: typing.Optional[bool] = None,
         attributes: typing.Optional[typing.List[dict]] = None,
@@ -680,7 +684,7 @@ class UpdateInvoiceInRequest(types.ApiRequest):
             raise ValueError("No data to update")
         return {
             "method": "PUT",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/invoicein/{self.invoice_in_id}",
+            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/invoicein/{self.invoice_in_id}",
             "json": json_data,
         }
 
@@ -731,7 +735,7 @@ class GetInvoiceInPositionRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/invoicein/"
+            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/invoicein/"
             f"{self.invoice_in_id}/positions/{self.position_id}",
         }
 
@@ -758,7 +762,7 @@ class GetInvoiceInPositionsRequest(types.ApiRequest):
         params = {"limit": self.limit, "offset": self.offset}
         return {
             "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/invoicein/"
+            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/invoicein/"
             f"{self.invoice_in_id}/positions",
             "params": params,
         }
@@ -805,7 +809,7 @@ class CreateInvoiceInPositionRequest(types.ApiRequest):
             json_data["vat"] = self.vat
         return {
             "method": "POST",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/invoicein/"
+            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/invoicein/"
             f"{self.invoice_in_id}/positions",
             "json": json_data,
         }
@@ -829,7 +833,7 @@ class DeleteInvoiceInPositionRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "DELETE",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/invoicein/"
+            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/invoicein/"
             f"{self.invoice_in_id}/positions/{self.position_id}",
             "allow_non_json": True,
         }
@@ -885,7 +889,7 @@ class UpdateInvoiceInPositionRequest(types.ApiRequest):
             raise ValueError("No data to update")
         return {
             "method": "PUT",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/invoicein/"
+            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/invoicein/"
             f"{self.invoice_in_id}/positions/{self.position_id}",
             "json": json_data,
         }

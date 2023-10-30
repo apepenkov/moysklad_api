@@ -1,6 +1,6 @@
 import typing
 import datetime
-from .... import types
+from .... import types, helpers
 
 
 class InternalOrder(types.MoySkladBaseClass):
@@ -57,7 +57,7 @@ class InternalOrder(types.MoySkladBaseClass):
         self.id: str = None
         self.meta: types.Meta = None
         self.moment: datetime.datetime = None
-        self.moves: list = None
+        self.moves: typing.List[types.Meta] = None
         self.name: str = None
         self.organization: types.Meta = None
         self.owner: types.Meta = None
@@ -65,7 +65,7 @@ class InternalOrder(types.MoySkladBaseClass):
         self.project: typing.Optional[types.Meta] = None
         self.printed: bool = None
         self.published: bool = None
-        self.purchase_orders: list = None
+        self.purchase_orders: typing.List[types.Meta] = None
         self.rate: types.Rate = None
         self.shared: bool = None
         self.state: typing.Optional[types.Meta] = None
@@ -106,7 +106,9 @@ class InternalOrder(types.MoySkladBaseClass):
         moment = dict_data.get("moment")
         if moment:
             result.moment = datetime.datetime.fromisoformat(moment)
-        result.moves = dict_data.get("moves")
+        result.moves = [
+            helpers.get_meta(x, must=True) for x in dict_data.get("moves", [])
+        ]
         result.name = dict_data.get("name")
         organization = dict_data.get("organization")
         if organization:
@@ -120,7 +122,11 @@ class InternalOrder(types.MoySkladBaseClass):
             result.project = project["meta"]
         result.printed = dict_data.get("printed")
         result.published = dict_data.get("published")
-        result.purchase_orders = dict_data.get("purchaseOrders")
+
+        result.purchase_orders = [
+            helpers.get_meta(x, must=True) for x in dict_data.get("purchaseOrders", [])
+        ]
+
         result.rate = dict_data.get("rate")
         result.shared = dict_data.get("shared")
         state = dict_data.get("state")
