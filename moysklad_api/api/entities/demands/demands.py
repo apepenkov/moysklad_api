@@ -782,7 +782,9 @@ class CreateDemandPositionsRequest(types.ApiRequest):
 
     """
 
-    def __init__(self, demand_id: str, positions: typing.List[CreateDemandPositionPosition]):
+    def __init__(
+        self, demand_id: str, positions: typing.List[CreateDemandPositionPosition]
+    ):
         """
 
         :param demand_id:  ID of demand (ID отгрузки)
@@ -840,7 +842,9 @@ class UpdateDemandPositionRequest(types.ApiRequest):
     https://dev.moysklad.ru/doc/api/remap/1.2/documents/#dokumenty-otgruzka-obnovit-poziciu-otgruzki
     """
 
-    def __init__(self, demand_id: str, position_id: str, position: UpdateDemandPositionPosition):
+    def __init__(
+        self, demand_id: str, position_id: str, position: UpdateDemandPositionPosition
+    ):
         """
 
         :param demand_id: ID of demand (ID отгрузки)

@@ -476,9 +476,9 @@ class CreatePurchaseOrderRequest(types.ApiRequest):
         if self.contract is not None:
             json_data["contract"] = {"meta": self.contract}
         if self.delivery_planned_moment is not None:
-            json_data[
-                "deliveryPlannedMoment"
-            ] = self.delivery_planned_moment.strftime("%Y-%m-%d %H:%M:%S")
+            json_data["deliveryPlannedMoment"] = self.delivery_planned_moment.strftime(
+                "%Y-%m-%d %H:%M:%S"
+            )
         if self.description is not None:
             json_data["description"] = self.description
         if self.external_code is not None:
@@ -784,9 +784,9 @@ class UpdatePurchaseOrderRequest(types.ApiRequest):
         if self.contract is not None:
             json_data["contract"] = {"meta": self.contract}
         if self.delivery_planned_moment is not None:
-            json_data[
-                "deliveryPlannedMoment"
-            ] = self.delivery_planned_moment.strftime("%Y-%m-%d %H:%M:%S")
+            json_data["deliveryPlannedMoment"] = self.delivery_planned_moment.strftime(
+                "%Y-%m-%d %H:%M:%S"
+            )
         if self.description is not None:
             json_data["description"] = self.description
         if self.external_code is not None:

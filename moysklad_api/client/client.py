@@ -22,6 +22,7 @@ from ..api.entities import (
     demands as demands_api,
     organizations as organizations_api,
     webhooks as webhooks_api,
+    invoice_in as invoice_in_api,
 )
 from ..api.reports import (
     stocks as stocks_api,
@@ -3519,5 +3520,369 @@ class MoySkladClient:
                 entity_type=entity_type,
                 action=action,
                 diff_type=diff_type,
+            )
+        )
+
+    # invoice in
+    async def get_invoices_in(
+        self,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
+    ) -> typing.List[invoice_in_api.InvoiceIn]:
+        """
+        Get invoices in
+        Получить счета-фактуры поставщиков
+
+        :param limit: Limit (Ограничение)
+        :param offset: Offset (Смещение)
+        :param search: Search (Поиск)
+        :return: List of invoices in (Список счетов-фактур поставщиков)
+        """
+        return await self(
+            invoice_in_api.GetInvoicesInRequest(
+                limit=limit,
+                offset=offset,
+                search=search,
+            )
+        )
+
+    async def create_invoice_in(
+        self,
+        name: str,
+        organization: types.Meta,
+        agent: types.Meta,
+        agent_account: typing.Optional[types.Meta] = None,
+        applicable: typing.Optional[bool] = None,
+        attributes: typing.Optional[typing.List[dict]] = None,
+        code: typing.Optional[str] = None,
+        contract: typing.Optional[types.Meta] = None,
+        description: typing.Optional[str] = None,
+        external_code: typing.Optional[str] = None,
+        files: typing.Optional[types.MetaArray] = None,
+        group: typing.Optional[types.Meta] = None,
+        incoming_date: typing.Optional[datetime.datetime] = None,
+        incoming_number: typing.Optional[float] = None,
+        moment: typing.Optional[datetime.datetime] = None,
+        organization_account: typing.Optional[types.Meta] = None,
+        owner: typing.Optional[types.Meta] = None,
+        payed_sum: typing.Optional[float] = None,
+        payment_planned_moment: typing.Optional[datetime.datetime] = None,
+        positions: typing.Optional[
+            typing.List[invoice_in_api.CreateInvoiceInRequest.CreateInvoiceInPosition]
+        ] = None,
+        project: typing.Optional[types.Meta] = None,
+        rate: typing.Optional[dict] = None,
+        shared: typing.Optional[bool] = None,
+        state: typing.Optional[types.Meta] = None,
+        store: typing.Optional[types.Meta] = None,
+        vat_enabled: typing.Optional[bool] = None,
+        vat_included: typing.Optional[bool] = None,
+    ) -> typing.List[invoice_in_api.InvoiceIn]:
+        """
+        Создание счета поставщика
+
+        :param name: Invoice number (Номер счета)
+        :param organization: Link to your organization in Metadata format (Ссылка на ваше юрлицо в формате Метаданных
+        :param agent: Link to the counterparty (supplier) in Metadata format (Ссылка на контрагента (поставщика) в формате Метаданных)
+        :param agent_account: Link to the counterparty's account in Metadata format (Ссылка на счет контрагента в формате Метаданных)
+        :param applicable: Marking for the document (Отметка о проведении)
+        :param attributes: Additional fields operators (Операторы доп. полей)
+        :param code: Invoice code (Код счета)
+        :param contract: Link to the contract in Metadata format (Ссылка на договор в формате Метаданных)
+        :param description: Invoice comment (Комментарий счета)
+        :param external_code: Invoice external code (Внешний код счета)
+        :param files: File array metadata (Метаданные массива Файлов)
+        :param group: Department of the employee (Отдел сотрудника)
+        :param incoming_date: Incoming date (Входящая дата)
+        :param incoming_number: Incoming number (Входящий номер)
+        :param moment: Document date (Дата документа)
+        :param organization_account: Link to the organization's account in Metadata format (Ссылка на счет юрлица в формате Метаданных)
+        :param owner: Owner (Employee) (Владелец (Сотрудник))
+        :param payed_sum: Amount of incoming payments on the invoice (Сумма входящих платежей по счету)
+        :param payment_planned_moment: Planned payment date (Планируемая дата оплаты)
+        :param positions: Invoice positions (Позиции счета)
+        :param project: Link to the project in Metadata format (Ссылка на проект в формате Метаданных)
+        :param rate: Currency (Валюта)
+        :param shared: Common Access (Общий доступ)
+        :param state: Link to the status of the account in Metadata format (Ссылка на статус счета в формате Метаданных)
+        :param store: Link to the warehouse in Metadata format (Ссылка на склад в формате Метаданных)
+        :param vat_enabled: Is VAT taken into account (Учитывается ли НДС)
+        :param vat_included: Is VAT included in the price (Включен ли НДС в цену)
+        :return: Invoice (Счет)
+        """
+        return await self(
+            invoice_in_api.CreateInvoiceInRequest(
+                name=name,
+                organization=organization,
+                agent=agent,
+                agent_account=agent_account,
+                applicable=applicable,
+                attributes=attributes,
+                code=code,
+                contract=contract,
+                description=description,
+                external_code=external_code,
+                files=files,
+                group=group,
+                incoming_date=incoming_date,
+                incoming_number=incoming_number,
+                moment=moment,
+                organization_account=organization_account,
+                owner=owner,
+                payed_sum=payed_sum,
+                payment_planned_moment=payment_planned_moment,
+                positions=positions,
+                project=project,
+                rate=rate,
+                shared=shared,
+                state=state,
+                store=store,
+                vat_enabled=vat_enabled,
+                vat_included=vat_included,
+            )
+        )
+
+    async def delete_invoice_in(self, invoice_id: str) -> None:
+        """
+        Delete invoice in
+        Удалить счет поставщика
+
+        :param invoice_id: ID of invoice (ID счета)
+        """
+        await self(invoice_in_api.DeleteInvoiceInRequest(invoice_id=invoice_id))
+
+    async def get_invoice_in(self, invoice_id: str) -> invoice_in_api.InvoiceIn:
+        """
+        Get invoice in
+        Получить счет поставщика
+
+        :param invoice_id: ID of invoice (ID счета)
+        :return: Invoice (Счет)
+        """
+        return await self(invoice_in_api.GetInvoiceInRequest(invoice_id=invoice_id))
+
+    async def update_invoice_in(
+        self,
+        invoice_in_id: str,
+        name: typing.Optional[str],
+        organization: typing.Optional[types.Meta],
+        agent: typing.Optional[types.Meta],
+        agent_account: typing.Optional[types.Meta] = None,
+        applicable: typing.Optional[bool] = None,
+        attributes: typing.Optional[typing.List[dict]] = None,
+        code: typing.Optional[str] = None,
+        contract: typing.Optional[types.Meta] = None,
+        description: typing.Optional[str] = None,
+        external_code: typing.Optional[str] = None,
+        files: typing.Optional[types.MetaArray] = None,
+        group: typing.Optional[types.Meta] = None,
+        incoming_date: typing.Optional[datetime.datetime] = None,
+        incoming_number: typing.Optional[float] = None,
+        moment: typing.Optional[datetime.datetime] = None,
+        organization_account: typing.Optional[types.Meta] = None,
+        owner: typing.Optional[types.Meta] = None,
+        payed_sum: typing.Optional[float] = None,
+        payment_planned_moment: typing.Optional[datetime.datetime] = None,
+        positions: typing.Optional[
+            typing.List[invoice_in_api.UpdateInvoiceInRequest.UpdateInvoiceInPosition]
+        ] = None,
+        project: typing.Optional[types.Meta] = None,
+        rate: typing.Optional[dict] = None,
+        shared: typing.Optional[bool] = None,
+        state: typing.Optional[types.Meta] = None,
+        store: typing.Optional[types.Meta] = None,
+        vat_enabled: typing.Optional[bool] = None,
+        vat_included: typing.Optional[bool] = None,
+    ) -> invoice_in_api.InvoiceIn:
+        """
+        Изменение счета поставщика
+
+        :param name: Invoice number (Номер счета)
+        :param organization: Link to your organization in Metadata format (Ссылка на ваше юрлицо в формате Метаданных
+        :param agent: Link to the counterparty (supplier) in Metadata format (Ссылка на контрагента (поставщика) в формате Метаданных)
+        :param agent_account: Link to the counterparty's account in Metadata format (Ссылка на счет контрагента в формате Метаданных)
+        :param applicable: Marking for the document (Отметка о проведении)
+        :param attributes: Additional fields operators (Операторы доп. полей)
+        :param code: Invoice code (Код счета)
+        :param contract: Link to the contract in Metadata format (Ссылка на договор в формате Метаданных)
+        :param description: Invoice comment (Комментарий счета)
+        :param external_code: Invoice external code (Внешний код счета)
+        :param files: File array metadata (Метаданные массива Файлов)
+        :param group: Department of the employee (Отдел сотрудника)
+        :param incoming_date: Incoming date (Входящая дата)
+        :param incoming_number: Incoming number (Входящий номер)
+        :param moment: Document date (Дата документа)
+        :param organization_account: Link to the organization's account in Metadata format (Ссылка на счет юрлица в формате Метаданных)
+        :param owner: Owner (Employee) (Владелец (Сотрудник))
+        :param payed_sum: Amount of incoming payments on the invoice (Сумма входящих платежей по счету)
+        :param payment_planned_moment: Planned payment date (Планируемая дата оплаты)
+        :param positions: Invoice positions (Позиции счета)
+        :param project: Link to the project in Metadata format (Ссылка на проект в формате Метаданных)
+        :param rate: Currency (Валюта)
+        :param shared: Common Access (Общий доступ)
+        :param state: Link to the status of the account in Metadata format (Ссылка на статус счета в формате Метаданных)
+        :param store: Link to the warehouse in Metadata format (Ссылка на склад в формате Метаданных)
+        :param vat_enabled: Is VAT taken into account (Учитывается ли НДС)
+        :param vat_included: Is VAT included in the price (Включен ли НДС в цену)
+        :return: Invoice (Счет)
+        """
+        return await self(
+            invoice_in_api.UpdateInvoiceInRequest(
+                invoice_in_id=invoice_in_id,
+                name=name,
+                organization=organization,
+                agent=agent,
+                agent_account=agent_account,
+                applicable=applicable,
+                attributes=attributes,
+                code=code,
+                contract=contract,
+                description=description,
+                external_code=external_code,
+                files=files,
+                group=group,
+                incoming_date=incoming_date,
+                incoming_number=incoming_number,
+                moment=moment,
+                organization_account=organization_account,
+                owner=owner,
+                payed_sum=payed_sum,
+                payment_planned_moment=payment_planned_moment,
+                positions=positions,
+                project=project,
+                rate=rate,
+                shared=shared,
+                state=state,
+                store=store,
+                vat_enabled=vat_enabled,
+                vat_included=vat_included,
+            )
+        )
+
+    async def get_invoice_in_positions(
+        self,
+        invoice_in_id: str,
+        limit: typing.Optional[int] = None,
+        offset: typing.Optional[int] = None,
+    ) -> typing.List[invoice_in_api.InvoiceInPosition]:
+        """
+        Get invoice in positions
+        Получить позиции счета поставщика
+
+        :param invoice_in_id: ID of invoice (ID счета)
+        :param limit: Limit (Ограничение)
+        :param offset: Offset (Смещение)
+        :return: List of invoice in positions (Список позиций счета поставщика)
+        """
+        return await self(
+            invoice_in_api.GetInvoiceInPositionsRequest(
+                invoice_in_id=invoice_in_id,
+                limit=limit,
+                offset=offset,
+            )
+        )
+
+    async def get_invoice_in_position(
+        self,
+        invoice_in_id: str,
+        position_id: str,
+    ) -> invoice_in_api.InvoiceInPosition:
+        """
+        Get invoice in position
+        Получить позицию счета поставщика
+
+        :param invoice_in_id: ID of invoice (ID счета)
+        :param position_id: ID of position (ID позиции)
+        :return: Invoice position (Позиция счета)
+        """
+        return await self(
+            invoice_in_api.GetInvoiceInPositionRequest(
+                invoice_in_id=invoice_in_id,
+                position_id=position_id,
+            )
+        )
+
+    async def create_invoice_in_position(
+        self,
+        invoice_in_id: str,
+        quantity: float,
+        assortment: types.Meta,
+        price: typing.Optional[float] = None,
+        discount: typing.Optional[float] = None,
+        vat: typing.Optional[float] = None,
+    ) -> invoice_in_api.InvoiceInPosition:
+        """
+        Добавить позицию счета поставщика
+
+        :param invoice_in_id: ID счета поставщика
+        :param quantity: Количество товара
+        :param assortment: Товар
+        :param price: Цена товара
+        :param discount: Скидка
+        :param vat: НДС
+        :return: Invoice position (Позиция счета)
+        """
+        return await self(
+            invoice_in_api.CreateInvoiceInPositionRequest(
+                invoice_in_id=invoice_in_id,
+                quantity=quantity,
+                assortment=assortment,
+                price=price,
+                discount=discount,
+                vat=vat,
+            )
+        )
+
+    async def delete_invoice_in_position(
+        self,
+        invoice_in_id: str,
+        position_id: str,
+    ) -> None:
+        """
+        Delete invoice in position
+        Удалить позицию счета поставщика
+
+        :param invoice_in_id: ID of invoice (ID счета)
+        :param position_id: ID of position (ID позиции)
+        """
+        await self(
+            invoice_in_api.DeleteInvoiceInPositionRequest(
+                invoice_in_id=invoice_in_id,
+                position_id=position_id,
+            )
+        )
+
+    async def update_invoice_in_position(
+        self,
+        invoice_in_id: str,
+        position_id: str,
+        quantity: typing.Optional[float] = None,
+        assortment: typing.Optional[types.Meta] = None,
+        price: typing.Optional[float] = None,
+        discount: typing.Optional[float] = None,
+        vat: typing.Optional[float] = None,
+    ) -> invoice_in_api.InvoiceInPosition:
+        """
+        Изменить позицию счета поставщика
+
+        :param invoice_in_id: ID счета поставщика
+        :param position_id: ID позиции
+        :param quantity: Количество товара
+        :param assortment: Товар
+        :param price: Цена товара
+        :param discount: Скидка
+        :param vat: НДС
+        :return: Invoice position (Позиция счета)
+        """
+        return await self(
+            invoice_in_api.UpdateInvoiceInPositionRequest(
+                invoice_in_id=invoice_in_id,
+                position_id=position_id,
+                quantity=quantity,
+                assortment=assortment,
+                price=price,
+                discount=discount,
+                vat=vat,
             )
         )
