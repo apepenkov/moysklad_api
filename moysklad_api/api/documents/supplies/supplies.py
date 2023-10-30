@@ -1,7 +1,7 @@
 import datetime
 import typing
 
-from .... import types
+from .... import types, helpers
 
 
 class Supply(types.MoySkladBaseClass):
@@ -90,6 +90,8 @@ class Supply(types.MoySkladBaseClass):
         self.vat_enabled: bool = None
         self.vat_included: typing.Optional[bool] = None
         self.vat_sum: float = None
+        self.invoices_in: typing.List[types.Meta] = None
+        self.facture_in: typing.Optional[types.Meta] = None
 
     @classmethod
     def from_json(cls, dict_data: dict) -> "Supply":
@@ -164,6 +166,10 @@ class Supply(types.MoySkladBaseClass):
         instance.vat_enabled = dict_data.get("vatEnabled")
         instance.vat_included = dict_data.get("vatIncluded")
         instance.vat_sum = dict_data.get("vatSum")
+        instance.invoices_in = [
+            helpers.get_meta(x, must=True) for x in dict_data.get("invoicesIn", [])
+        ]
+        instance.facture_in = helpers.get_meta(dict_data.get("factureIn", None))
         return instance
 
 
@@ -447,9 +453,9 @@ class UpdateSupplyRequest(types.ApiRequest):
     def __init__(
         self,
         supply_id: str,
-        organization: typing.Optional[types.Meta],
-        agent: typing.Optional[types.Meta],
-        store: typing.Optional[types.Meta],
+        organization: typing.Optional[types.Meta] = None,
+        agent: typing.Optional[types.Meta] = None,
+        store: typing.Optional[types.Meta] = None,
         agent_account: typing.Optional[types.Meta] = None,
         applicable: typing.Optional[bool] = None,
         attributes: typing.Optional[typing.List[dict]] = None,
