@@ -91,6 +91,7 @@ class InvoiceIn(types.MoySkladBaseClass):
         self.vat_enabled: bool = None
         self.vat_included: typing.Optional[bool] = None
         self.vat_sum: float = None
+        self.supplies: typing.List[dict] = None
 
     @classmethod
     def from_json(cls, dict_data: dict) -> "InvoiceIn":
@@ -138,6 +139,7 @@ class InvoiceIn(types.MoySkladBaseClass):
         instance.vat_enabled = dict_data.get("vatEnabled", False)
         instance.vat_included = dict_data.get("vatIncluded", False)
         instance.vat_sum = dict_data.get("vatSum", None)
+        instance.supplies = dict_data.get("supplies", [])
         return instance
 
 
