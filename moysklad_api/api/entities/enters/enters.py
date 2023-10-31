@@ -378,40 +378,40 @@ class CreateEnterRequest(types.ApiRequest):
             for position in self.positions:
                 pos = {}
                 assortment = position.get("assortment")
-                if assortment != Unset:
+                if assortment is not None:
                     pos["assortment"] = {"meta": assortment}
                 else:
                     raise ValueError("Assortment is required for position")
                 price = position.get("price")
-                if price != Unset:
+                if price is not None:
                     pos["price"] = price
                 else:
                     raise ValueError("Price is required for position")
                 quantity = position.get("quantity")
-                if quantity != Unset:
+                if quantity is not None:
                     pos["quantity"] = quantity
                 else:
                     raise ValueError("Quantity is required for position")
                 country = position.get("country")
-                if country != Unset:
+                if country is not None:
                     pos["country"] = {"meta": country}
                 gtd = position.get("gtd")
-                if gtd != Unset:
+                if gtd is not None:
                     pos["gtd"] = gtd
                 pack = position.get("pack")
-                if pack != Unset:
+                if pack is not None:
                     pos["pack"] = pack
                 reason = position.get("reason")
-                if reason != Unset:
+                if reason is not None:
                     pos["reason"] = {"meta": reason}
                 slot = position.get("slot")
-                if slot != Unset:
+                if slot is not None:
                     pos["slot"] = {"meta": slot}
                 things = position.get("things")
-                if things != Unset:
+                if things is not None:
                     pos["things"] = things
                 pos_overhead = position.get("overhead")
-                if pos_overhead != Unset:
+                if pos_overhead is not None:
                     pos["overhead"] = pos_overhead
                 json_data["positions"].append(pos)
         if self.project != Unset:
@@ -711,40 +711,40 @@ class CreateEnterPositionRequest(types.ApiRequest):
         for position in self.positions:
             pos = {}
             assortment = position.get("assortment")
-            if assortment != Unset:
+            if assortment is not None:
                 pos["assortment"] = {"meta": assortment}
             else:
                 raise ValueError("Assortment is required for position")
             price = position.get("price")
-            if price != Unset:
+            if price is not None:
                 pos["price"] = price
             else:
                 raise ValueError("Price is required for position")
             quantity = position.get("quantity")
-            if quantity != Unset:
+            if quantity is not None:
                 pos["quantity"] = quantity
             else:
                 raise ValueError("Quantity is required for position")
             country = position.get("country")
-            if country != Unset:
+            if country is not None:
                 pos["country"] = {"meta": country}
             gtd = position.get("gtd")
-            if gtd != Unset:
+            if gtd is not None:
                 pos["gtd"] = gtd
             pack = position.get("pack")
-            if pack != Unset:
+            if pack is not None:
                 pos["pack"] = pack
             reason = position.get("reason")
-            if reason != Unset:
+            if reason is not None:
                 pos["reason"] = {"meta": reason}
             slot = position.get("slot")
-            if slot != Unset:
+            if slot is not None:
                 pos["slot"] = {"meta": slot}
             things = position.get("things")
-            if things != Unset:
+            if things is not None:
                 pos["things"] = things
             pos_overhead = position.get("overhead")
-            if pos_overhead != Unset:
+            if pos_overhead is not None:
                 pos["overhead"] = pos_overhead
             json_data.append(pos)
         return {

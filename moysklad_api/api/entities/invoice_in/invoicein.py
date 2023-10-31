@@ -422,15 +422,15 @@ class CreateInvoiceInRequest(types.ApiRequest):
             for position in self.positions:
                 pos = {}
                 assortment = position.get("assortment")
-                if assortment != Unset:
+                if assortment is not None:
                     pos["assortment"] = {"meta": assortment}
                 else:
                     raise ValueError("Assortment is required for position")
                 price = position.get("price")
-                if price != Unset:
+                if price is not None:
                     pos["price"] = price
                 quantity = position.get("quantity")
-                if quantity != Unset:
+                if quantity is not None:
                     pos["quantity"] = quantity
                 else:
                     raise ValueError("Quantity is required for position")
@@ -711,15 +711,15 @@ class UpdateInvoiceInRequest(types.ApiRequest):
             for position in self.positions:
                 pos = {}
                 assortment = position.get("assortment")
-                if assortment != Unset:
+                if assortment is not None:
                     pos["assortment"] = {"meta": assortment}
                 else:
                     raise ValueError("Assortment is required for position")
                 price = position.get("price")
-                if price != Unset:
+                if price is not None:
                     pos["price"] = price
                 quantity = position.get("quantity")
-                if quantity != Unset:
+                if quantity is not None:
                     pos["quantity"] = quantity
                 else:
                     raise ValueError("Quantity is required for position")

@@ -217,10 +217,10 @@ class Position(types.MoySkladBaseClass):
         instance = cls()
         instance.account_id = dict_data.get("accountId")
         assortment = dict_data.get("assortment")
-        if assortment != Unset:
+        if assortment is not None:
             instance.assortment = assortment["meta"]
         country = dict_data.get("country")
-        if country != Unset:
+        if country is not None:
             instance.country = country["meta"]
         instance.discount = dict_data.get("discount")
         instance.gtd = dict_data.get("gtd")
@@ -229,7 +229,7 @@ class Position(types.MoySkladBaseClass):
         instance.price = dict_data.get("price")
         instance.quantity = dict_data.get("quantity")
         slot = dict_data.get("slot")
-        if slot != Unset:
+        if slot is not None:
             instance.slot = slot["meta"]
         instance.things = dict_data.get("things")
         instance.overhead = dict_data.get("overhead")
