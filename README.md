@@ -81,6 +81,7 @@ await client.get_order_position(order_id="...", position_id="...")
 * `datetime.datetime` (will be converted according to specification)
 * **type-hinted dicts** (aka `typing.TypedDict`) from `moysklad_api/types` (`Meta` included)
 * classes. If class is required, it may be nested in ApiRequest itself, or used from some api file.
+* `Unset` type. It is used to indicate, that updating this field is not needed. All optional fields are `Unset` by default, and have a type like `typing.Union[Unset, str]`. If you want to set some field to None, just pass `None`
 
 
 # Meta
@@ -139,6 +140,10 @@ response = await moysklad_client.create_internal_order(
   ]
 )
 ```
+
+Most of the response parameters in `MoySkladBaseClass` (except cls.meta) are wrapped into {"meta": {"href": ...}} by the API. In the library, they are unwrapped, so, for example:
+
+Api returns Invoicein with fields `{..., "agent": {"meta": {"href": ...}}, ...}`. It will be unwrapped by the library into `InoiveIn.agent: Meta`, which has fields `href`, `type`, etc.
 # Type hints
 
 **All requests are type-hinted**, so you can use IDE's autocomplete to find out what arguments are required.
