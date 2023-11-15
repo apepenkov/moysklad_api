@@ -188,6 +188,7 @@ class MoySkladClient:
         async with aiohttp.ClientSession() as session:
             kwargs.setdefault("headers", {})
             kwargs["headers"]["Authorization"] = f"Basic {self._api_token}"
+            kwargs["headers"]["Accept-Encoding"] = "gzip"
 
             async with session.request(*args, **kwargs) as resp:
                 return resp.status, await resp.read(), resp.headers

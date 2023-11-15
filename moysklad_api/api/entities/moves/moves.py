@@ -224,7 +224,7 @@ class GetMovesRequest(types.ApiRequest):
 
         return {
             "method": "GET",
-            "url": "https://online.moysklad.ru/api/remap/1.2/entity/move",
+            "url": "https://api.moysklad.ru/api/remap/1.2/entity/move",
             "params": params,
         }
 
@@ -377,7 +377,7 @@ class CreateMoveRequest(types.ApiRequest):
 
         return {
             "method": "POST",
-            "url": "https://online.moysklad.ru/api/remap/1.2/entity/move",
+            "url": "https://api.moysklad.ru/api/remap/1.2/entity/move",
             "json": json_data,
         }
 
@@ -402,7 +402,7 @@ class DeleteMoveRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "DELETE",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}",
             "allow_non_json": True,
         }
 
@@ -427,7 +427,7 @@ class GetMoveRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "GET",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}",
         }
 
     def from_response(self, result) -> Move:
@@ -594,7 +594,7 @@ class UpdateMoveRequest(types.ApiRequest):
             json_data["syncId"] = self.sync_id
         return {
             "method": "PUT",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}",
             "json": json_data,
         }
 
@@ -644,7 +644,7 @@ class GetMovePositionsRequest(types.ApiRequest):
 
         return {
             "method": "GET",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}/positions",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}/positions",
             "params": params,
         }
 
@@ -699,7 +699,7 @@ class CreateMovePositionRequest(types.ApiRequest):
 
         return {
             "method": "POST",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}/positions",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}/positions",
             "json": json_data,
         }
 
@@ -731,7 +731,7 @@ class GetMovePositionRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "GET",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}/positions/{self.position_id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}/positions/{self.position_id}",
         }
 
     def from_response(self, result) -> MovePosition:
@@ -792,7 +792,7 @@ class UpdateMovePositionRequest(types.ApiRequest):
 
         return {
             "method": "PUT",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}/positions/{self.position_id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}/positions/{self.position_id}",
             "json": json_data,
         }
 
@@ -821,7 +821,7 @@ class DeleteMovePositionRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "DELETE",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}/positions/{self.position_id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}/positions/{self.position_id}",
         }
 
     def from_response(self, result) -> None:

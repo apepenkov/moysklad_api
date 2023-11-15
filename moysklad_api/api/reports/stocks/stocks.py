@@ -157,7 +157,7 @@ class GetFullStockReportRequest(types.ApiRequest):
             params["includeRelated"] = self.include_related
         return {
             "method": "GET",
-            "url": "https://online.moysklad.ru/api/remap/1.2/report/stock/all",
+            "url": "https://api.moysklad.ru/api/remap/1.2/report/stock/all",
             "params": params,
         }
 
@@ -249,7 +249,7 @@ class GetSmallStockReportCurrentRequest(types.ApiRequest):
             params["filter"].append("storeId={}".format(",".join(self.filter_store_id)))
         return {
             "method": "GET",
-            "url": "https://online.moysklad.ru/api/remap/1.2/report/stock/bystore/current",
+            "url": "https://api.moysklad.ru/api/remap/1.2/report/stock/bystore/current",
             "params": params,
         }
 

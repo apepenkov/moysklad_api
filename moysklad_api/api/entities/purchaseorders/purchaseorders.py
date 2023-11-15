@@ -286,7 +286,7 @@ class GetPurchaseOrderListRequest(types.ApiRequest):
             params["search"] = self.search
         return {
             "method": "GET",
-            "url": "https://online.moysklad.ru/api/remap/1.2/entity/purchaseorder",
+            "url": "https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder",
             "params": params,
         }
 
@@ -573,7 +573,7 @@ class CreatePurchaseOrderRequest(types.ApiRequest):
             )
         return {
             "method": "POST",
-            "url": "https://online.moysklad.ru/api/remap/1.2/entity/purchaseorder",
+            "url": "https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder",
             "json": json_data,
         }
 
@@ -599,7 +599,7 @@ class DeletePurchaseOrderRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "DELETE",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}",
             "allow_non_json": True,
         }
 
@@ -628,7 +628,7 @@ class GetPurchaseOrderRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "GET",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}",
         }
 
     def from_response(self, result) -> PurchaseOrder:
@@ -908,7 +908,7 @@ class UpdatePurchaseOrderRequest(types.ApiRequest):
 
         return {
             "method": "PUT",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}",
             "json": json_data,
         }
 
@@ -946,7 +946,7 @@ class GetPurchaseOrderPositionsRequest(types.ApiRequest):
             params["offset"] = self.offset
         return {
             "method": "GET",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}/positions",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}/positions",
             "params": params,
         }
 
@@ -1011,7 +1011,7 @@ class CreatePurchaseOrderPositionRequest(types.ApiRequest):
             json_data["discount"] = self.discount
         return {
             "method": "POST",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/purchaseOrder/{self.order_id}/positions",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseOrder/{self.order_id}/positions",
             "json": json_data,
         }
 
@@ -1041,7 +1041,7 @@ class GetPurchaseOrderPositionRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "GET",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}/positions/{self.position_id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}/positions/{self.position_id}",
         }
 
     def from_response(self, result) -> PurchaseOrderPosition:
@@ -1115,7 +1115,7 @@ class UpdatePurchaseOrderPositionRequest(types.ApiRequest):
 
         return {
             "method": "PUT",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}/positions/{self.position_id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}/positions/{self.position_id}",
             "json": json_data,
         }
 
@@ -1144,7 +1144,7 @@ class DeletePurchaseOrderPositionRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "DELETE",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}/positions/{self.position_id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}/positions/{self.position_id}",
             "allow_non_json": True,
         }
 

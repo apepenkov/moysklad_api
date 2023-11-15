@@ -439,7 +439,7 @@ class CreateDemandRequest(types.ApiRequest):
 
         return {
             "method": "POST",
-            "url": "https://online.moysklad.ru/api/remap/1.2/entity/demand",
+            "url": "https://api.moysklad.ru/api/remap/1.2/entity/demand",
             "json": json_data,
         }
 
@@ -485,7 +485,7 @@ class GetDemandsRequest(types.ApiRequest):
 
         return {
             "method": "GET",
-            "url": "https://online.moysklad.ru/api/remap/1.2/entity/demand",
+            "url": "https://api.moysklad.ru/api/remap/1.2/entity/demand",
             "params": params,
         }
 
@@ -511,7 +511,7 @@ class DeleteDemandRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "DELETE",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/demand/{self.id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/demand/{self.id}",
             "allow_non_json": True,
         }
 
@@ -537,7 +537,7 @@ class GetDemandRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "GET",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/demand/{self.demand_id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/demand/{self.demand_id}",
         }
 
     def from_response(self, result: dict) -> Demand:
@@ -755,7 +755,7 @@ class UpdateDemandRequest(types.ApiRequest):
 
         return {
             "method": "PUT",
-            "url": "https://online.moysklad.ru/api/remap/1.2/entity/demand/"
+            "url": "https://api.moysklad.ru/api/remap/1.2/entity/demand/"
             + str(self.id),
             "json": json_data,
         }
@@ -794,7 +794,7 @@ class GetDemandPositionsRequest(types.ApiRequest):
             params["offset"] = self.offset
         return {
             "method": "GET",
-            "url": "https://online.moysklad.ru/api/remap/1.2/entity/demand/"
+            "url": "https://api.moysklad.ru/api/remap/1.2/entity/demand/"
             + str(self.id)
             + "/positions",
             "params": params,
@@ -830,7 +830,7 @@ class CreateDemandPositionsRequest(types.ApiRequest):
         json = self.positions
         return {
             "method": "POST",
-            "url": "https://online.moysklad.ru/api/remap/1.2/entity/demand/"
+            "url": "https://api.moysklad.ru/api/remap/1.2/entity/demand/"
             + str(self.id)
             + "/positions",
             "json": json,
@@ -857,7 +857,7 @@ class GetDemandPositionRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "GET",
-            "url": "https://online.moysklad.ru/api/remap/1.2/entity/demand/"
+            "url": "https://api.moysklad.ru/api/remap/1.2/entity/demand/"
             + str(self.demand_id)
             + "/positions/"
             + str(self.position_id),
@@ -890,7 +890,7 @@ class UpdateDemandPositionRequest(types.ApiRequest):
         json = self.position
         return {
             "method": "PUT",
-            "url": "https://online.moysklad.ru/api/remap/1.2/entity/demand/"
+            "url": "https://api.moysklad.ru/api/remap/1.2/entity/demand/"
             + str(self.demand_id)
             + "/positions/"
             + str(self.position_id),
@@ -918,7 +918,7 @@ class DeleteDemandPositionRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "DELETE",
-            "url": "https://online.moysklad.ru/api/remap/1.2/entity/demand/"
+            "url": "https://api.moysklad.ru/api/remap/1.2/entity/demand/"
             + str(self.demand_id)
             + "/positions/"
             + str(self.position_id),

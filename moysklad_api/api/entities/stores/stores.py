@@ -194,7 +194,7 @@ class GetStoresRequest(types.ApiRequest):
             params["offset"] = self.offset
         return {
             "method": "GET",
-            "url": "https://online.moysklad.ru/api/remap/1.2/entity/store",
+            "url": "https://api.moysklad.ru/api/remap/1.2/entity/store",
             "params": params,
         }
 
@@ -330,7 +330,7 @@ class CreateStoreRequest(types.ApiRequest):
 
         return {
             "method": "POST",
-            "url": "https://online.moysklad.ru/api/remap/1.2/entity/store",
+            "url": "https://api.moysklad.ru/api/remap/1.2/entity/store",
             "json": json_dict,
         }
 
@@ -355,7 +355,7 @@ class DeleteStoreRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "DELETE",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/store/{self.id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.id}",
             "allow_non_json": True,
         }
 
@@ -384,7 +384,7 @@ class GetStoreRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "GET",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/store/{self.id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.id}",
         }
 
     def from_response(self, result: dict) -> Store:
@@ -499,7 +499,7 @@ class UpdateStoreRequest(types.ApiRequest):
 
         return {
             "method": "PUT",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/store/{self.id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.id}",
             "json": json_dict,
         }
 
@@ -545,7 +545,7 @@ class GetStoreZonesRequest(types.ApiRequest):
 
         return {
             "method": "GET",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/zones",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/zones",
             "params": params,
         }
 
@@ -590,7 +590,7 @@ class CreateStoreZoneRequest(types.ApiRequest):
             json_data["meta"] = self.meta
         return {
             "method": "POST",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/zones",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/zones",
             "json": json_data,
         }
 
@@ -622,7 +622,7 @@ class GetStoreZoneRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "GET",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/zones/{self.zone_id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/zones/{self.zone_id}",
         }
 
     def from_response(self, result: dict) -> StoreZone:
@@ -649,7 +649,7 @@ class DeleteStoreZoneRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "DELETE",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/zones/{self.zone_id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/zones/{self.zone_id}",
             "allow_non_json": True,
         }
 
@@ -697,7 +697,7 @@ class UpdateStoreZoneRequest(types.ApiRequest):
             json_data["meta"] = self.meta
         return {
             "method": "PUT",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/zones/{self.zone_id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/zones/{self.zone_id}",
             "json": json_data,
         }
 
@@ -743,7 +743,7 @@ class GetStoreSlotsRequest(types.ApiRequest):
 
         return {
             "method": "GET",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/slots",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/slots",
             "params": params,
         }
 
@@ -795,7 +795,7 @@ class CreateStoreSlotRequest(types.ApiRequest):
 
         return {
             "method": "POST",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/slots",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/slots",
             "json": json_data,
         }
 
@@ -848,7 +848,7 @@ class UpdateStoreSlotRequest(types.ApiRequest):
 
         return {
             "method": "PUT",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/slots/{self.slot_id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/slots/{self.slot_id}",
             "json": json_data,
         }
 
@@ -881,7 +881,7 @@ class DeleteStoreSlotRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "DELETE",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/slots/{self.slot_id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/slots/{self.slot_id}",
             "allow_non_json": True,
         }
 
@@ -914,7 +914,7 @@ class GetStoreSlotRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "GET",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/slots/{self.slot_id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/slots/{self.slot_id}",
         }
 
     def from_response(self, result: dict) -> StoreSlot:

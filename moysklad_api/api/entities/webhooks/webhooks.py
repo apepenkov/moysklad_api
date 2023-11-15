@@ -63,7 +63,7 @@ class GetWebhooksRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "GET",
-            "url": "https://online.moysklad.ru/api/remap/1.2/entity/webhook",
+            "url": "https://api.moysklad.ru/api/remap/1.2/entity/webhook",
         }
 
     def from_response(self, result: dict) -> typing.List[Webhook]:
@@ -112,7 +112,7 @@ class CreateWebhookRequest(types.ApiRequest):
 
         return {
             "method": "POST",
-            "url": "https://online.moysklad.ru/api/remap/1.2/entity/webhook",
+            "url": "https://api.moysklad.ru/api/remap/1.2/entity/webhook",
             "json": json_data,
         }
 
@@ -133,7 +133,7 @@ class GetWebhookRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "GET",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/webhook/{self.webhook_id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/webhook/{self.webhook_id}",
         }
 
     def from_response(self, result: dict) -> Webhook:
@@ -187,7 +187,7 @@ class UpdateWebhookRequest(types.ApiRequest):
 
         return {
             "method": "PUT",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/webhook/{self.webhook_id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/webhook/{self.webhook_id}",
             "json": json_data,
         }
 
@@ -208,7 +208,7 @@ class DeleteWebhookRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "DELETE",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/webhook/{self.webhook_id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/webhook/{self.webhook_id}",
             "allow_non_json": True,
         }
 

@@ -233,7 +233,7 @@ class GetInternalOrdersRequest(types.ApiRequest):
             params["search"] = self.search
         return {
             "method": "GET",
-            "url": "https://online.moysklad.ru/api/remap/1.2/entity/internalorder",
+            "url": "https://api.moysklad.ru/api/remap/1.2/entity/internalorder",
             "params": params,
         }
 
@@ -423,7 +423,7 @@ class CreateInternalOrderRequest(types.ApiRequest):
             json_data["vatIncluded"] = self.vat_included
         return {
             "method": "POST",
-            "url": "https://online.moysklad.ru/api/remap/1.2/entity/internalorder",
+            "url": "https://api.moysklad.ru/api/remap/1.2/entity/internalorder",
             "json": json_data,
         }
 
@@ -450,7 +450,7 @@ class GetInternalOrderRequest(types.ApiRequest):
     ) -> dict:
         return {
             "method": "GET",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/internalorder/{self.id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/internalorder/{self.id}",
         }
 
     def from_response(self, response: dict) -> InternalOrder:
@@ -632,7 +632,7 @@ class UpdateInternalOrderRequest(types.ApiRequest):
             json_data["vatIncluded"] = self.vat_included
         return {
             "method": "PUT",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/internalorder/{self.id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/internalorder/{self.id}",
             "json": json_data,
         }
 
@@ -679,7 +679,7 @@ class GetOrderPositionsRequest(types.ApiRequest):
 
         return {
             "method": "GET",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/internalorder/{self.id}/positions",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/internalorder/{self.id}/positions",
             "params": params,
         }
 
@@ -733,7 +733,7 @@ class AddOrderPositionsRequest(types.ApiRequest):
             )
         return {
             "method": "POST",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/internalorder/{self.id}/positions",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/internalorder/{self.id}/positions",
             "json": json_data,
         }
 
@@ -766,7 +766,7 @@ class DeleteOrderPositionRequest(types.ApiRequest):
     ) -> dict:
         return {
             "method": "DELETE",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/internalorder/{self.order_id}/positions/{self.position_id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/internalorder/{self.order_id}/positions/{self.position_id}",
             "allow_non_json": True,  # this endpoint returns empty body (octet-stream)
             "json": {},
         }
@@ -802,7 +802,7 @@ class GetOrderPositionRequest(types.ApiRequest):
     ) -> dict:
         return {
             "method": "GET",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/internalorder/{self.order_id}/positions/{self.position_id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/internalorder/{self.order_id}/positions/{self.position_id}",
         }
 
     def from_response(self, response: dict) -> Position:

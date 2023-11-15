@@ -131,7 +131,7 @@ class GetOrganizationsRequest(types.ApiRequest):
 
         return {
             "method": "GET",
-            "url": "https://online.moysklad.ru/api/remap/1.2/entity/organization",
+            "url": "https://api.moysklad.ru/api/remap/1.2/entity/organization",
             "params": params,
         }
 
@@ -245,7 +245,7 @@ class CreateOrganizationRequest(types.ApiRequest):
 
         return {
             "method": "POST",
-            "url": "https://online.moysklad.ru/api/remap/1.2/entity/organization",
+            "url": "https://api.moysklad.ru/api/remap/1.2/entity/organization",
             "json": json_data,
         }
 
@@ -265,7 +265,7 @@ class DeleteOrganizationRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "DELETE",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/organization/{self.id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/organization/{self.id}",
             "allow_non_json": True,
         }
 
@@ -285,7 +285,7 @@ class GetOrganizationRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "GET",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/organization/{self.id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/organization/{self.id}",
         }
 
     def from_response(self, result: dict) -> Organization:
@@ -401,7 +401,7 @@ class UpdateOrganizationRequest(types.ApiRequest):
 
         return {
             "method": "PUT",
-            "url": "https://online.moysklad.ru/api/remap/1.2/entity/organization/"
+            "url": "https://api.moysklad.ru/api/remap/1.2/entity/organization/"
             + self.id,
             "json": json_data,
         }

@@ -275,7 +275,7 @@ class GetSuppliesRequest(types.ApiRequest):
             params["search"] = self.search
         return {
             "method": "GET",
-            "url": "https://online.moysklad.ru/api/remap/1.2/entity/supply",
+            "url": "https://api.moysklad.ru/api/remap/1.2/entity/supply",
             "params": params,
         }
 
@@ -489,7 +489,7 @@ class CreateSupplyRequest(types.ApiRequest):
             json_data["vatIncluded"] = self.vat_included
         return {
             "method": "POST",
-            "url": "https://online.moysklad.ru/api/remap/1.2/entity/supply",
+            "url": "https://api.moysklad.ru/api/remap/1.2/entity/supply",
             "json": json_data,
         }
 
@@ -515,7 +515,7 @@ class DeleteSupplyRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "DELETE",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}",
             "allow_non_json": True,
         }
 
@@ -541,7 +541,7 @@ class GetSupplyRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "GET",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}",
         }
 
     def from_response(self, result: dict) -> Supply:
@@ -771,7 +771,7 @@ class UpdateSupplyRequest(types.ApiRequest):
 
         return {
             "method": "PUT",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}",
             "json": json_data,
         }
 
@@ -815,7 +815,7 @@ class GetSupplyPositionsRequest(types.ApiRequest):
             params["offset"] = self.offset
         return {
             "method": "GET",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}/positions",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}/positions",
             "params": params,
         }
 
@@ -881,7 +881,7 @@ class CreateSupplyPositionRequest(types.ApiRequest):
             json_data["overhead"] = self.overhead
         return {
             "method": "POST",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}/positions",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}/positions",
             "json": json_data,
         }
 
@@ -919,7 +919,7 @@ class GetSupplyPositionRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "GET",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}/positions/{self.position_id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}/positions/{self.position_id}",
         }
 
     def from_response(self, result: dict) -> Position:
@@ -994,7 +994,7 @@ class UpdateSupplyPositionRequest(types.ApiRequest):
             json_data["overhead"] = self.overhead
         return {
             "method": "PUT",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}/positions/{self.position_id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}/positions/{self.position_id}",
             "json": json_data,
         }
 
@@ -1032,7 +1032,7 @@ class DeleteSupplyPositionRequest(types.ApiRequest):
     def to_request(self) -> dict:
         return {
             "method": "DELETE",
-            "url": f"https://online.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}/positions/{self.position_id}",
+            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}/positions/{self.position_id}",
             "allow_non_json": True,
         }
 
