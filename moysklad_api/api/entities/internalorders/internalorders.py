@@ -1,7 +1,7 @@
 import typing
 import datetime
 from .... import types, helpers
-from ....types import Unset
+from ....types import Unset, RequestData
 
 
 class InternalOrder(types.MoySkladBaseClass):
@@ -87,15 +87,13 @@ class InternalOrder(types.MoySkladBaseClass):
         result.code = dict_data.get("code")
         created = dict_data.get("created")
         if created:
-            result.created = datetime.datetime.fromisoformat(created)
+            result.created = helpers.parse_date(created)
         deleted = dict_data.get("deleted")
         if deleted:
-            result.deleted = datetime.datetime.fromisoformat(deleted)
+            result.deleted = helpers.parse_date(deleted)
         delivery_planned_moment = dict_data.get("deliveryPlannedMoment")
         if delivery_planned_moment:
-            result.delivery_planned_moment = datetime.datetime.fromisoformat(
-                delivery_planned_moment
-            )
+            result.delivery_planned_moment = helpers.parse_date(delivery_planned_moment)
         result.description = dict_data.get("description")
         result.external_code = dict_data.get("externalCode")
         result.files = dict_data.get("files")
@@ -106,7 +104,7 @@ class InternalOrder(types.MoySkladBaseClass):
         result.meta = dict_data.get("meta")
         moment = dict_data.get("moment")
         if moment:
-            result.moment = datetime.datetime.fromisoformat(moment)
+            result.moment = helpers.parse_date(moment)
         result.moves = [
             helpers.get_meta(x, must=True) for x in dict_data.get("moves", [])
         ]
@@ -140,7 +138,7 @@ class InternalOrder(types.MoySkladBaseClass):
         result.sync_id = dict_data.get("syncId")
         updated = dict_data.get("updated")
         if updated:
-            result.updated = datetime.datetime.fromisoformat(updated)
+            result.updated = helpers.parse_date(updated)
         result.vat_enabled = dict_data.get("vatEnabled")
         result.vat_included = dict_data.get("vatIncluded")
         result.vat_sum = dict_data.get("vatSum")
@@ -223,7 +221,7 @@ class GetInternalOrdersRequest(types.ApiRequest):
 
     def to_request(
         self,
-    ) -> dict:
+    ) -> RequestData:
         params = {}
         if self.limit != Unset:
             params["limit"] = self.limit
@@ -231,11 +229,11 @@ class GetInternalOrdersRequest(types.ApiRequest):
             params["offset"] = self.offset
         if self.search != Unset:
             params["search"] = self.search
-        return {
-            "method": "GET",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/internalorder",
-            "params": params,
-        }
+        return RequestData(
+            method="GET",
+            url="https://api.moysklad.ru/api/remap/1.2/entity/internalorder",
+            params=params,
+        )
 
     def from_response(self, response: dict) -> typing.List[InternalOrder]:
         return [InternalOrder.from_json(i) for i in response["rows"]]
@@ -353,7 +351,7 @@ class CreateInternalOrderRequest(types.ApiRequest):
 
     def to_request(
         self,
-    ) -> dict:
+    ) -> RequestData:
         if not self.organization:
             raise ValueError("organization is required")
         json_data = {"organization": {"meta": self.organization}}
@@ -421,11 +419,11 @@ class CreateInternalOrderRequest(types.ApiRequest):
             json_data["vatEnabled"] = self.vat_enabled
         if self.vat_included != Unset:
             json_data["vatIncluded"] = self.vat_included
-        return {
-            "method": "POST",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/internalorder",
-            "json": json_data,
-        }
+        return RequestData(
+            method="POST",
+            url="https://api.moysklad.ru/api/remap/1.2/entity/internalorder",
+            json=json_data,
+        )
 
     def from_response(self, response: dict) -> InternalOrder:
         return InternalOrder.from_json(response)
@@ -447,11 +445,11 @@ class GetInternalOrderRequest(types.ApiRequest):
 
     def to_request(
         self,
-    ) -> dict:
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/internalorder/{self.id}",
-        }
+    ) -> RequestData:
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/internalorder/{self.id}",
+        )
 
     def from_response(self, response: dict) -> InternalOrder:
         return InternalOrder.from_json(response)
@@ -560,7 +558,7 @@ class UpdateInternalOrderRequest(types.ApiRequest):
 
     def to_request(
         self,
-    ) -> dict:
+    ) -> RequestData:
         json_data = {}
         if self.organization != Unset:
             json_data["organization"] = (
@@ -630,11 +628,11 @@ class UpdateInternalOrderRequest(types.ApiRequest):
             json_data["vatEnabled"] = self.vat_enabled
         if self.vat_included != Unset:
             json_data["vatIncluded"] = self.vat_included
-        return {
-            "method": "PUT",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/internalorder/{self.id}",
-            "json": json_data,
-        }
+        return RequestData(
+            method="PUT",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/internalorder/{self.id}",
+            json=json_data,
+        )
 
     def from_response(self, response: dict) -> InternalOrder:
         return InternalOrder.from_json(response)
@@ -668,7 +666,7 @@ class GetOrderPositionsRequest(types.ApiRequest):
 
     def to_request(
         self,
-    ) -> dict:
+    ) -> RequestData:
         params = {}
         if self.limit != Unset:
             params["limit"] = self.limit
@@ -677,11 +675,11 @@ class GetOrderPositionsRequest(types.ApiRequest):
         if self.search != Unset:
             params["search"] = self.search
 
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/internalorder/{self.id}/positions",
-            "params": params,
-        }
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/internalorder/{self.id}/positions",
+            params=params,
+        )
 
     def from_response(self, response: dict) -> typing.List[Position]:
         return [Position.from_json(x) for x in response["rows"]]
@@ -719,7 +717,7 @@ class AddOrderPositionsRequest(types.ApiRequest):
 
     def to_request(
         self,
-    ) -> dict:
+    ) -> RequestData:
         json_data = []
         for i in self.positions:
             json_data.append(
@@ -731,11 +729,11 @@ class AddOrderPositionsRequest(types.ApiRequest):
                     "assortment": {"meta": i["assortment"]},
                 }
             )
-        return {
-            "method": "POST",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/internalorder/{self.id}/positions",
-            "json": json_data,
-        }
+        return RequestData(
+            method="POST",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/internalorder/{self.id}/positions",
+            json=json_data,
+        )
 
     def from_response(self, response: dict) -> typing.List[Position]:
         return [Position.from_json(x) for x in response]
@@ -763,13 +761,13 @@ class DeleteOrderPositionRequest(types.ApiRequest):
 
     def to_request(
         self,
-    ) -> dict:
-        return {
-            "method": "DELETE",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/internalorder/{self.order_id}/positions/{self.position_id}",
-            "allow_non_json": True,  # this endpoint returns empty body (octet-stream)
-            "json": {},
-        }
+    ) -> RequestData:
+        return RequestData(
+            method="DELETE",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/internalorder/{self.order_id}/positions/{self.position_id}",
+            allow_non_json=True,  # this endpoint returns empty body (octet-stream)
+            json={},
+        )
 
     def from_response(self, response: dict) -> None:
         # This API request returns nothing (Этот запрос ничего не возвращает)
@@ -799,11 +797,11 @@ class GetOrderPositionRequest(types.ApiRequest):
 
     def to_request(
         self,
-    ) -> dict:
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/internalorder/{self.order_id}/positions/{self.position_id}",
-        }
+    ) -> RequestData:
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/internalorder/{self.order_id}/positions/{self.position_id}",
+        )
 
     def from_response(self, response: dict) -> Position:
         return Position.from_json(response)

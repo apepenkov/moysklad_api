@@ -1,8 +1,8 @@
 import datetime
 import typing
 
-from .... import types
-from ....types import Unset
+from .... import types, helpers
+from ....types import Unset, RequestData
 
 
 # https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-towar-towary
@@ -162,7 +162,7 @@ class Product(types.MoySkladBaseClass):
             result.uom = uom["meta"]
         updated = dict_data.get("updated")
         if updated:
-            result.updated = datetime.datetime.fromisoformat(updated)
+            result.updated = helpers.parse_date(updated)
         result.use_parent_vat = dict_data.get("useParentVat")
         result.variants_count = dict_data.get("variantsCount")
         result.vat = dict_data.get("vat")
@@ -189,18 +189,18 @@ class GetProductListRequest(types.ApiRequest):
 
     def to_request(
         self,
-    ) -> dict:
+    ) -> RequestData:
         params = {}
         if self.limit != Unset:
             params["limit"] = self.limit
         if self.offset != Unset:
             params["offset"] = self.offset
 
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/product",
-            "params": params,
-        }
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/product",
+            params=params,
+        )
 
     def from_response(self, response: dict) -> typing.List[Product]:
         return [Product.from_json(product) for product in response["rows"]]
@@ -366,7 +366,7 @@ class CreateProductRequest(types.ApiRequest):
         self.tnved = tnved
         self.use_parent_vat = use_parent_vat
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         if not self.name:
             raise ValueError("Name is required")
         json_data = {"name": self.name}
@@ -470,11 +470,11 @@ class CreateProductRequest(types.ApiRequest):
         if self.use_parent_vat != Unset:
             json_data["useParentVat"] = self.use_parent_vat
 
-        return {
-            "method": "POST",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/product",
-            "json": json_data,
-        }
+        return RequestData(
+            method="POST",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/product",
+            json=json_data,
+        )
 
     def from_response(self, response: dict) -> Product:
         return Product.from_json(response)
@@ -494,14 +494,14 @@ class DeleteProductRequest(types.ApiRequest):
         """
         self.id = id_
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         if not self.id:
             raise ValueError("Product ID is required")
-        return {
-            "method": "DELETE",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/product/{self.id}",
-            "allow_non_json": True,
-        }
+        return RequestData(
+            method="DELETE",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/product/{self.id}",
+            allow_non_json=True,
+        )
 
     def from_response(self, response: dict) -> None:
         return None
@@ -521,13 +521,13 @@ class GetProductRequest(types.ApiRequest):
         """
         self.id = id_
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         if not self.id:
             raise ValueError("Product ID is required")
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/product/{self.id}",
-        }
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/product/{self.id}",
+        )
 
     def from_response(self, response: dict) -> Product:
         return Product.from_json(response)
@@ -696,7 +696,7 @@ class UpdateProductRequest(types.ApiRequest):
         self.tnved = tnved
         self.use_parent_vat = use_parent_vat
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         if not self.id:
             raise ValueError("Product ID is required")
 
@@ -804,11 +804,11 @@ class UpdateProductRequest(types.ApiRequest):
         # but I don't think that should be done on library level
         # Здесь было бы хорошо проверить, что длина json_data > 1, чтобы избежать лишних запросов,
         # но я не думаю, что это должно делаться на уровне библиотеки
-        return {
-            "method": "PUT",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/product/{self.id}",
-            "json": json_data,
-        }
+        return RequestData(
+            method="PUT",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/product/{self.id}",
+            json=json_data,
+        )
 
     def from_response(self, response: dict) -> Product:
         return Product.from_json(response)

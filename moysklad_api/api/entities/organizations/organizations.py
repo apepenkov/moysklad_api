@@ -1,8 +1,8 @@
 import datetime
 import typing
 
-from .... import types
-from ....types import Unset
+from .... import types, helpers
+from ....types import Unset, RequestData
 
 
 class Organization(types.MoySkladBaseClass):
@@ -65,38 +65,26 @@ class Organization(types.MoySkladBaseClass):
         instance.archived = dict_data.get("archived")
         instance.attributes = dict_data.get("attributes")
         instance.bonus_points = dict_data.get("bonusPoints")
-        bonus_program = dict_data.get("bonusProgram")
-        if bonus_program is not None:
-            instance.bonus_program = bonus_program["meta"]
+        instance.bonus_program = helpers.get_meta(dict_data.get("bonusProgram"))
         instance.code = dict_data.get("code")
         instance.company_type = dict_data.get("companyType")
-        created = dict_data.get("created")
-        if created is not None:
-            instance.created = datetime.datetime.fromisoformat(created)
+        instance.created = helpers.parse_date(dict_data.get("created"))
         instance.description = dict_data.get("description")
         instance.external_code = dict_data.get("externalCode")
-        group = dict_data.get("group")
-        if group is not None:
-            instance.group = group["meta"]
+        instance.group = helpers.get_meta(dict_data.get("group"))
         instance.id = dict_data.get("id")
         meta = dict_data.get("meta")
         if meta is not None:
             instance.meta = meta
         instance.name = dict_data.get("name")
-        owner = dict_data.get("owner")
-        if owner is not None:
-            instance.owner = owner["meta"]
+        instance.owner = helpers.get_meta(dict_data.get("owner"))
         instance.shared = dict_data.get("shared")
         instance.sync_id = dict_data.get("syncId")
         tracking_contract_date = dict_data.get("trackingContractDate")
         if tracking_contract_date is not None:
-            instance.tracking_contract_date = datetime.datetime.fromisoformat(
-                tracking_contract_date
-            )
+            instance.tracking_contract_date = helpers.parse_date(tracking_contract_date)
         instance.tracking_contract_number = dict_data.get("trackingContractNumber")
-        updated = dict_data.get("updated")
-        if updated is not None:
-            instance.updated = datetime.datetime.fromisoformat(updated)
+        instance.updated = helpers.parse_date(dict_data.get("updated"))
         return instance
 
 
@@ -122,18 +110,18 @@ class GetOrganizationsRequest(types.ApiRequest):
         self.limit = limit
         self.offset = offset
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         params = {}
         if self.limit != Unset:
             params["limit"] = self.limit
         if self.offset != Unset:
             params["offset"] = self.offset
 
-        return {
-            "method": "GET",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/organization",
-            "params": params,
-        }
+        return RequestData(
+            method="GET",
+            url="https://api.moysklad.ru/api/remap/1.2/entity/organization",
+            params=params,
+        )
 
     def from_response(self, result: dict) -> typing.List[Organization]:
         return [Organization.from_json(org) for org in result["rows"]]
@@ -200,7 +188,7 @@ class CreateOrganizationRequest(types.ApiRequest):
         self.tracking_contract_date = tracking_contract_date
         self.tracking_contract_number = tracking_contract_number
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {
             "name": self.name,
         }
@@ -237,17 +225,17 @@ class CreateOrganizationRequest(types.ApiRequest):
         if self.sync_id != Unset:
             json_data["syncId"] = self.sync_id
         if self.tracking_contract_date != Unset:
-            json_data["trackingContractDate"] = self.tracking_contract_date.strftime(
-                "%Y-%m-%d %H:%M:%S"
+            json_data["trackingContractDate"] = helpers.date_to_str(
+                self.tracking_contract_date
             )
         if self.tracking_contract_number != Unset:
             json_data["trackingContractNumber"] = self.tracking_contract_number
 
-        return {
-            "method": "POST",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/organization",
-            "json": json_data,
-        }
+        return RequestData(
+            method="POST",
+            url="https://api.moysklad.ru/api/remap/1.2/entity/organization",
+            json=json_data,
+        )
 
     def from_response(self, result: dict) -> Organization:
         return Organization.from_json(result)
@@ -262,12 +250,12 @@ class DeleteOrganizationRequest(types.ApiRequest):
     def __init__(self, organization_id: str):
         self.id = organization_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "DELETE",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/organization/{self.id}",
-            "allow_non_json": True,
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="DELETE",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/organization/{self.id}",
+            allow_non_json=True,
+        )
 
     def from_response(self, result: dict) -> None:
         return
@@ -282,11 +270,11 @@ class GetOrganizationRequest(types.ApiRequest):
     def __init__(self, organization_id: str):
         self.id = organization_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/organization/{self.id}",
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/organization/{self.id}",
+        )
 
     def from_response(self, result: dict) -> Organization:
         return Organization.from_json(result)
@@ -356,7 +344,7 @@ class UpdateOrganizationRequest(types.ApiRequest):
         self.tracking_contract_date = tracking_contract_date
         self.tracking_contract_number = tracking_contract_number
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {}
         if self.name != Unset:
             json_data["name"] = self.name
@@ -393,18 +381,17 @@ class UpdateOrganizationRequest(types.ApiRequest):
         if self.sync_id != Unset:
             json_data["syncId"] = self.sync_id
         if self.tracking_contract_date != Unset:
-            json_data["trackingContractDate"] = self.tracking_contract_date.strftime(
-                "%Y-%m-%d %H:%M:%S"
+            json_data["trackingContractDate"] = helpers.date_to_str(
+                self.tracking_contract_date
             )
         if self.tracking_contract_number != Unset:
             json_data["trackingContractNumber"] = self.tracking_contract_number
 
-        return {
-            "method": "PUT",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/organization/"
-            + self.id,
-            "json": json_data,
-        }
+        return RequestData(
+            method="PUT",
+            url="https://api.moysklad.ru/api/remap/1.2/entity/organization/" + self.id,
+            json=json_data,
+        )
 
     def from_response(self, result: dict) -> Organization:
         return Organization.from_json(result)

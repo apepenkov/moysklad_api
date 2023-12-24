@@ -1,7 +1,7 @@
 import typing
 import datetime
-from .... import types
-from ....types import Unset
+from .... import types, helpers
+from ....types import Unset, RequestData
 
 
 # https://dev.moysklad.ru/doc/api/remap/1.2/reports/#otchety-otchet-ostatki
@@ -58,9 +58,7 @@ class FullStockReport(types.MoySkladBaseClass):
         instance.code = dict_data.get("code")
         instance.external_code = dict_data.get("externalCode")
         instance.folder = dict_data.get("folder")
-        image = dict_data.get("image")
-        if image:
-            instance.image = image["meta"]
+        instance.image = helpers.get_meta(dict_data.get("image"))
         instance.in_transit = dict_data.get("inTransit")
         instance.meta = dict_data.get("meta")
         instance.name = dict_data.get("name")
@@ -145,7 +143,7 @@ class GetFullStockReportRequest(types.ApiRequest):
         self.group_by = group_by
         self.include_related = include_related
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         params = {}
         if self.limit != Unset:
             params["limit"] = self.limit
@@ -155,11 +153,11 @@ class GetFullStockReportRequest(types.ApiRequest):
             params["groupBy"] = self.group_by
         if self.include_related != Unset:
             params["includeRelated"] = self.include_related
-        return {
-            "method": "GET",
-            "url": "https://api.moysklad.ru/api/remap/1.2/report/stock/all",
-            "params": params,
-        }
+        return RequestData(
+            method="GET",
+            url="https://api.moysklad.ru/api/remap/1.2/report/stock/all",
+            params=params,
+        )
 
     def from_response(self, result: dict) -> typing.List[FullStockReport]:
         return [FullStockReport.from_json(item) for item in result["rows"]]
@@ -230,12 +228,12 @@ class GetSmallStockReportCurrentRequest(types.ApiRequest):
         self.filter_assortment_id = filter_assortment_id
         self.filter_store_id = filter_store_id
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         params = {}
         if self.include != Unset:
             params["include"] = self.include
         if self.changed_since != Unset:
-            params["changedSince"] = self.changed_since.strftime("%Y-%m-%d %H:%M:%S")
+            params["changedSince"] = helpers.date_to_str(self.changed_since)
         if self.stock_type != Unset:
             params["stockType"] = self.stock_type
         if self.filter_assortment_id != Unset:
@@ -247,11 +245,11 @@ class GetSmallStockReportCurrentRequest(types.ApiRequest):
             if "filter" not in params:
                 params["filter"] = []
             params["filter"].append("storeId={}".format(",".join(self.filter_store_id)))
-        return {
-            "method": "GET",
-            "url": "https://api.moysklad.ru/api/remap/1.2/report/stock/bystore/current",
-            "params": params,
-        }
+        return RequestData(
+            method="GET",
+            url="https://api.moysklad.ru/api/remap/1.2/report/stock/all/current",
+            params=params,
+        )
 
     def from_response(self, result: dict) -> typing.List[SmallStockReport]:
         return [SmallStockReport.from_json(item) for item in result]

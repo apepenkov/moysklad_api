@@ -1,8 +1,8 @@
 import datetime
 import typing
 
-from .... import types
-from ....types import Unset
+from .... import types, helpers
+from ....types import Unset, RequestData
 
 
 class Store(types.MoySkladBaseClass):
@@ -63,23 +63,15 @@ class Store(types.MoySkladBaseClass):
         instance.code = dict_data.get("code")
         instance.description = dict_data.get("description")
         instance.external_code = dict_data.get("externalCode")
-        group = dict_data.get("group")
-        if group:
-            instance.group = group["meta"]
+        instance.group = helpers.get_meta(dict_data.get("group"))
         instance.id = dict_data.get("id")
         instance.meta = dict_data.get("meta")
         instance.name = dict_data.get("name")
-        owner = dict_data.get("owner")
-        if owner:
-            instance.owner = owner["meta"]
-        parent = dict_data.get("parent")
-        if parent:
-            instance.parent = parent["meta"]
+        instance.owner = helpers.get_meta(dict_data.get("owner"))
+        instance.parent = helpers.get_meta(dict_data.get("parent"))
         instance.path_name = dict_data.get("pathName")
         instance.shared = dict_data.get("shared")
-        updated = dict_data.get("updated")
-        if updated:
-            instance.updated = datetime.datetime.fromisoformat(updated)
+        instance.updated = helpers.parse_date(dict_data.get("updated"))
         instance.zones = dict_data.get("zones")
         instance.slots = dict_data.get("slots")
         return instance
@@ -115,9 +107,7 @@ class StoreZone(types.MoySkladBaseClass):
         instance.id = dict_data.get("id")
         instance.meta = dict_data.get("meta")
         instance.name = dict_data.get("name")
-        updated = dict_data.get("updated")
-        if updated:
-            instance.updated = datetime.datetime.fromisoformat(updated)
+        instance.updated = helpers.parse_date(dict_data.get("updated"))
         return instance
 
 
@@ -152,12 +142,8 @@ class StoreSlot(types.MoySkladBaseClass):
         instance.id = dict_data.get("id")
         instance.meta = dict_data.get("meta")
         instance.name = dict_data.get("name")
-        updated = dict_data.get("updated")
-        if updated:
-            instance.updated = datetime.datetime.fromisoformat(updated)
-        zone = dict_data.get("zone")
-        if zone:
-            instance.zone = zone["meta"]
+        instance.updated = helpers.parse_date(dict_data.get("updated"))
+        instance.zone = helpers.get_meta(dict_data.get("zone"))
         return instance
 
 
@@ -186,17 +172,17 @@ class GetStoresRequest(types.ApiRequest):
         self.limit = limit
         self.offset = offset
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         params = {}
         if self.limit != Unset:
             params["limit"] = self.limit
         if self.offset != Unset:
             params["offset"] = self.offset
-        return {
-            "method": "GET",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/store",
-            "params": params,
-        }
+        return RequestData(
+            method="GET",
+            url="https://api.moysklad.ru/api/remap/1.2/entity/store",
+            params=params,
+        )
 
     def from_response(self, result: dict) -> typing.List[Store]:
         return [Store.from_json(item) for item in result["rows"]]
@@ -284,7 +270,7 @@ class CreateStoreRequest(types.ApiRequest):
         self.path_name = path_name
         self.shared = shared
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_dict = {
             "name": self.name,
         }
@@ -328,11 +314,11 @@ class CreateStoreRequest(types.ApiRequest):
         if self.shared != Unset:
             json_dict["shared"] = self.shared
 
-        return {
-            "method": "POST",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/store",
-            "json": json_dict,
-        }
+        return RequestData(
+            method="POST",
+            url="https://api.moysklad.ru/api/remap/1.2/entity/store",
+            json=json_dict,
+        )
 
     def from_response(self, result: dict) -> Store:
         return Store.from_json(result)
@@ -352,12 +338,12 @@ class DeleteStoreRequest(types.ApiRequest):
         """
         self.id = store_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "DELETE",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.id}",
-            "allow_non_json": True,
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="DELETE",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.id}",
+            allow_non_json=True,
+        )
 
     def from_response(self, result: dict) -> None:
         return None
@@ -381,11 +367,11 @@ class GetStoreRequest(types.ApiRequest):
         """
         self.id = store_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.id}",
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.id}",
+        )
 
     def from_response(self, result: dict) -> Store:
         return Store.from_json(result)
@@ -452,7 +438,7 @@ class UpdateStoreRequest(types.ApiRequest):
         self.path_name = path_name
         self.shared = shared
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_dict = {}
 
         if self.name != Unset:
@@ -497,11 +483,11 @@ class UpdateStoreRequest(types.ApiRequest):
         if self.shared != Unset:
             json_dict["shared"] = self.shared
 
-        return {
-            "method": "PUT",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.id}",
-            "json": json_dict,
-        }
+        return RequestData(
+            method="PUT",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.id}",
+            json=json_dict,
+        )
 
     def from_response(self, result: dict) -> Store:
         return Store.from_json(result)
@@ -536,18 +522,18 @@ class GetStoreZonesRequest(types.ApiRequest):
         self.limit = limit
         self.offset = offset
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         params = {}
         if self.limit != Unset:
             params["limit"] = self.limit
         if self.offset != Unset:
             params["offset"] = self.offset
 
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/zones",
-            "params": params,
-        }
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/zones",
+            params=params,
+        )
 
     def from_response(self, result: dict) -> typing.List["StoreZone"]:
         return [StoreZone.from_json(item) for item in result.get("rows", [])]
@@ -580,7 +566,7 @@ class CreateStoreZoneRequest(types.ApiRequest):
         self.external_code = external_code
         self.meta = meta
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {
             "name": self.name,
         }
@@ -588,11 +574,11 @@ class CreateStoreZoneRequest(types.ApiRequest):
             json_data["externalCode"] = self.external_code
         if self.meta != Unset:
             json_data["meta"] = self.meta
-        return {
-            "method": "POST",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/zones",
-            "json": json_data,
-        }
+        return RequestData(
+            method="POST",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/zones",
+            json=json_data,
+        )
 
     def from_response(self, result: dict) -> StoreZone:
         return StoreZone.from_json(result)
@@ -619,11 +605,11 @@ class GetStoreZoneRequest(types.ApiRequest):
         self.store_id = store_id
         self.zone_id = zone_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/zones/{self.zone_id}",
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/zones/{self.zone_id}",
+        )
 
     def from_response(self, result: dict) -> StoreZone:
         return StoreZone.from_json(result)
@@ -646,12 +632,12 @@ class DeleteStoreZoneRequest(types.ApiRequest):
         self.store_id = store_id
         self.zone_id = zone_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "DELETE",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/zones/{self.zone_id}",
-            "allow_non_json": True,
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="DELETE",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/zones/{self.zone_id}",
+            allow_non_json=True,
+        )
 
     def from_response(self, result: dict) -> None:
         return None
@@ -687,7 +673,7 @@ class UpdateStoreZoneRequest(types.ApiRequest):
         self.external_code = external_code
         self.meta = meta
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {}
         if self.name != Unset:
             json_data["name"] = self.name
@@ -695,11 +681,11 @@ class UpdateStoreZoneRequest(types.ApiRequest):
             json_data["externalCode"] = self.external_code
         if self.meta != Unset:
             json_data["meta"] = self.meta
-        return {
-            "method": "PUT",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/zones/{self.zone_id}",
-            "json": json_data,
-        }
+        return RequestData(
+            method="PUT",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/zones/{self.zone_id}",
+            json=json_data,
+        )
 
     def from_response(self, result: dict) -> StoreZone:
         return StoreZone.from_json(result)
@@ -734,18 +720,18 @@ class GetStoreSlotsRequest(types.ApiRequest):
         self.limit = limit
         self.offset = offset
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         params = {}
         if self.limit != Unset:
             params["limit"] = self.limit
         if self.offset != Unset:
             params["offset"] = self.offset
 
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/slots",
-            "params": params,
-        }
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/slots",
+            params=params,
+        )
 
     def from_response(self, result: dict) -> typing.List[StoreSlot]:
         return [StoreSlot.from_json(item) for item in result["rows"]]
@@ -782,7 +768,7 @@ class CreateStoreSlotRequest(types.ApiRequest):
         self.meta = meta
         self.zone = zone
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {
             "name": self.name,
         }
@@ -793,11 +779,11 @@ class CreateStoreSlotRequest(types.ApiRequest):
         if self.zone != Unset:
             json_data["zone"] = {"meta": self.zone} if self.zone is not None else None
 
-        return {
-            "method": "POST",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/slots",
-            "json": json_data,
-        }
+        return RequestData(
+            method="POST",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/slots",
+            json=json_data,
+        )
 
     def from_response(self, result: dict) -> StoreSlot:
         return StoreSlot.from_json(result)
@@ -835,7 +821,7 @@ class UpdateStoreSlotRequest(types.ApiRequest):
         self.meta = meta
         self.zone = zone
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {}
         if self.name != Unset:
             json_data["name"] = self.name
@@ -846,11 +832,11 @@ class UpdateStoreSlotRequest(types.ApiRequest):
         if self.zone != Unset:
             json_data["zone"] = {"meta": self.zone} if self.zone is not None else None
 
-        return {
-            "method": "PUT",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/slots/{self.slot_id}",
-            "json": json_data,
-        }
+        return RequestData(
+            method="PUT",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/slots/{self.slot_id}",
+            json=json_data,
+        )
 
     def from_response(self, result: dict) -> StoreSlot:
         return StoreSlot.from_json(result)
@@ -878,12 +864,12 @@ class DeleteStoreSlotRequest(types.ApiRequest):
         self.store_id = store_id
         self.slot_id = slot_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "DELETE",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/slots/{self.slot_id}",
-            "allow_non_json": True,
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="DELETE",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/slots/{self.slot_id}",
+            allow_non_json=True,
+        )
 
     def from_response(self, result: dict) -> None:
         return None
@@ -911,11 +897,11 @@ class GetStoreSlotRequest(types.ApiRequest):
         self.store_id = store_id
         self.slot_id = slot_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/slots/{self.slot_id}",
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/store/{self.store_id}/slots/{self.slot_id}",
+        )
 
     def from_response(self, result: dict) -> StoreSlot:
         return StoreSlot.from_json(result)

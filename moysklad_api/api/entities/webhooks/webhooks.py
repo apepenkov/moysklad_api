@@ -1,8 +1,7 @@
-import datetime
 import typing
 
-from .... import types
-from ....types import Unset
+from .... import types, helpers
+from ....types import Unset, RequestData
 
 
 class Webhook(types.MoySkladBaseClass):
@@ -37,9 +36,9 @@ class Webhook(types.MoySkladBaseClass):
     def from_json(cls, dict_data: dict) -> "Webhook":
         instance = cls()
         instance.meta = dict_data.get("meta")
-        author_application = dict_data.get("authorApplication")
-        if author_application:
-            instance.author_application = author_application["meta"]
+        instance.author_application = helpers.get_meta(
+            dict_data.get("authorApplication")
+        )
         instance.id = dict_data.get("id")
         instance.account_id = dict_data.get("accountId")
         instance.entity_type = dict_data.get("entityType")
@@ -60,11 +59,11 @@ class GetWebhooksRequest(types.ApiRequest):
     def __init__(self):
         pass
 
-    def to_request(self) -> dict:
-        return {
-            "method": "GET",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/webhook",
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="GET",
+            url="https://api.moysklad.ru/api/remap/1.2/entity/webhook",
+        )
 
     def from_response(self, result: dict) -> typing.List[Webhook]:
         return [Webhook.from_json(item) for item in result["rows"]]
@@ -101,7 +100,7 @@ class CreateWebhookRequest(types.ApiRequest):
         self.action = action
         self.diff_type = diff_type
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {
             "url": self.url,
             "entityType": self.entity_type,
@@ -109,12 +108,11 @@ class CreateWebhookRequest(types.ApiRequest):
         }
         if self.diff_type != Unset:
             json_data["diffType"] = self.diff_type
-
-        return {
-            "method": "POST",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/webhook",
-            "json": json_data,
-        }
+        return RequestData(
+            method="POST",
+            url="https://api.moysklad.ru/api/remap/1.2/entity/webhook",
+            json=json_data,
+        )
 
     def from_response(self, result: dict) -> Webhook:
         return Webhook.from_json(result)
@@ -130,11 +128,11 @@ class GetWebhookRequest(types.ApiRequest):
     def __init__(self, webhook_id: str):
         self.webhook_id = webhook_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/webhook/{self.webhook_id}",
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/webhook/{self.webhook_id}",
+        )
 
     def from_response(self, result: dict) -> Webhook:
         return Webhook.from_json(result)
@@ -174,7 +172,7 @@ class UpdateWebhookRequest(types.ApiRequest):
         self.action = action
         self.diff_type = diff_type
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {}
         if self.url != Unset:
             json_data["url"] = self.url
@@ -184,12 +182,11 @@ class UpdateWebhookRequest(types.ApiRequest):
             json_data["action"] = self.action
         if self.diff_type != Unset:
             json_data["diffType"] = self.diff_type
-
-        return {
-            "method": "PUT",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/webhook/{self.webhook_id}",
-            "json": json_data,
-        }
+        return RequestData(
+            method="PUT",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/webhook/{self.webhook_id}",
+            json=json_data,
+        )
 
     def from_response(self, result: dict) -> Webhook:
         return Webhook.from_json(result)
@@ -205,12 +202,12 @@ class DeleteWebhookRequest(types.ApiRequest):
     def __init__(self, webhook_id: str):
         self.webhook_id = webhook_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "DELETE",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/webhook/{self.webhook_id}",
-            "allow_non_json": True,
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="DELETE",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/webhook/{self.webhook_id}",
+            allow_non_json=True,
+        )
 
     def from_response(self, result: dict) -> None:
         return None

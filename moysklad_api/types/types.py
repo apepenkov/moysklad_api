@@ -53,9 +53,50 @@ class MoySkladBaseClass:
         raise NotImplementedError
 
 
+class RequestData:
+    def __init__(
+        self,
+        method: typing.Literal["GET", "POST", "PUT", "DELETE"],
+        url: str,
+        allow_non_json: bool = False,
+        json: typing.Optional[typing.Union[list, dict]] = None,
+        params: typing.Optional[dict] = None,
+        headers: typing.Optional[dict] = None,
+        **kwargs,
+    ):
+        self.method = method
+        self.url = url
+        self.allow_non_json = allow_non_json
+        self.json = json
+        self.params = params
+        self.headers = headers
+        self.kwargs = kwargs
+
+    def __repr__(self):
+        return (
+            f"{self.__class__.__name__}("
+            + ", ".join(f"{k}={v!r}" for k, v in self.__dict__.items())
+            + ")"
+        )
+
+    def __str__(self):
+        return self.__repr__()
+
+    def to_kwargs(self) -> dict:
+        kwargs = {"allow_non_json": self.allow_non_json}
+        if self.json is not None:
+            kwargs["json"] = self.json
+        if self.params is not None:
+            kwargs["params"] = self.params
+        if self.headers is not None:
+            kwargs["headers"] = self.headers
+        kwargs.update(self.kwargs)
+        return kwargs
+
+
 class ApiRequest:
     # method: typing.Literal["GET", "POST", "PUT", "DELETE"], url: str, **kwargs
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         raise NotImplementedError
 
     def from_response(self, result: dict):

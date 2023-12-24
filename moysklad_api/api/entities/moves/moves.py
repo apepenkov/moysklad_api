@@ -1,7 +1,7 @@
 import typing
 import datetime
-from .... import types
-from ....types import Unset
+from .... import types, helpers
+from ....types import Unset, RequestData
 
 
 class Move(types.MoySkladBaseClass):
@@ -82,59 +82,33 @@ class Move(types.MoySkladBaseClass):
         instance.applicable = dict_data.get("applicable")
         instance.attributes = dict_data.get("attributes")
         instance.code = dict_data.get("code")
-        created = dict_data.get("created")
-        if created:
-            instance.created = datetime.datetime.fromisoformat(created)
-        deleted = dict_data.get("deleted")
-        if deleted:
-            instance.deleted = datetime.datetime.fromisoformat(deleted)
+        instance.created = helpers.parse_date(dict_data.get("created"))
+        instance.deleted = helpers.parse_date(dict_data.get("deleted"))
         instance.description = dict_data.get("description")
         instance.external_code = dict_data.get("externalCode")
         instance.files = dict_data.get("files")
-        group = dict_data.get("group")
-        if group:
-            instance.group = group["meta"]
+        instance.group = helpers.get_meta(dict_data.get("group"))
         instance.id = dict_data.get("id")
-        internal_order = dict_data.get("internalOrder")
-        if internal_order:
-            instance.internal_order = internal_order["meta"]
-        custom_order = dict_data.get("customOrder")
-        if custom_order:
-            instance.custom_order = custom_order["meta"]
+        instance.internal_order = helpers.get_meta(dict_data.get("internalOrder"))
+        instance.custom_order = helpers.get_meta(dict_data.get("customOrder"))
         instance.meta = dict_data.get("meta")
-        moment = dict_data.get("moment")
-        if moment:
-            instance.moment = datetime.datetime.fromisoformat(moment)
+        instance.moment = helpers.parse_date(dict_data.get("moment"))
         instance.name = dict_data.get("name")
-        organization = dict_data.get("organization")
-        if organization:
-            instance.organization = organization["meta"]
+        instance.organization = helpers.get_meta(dict_data.get("organization"))
         instance.overhead = dict_data.get("overhead")
-        owner = dict_data.get("owner")
-        if owner:
-            instance.owner = owner["meta"]
+        instance.owner = helpers.get_meta(dict_data.get("owner"))
         instance.positions = dict_data.get("positions")
         instance.printed = dict_data.get("printed")
-        project = dict_data.get("project")
-        if project:
-            instance.project = project["meta"]
+        instance.project = helpers.get_meta(dict_data.get("project"))
         instance.published = dict_data.get("published")
         instance.rate = dict_data.get("rate")
         instance.shared = dict_data.get("shared")
-        source_store = dict_data.get("sourceStore")
-        if source_store:
-            instance.source_store = source_store["meta"]
-        state = dict_data.get("state")
-        if state:
-            instance.state = state["meta"]
+        instance.source_store = helpers.get_meta(dict_data.get("sourceStore"))
+        instance.state = helpers.get_meta(dict_data.get("state"))
         instance.sum = dict_data.get("sum")
         instance.sync_id = dict_data.get("syncId")
-        target_store = dict_data.get("targetStore")
-        if target_store:
-            instance.target_store = target_store["meta"]
-        updated = dict_data.get("updated")
-        if updated:
-            instance.updated = datetime.datetime.fromisoformat(updated)
+        instance.target_store = helpers.get_meta(dict_data.get("targetStore"))
+        instance.updated = helpers.parse_date(dict_data.get("updated"))
         return instance
 
 
@@ -169,20 +143,14 @@ class MovePosition(types.MoySkladBaseClass):
     def from_json(cls, dict_data: dict) -> "MovePosition":
         instance = cls()
         instance.account_id = dict_data.get("accountId")
-        assortment = dict_data.get("assortment")
-        if assortment:
-            instance.assortment = assortment["meta"]
+        instance.assortment = helpers.get_meta(dict_data.get("assortment"))
         instance.id = dict_data.get("id")
         instance.overhead = dict_data.get("overhead")
         instance.pack = dict_data.get("pack")
         instance.price = dict_data.get("price")
         instance.quantity = dict_data.get("quantity")
-        source_slot = dict_data.get("sourceSlot")
-        if source_slot:
-            instance.source_slot = source_slot["meta"]
-        target_slot = dict_data.get("targetSlot")
-        if target_slot:
-            instance.target_slot = target_slot["meta"]
+        instance.source_slot = helpers.get_meta(dict_data.get("sourceSlot"))
+        instance.target_slot = helpers.get_meta(dict_data.get("targetSlot"))
         instance.things = dict_data.get("things")
         return instance
 
@@ -213,7 +181,7 @@ class GetMovesRequest(types.ApiRequest):
         self.offset = offset
         self.search = search
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         params = {}
         if self.limit != Unset:
             params["limit"] = self.limit
@@ -222,11 +190,11 @@ class GetMovesRequest(types.ApiRequest):
         if self.search != Unset:
             params["search"] = self.search
 
-        return {
-            "method": "GET",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/move",
-            "params": params,
-        }
+        return RequestData(
+            method="GET",
+            url="https://api.moysklad.ru/api/remap/1.2/entity/move",
+            params=params,
+        )
 
     def from_response(self, result) -> typing.List[Move]:
         return [Move.from_json(move) for move in result["rows"]]
@@ -324,7 +292,7 @@ class CreateMoveRequest(types.ApiRequest):
         self.state = state
         self.sync_id = sync_id
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {
             "organization": {"meta": self.organization},
             "sourceStore": {"meta": self.source_store},
@@ -351,7 +319,7 @@ class CreateMoveRequest(types.ApiRequest):
         if self.meta != Unset:
             json_data["meta"] = self.meta
         if self.moment != Unset:
-            json_data["moment"] = self.moment.strftime("%Y-%m-%d %H:%M:%S")
+            json_data["moment"] = helpers.date_to_str(self.moment)
         if self.name != Unset:
             json_data["name"] = self.name
         if self.overhead != Unset:
@@ -375,11 +343,11 @@ class CreateMoveRequest(types.ApiRequest):
         if self.sync_id != Unset:
             json_data["syncId"] = self.sync_id
 
-        return {
-            "method": "POST",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/move",
-            "json": json_data,
-        }
+        return RequestData(
+            method="POST",
+            url="https://api.moysklad.ru/api/remap/1.2/entity/move",
+            json=json_data,
+        )
 
     def from_response(self, result) -> Move:
         return Move.from_json(result)
@@ -399,12 +367,12 @@ class DeleteMoveRequest(types.ApiRequest):
         """
         self.move_id = move_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "DELETE",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}",
-            "allow_non_json": True,
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="DELETE",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}",
+            allow_non_json=True,
+        )
 
     def from_response(self, result) -> None:
         return None
@@ -424,11 +392,11 @@ class GetMoveRequest(types.ApiRequest):
         """
         self.move_id = move_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}",
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}",
+        )
 
     def from_response(self, result) -> Move:
         return Move.from_json(result)
@@ -522,7 +490,7 @@ class UpdateMoveRequest(types.ApiRequest):
         self.state = state
         self.sync_id = sync_id
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {}
         if self.organization != Unset:
             json_data["organization"] = (
@@ -567,7 +535,7 @@ class UpdateMoveRequest(types.ApiRequest):
         if self.meta != Unset:
             json_data["meta"] = self.meta
         if self.moment != Unset:
-            json_data["moment"] = self.moment.strftime("%Y-%m-%d %H:%M:%S")
+            json_data["moment"] = helpers.date_to_str(self.moment)
         if self.name != Unset:
             json_data["name"] = self.name
         if self.overhead != Unset:
@@ -592,11 +560,11 @@ class UpdateMoveRequest(types.ApiRequest):
             )
         if self.sync_id != Unset:
             json_data["syncId"] = self.sync_id
-        return {
-            "method": "PUT",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}",
-            "json": json_data,
-        }
+        return RequestData(
+            method="PUT",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}",
+            json=json_data,
+        )
 
     def from_response(self, result) -> Move:
         return Move.from_json(result)
@@ -633,7 +601,7 @@ class GetMovePositionsRequest(types.ApiRequest):
         self.offset = offset
         self.search = search
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         params = {}
         if self.limit != Unset:
             params["limit"] = self.limit
@@ -642,11 +610,11 @@ class GetMovePositionsRequest(types.ApiRequest):
         if self.search != Unset:
             params["search"] = self.search
 
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}/positions",
-            "params": params,
-        }
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}/positions",
+            params=params,
+        )
 
     def from_response(self, result) -> typing.List[MovePosition]:
         return [MovePosition.from_json(item) for item in result["rows"]]
@@ -687,7 +655,7 @@ class CreateMovePositionRequest(types.ApiRequest):
         self.price = price
         self.overhead = overhead
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {
             "assortment": {"meta": self.assortment},
             "quantity": self.quantity,
@@ -697,11 +665,11 @@ class CreateMovePositionRequest(types.ApiRequest):
         if self.overhead != Unset:
             json_data["overhead"] = self.overhead
 
-        return {
-            "method": "POST",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}/positions",
-            "json": json_data,
-        }
+        return RequestData(
+            method="POST",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}/positions",
+            json=json_data,
+        )
 
     def from_response(self, result) -> typing.List[MovePosition]:
         return [MovePosition.from_json(item) for item in result["rows"]]
@@ -728,11 +696,11 @@ class GetMovePositionRequest(types.ApiRequest):
         self.move_id = move_id
         self.position_id = position_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}/positions/{self.position_id}",
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}/positions/{self.position_id}",
+        )
 
     def from_response(self, result) -> MovePosition:
         return MovePosition.from_json(result)
@@ -777,7 +745,7 @@ class UpdateMovePositionRequest(types.ApiRequest):
         self.price = price
         self.overhead = overhead
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {}
         if self.assortment != Unset:
             json_data["assortment"] = (
@@ -790,11 +758,11 @@ class UpdateMovePositionRequest(types.ApiRequest):
         if self.overhead != Unset:
             json_data["overhead"] = self.overhead
 
-        return {
-            "method": "PUT",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}/positions/{self.position_id}",
-            "json": json_data,
-        }
+        return RequestData(
+            method="PUT",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}/positions/{self.position_id}",
+            json=json_data,
+        )
 
     def from_response(self, result) -> MovePosition:
         return MovePosition.from_json(result)
@@ -818,11 +786,11 @@ class DeleteMovePositionRequest(types.ApiRequest):
         self.move_id = move_id
         self.position_id = position_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "DELETE",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}/positions/{self.position_id}",
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="DELETE",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}/positions/{self.position_id}",
+        )
 
     def from_response(self, result) -> None:
         return None

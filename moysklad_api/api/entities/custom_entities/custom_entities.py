@@ -1,8 +1,8 @@
 import datetime
 import typing
 
-from .... import types
-from ....types import Unset
+from .... import types, helpers
+from ....types import Unset, RequestData
 
 
 class CustomEntity(types.MoySkladBaseClass):
@@ -71,13 +71,9 @@ class CustomEntityElement(types.MoySkladBaseClass):
         instance.id = dict_data.get("id")
         instance.meta = dict_data.get("meta")
         instance.name = dict_data.get("name")
-        instance.updated = datetime.datetime.fromisoformat(dict_data.get("updated"))
-        group = dict_data.get("group")
-        if group:
-            instance.group = group["meta"]
-        owner = dict_data.get("owner")
-        if owner:
-            instance.owner = owner["meta"]
+        instance.updated = helpers.parse_date(dict_data.get("updated"))
+        instance.group = helpers.get_meta(dict_data.get("group"))
+        instance.owner = helpers.get_meta(dict_data.get("owner"))
         instance.shared = dict_data.get("shared")
         return instance
 
@@ -100,15 +96,15 @@ class CreateCustomEntityRequest(types.ApiRequest):
         self.name = name
         self.meta = meta
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_request = {"name": self.name}
         if self.meta != Unset:
             json_request["meta"] = self.meta
-        return {
-            "method": "POST",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/customentity",
-            "json": json_request,
-        }
+        return RequestData(
+            method="POST",
+            url="https://api.moysklad.ru/api/remap/1.2/entity/customentity",
+            json=json_request,
+        )
 
     def from_response(self, result: dict) -> CustomEntity:
         return CustomEntity.from_json(result)
@@ -135,17 +131,17 @@ class UpdateCustomEntityRequest(types.ApiRequest):
         self.name = name
         self.meta = meta
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_request = {}
         if self.name != Unset:
             json_request["name"] = self.name
         if self.meta != Unset:
             json_request["meta"] = self.meta
-        return {
-            "method": "PUT",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/customentity/{self.id}",
-            "json": json_request,
-        }
+        return RequestData(
+            method="PUT",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/customentity/{self.id}",
+            json=json_request,
+        )
 
     def from_response(self, result: dict) -> CustomEntity:
         return CustomEntity.from_json(result)
@@ -163,12 +159,12 @@ class DeleteCustomEntityRequest(types.ApiRequest):
         """
         self.id = metadata_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "DELETE",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/customentity/{self.id}",
-            "allow_non_json": True,
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="DELETE",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/customentity/{self.id}",
+            allow_non_json=True,
+        )
 
     def from_response(self, result: dict) -> None:
         return None
@@ -214,7 +210,7 @@ class CreateCustomEntityElementRequest(types.ApiRequest):
         self.owner = owner
         self.shared = shared
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {
             "name": self.name,
         }
@@ -236,11 +232,11 @@ class CreateCustomEntityElementRequest(types.ApiRequest):
             )
         if self.shared != Unset:
             json_data["shared"] = self.shared
-        return {
-            "method": "POST",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/customentity/{self.metadata_id}",
-            "json": json_data,
-        }
+        return RequestData(
+            method="POST",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/customentity/{self.metadata_id}",
+            json=json_data,
+        )
 
     def from_response(self, result: dict) -> "CustomEntityElement":
         return CustomEntityElement.from_json(result)
@@ -289,7 +285,7 @@ class UpdateCustomEntityElementRequest(types.ApiRequest):
         self.owner = owner
         self.shared = shared
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {}
         if self.name != Unset:
             json_data["name"] = self.name
@@ -311,11 +307,11 @@ class UpdateCustomEntityElementRequest(types.ApiRequest):
             )
         if self.shared != Unset:
             json_data["shared"] = self.shared
-        return {
-            "method": "PUT",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/customentity/{self.metadata_id}/{self.element_id}",
-            "json": json_data,
-        }
+        return RequestData(
+            method="PUT",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/customentity/{self.metadata_id}/{self.element_id}",
+            json=json_data,
+        )
 
     def from_response(self, result: dict) -> "CustomEntityElement":
         return CustomEntityElement.from_json(result)
@@ -336,12 +332,12 @@ class DeleteCustomEntityElementRequest(types.ApiRequest):
         self.metadata_id = metadata_id
         self.element_id = element_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "DELETE",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/customentity/{self.metadata_id}/{self.element_id}",
-            "allow_non_json": True,
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="DELETE",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/customentity/{self.metadata_id}/{self.element_id}",
+            allow_non_json=True,
+        )
 
     def from_response(self, result: dict) -> None:
         return None
@@ -362,11 +358,11 @@ class GetCustomEntityElementRequest(types.ApiRequest):
         self.metadata_id = metadata_id
         self.element_id = element_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/customentity/{self.metadata_id}/{self.element_id}",
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/customentity/{self.metadata_id}/{self.element_id}",
+        )
 
     def from_response(self, result: dict) -> "CustomEntityElement":
         return CustomEntityElement.from_json(result)
@@ -394,17 +390,17 @@ class GetCustomEntityElementsRequest(types.ApiRequest):
         self.limit = limit
         self.offset = offset
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         params = {}
         if self.limit != Unset:
             params["limit"] = self.limit
         if self.offset != Unset:
             params["offset"] = self.offset
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/customentity/{self.metadata_id}",
-            "params": params,
-        }
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/customentity/{self.metadata_id}",
+            params=params,
+        )
 
     def from_response(self, result: dict) -> typing.List["CustomEntityElement"]:
         return [CustomEntityElement.from_json(i) for i in result["rows"]]

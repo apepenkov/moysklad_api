@@ -2,7 +2,7 @@ import typing
 import datetime
 from .... import types
 from .... import helpers
-from ....types import Unset
+from ....types import Unset, RequestData
 
 
 class InvoiceIn(types.MoySkladBaseClass):
@@ -98,53 +98,53 @@ class InvoiceIn(types.MoySkladBaseClass):
     @classmethod
     def from_json(cls, dict_data: dict) -> "InvoiceIn":
         instance = cls()
-        instance.account_id = dict_data.get("accountId", None)
-        instance.agent = helpers.get_meta(dict_data.get("agent", None))
-        instance.agent_account = helpers.get_meta(dict_data.get("agentAccount", None))
+        instance.account_id = dict_data.get("accountId")
+        instance.agent = helpers.get_meta(dict_data.get("agent"))
+        instance.agent_account = helpers.get_meta(dict_data.get("agentAccount"))
         instance.applicable = dict_data.get("applicable", False)
         instance.attributes = dict_data.get("attributes", [])
-        instance.code = dict_data.get("code", None)
-        instance.contract = helpers.get_meta(dict_data.get("contract", None))
+        instance.code = dict_data.get("code")
+        instance.contract = helpers.get_meta(dict_data.get("contract"))
         instance.created = helpers.parse_date(dict_data.get("created"))
         instance.deleted = helpers.parse_date(dict_data.get("deleted"))
-        instance.description = dict_data.get("description", None)
-        instance.external_code = dict_data.get("externalCode", None)
+        instance.description = dict_data.get("description")
+        instance.external_code = dict_data.get("externalCode")
         instance.files = dict_data.get("files", [])
-        instance.group = helpers.get_meta(dict_data.get("group", None))
-        instance.id = dict_data.get("id", None)
+        instance.group = helpers.get_meta(dict_data.get("group"))
+        instance.id = dict_data.get("id")
         instance.incoming_date = helpers.parse_date(dict_data.get("incomingDate"))
-        instance.incoming_number = dict_data.get("incomingNumber", None)
-        instance.meta = dict_data.get("meta", None)
+        instance.incoming_number = dict_data.get("incomingNumber")
+        instance.meta = dict_data.get("meta")
         instance.moment = helpers.parse_date(dict_data.get("moment"))
-        instance.name = dict_data.get("name", None)
-        instance.organization = helpers.get_meta(dict_data.get("organization", None))
+        instance.name = dict_data.get("name")
+        instance.organization = helpers.get_meta(dict_data.get("organization"))
         instance.organization_account = helpers.get_meta(
-            dict_data.get("organizationAccount", None)
+            dict_data.get("organizationAccount")
         )
-        instance.owner = helpers.get_meta(dict_data.get("owner", None))
-        instance.payed_sum = dict_data.get("payedSum", None)
+        instance.owner = helpers.get_meta(dict_data.get("owner"))
+        instance.payed_sum = dict_data.get("payedSum")
         instance.payment_planned_moment = helpers.parse_date(
             dict_data.get("paymentPlannedMoment")
         )
         instance.positions = dict_data.get("positions", [])
         instance.printed = dict_data.get("printed", False)
-        instance.project = helpers.get_meta(dict_data.get("project", None))
+        instance.project = helpers.get_meta(dict_data.get("project"))
         instance.published = dict_data.get("published", False)
-        instance.rate = dict_data.get("rate", None)
+        instance.rate = dict_data.get("rate")
         instance.shared = dict_data.get("shared", False)
-        instance.shipped_sum = dict_data.get("shippedSum", None)
-        instance.state = helpers.get_meta(dict_data.get("state", None))
-        instance.store = helpers.get_meta(dict_data.get("store", None))
-        instance.sum = dict_data.get("sum", None)
-        instance.sync_id = dict_data.get("syncId", None)
+        instance.shipped_sum = dict_data.get("shippedSum")
+        instance.state = helpers.get_meta(dict_data.get("state"))
+        instance.store = helpers.get_meta(dict_data.get("store"))
+        instance.sum = dict_data.get("sum")
+        instance.sync_id = dict_data.get("syncId")
         instance.updated = helpers.parse_date(dict_data.get("updated"))
         instance.vat_enabled = dict_data.get("vatEnabled", False)
         instance.vat_included = dict_data.get("vatIncluded", False)
-        instance.vat_sum = dict_data.get("vatSum", None)
+        instance.vat_sum = dict_data.get("vatSum")
         instance.supplies = [
             helpers.get_meta(x, must=True) for x in dict_data.get("supplies", [])
         ]
-        instance.purchase_order = helpers.get_meta(dict_data.get("purchaseOrder", None))
+        instance.purchase_order = helpers.get_meta(dict_data.get("purchaseOrder"))
         return instance
 
 
@@ -175,7 +175,7 @@ class GetInvoicesInRequest(types.ApiRequest):
         self.offset = offset
         self.search = search
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         params = {}
         if self.limit is not None:
             params["limit"] = self.limit
@@ -183,11 +183,11 @@ class GetInvoicesInRequest(types.ApiRequest):
             params["offset"] = self.offset
         if self.search is not None:
             params["search"] = self.search
-        return {
-            "method": "GET",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/invoicein",
-            "params": params,
-        }
+        return RequestData(
+            method="GET",
+            url="https://api.moysklad.ru/api/remap/1.2/entity/invoicein",
+            params=params,
+        )
 
     def from_response(self, result: dict) -> typing.List[InvoiceIn]:
         return [InvoiceIn.from_json(obj_json) for obj_json in result["rows"]]
@@ -209,11 +209,11 @@ class GetInvoiceInRequest(types.ApiRequest):
         """
         self.uuid = invoice_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/invoicein/{self.uuid}",
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/invoicein/{self.uuid}",
+        )
 
     def from_response(self, response: dict) -> InvoiceIn:
         return InvoiceIn.from_json(response)
@@ -365,7 +365,7 @@ class CreateInvoiceInRequest(types.ApiRequest):
         self.vat_enabled = vat_enabled
         self.vat_included = vat_included
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {
             "name": self.name,
             "organization": {"meta": self.organization},
@@ -396,11 +396,11 @@ class CreateInvoiceInRequest(types.ApiRequest):
                 {"meta": self.group} if self.group is not None else None
             )
         if self.incoming_date != Unset:
-            json_data["incomingDate"] = self.incoming_date.strftime("%Y-%m-%d %H:%M:%S")
+            json_data["incomingDate"] = helpers.date_to_str(self.incoming_date)
         if self.incoming_number != Unset:
             json_data["incomingNumber"] = self.incoming_number
         if self.moment != Unset:
-            json_data["moment"] = self.moment.strftime("%Y-%m-%d %H:%M:%S")
+            json_data["moment"] = helpers.date_to_str(self.moment)
         if self.organization_account != Unset:
             json_data["organizationAccount"] = (
                 {"meta": self.organization_account}
@@ -414,8 +414,8 @@ class CreateInvoiceInRequest(types.ApiRequest):
         if self.payed_sum != Unset:
             json_data["payedSum"] = self.payed_sum
         if self.payment_planned_moment != Unset:
-            json_data["paymentPlannedMoment"] = self.payment_planned_moment.strftime(
-                "%Y-%m-%d %H:%M:%S"
+            json_data["paymentPlannedMoment"] = helpers.date_to_str(
+                self.payment_planned_moment
             )
         if self.positions != Unset:
             json_data["positions"] = []
@@ -459,11 +459,11 @@ class CreateInvoiceInRequest(types.ApiRequest):
             json_data["vatEnabled"] = self.vat_enabled
         if self.vat_included != Unset:
             json_data["vatIncluded"] = self.vat_included
-        return {
-            "method": "POST",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/invoicein",
-            "json": json_data,
-        }
+        return RequestData(
+            method="POST",
+            url="https://api.moysklad.ru/api/remap/1.2/entity/invoicein",
+            json=json_data,
+        )
 
     def from_response(self, response: dict) -> InvoiceIn:
         return InvoiceIn.from_json(response)
@@ -472,15 +472,15 @@ class CreateInvoiceInRequest(types.ApiRequest):
 class InvoiceInPosition(types.MoySkladBaseClass):
     # https://dev.moysklad.ru/doc/api/remap/1.2/documents/#dokumenty-schet-postawschika-poziciq-scheta-postawschika
     def __init__(self):
-        self.meta: typing.Union[Unset, types.Meta] = Unset
-        self.id: typing.Union[Unset, str] = Unset
-        self.account_id: typing.Union[Unset, str] = Unset
-        self.quantity: typing.Union[Unset, float] = Unset
-        self.price: typing.Union[Unset, float] = Unset
-        self.discount: typing.Union[Unset, float] = Unset
-        self.vat: typing.Union[Unset, float] = Unset
-        self.vat_enabled: typing.Union[Unset, bool] = Unset
-        self.assortment: typing.Union[Unset, types.Meta] = Unset
+        self.meta: typing.Optional[types.Meta] = None
+        self.id: typing.Optional[str] = None
+        self.account_id: typing.Optional[str] = None
+        self.quantity: typing.Optional[float] = None
+        self.price: typing.Optional[float] = None
+        self.discount: typing.Optional[float] = None
+        self.vat: typing.Optional[float] = None
+        self.vat_enabled: typing.Optional[bool] = None
+        self.assortment: typing.Optional[types.Meta] = None
 
     @classmethod
     def from_json(cls, data: dict) -> "InvoiceInPosition":
@@ -505,12 +505,12 @@ class DeleteInvoiceInRequest(types.ApiRequest):
     def __init__(self, invoice_id: str):
         self.uuid = invoice_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "DELETE",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/invoicein/{self.uuid}",
-            "allow_non_json": True,
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="DELETE",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/invoicein/{self.uuid}",
+            allow_non_json=True,
+        )
 
     def from_response(self, response):
         return None
@@ -648,7 +648,7 @@ class UpdateInvoiceInRequest(types.ApiRequest):
         self.vat_enabled = vat_enabled
         self.vat_included = vat_included
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {}
         if self.name != Unset:
             json_data["name"] = self.name
@@ -685,11 +685,11 @@ class UpdateInvoiceInRequest(types.ApiRequest):
                 {"meta": self.group} if self.group is not None else None
             )
         if self.incoming_date != Unset:
-            json_data["incomingDate"] = self.incoming_date.strftime("%Y-%m-%d %H:%M:%S")
+            json_data["incomingDate"] = helpers.date_to_str(self.incoming_date)
         if self.incoming_number != Unset:
             json_data["incomingNumber"] = self.incoming_number
         if self.moment != Unset:
-            json_data["moment"] = self.moment.strftime("%Y-%m-%d %H:%M:%S")
+            json_data["moment"] = helpers.date_to_str(self.moment)
         if self.organization_account != Unset:
             json_data["organizationAccount"] = (
                 {"meta": self.organization_account}
@@ -703,8 +703,8 @@ class UpdateInvoiceInRequest(types.ApiRequest):
         if self.payed_sum != Unset:
             json_data["payedSum"] = self.payed_sum
         if self.payment_planned_moment != Unset:
-            json_data["paymentPlannedMoment"] = self.payment_planned_moment.strftime(
-                "%Y-%m-%d %H:%M:%S"
+            json_data["paymentPlannedMoment"] = helpers.date_to_str(
+                self.payment_planned_moment
             )
         if self.positions != Unset:
             json_data["positions"] = []
@@ -751,11 +751,11 @@ class UpdateInvoiceInRequest(types.ApiRequest):
 
         if len(json_data) == 0:
             raise ValueError("No data to update")
-        return {
-            "method": "PUT",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/invoicein/{self.invoice_in_id}",
-            "json": json_data,
-        }
+        return RequestData(
+            method="PUT",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/invoicein/{self.invoice_in_id}",
+            json=json_data,
+        )
 
     def from_response(self, response: dict) -> InvoiceIn:
         return InvoiceIn.from_json(response)
@@ -773,12 +773,12 @@ class GetInvoiceInPositionRequest(types.ApiRequest):
         self.invoice_in_id = invoice_in_id
         self.position_id = position_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/invoicein/"
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/invoicein/"
             f"{self.invoice_in_id}/positions/{self.position_id}",
-        }
+        )
 
     def from_response(self, response: dict) -> InvoiceInPosition:
         return InvoiceInPosition.from_json(response)
@@ -799,14 +799,14 @@ class GetInvoiceInPositionsRequest(types.ApiRequest):
         self.limit = limit
         self.offset = offset
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         params = {"limit": self.limit, "offset": self.offset}
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/invoicein/"
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/invoicein/"
             f"{self.invoice_in_id}/positions",
-            "params": params,
-        }
+            params=params,
+        )
 
     def from_response(self, response: dict) -> typing.List[InvoiceInPosition]:
         return [InvoiceInPosition.from_json(item) for item in response.get("rows", [])]
@@ -840,7 +840,7 @@ class CreateInvoiceInPositionRequest(types.ApiRequest):
         self.discount = discount
         self.vat = vat
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {"quantity": self.quantity, "assortment": {"meta": self.assortment}}
         if self.price != Unset:
             json_data["price"] = self.price
@@ -848,12 +848,12 @@ class CreateInvoiceInPositionRequest(types.ApiRequest):
             json_data["discount"] = self.discount
         if self.vat != Unset:
             json_data["vat"] = self.vat
-        return {
-            "method": "POST",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/invoicein/"
+        return RequestData(
+            method="POST",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/invoicein/"
             f"{self.invoice_in_id}/positions",
-            "json": json_data,
-        }
+            json=json_data,
+        )
 
     def from_response(self, response: dict) -> InvoiceInPosition:
         return InvoiceInPosition.from_json(response[0])
@@ -871,13 +871,13 @@ class DeleteInvoiceInPositionRequest(types.ApiRequest):
         self.invoice_in_id = invoice_in_id
         self.position_id = position_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "DELETE",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/invoicein/"
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="DELETE",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/invoicein/"
             f"{self.invoice_in_id}/positions/{self.position_id}",
-            "allow_non_json": True,
-        }
+            allow_non_json=True,
+        )
 
     def from_response(self, response):
         return None
@@ -914,7 +914,7 @@ class UpdateInvoiceInPositionRequest(types.ApiRequest):
         self.discount = discount
         self.vat = vat
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {}
         if self.quantity != Unset:
             json_data["quantity"] = self.quantity
@@ -930,12 +930,12 @@ class UpdateInvoiceInPositionRequest(types.ApiRequest):
             json_data["vat"] = self.vat
         if len(json_data) == 0:
             raise ValueError("No data to update")
-        return {
-            "method": "PUT",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/invoicein/"
+        return RequestData(
+            method="PUT",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/invoicein/"
             f"{self.invoice_in_id}/positions/{self.position_id}",
-            "json": json_data,
-        }
+            json=json_data,
+        )
 
     def from_response(self, response: dict) -> InvoiceInPosition:
         return InvoiceInPosition.from_json(response)

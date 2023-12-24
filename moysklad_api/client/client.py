@@ -144,7 +144,7 @@ class MoySkladClient:
                             last_exception = MoySkladError(
                                 json_resp.get(
                                     "errors",
-                                    [{"error": f"Server returned {resp.status}"}],
+                                    {"error": f"Server returned {resp.status}"},
                                 ),
                                 json_text,
                             )
@@ -198,7 +198,7 @@ class MoySkladClient:
     async def __call__(self, request):
         if not isinstance(request, types.ApiRequest):
             raise TypeError("request must be an ApiRequest")
-        result = await self.request(**request.to_request())
+        result = await self.request(**request.to_request().to_kwargs())
         return request.from_response(result)
 
     # internal orders (внутренние заказы)
@@ -240,8 +240,9 @@ class MoySkladClient:
         store: typing.Union[Unset, types.Meta] = Unset,
         project: typing.Union[Unset, types.Meta] = Unset,
         state: typing.Union[Unset, types.Meta] = Unset,
-        positions: typing.Union[Unset,
-            typing.List[internalorders_api.CreateInternalOrderRequest.CreatePosition]
+        positions: typing.Union[
+            Unset,
+            typing.List[internalorders_api.CreateInternalOrderRequest.CreatePosition],
         ] = Unset,
         attributes: typing.Union[Unset, typing.List[dict]] = Unset,
         code: typing.Union[Unset, str] = Unset,
@@ -337,8 +338,9 @@ class MoySkladClient:
         store: typing.Union[Unset, types.Meta] = Unset,
         project: typing.Union[Unset, types.Meta] = Unset,
         state: typing.Union[Unset, types.Meta] = Unset,
-        positions: typing.Union[Unset,
-            typing.List[internalorders_api.UpdateInternalOrderRequest.UpdatePosition]
+        positions: typing.Union[
+            Unset,
+            typing.List[internalorders_api.UpdateInternalOrderRequest.UpdatePosition],
         ] = Unset,
         attributes: typing.Union[Unset, typing.List[dict]] = Unset,
         code: typing.Union[Unset, str] = Unset,
@@ -527,7 +529,8 @@ class MoySkladClient:
         volume: typing.Union[Unset, int] = Unset,
         packs: typing.Union[Unset, typing.List[dict]] = Unset,
         is_serial_trackable: typing.Union[Unset, bool] = Unset,
-        tracking_type: typing.Union[Unset,
+        tracking_type: typing.Union[
+            Unset,
             typing.Literal[
                 "ELECTRONICS",
                 "LP_CLOTHES",
@@ -541,7 +544,7 @@ class MoySkladClient:
                 "TIRES",
                 "TOBACCO",
                 "WATER",
-            ]
+            ],
         ] = Unset,
         attributes: typing.Union[Unset, typing.List[dict]] = Unset,
         images: typing.Union[Unset, typing.List[dict]] = Unset,
@@ -553,18 +556,20 @@ class MoySkladClient:
         minimum_balance: typing.Union[Unset, int] = Unset,
         owner: typing.Union[Unset, types.Meta] = Unset,
         partial_disposal: typing.Union[Unset, bool] = Unset,
-        payment_item_type: typing.Union[Unset,
+        payment_item_type: typing.Union[
+            Unset,
             typing.Literal[
                 "GOODS",
                 "EXCISABLE_GOOD",
                 "COMPOUND_PAYMENT_ITEM",
                 "ANOTHER_PAYMENT_ITEM",
-            ]
+            ],
         ] = Unset,
         ppe_type: typing.Union[Unset, str] = Unset,
         product_folder: typing.Union[Unset, types.Meta] = Unset,
         shared: typing.Union[Unset, bool] = Unset,
-        tax_system: typing.Union[Unset,
+        tax_system: typing.Union[
+            Unset,
             typing.Literal[
                 "GENERAL_TAX_SYSTEM",
                 "PATENT_BASED",
@@ -573,7 +578,7 @@ class MoySkladClient:
                 "SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME",
                 "TAX_SYSTEM_SAME_AS_GROUP",
                 "UNIFIED_AGRICULTURAL_TAX",
-            ]
+            ],
         ] = Unset,
         things: typing.Union[Unset, typing.List[str]] = Unset,
         tnved: typing.Union[Unset, str] = Unset,
@@ -702,7 +707,8 @@ class MoySkladClient:
         volume: typing.Union[Unset, int] = Unset,
         packs: typing.Union[Unset, typing.List[dict]] = Unset,
         is_serial_trackable: typing.Union[Unset, bool] = Unset,
-        tracking_type: typing.Union[Unset,
+        tracking_type: typing.Union[
+            Unset,
             typing.Literal[
                 "ELECTRONICS",
                 "LP_CLOTHES",
@@ -716,7 +722,7 @@ class MoySkladClient:
                 "TIRES",
                 "TOBACCO",
                 "WATER",
-            ]
+            ],
         ] = Unset,
         attributes: typing.Union[Unset, typing.List[dict]] = Unset,
         images: typing.Union[Unset, typing.List[dict]] = Unset,
@@ -728,18 +734,20 @@ class MoySkladClient:
         minimum_balance: typing.Union[Unset, int] = Unset,
         owner: typing.Union[Unset, types.Meta] = Unset,
         partial_disposal: typing.Union[Unset, bool] = Unset,
-        payment_item_type: typing.Union[Unset,
+        payment_item_type: typing.Union[
+            Unset,
             typing.Literal[
                 "GOODS",
                 "EXCISABLE_GOOD",
                 "COMPOUND_PAYMENT_ITEM",
                 "ANOTHER_PAYMENT_ITEM",
-            ]
+            ],
         ] = Unset,
         ppe_type: typing.Union[Unset, str] = Unset,
         product_folder: typing.Union[Unset, types.Meta] = Unset,
         shared: typing.Union[Unset, bool] = Unset,
-        tax_system: typing.Union[Unset,
+        tax_system: typing.Union[
+            Unset,
             typing.Literal[
                 "GENERAL_TAX_SYSTEM",
                 "PATENT_BASED",
@@ -748,7 +756,7 @@ class MoySkladClient:
                 "SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME",
                 "TAX_SYSTEM_SAME_AS_GROUP",
                 "UNIFIED_AGRICULTURAL_TAX",
-            ]
+            ],
         ] = Unset,
         things: typing.Union[Unset, typing.List[str]] = Unset,
         tnved: typing.Union[Unset, str] = Unset,
@@ -881,8 +889,8 @@ class MoySkladClient:
         name: typing.Union[Unset, str] = Unset,
         overhead: typing.Union[Unset, dict] = Unset,
         owner: typing.Union[Unset, types.Meta] = Unset,
-        positions: typing.Union[Unset,
-            typing.List[moves_api.CreateMoveRequest.CreatePosition]
+        positions: typing.Union[
+            Unset, typing.List[moves_api.CreateMoveRequest.CreatePosition]
         ] = Unset,
         project: typing.Union[Unset, types.Meta] = Unset,
         rate: typing.Union[Unset, types.Rate] = Unset,
@@ -1179,8 +1187,9 @@ class MoySkladClient:
         name: typing.Union[Unset, str] = Unset,
         organization_account: typing.Union[Unset, types.Meta] = Unset,
         owner: typing.Union[Unset, types.Meta] = Unset,
-        positions: typing.Union[Unset,
-            typing.List[purchaseorders_api.CreatePurchaseOrderRequest.CreatePosition]
+        positions: typing.Union[
+            Unset,
+            typing.List[purchaseorders_api.CreatePurchaseOrderRequest.CreatePosition],
         ] = Unset,
         project: typing.Union[Unset, types.Meta] = Unset,
         rate: typing.Union[Unset, types.Rate] = Unset,
@@ -1308,8 +1317,9 @@ class MoySkladClient:
         name: typing.Union[Unset, str] = Unset,
         organization_account: typing.Union[Unset, types.Meta] = Unset,
         owner: typing.Union[Unset, types.Meta] = Unset,
-        positions: typing.Union[Unset,
-            typing.List[purchaseorders_api.UpdatePurchaseOrderRequest.UpdatePosition]
+        positions: typing.Union[
+            Unset,
+            typing.List[purchaseorders_api.UpdatePurchaseOrderRequest.UpdatePosition],
         ] = Unset,
         project: typing.Union[Unset, types.Meta] = Unset,
         rate: typing.Union[Unset, types.Rate] = Unset,
@@ -1477,7 +1487,8 @@ class MoySkladClient:
         owner: typing.Union[Unset, types.Meta] = Unset,
         product_folder: typing.Union[Unset, types.Meta] = Unset,
         shared: typing.Union[Unset, bool] = Unset,
-        tax_system: typing.Union[Unset,
+        tax_system: typing.Union[
+            Unset,
             typing.Literal[
                 "GENERAL_TAX_SYSTEM",
                 "PATENT_BASED",
@@ -1486,7 +1497,7 @@ class MoySkladClient:
                 "SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME",
                 "TAX_SYSTEM_SAME_AS_GROUP",
                 "UNIFIED_AGRICULTURAL_TAX",
-            ]
+            ],
         ] = Unset,
         use_parent_vat: typing.Union[Unset, bool] = Unset,
         vat: typing.Union[Unset, int] = Unset,
@@ -1567,7 +1578,8 @@ class MoySkladClient:
         owner: typing.Union[Unset, types.Meta] = Unset,
         product_folder: typing.Union[Unset, types.Meta] = Unset,
         shared: typing.Union[Unset, bool] = Unset,
-        tax_system: typing.Union[Unset,
+        tax_system: typing.Union[
+            Unset,
             typing.Literal[
                 "GENERAL_TAX_SYSTEM",
                 "PATENT_BASED",
@@ -1576,7 +1588,7 @@ class MoySkladClient:
                 "SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME",
                 "TAX_SYSTEM_SAME_AS_GROUP",
                 "UNIFIED_AGRICULTURAL_TAX",
-            ]
+            ],
         ] = Unset,
         use_parent_vat: typing.Union[Unset, bool] = Unset,
         vat: typing.Union[Unset, int] = Unset,
@@ -1652,8 +1664,8 @@ class MoySkladClient:
         moment: typing.Union[Unset, datetime.datetime] = Unset,
         name: typing.Union[Unset, str] = Unset,
         overhead: typing.Union[Unset, dict] = Unset,
-        positions: typing.Union[Unset,
-            typing.List[enters_api.CreateEnterRequest.CreateEnterPosition]
+        positions: typing.Union[
+            Unset, typing.List[enters_api.CreateEnterRequest.CreateEnterPosition]
         ] = Unset,
         project: typing.Union[Unset, types.Meta] = Unset,
         rate: typing.Union[Unset, dict] = Unset,
@@ -1730,8 +1742,8 @@ class MoySkladClient:
         moment: typing.Union[Unset, datetime.datetime] = Unset,
         name: typing.Union[Unset, str] = Unset,
         overhead: typing.Union[Unset, dict] = Unset,
-        positions: typing.Union[Unset,
-            typing.List[enters_api.UpdateEnterRequest.UpdateEnterPosition]
+        positions: typing.Union[
+            Unset, typing.List[enters_api.UpdateEnterRequest.UpdateEnterPosition]
         ] = Unset,
         project: typing.Union[Unset, str] = Unset,
         rate: typing.Union[Unset, str] = Unset,
@@ -1911,8 +1923,8 @@ class MoySkladClient:
         self,
         limit: typing.Union[Unset, int] = 1000,
         offset: typing.Union[Unset, int] = 0,
-        group_by: typing.Union[Unset,
-            typing.Literal["product", "variant", "consignment"]
+        group_by: typing.Union[
+            Unset, typing.Literal["product", "variant", "consignment"]
         ] = Unset,
         include_related: typing.Union[Unset, bool] = Unset,
     ) -> typing.List[stocks_api.FullStockReport]:
@@ -1937,8 +1949,8 @@ class MoySkladClient:
         self,
         include: typing.Union[Unset, str] = Unset,
         changed_since: typing.Union[Unset, datetime.datetime] = Unset,
-        stock_type: typing.Union[Unset,
-            typing.Literal["stock", "freeStock", "quantity"]
+        stock_type: typing.Union[
+            Unset, typing.Literal["stock", "freeStock", "quantity"]
         ] = Unset,
         filter_assortment_id: typing.Union[Unset, typing.List[str]] = Unset,
         filter_store_id: typing.Union[Unset, typing.List[str]] = Unset,
@@ -2180,7 +2192,9 @@ class MoySkladClient:
         self,
         name: str,
         address: typing.Union[Unset, str] = Unset,
-        address_full: typing.Union[Unset, stores_api.CreateStoreRequest.AddressFull] = Unset,
+        address_full: typing.Union[
+            Unset, stores_api.CreateStoreRequest.AddressFull
+        ] = Unset,
         archived: typing.Union[Unset, bool] = Unset,
         attributes: typing.Union[Unset, typing.List[dict]] = Unset,
         code: typing.Union[Unset, str] = Unset,
@@ -2237,7 +2251,9 @@ class MoySkladClient:
         store_id: str,
         name: typing.Union[Unset, str] = Unset,
         address: typing.Union[Unset, str] = Unset,
-        address_full: typing.Union[Unset, stores_api.UpdateStoreRequest.AddressFull] = Unset,
+        address_full: typing.Union[
+            Unset, stores_api.UpdateStoreRequest.AddressFull
+        ] = Unset,
         archived: typing.Union[Unset, bool] = Unset,
         attributes: typing.Union[Unset, typing.List[dict]] = Unset,
         code: typing.Union[Unset, str] = Unset,
@@ -2609,8 +2625,8 @@ class MoySkladClient:
         organization_account: typing.Union[Unset, types.Meta] = Unset,
         overhead: typing.Union[Unset, dict] = Unset,
         owner: typing.Union[Unset, types.Meta] = Unset,
-        positions: typing.Union[Unset,
-            typing.List[supplies_api.CreateSupplyRequest.CreatePosition]
+        positions: typing.Union[
+            Unset, typing.List[supplies_api.CreateSupplyRequest.CreatePosition]
         ] = Unset,
         project: typing.Union[Unset, types.Meta] = Unset,
         rate: typing.Union[Unset, dict] = Unset,
@@ -2732,8 +2748,8 @@ class MoySkladClient:
         organization_account: typing.Union[Unset, types.Meta] = Unset,
         overhead: typing.Union[Unset, dict] = Unset,
         owner: typing.Union[Unset, types.Meta] = Unset,
-        positions: typing.Union[Unset,
-            typing.List[supplies_api.UpdateSupplyRequest.UpdatePosition]
+        positions: typing.Union[
+            Unset, typing.List[supplies_api.UpdateSupplyRequest.UpdatePosition]
         ] = Unset,
         project: typing.Union[Unset, types.Meta] = Unset,
         rate: typing.Union[Unset, dict] = Unset,
@@ -2970,8 +2986,8 @@ class MoySkladClient:
         organization_account: typing.Union[Unset, bool] = Unset,
         overhead: typing.Union[Unset, dict] = Unset,
         owner: typing.Union[Unset, types.Meta] = Unset,
-        positions: typing.Union[Unset,
-            demands_api.CreateDemandRequest.CreateDemandPosition
+        positions: typing.Union[
+            Unset, demands_api.CreateDemandRequest.CreateDemandPosition
         ] = Unset,
         project: typing.Union[Unset, types.Meta] = Unset,
         rate: typing.Union[Unset, dict] = Unset,
@@ -3105,8 +3121,8 @@ class MoySkladClient:
         organization_account: typing.Union[Unset, bool] = Unset,
         overhead: typing.Union[Unset, dict] = Unset,
         owner: typing.Union[Unset, types.Meta] = Unset,
-        positions: typing.Union[Unset,
-            demands_api.UpdateDemandRequest.UpdateDemandPosition
+        positions: typing.Union[
+            Unset, demands_api.UpdateDemandRequest.UpdateDemandPosition
         ] = Unset,
         project: typing.Union[Unset, types.Meta] = Unset,
         rate: typing.Union[Unset, dict] = Unset,
@@ -3570,8 +3586,9 @@ class MoySkladClient:
         owner: typing.Union[Unset, types.Meta] = Unset,
         payed_sum: typing.Union[Unset, float] = Unset,
         payment_planned_moment: typing.Union[Unset, datetime.datetime] = Unset,
-        positions: typing.Union[Unset,
-            typing.List[invoice_in_api.CreateInvoiceInRequest.CreateInvoiceInPosition]
+        positions: typing.Union[
+            Unset,
+            typing.List[invoice_in_api.CreateInvoiceInRequest.CreateInvoiceInPosition],
         ] = Unset,
         project: typing.Union[Unset, types.Meta] = Unset,
         rate: typing.Union[Unset, dict] = Unset,
@@ -3686,8 +3703,9 @@ class MoySkladClient:
         owner: typing.Union[Unset, types.Meta] = Unset,
         payed_sum: typing.Union[Unset, float] = Unset,
         payment_planned_moment: typing.Union[Unset, datetime.datetime] = Unset,
-        positions: typing.Union[Unset,
-            typing.List[invoice_in_api.UpdateInvoiceInRequest.UpdateInvoiceInPosition]
+        positions: typing.Union[
+            Unset,
+            typing.List[invoice_in_api.UpdateInvoiceInRequest.UpdateInvoiceInPosition],
         ] = Unset,
         project: typing.Union[Unset, types.Meta] = Unset,
         rate: typing.Union[Unset, dict] = Unset,
@@ -3700,6 +3718,7 @@ class MoySkladClient:
         """
         Изменение счета поставщика
 
+        :param invoice_in_id: ID of invoice (ID счета)
         :param name: Invoice number (Номер счета)
         :param organization: Link to your organization in Metadata format (Ссылка на ваше юрлицо в формате Метаданных
         :param agent: Link to the counterparty (supplier) in Metadata format (Ссылка на контрагента (поставщика) в формате Метаданных)

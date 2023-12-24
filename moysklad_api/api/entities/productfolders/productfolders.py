@@ -1,7 +1,7 @@
 import typing
 import datetime
-from .... import types
-from ....types import Unset
+from .... import types, helpers
+from ....types import Unset, RequestData
 
 
 class ProductFolder(types.MoySkladBaseClass):
@@ -87,27 +87,19 @@ class ProductFolder(types.MoySkladBaseClass):
         instance.effective_vat = dict_data.get("effectiveVat")
         instance.effective_vat_enabled = dict_data.get("effectiveVatEnabled")
         instance.external_code = dict_data.get("externalCode")
-        group = dict_data.get("group")
-        if group:
-            instance.group = group["meta"]
+        instance.group = helpers.get_meta(dict_data.get("group"))
         instance.id = dict_data.get("id")
         instance.meta = dict_data.get("meta")
         instance.name = dict_data.get("name")
-        owner = dict_data.get("owner")
-        if owner:
-            instance.owner = owner["meta"]
+        instance.owner = helpers.get_meta(dict_data.get("owner"))
         instance.path_name = dict_data.get("pathName")
         instance.shared = dict_data.get("shared")
         instance.tax_system = dict_data.get("taxSystem")
-        updated = dict_data.get("updated")
-        if updated:
-            instance.updated = datetime.datetime.fromisoformat(updated)
+        instance.updated = helpers.parse_date(dict_data.get("updated"))
         instance.use_parent_vat = dict_data.get("useParentVat")
         instance.vat = dict_data.get("vat")
         instance.vat_enabled = dict_data.get("vatEnabled")
-        product_folder = dict_data.get("productFolder")
-        if product_folder:
-            instance.product_folder = product_folder["meta"]
+        instance.product_folder = helpers.get_meta(dict_data.get("productFolder"))
         return instance
 
 
@@ -131,17 +123,17 @@ class GetProductFoldersRequest(types.ApiRequest):
         self.limit = limit
         self.offset = offset
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         params = {}
         if self.limit != Unset:
             params["limit"] = self.limit
         if self.offset != Unset:
             params["offset"] = self.offset
-        return {
-            "method": "GET",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/productfolder",
-            "params": params,
-        }
+        return RequestData(
+            method="GET",
+            url="https://api.moysklad.ru/api/remap/1.2/entity/productfolder",
+            params=params,
+        )
 
     def from_response(self, response: dict) -> typing.List[ProductFolder]:
         return [ProductFolder.from_json(item) for item in response["rows"]]
@@ -224,7 +216,7 @@ class CreateProductFolderRequest(types.ApiRequest):
         self.vat = vat
         self.vat_enabled = vat_enabled
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {
             "name": self.name,
         }
@@ -261,11 +253,11 @@ class CreateProductFolderRequest(types.ApiRequest):
         if self.vat_enabled != Unset:
             json_data["vatEnabled"] = self.vat_enabled
 
-        return {
-            "method": "POST",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/productfolder",
-            "json": json_data,
-        }
+        return RequestData(
+            method="POST",
+            url="https://api.moysklad.ru/api/remap/1.2/entity/productfolder",
+            json=json_data,
+        )
 
     def from_response(self, result) -> "ProductFolder":
         return ProductFolder.from_json(result)
@@ -287,12 +279,12 @@ class DeleteProductFolderRequest(types.ApiRequest):
         """
         self.folder_id = folder_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "DELETE",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/productfolder/{self.folder_id}",
-            "allow_non_json": True,
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="DELETE",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/productfolder/{self.folder_id}",
+            allow_non_json=True,
+        )
 
     def from_response(self, result) -> None:
         return None
@@ -313,11 +305,11 @@ class GetProductFolderRequest(types.ApiRequest):
         """
         self.folder_id = folder_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/productfolder/{self.folder_id}",
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/productfolder/{self.folder_id}",
+        )
 
     def from_response(self, result) -> "ProductFolder":
         return ProductFolder.from_json(result)
@@ -394,7 +386,7 @@ class UpdateProductFolderRequest(types.ApiRequest):
         self.vat = vat
         self.vat_enabled = vat_enabled
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {}
         if self.name != Unset:
             json_data["name"] = self.name
@@ -430,11 +422,11 @@ class UpdateProductFolderRequest(types.ApiRequest):
             json_data["vat"] = self.vat
         if self.vat_enabled != Unset:
             json_data["vatEnabled"] = self.vat_enabled
-        return {
-            "method": "PUT",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/productfolder/{self.folder_id}",
-            "json": json_data,
-        }
+        return RequestData(
+            method="PUT",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/productfolder/{self.folder_id}",
+            json=json_data,
+        )
 
     def from_response(self, result) -> "ProductFolder":
         return ProductFolder.from_json(result)

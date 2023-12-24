@@ -1,7 +1,7 @@
 import typing
 import datetime
-from .... import types
-from ....types import Unset
+from .... import types, helpers
+from ....types import Unset, RequestData
 
 
 class Enter(types.MoySkladBaseClass):
@@ -85,50 +85,30 @@ class Enter(types.MoySkladBaseClass):
         instance.applicable = dict_data.get("applicable")
         instance.attributes = dict_data.get("attributes")
         instance.code = dict_data.get("code")
-        created = dict_data.get("created")
-        if created:
-            instance.created = datetime.datetime.fromisoformat(created)
-        deleted = dict_data.get("deleted")
-        if deleted:
-            instance.deleted = datetime.datetime.fromisoformat(deleted)
+        instance.created = helpers.parse_date(dict_data.get("created"))
+        instance.deleted = helpers.parse_date(dict_data.get("deleted"))
         instance.description = dict_data.get("description")
         instance.external_code = dict_data.get("externalCode")
         instance.files = dict_data.get("files")
-        group = dict_data.get("group")
-        if group:
-            instance.group = group["meta"]
+        instance.group = helpers.get_meta(dict_data.get("group"))
         instance.id = dict_data.get("id")
         instance.meta = dict_data.get("meta")
-        moment = dict_data.get("moment")
-        if moment:
-            instance.moment = datetime.datetime.fromisoformat(moment)
+        instance.moment = helpers.parse_date(dict_data.get("moment"))
         instance.name = dict_data.get("name")
-        organization = dict_data.get("organization")
-        if organization:
-            instance.organization = organization["meta"]
+        instance.organization = helpers.get_meta(dict_data.get("organization"))
         instance.overhead = dict_data.get("overhead")
-        owner = dict_data.get("owner")
-        if owner:
-            instance.owner = owner["meta"]
+        instance.owner = helpers.get_meta(dict_data.get("owner"))
         instance.positions = dict_data.get("positions")
         instance.printed = dict_data.get("printed")
-        project = dict_data.get("project")
-        if project:
-            instance.project = project["meta"]
+        instance.project = helpers.get_meta(dict_data.get("project"))
         instance.published = dict_data.get("published")
         instance.rate = dict_data.get("rate")
         instance.shared = dict_data.get("shared")
-        state = dict_data.get("state")
-        if state:
-            instance.state = state["meta"]
-        store = dict_data.get("store")
-        if store:
-            instance.store = store["meta"]
+        instance.state = helpers.get_meta(dict_data.get("state"))
+        instance.store = helpers.get_meta(dict_data.get("store"))
         instance.sum = dict_data.get("sum")
         instance.sync_id = dict_data.get("syncId")
-        updated = dict_data.get("updated")
-        if updated:
-            instance.updated = datetime.datetime.fromisoformat(updated)
+        instance.updated = helpers.parse_date(dict_data.get("updated"))
         return instance
 
 
@@ -173,12 +153,8 @@ class EnterPosition(types.MoySkladBaseClass):
     def from_json(cls, dict_data: dict) -> "EnterPosition":
         instance = cls()
         instance.account_id = dict_data.get("accountId")
-        assortment = dict_data.get("assortment")
-        if assortment:
-            instance.assortment = assortment["meta"]
-        country = dict_data.get("country")
-        if country:
-            instance.country = country["meta"]
+        instance.assortment = helpers.get_meta(dict_data.get("assortment"))
+        instance.country = helpers.get_meta(dict_data.get("country"))
         instance.gtd = dict_data.get("gtd")
         instance.id = dict_data.get("id")
         instance.overhead = dict_data.get("overhead")
@@ -186,9 +162,7 @@ class EnterPosition(types.MoySkladBaseClass):
         instance.price = dict_data.get("price")
         instance.quantity = dict_data.get("quantity")
         instance.reason = dict_data.get("reason")
-        slot = dict_data.get("slot")
-        if slot:
-            instance.slot = slot["meta"]
+        instance.slot = helpers.get_meta(dict_data.get("slot"))
         instance.things = dict_data.get("things")
         return instance
 
@@ -220,7 +194,7 @@ class GetEntersRequest(types.ApiRequest):
         self.offset = offset
         self.search = search
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         params = {}
         if self.limit != Unset:
             params["limit"] = self.limit
@@ -228,11 +202,11 @@ class GetEntersRequest(types.ApiRequest):
             params["offset"] = self.offset
         if self.search != Unset:
             params["search"] = self.search
-        return {
-            "method": "GET",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/enter",
-            "params": params,
-        }
+        return RequestData(
+            method="GET",
+            url="https://api.moysklad.ru/api/remap/1.2/entity/enter",
+            params=params,
+        )
 
     def from_response(self, result) -> typing.List[Enter]:
         return [Enter.from_json(row) for row in result["rows"]]
@@ -346,7 +320,7 @@ class CreateEnterRequest(types.ApiRequest):
         self.rate = rate
         self.shared = shared
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {
             "organization": {"meta": self.organization},
             "store": {"meta": self.store},
@@ -368,7 +342,7 @@ class CreateEnterRequest(types.ApiRequest):
                 {"meta": self.group} if self.group is not None else None
             )
         if self.moment != Unset:
-            json_data["moment"] = self.moment.strftime("%Y-%m-%d %H:%M:%S")
+            json_data["moment"] = helpers.date_to_str(self.moment)
         if self.name != Unset:
             json_data["name"] = self.name
         if self.overhead != Unset:
@@ -422,11 +396,11 @@ class CreateEnterRequest(types.ApiRequest):
             json_data["rate"] = self.rate
         if self.shared != Unset:
             json_data["shared"] = self.shared
-        return {
-            "method": "POST",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/enter",
-            "json": json_data,
-        }
+        return RequestData(
+            method="POST",
+            url="https://api.moysklad.ru/api/remap/1.2/entity/enter",
+            json=json_data,
+        )
 
     def from_response(self, result) -> Enter:
         return Enter.from_json(result)
@@ -447,12 +421,12 @@ class DeleteEnterRequest(types.ApiRequest):
         """
         self.enter_id = enter_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "DELETE",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/enter/{self.enter_id}",
-            "allow_non_json": True,
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="DELETE",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/enter/{self.enter_id}",
+            allow_non_json=True,
+        )
 
     def from_response(self, result) -> None:
         return None
@@ -473,11 +447,11 @@ class GetEnterRequest(types.ApiRequest):
         """
         self.enter_id = enter_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/enter/{self.enter_id}",
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/enter/{self.enter_id}",
+        )
 
     def from_response(self, result) -> Enter:
         return Enter.from_json(result)
@@ -550,7 +524,7 @@ class UpdateEnterRequest(types.ApiRequest):
         self.rate = rate
         self.shared = shared
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {}
         if self.organization != Unset:
             json_data["organization"] = (
@@ -577,7 +551,7 @@ class UpdateEnterRequest(types.ApiRequest):
                 {"meta": self.group} if self.group is not None else None
             )
         if self.moment != Unset:
-            json_data["moment"] = self.moment.strftime("%Y-%m-%d %H:%M:%S")
+            json_data["moment"] = helpers.date_to_str(self.moment)
         if self.name != Unset:
             json_data["name"] = self.name
         if self.overhead != Unset:
@@ -631,11 +605,11 @@ class UpdateEnterRequest(types.ApiRequest):
             json_data["rate"] = self.rate
         if self.shared != Unset:
             json_data["shared"] = self.shared
-        return {
-            "method": "PUT",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/enter/{self.enter_id}",
-            "json": json_data,
-        }
+        return RequestData(
+            method="PUT",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/enter/{self.enter_id}",
+            json=json_data,
+        )
 
     def from_response(self, result) -> Enter:
         return Enter.from_json(result)
@@ -667,17 +641,17 @@ class GetEnterPositionsRequest(types.ApiRequest):
         self.limit = limit
         self.offset = offset
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         params = {}
         if self.limit != Unset:
             params["limit"] = self.limit
         if self.offset != Unset:
             params["offset"] = self.offset
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/enter/{self.enter_id}/positions",
-            "params": params,
-        }
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/enter/{self.enter_id}/positions",
+            params=params,
+        )
 
     def from_response(self, result) -> typing.List[EnterPosition]:
         return [EnterPosition.from_json(position) for position in result["rows"]]
@@ -706,7 +680,7 @@ class CreateEnterPositionRequest(types.ApiRequest):
         self.enter_id = enter_id
         self.positions = positions
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = []
         for position in self.positions:
             pos = {}
@@ -747,11 +721,11 @@ class CreateEnterPositionRequest(types.ApiRequest):
             if pos_overhead is not None:
                 pos["overhead"] = pos_overhead
             json_data.append(pos)
-        return {
-            "method": "POST",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/enter/{self.enter_id}/positions",
-            "json": json_data,
-        }
+        return RequestData(
+            method="POST",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/enter/{self.enter_id}/positions",
+            json=json_data,
+        )
 
     def from_response(self, result) -> typing.List[EnterPosition]:
         return [EnterPosition.from_json(position) for position in result["rows"]]
@@ -779,11 +753,11 @@ class GetEnterPositionRequest(types.ApiRequest):
         self.enter_id = enter_id
         self.position_id = position_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/enter/{self.enter_id}/positions/{self.position_id}",
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/enter/{self.enter_id}/positions/{self.position_id}",
+        )
 
     def from_response(self, result) -> EnterPosition:
         return EnterPosition.from_json(result)
@@ -855,7 +829,7 @@ class UpdateEnterPositionRequest(types.ApiRequest):
         self.things = things
         self.overhead = overhead
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {
             "assortment": {"meta": self.assortment},
             "price": self.price,
@@ -875,11 +849,11 @@ class UpdateEnterPositionRequest(types.ApiRequest):
             json_data["things"] = self.things
         if self.overhead != Unset:
             json_data["overhead"] = self.overhead
-        return {
-            "method": "PUT",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/enter/{self.enter_id}/positions/{self.position_id}",
-            "json": json_data,
-        }
+        return RequestData(
+            method="PUT",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/enter/{self.enter_id}/positions/{self.position_id}",
+            json=json_data,
+        )
 
     def from_response(self, result: dict) -> "EnterPosition":
         return EnterPosition.from_json(result)
@@ -907,12 +881,12 @@ class DeleteEnterPositionRequest(types.ApiRequest):
         self.enter_id = enter_id
         self.position_id = position_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "DELETE",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/enter/{self.enter_id}/positions/{self.position_id}",
-            "allow_non_json": True,
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="DELETE",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/enter/{self.enter_id}/positions/{self.position_id}",
+            allow_non_json=True,
+        )
 
     def from_response(self, result: dict) -> None:
         return None

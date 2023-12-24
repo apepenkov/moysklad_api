@@ -1,7 +1,7 @@
 import typing
 import datetime
-from .... import types
-from ....types import Unset
+from .... import types, helpers
+from ....types import Unset, RequestData
 
 
 class PurchaseOrder(types.MoySkladBaseClass):
@@ -109,70 +109,46 @@ class PurchaseOrder(types.MoySkladBaseClass):
     def from_json(cls, dict_data: dict) -> "PurchaseOrder":
         instance = cls()
         instance.account_id = dict_data.get("accountId")
-        agent = dict_data.get("agent")
-        if agent:
-            instance.agent = agent["meta"]
-        agent_account = dict_data.get("agentAccount")
-        if agent_account:
-            instance.agent_account = agent_account["meta"]
+        instance.agent = helpers.get_meta(dict_data.get("agent"))
+        instance.agent_account = helpers.get_meta(dict_data.get("agentAccount"))
         instance.applicable = dict_data.get("applicable")
         instance.attributes = dict_data.get("attributes")
         instance.code = dict_data.get("code")
-        contract = dict_data.get("contract")
-        if contract:
-            instance.contract = contract["meta"]
-        created = dict_data.get("created")
-        if created:
-            instance.created = datetime.datetime.fromisoformat(created)
-        deleted = dict_data.get("deleted")
-        if deleted:
-            instance.deleted = datetime.datetime.fromisoformat(deleted)
+        instance.contract = helpers.get_meta(dict_data.get("contract"))
+        instance.created = helpers.parse_date(dict_data.get("created"))
+        instance.deleted = helpers.parse_date(dict_data.get("deleted"))
         delivery_planned_moment = dict_data.get("deliveryPlannedMoment")
         if delivery_planned_moment:
-            instance.delivery_planned_moment = datetime.datetime.fromisoformat(
+            instance.delivery_planned_moment = helpers.parse_date(
                 delivery_planned_moment
             )
         instance.description = dict_data.get("description")
         instance.external_code = dict_data.get("externalCode")
         instance.files = dict_data.get("files")
-        group = dict_data.get("group")
-        if group:
-            instance.group = group["meta"]
+        instance.group = helpers.get_meta(dict_data.get("group"))
         instance.id = dict_data.get("id")
         instance.invoiced_sum = dict_data.get("invoicedSum")
         instance.meta = dict_data.get("meta")
-        moment = dict_data.get("moment")
-        if moment:
-            instance.moment = datetime.datetime.fromisoformat(moment)
+        instance.moment = helpers.parse_date(dict_data.get("moment"))
         instance.name = dict_data.get("name")
-        organization = dict_data.get("organization")
-        if organization:
-            instance.organization = organization["meta"]
-        organization_account = dict_data.get("organizationAccount")
-        if organization_account:
-            instance.organization_account = organization_account["meta"]
+        instance.organization = helpers.get_meta(dict_data.get("organization"))
+        instance.organization_account = helpers.get_meta(
+            dict_data.get("organizationAccount")
+        )
         instance.owner = dict_data.get("owner")
         instance.payed_sum = dict_data.get("payedSum")
         instance.positions = dict_data.get("positions")
         instance.printed = dict_data.get("printed")
-        project = dict_data.get("project")
-        if project:
-            instance.project = project["meta"]
+        instance.project = helpers.get_meta(dict_data.get("project"))
         instance.published = dict_data.get("published")
         instance.rate = dict_data.get("rate")
         instance.shared = dict_data.get("shared")
         instance.shipped_sum = dict_data.get("shippedSum")
-        state = dict_data.get("state")
-        if state:
-            instance.state = state["meta"]
-        store = dict_data.get("store")
-        if store:
-            instance.store = store["meta"]
+        instance.state = helpers.get_meta(dict_data.get("state"))
+        instance.store = helpers.get_meta(dict_data.get("store"))
         instance.sum = dict_data.get("sum")
         instance.sync_id = dict_data.get("syncId")
-        updated = dict_data.get("updated")
-        if updated:
-            instance.updated = datetime.datetime.fromisoformat(updated)
+        instance.updated = helpers.parse_date(dict_data.get("updated"))
         instance.vat_enabled = dict_data.get("vatEnabled")
         instance.vat_included = dict_data.get("vatIncluded")
         instance.vat_sum = dict_data.get("vatSum")
@@ -189,9 +165,7 @@ class PurchaseOrder(types.MoySkladBaseClass):
         supplies = dict_data.get("supplies")
         if supplies:
             instance.supplies = [item["meta"] for item in supplies]
-        internal_order = dict_data.get("internalOrder")
-        if internal_order:
-            instance.internal_order = internal_order["meta"]
+        instance.internal_order = helpers.get_meta(dict_data.get("internalOrder"))
         return instance
 
 
@@ -233,9 +207,7 @@ class PurchaseOrderPosition(types.MoySkladBaseClass):
     def from_json(cls, dict_data: dict) -> "PurchaseOrderPosition":
         instance = cls()
         instance.account_id = dict_data.get("accountId")
-        assortment = dict_data.get("assortment")
-        if assortment:
-            instance.assortment = assortment["meta"]
+        instance.assortment = helpers.get_meta(dict_data.get("assortment"))
         instance.discount = dict_data.get("discount")
         instance.id = dict_data.get("id")
         instance.pack = dict_data.get("pack")
@@ -276,7 +248,7 @@ class GetPurchaseOrderListRequest(types.ApiRequest):
         self.offset = offset
         self.search = search
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         params = {}
         if self.limit != Unset:
             params["limit"] = self.limit
@@ -284,11 +256,11 @@ class GetPurchaseOrderListRequest(types.ApiRequest):
             params["offset"] = self.offset
         if self.search != Unset:
             params["search"] = self.search
-        return {
-            "method": "GET",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder",
-            "params": params,
-        }
+        return RequestData(
+            method="GET",
+            url="https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder",
+            params=params,
+        )
 
     def from_response(self, result) -> typing.List[PurchaseOrder]:
         return [PurchaseOrder.from_json(item) for item in result["rows"]]
@@ -466,7 +438,7 @@ class CreatePurchaseOrderRequest(types.ApiRequest):
         self.supplies: typing.Optional[typing.List[types.Meta]] = supplies
         self.internal_order: typing.Optional[types.Meta] = internal_order
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {
             "organization": {"meta": self.organization},
             "agent": {"meta": self.agent},
@@ -486,8 +458,8 @@ class CreatePurchaseOrderRequest(types.ApiRequest):
                 {"meta": self.contract} if self.contract is not None else None
             )
         if self.delivery_planned_moment != Unset:
-            json_data["deliveryPlannedMoment"] = self.delivery_planned_moment.strftime(
-                "%Y-%m-%d %H:%M:%S"
+            json_data["deliveryPlannedMoment"] = helpers.date_to_str(
+                self.delivery_planned_moment
             )
         if self.description != Unset:
             json_data["description"] = self.description
@@ -502,7 +474,7 @@ class CreatePurchaseOrderRequest(types.ApiRequest):
         if self.meta != Unset:
             json_data["meta"] = self.meta
         if self.moment != Unset:
-            json_data["moment"] = self.moment.strftime("%Y-%m-%d %H:%M:%S")
+            json_data["moment"] = helpers.date_to_str(self.moment)
         if self.name != Unset:
             json_data["name"] = self.name
         if self.organization_account != Unset:
@@ -571,11 +543,11 @@ class CreatePurchaseOrderRequest(types.ApiRequest):
                 if self.internal_order is not None
                 else None
             )
-        return {
-            "method": "POST",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder",
-            "json": json_data,
-        }
+        return RequestData(
+            method="POST",
+            url="https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder",
+            json=json_data,
+        )
 
     def from_response(self, result) -> PurchaseOrder:
         return PurchaseOrder.from_json(result)
@@ -596,12 +568,12 @@ class DeletePurchaseOrderRequest(types.ApiRequest):
         """
         self.order_id = order_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "DELETE",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}",
-            "allow_non_json": True,
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="DELETE",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}",
+            allow_non_json=True,
+        )
 
     def from_response(self, result) -> None:
         return None
@@ -625,11 +597,11 @@ class GetPurchaseOrderRequest(types.ApiRequest):
         """
         self.order_id = order_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}",
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}",
+        )
 
     def from_response(self, result) -> PurchaseOrder:
         return PurchaseOrder.from_json(result)
@@ -795,7 +767,7 @@ class UpdatePurchaseOrderRequest(types.ApiRequest):
         self.supplies: typing.Optional[typing.List[types.Meta]] = supplies
         self.internal_order: typing.Optional[types.Meta] = internal_order
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {}
         if self.organization != Unset:
             json_data["organization"] = (
@@ -820,8 +792,8 @@ class UpdatePurchaseOrderRequest(types.ApiRequest):
                 {"meta": self.contract} if self.contract is not None else None
             )
         if self.delivery_planned_moment != Unset:
-            json_data["deliveryPlannedMoment"] = self.delivery_planned_moment.strftime(
-                "%Y-%m-%d %H:%M:%S"
+            json_data["deliveryPlannedMoment"] = helpers.date_to_str(
+                self.delivery_planned_moment
             )
         if self.description != Unset:
             json_data["description"] = self.description
@@ -836,7 +808,7 @@ class UpdatePurchaseOrderRequest(types.ApiRequest):
         if self.meta != Unset:
             json_data["meta"] = self.meta
         if self.moment != Unset:
-            json_data["moment"] = self.moment.strftime("%Y-%m-%d %H:%M:%S")
+            json_data["moment"] = helpers.date_to_str(self.moment)
         if self.name != Unset:
             json_data["name"] = self.name
         if self.organization_account != Unset:
@@ -906,11 +878,11 @@ class UpdatePurchaseOrderRequest(types.ApiRequest):
                 else None
             )
 
-        return {
-            "method": "PUT",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}",
-            "json": json_data,
-        }
+        return RequestData(
+            method="PUT",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}",
+            json=json_data,
+        )
 
     def from_response(self, result) -> PurchaseOrder:
         return PurchaseOrder.from_json(result)
@@ -938,17 +910,17 @@ class GetPurchaseOrderPositionsRequest(types.ApiRequest):
         self.limit = limit
         self.offset = offset
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         params = {}
         if self.limit != Unset:
             params["limit"] = self.limit
         if self.offset != Unset:
             params["offset"] = self.offset
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}/positions",
-            "params": params,
-        }
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}/positions",
+            params=params,
+        )
 
     def from_response(self, result) -> typing.List[PurchaseOrderPosition]:
         return [PurchaseOrderPosition.from_json(item) for item in result["rows"]]
@@ -996,7 +968,7 @@ class CreatePurchaseOrderPositionRequest(types.ApiRequest):
         self.in_transit = in_transit
         self.discount = discount
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {
             "assortment": {"meta": self.assortment},
             "quantity": self.quantity,
@@ -1009,11 +981,11 @@ class CreatePurchaseOrderPositionRequest(types.ApiRequest):
             json_data["inTransit"] = self.in_transit
         if self.discount != Unset:
             json_data["discount"] = self.discount
-        return {
-            "method": "POST",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseOrder/{self.order_id}/positions",
-            "json": json_data,
-        }
+        return RequestData(
+            method="POST",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseOrder/{self.order_id}/positions",
+            json=json_data,
+        )
 
     def from_response(self, result) -> PurchaseOrderPosition:
         # I have no idea why they decided to return a list of one element
@@ -1038,11 +1010,11 @@ class GetPurchaseOrderPositionRequest(types.ApiRequest):
         self.order_id = order_id
         self.position_id = position_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}/positions/{self.position_id}",
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}/positions/{self.position_id}",
+        )
 
     def from_response(self, result) -> PurchaseOrderPosition:
         return PurchaseOrderPosition.from_json(result)
@@ -1096,7 +1068,7 @@ class UpdatePurchaseOrderPositionRequest(types.ApiRequest):
         self.in_transit = in_transit
         self.discount = discount
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {}
         if self.assortment != Unset:
             json_data["assortment"] = (
@@ -1113,11 +1085,11 @@ class UpdatePurchaseOrderPositionRequest(types.ApiRequest):
         if self.discount != Unset:
             json_data["discount"] = self.discount
 
-        return {
-            "method": "PUT",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}/positions/{self.position_id}",
-            "json": json_data,
-        }
+        return RequestData(
+            method="PUT",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}/positions/{self.position_id}",
+            json=json_data,
+        )
 
     def from_response(self, result) -> PurchaseOrderPosition:
         return PurchaseOrderPosition.from_json(result)
@@ -1141,12 +1113,12 @@ class DeletePurchaseOrderPositionRequest(types.ApiRequest):
         self.order_id = order_id
         self.position_id = position_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "DELETE",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}/positions/{self.position_id}",
-            "allow_non_json": True,
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="DELETE",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}/positions/{self.position_id}",
+            allow_non_json=True,
+        )
 
     def from_response(self, result) -> None:
         return None

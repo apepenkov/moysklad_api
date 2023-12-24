@@ -2,7 +2,7 @@ import datetime
 import typing
 
 from .... import types, helpers
-from ....types import Unset
+from ....types import Unset, RequestData
 
 
 class Supply(types.MoySkladBaseClass):
@@ -98,79 +98,47 @@ class Supply(types.MoySkladBaseClass):
     def from_json(cls, dict_data: dict) -> "Supply":
         instance = cls()
         instance.account_id = dict_data.get("accountId")
-        agent = dict_data.get("agent")
-        if agent is not None:
-            instance.agent = agent["meta"]
-        agent_account = dict_data.get("agentAccount")
-        if agent_account is not None:
-            instance.agent_account = agent_account["meta"]
+        instance.agent = helpers.get_meta(dict_data.get("agent"))
+        instance.agent_account = helpers.get_meta(dict_data.get("agentAccount"))
         instance.applicable = dict_data.get("applicable")
         instance.attributes = dict_data.get("attributes")
         instance.code = dict_data.get("code")
-        contract = dict_data.get("contract")
-        if contract is not None:
-            instance.contract = contract["meta"]
-        created = dict_data.get("created")
-        if created is not None:
-            instance.created = datetime.datetime.fromisoformat(created)
-        deleted = dict_data.get("deleted")
-        if deleted is not None:
-            instance.deleted = datetime.datetime.fromisoformat(deleted)
+        instance.contract = helpers.get_meta(dict_data.get("contract"))
+        instance.created = helpers.parse_date(dict_data.get("created"))
+        instance.deleted = helpers.parse_date(dict_data.get("deleted"))
         instance.description = dict_data.get("description")
         instance.external_code = dict_data.get("externalCode")
-        files = dict_data.get("files")
-        if files is not None:
-            instance.files = files["meta"]
-        group = dict_data.get("group")
-        if group is not None:
-            instance.group = group["meta"]
+        instance.files = helpers.get_meta(dict_data.get("files"))
+        instance.group = helpers.get_meta(dict_data.get("group"))
         instance.id = dict_data.get("id")
-        incoming_date = dict_data.get("incomingDate")
-        if incoming_date is not None:
-            instance.incoming_date = datetime.datetime.fromisoformat(incoming_date)
+        instance.incoming_date = helpers.parse_date(dict_data.get("incomingDate"))
         instance.incoming_number = dict_data.get("incomingNumber")
         instance.meta = dict_data.get("meta")
-        moment = dict_data.get("moment")
-        if moment is not None:
-            instance.moment = datetime.datetime.fromisoformat(moment)
+        instance.moment = helpers.parse_date(dict_data.get("moment"))
         instance.name = dict_data.get("name")
-        organization = dict_data.get("organization")
-        if organization is not None:
-            instance.organization = organization["meta"]
-        organization_account = dict_data.get("organizationAccount")
-        if organization_account is not None:
-            instance.organization_account = organization_account["meta"]
+        instance.organization = helpers.get_meta(dict_data.get("organization"))
+        instance.organization_account = helpers.get_meta(dict_data.get("organizationAccount"))
         instance.overhead = dict_data.get("overhead")
-        owner = dict_data.get("owner")
-        if owner is not None:
-            instance.owner = owner["meta"]
+        instance.owner = helpers.get_meta(dict_data.get("owner"))
         instance.payed_sum = dict_data.get("payedSum")
         instance.positions = dict_data.get("positions")
         instance.printed = dict_data.get("printed")
-        project = dict_data.get("project")
-        if project is not None:
-            instance.project = project["meta"]
+        instance.project = helpers.get_meta(dict_data.get("project"))
         instance.published = dict_data.get("published")
         instance.rate = dict_data.get("rate")
         instance.shared = dict_data.get("shared")
-        state = dict_data.get("state")
-        if state is not None:
-            instance.state = state["meta"]
-        store = dict_data.get("store")
-        if store is not None:
-            instance.store = store["meta"]
+        instance.state = helpers.get_meta(dict_data.get("state"))
+        instance.store = helpers.get_meta(dict_data.get("store"))
         instance.sum = dict_data.get("sum")
         instance.sync_id = dict_data.get("syncId")
-        updated = dict_data.get("updated")
-        if updated is not None:
-            instance.updated = datetime.datetime.fromisoformat(updated)
+        instance.updated = helpers.parse_date(dict_data.get("updated"))
         instance.vat_enabled = dict_data.get("vatEnabled")
         instance.vat_included = dict_data.get("vatIncluded")
         instance.vat_sum = dict_data.get("vatSum")
         instance.invoices_in = [
             helpers.get_meta(x, must=True) for x in dict_data.get("invoicesIn", [])
         ]
-        instance.facture_in = helpers.get_meta(dict_data.get("factureIn", None))
+        instance.facture_in = helpers.get_meta(dict_data.get("factureIn"))
         return instance
 
 
@@ -216,21 +184,15 @@ class Position(types.MoySkladBaseClass):
     def from_json(cls, dict_data: dict) -> "Position":
         instance = cls()
         instance.account_id = dict_data.get("accountId")
-        assortment = dict_data.get("assortment")
-        if assortment is not None:
-            instance.assortment = assortment["meta"]
-        country = dict_data.get("country")
-        if country is not None:
-            instance.country = country["meta"]
+        instance.assortment = helpers.get_meta(dict_data.get("assortment"))
+        instance.country = helpers.get_meta(dict_data.get("country"))
         instance.discount = dict_data.get("discount")
         instance.gtd = dict_data.get("gtd")
         instance.id = dict_data.get("id")
         instance.pack = dict_data.get("pack")
         instance.price = dict_data.get("price")
         instance.quantity = dict_data.get("quantity")
-        slot = dict_data.get("slot")
-        if slot is not None:
-            instance.slot = slot["meta"]
+        instance.slot = helpers.get_meta(dict_data.get("slot"))
         instance.things = dict_data.get("things")
         instance.overhead = dict_data.get("overhead")
         instance.vat = dict_data.get("vat")
@@ -265,7 +227,7 @@ class GetSuppliesRequest(types.ApiRequest):
         self.offset = offset
         self.search = search
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         params = {}
         if self.limit != Unset:
             params["limit"] = self.limit
@@ -273,11 +235,11 @@ class GetSuppliesRequest(types.ApiRequest):
             params["offset"] = self.offset
         if self.search != Unset:
             params["search"] = self.search
-        return {
-            "method": "GET",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/supply",
-            "params": params,
-        }
+        return RequestData(
+            method="GET",
+            url="https://api.moysklad.ru/api/remap/1.2/entity/supply",
+            params=params,
+        )
 
     def from_response(self, result: dict) -> typing.List[Supply]:
         return [Supply.from_json(i) for i in result["rows"]]
@@ -387,7 +349,7 @@ class CreateSupplyRequest(types.ApiRequest):
         self.vat_enabled = vat_enabled
         self.vat_included = vat_included
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {
             "organization": {"meta": self.organization},
             "agent": {"meta": self.agent},
@@ -430,11 +392,11 @@ class CreateSupplyRequest(types.ApiRequest):
                 else None
             )
         if self.incoming_date != Unset:
-            json_data["incomingDate"] = self.incoming_date.strftime("%Y-%m-%d %H:%M:%S")
+            json_data["incomingDate"] = helpers.date_to_str(self.incoming_date)
         if self.incoming_number != Unset:
             json_data["incomingNumber"] = self.incoming_number
         if self.moment != Unset:
-            json_data["moment"] = self.moment.strftime("%Y-%m-%d %H:%M:%S")
+            json_data["moment"] = helpers.date_to_str(self.moment)
         if self.name != Unset:
             json_data["name"] = self.name
         if self.organization_account != Unset:
@@ -487,11 +449,11 @@ class CreateSupplyRequest(types.ApiRequest):
             json_data["vatEnabled"] = self.vat_enabled
         if self.vat_included != Unset:
             json_data["vatIncluded"] = self.vat_included
-        return {
-            "method": "POST",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/supply",
-            "json": json_data,
-        }
+        return RequestData(
+            method="POST",
+            url="https://api.moysklad.ru/api/remap/1.2/entity/supply",
+            json=json_data,
+        )
 
     def from_response(self, result: dict) -> Supply:
         return Supply.from_json(result)
@@ -512,12 +474,12 @@ class DeleteSupplyRequest(types.ApiRequest):
         """
         self.supply_id = supply_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "DELETE",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}",
-            "allow_non_json": True,
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="DELETE",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}",
+            allow_non_json=True,
+        )
 
     def from_response(self, result: dict) -> None:
         return None
@@ -538,11 +500,11 @@ class GetSupplyRequest(types.ApiRequest):
         """
         self.supply_id = supply_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}",
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}",
+        )
 
     def from_response(self, result: dict) -> Supply:
         return Supply.from_json(result)
@@ -648,7 +610,7 @@ class UpdateSupplyRequest(types.ApiRequest):
         self.vat_enabled = vat_enabled
         self.vat_included = vat_included
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {}
         if self.organization != Unset:
             json_data["organization"] = (
@@ -711,11 +673,11 @@ class UpdateSupplyRequest(types.ApiRequest):
                 else None
             )
         if self.incoming_date != Unset:
-            json_data["incomingDate"] = self.incoming_date.strftime("%Y-%m-%d %H:%M:%S")
+            json_data["incomingDate"] = helpers.date_to_str(self.incoming_date)
         if self.incoming_number != Unset:
             json_data["incomingNumber"] = self.incoming_number
         if self.moment != Unset:
-            json_data["moment"] = self.moment.strftime("%Y-%m-%d %H:%M:%S")
+            json_data["moment"] = helpers.date_to_str(self.moment)
         if self.name != Unset:
             json_data["name"] = self.name
         if self.organization_account != Unset:
@@ -769,11 +731,11 @@ class UpdateSupplyRequest(types.ApiRequest):
         if self.vat_included != Unset:
             json_data["vatIncluded"] = self.vat_included
 
-        return {
-            "method": "PUT",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}",
-            "json": json_data,
-        }
+        return RequestData(
+            method="PUT",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}",
+            json=json_data,
+        )
 
     def from_response(self, result: dict) -> Supply:
         return Supply.from_json(result)
@@ -807,17 +769,17 @@ class GetSupplyPositionsRequest(types.ApiRequest):
         self.limit = limit
         self.offset = offset
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         params = {}
         if self.limit != Unset:
             params["limit"] = self.limit
         if self.offset != Unset:
             params["offset"] = self.offset
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}/positions",
-            "params": params,
-        }
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}/positions",
+            params=params,
+        )
 
     def from_response(self, result: dict) -> typing.List[Position]:
         return [Position.from_json(position) for position in result["rows"]]
@@ -864,7 +826,7 @@ class CreateSupplyPositionRequest(types.ApiRequest):
         self.tracking_codes = tracking_codes
         self.overhead = overhead
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {
             "assortment": {"meta": self.assortment},
             "quantity": self.quantity,
@@ -879,11 +841,11 @@ class CreateSupplyPositionRequest(types.ApiRequest):
             json_data["trackingCodes"] = self.tracking_codes
         if self.overhead != Unset:
             json_data["overhead"] = self.overhead
-        return {
-            "method": "POST",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}/positions",
-            "json": json_data,
-        }
+        return RequestData(
+            method="POST",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}/positions",
+            json=json_data,
+        )
 
     def from_response(self, result: dict) -> Position:
         return Position.from_json(result)
@@ -916,11 +878,11 @@ class GetSupplyPositionRequest(types.ApiRequest):
         self.supply_id = supply_id
         self.position_id = position_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}/positions/{self.position_id}",
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}/positions/{self.position_id}",
+        )
 
     def from_response(self, result: dict) -> Position:
         return Position.from_json(result)
@@ -970,7 +932,7 @@ class UpdateSupplyPositionRequest(types.ApiRequest):
         self.tracking_codes = tracking_codes
         self.overhead = overhead
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {}
         if self.assortment != Unset:
             json_data["assortment"] = (
@@ -992,11 +954,11 @@ class UpdateSupplyPositionRequest(types.ApiRequest):
             json_data["trackingCodes"] = self.tracking_codes
         if self.overhead != Unset:
             json_data["overhead"] = self.overhead
-        return {
-            "method": "PUT",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}/positions/{self.position_id}",
-            "json": json_data,
-        }
+        return RequestData(
+            method="PUT",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}/positions/{self.position_id}",
+            json=json_data,
+        )
 
     def from_response(self, result: dict) -> Position:
         return Position.from_json(result)
@@ -1029,12 +991,12 @@ class DeleteSupplyPositionRequest(types.ApiRequest):
         self.supply_id = supply_id
         self.position_id = position_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "DELETE",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}/positions/{self.position_id}",
-            "allow_non_json": True,
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="DELETE",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}/positions/{self.position_id}",
+            allow_non_json=True,
+        )
 
     def from_response(self, result: dict) -> None:
         return None

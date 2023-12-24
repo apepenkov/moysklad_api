@@ -10,8 +10,8 @@ class MoySkladError(Exception):
         self.error = json_error.get("error", "Unknown error")
         self.code = json_error.get("code", "Unknown code")
         self.more_info = json_error.get("moreInfo", "No link to more info")
-        self.line = json_error.get("line", None)
-        self.column = json_error.get("column", None)
+        self.line = json_error.get("line")
+        self.column = json_error.get("column")
         self.requested_json = requested_json
         self.message = (
             f"Error: {self.error} (Code {self.code})\n" f"More info: {self.more_info}\n"

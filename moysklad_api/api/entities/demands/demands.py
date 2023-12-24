@@ -1,8 +1,8 @@
 import datetime
 import typing
 
-from .... import types
-from ....types import Unset
+from .... import types, helpers
+from ....types import Unset, RequestData
 
 
 class Demand(types.MoySkladBaseClass):
@@ -94,73 +94,45 @@ class Demand(types.MoySkladBaseClass):
     def from_json(cls, dict_data: dict) -> "Demand":
         instance = cls()
         instance.account_id = dict_data.get("accountId")
-        agent = dict_data.get("agent")
-        if agent is not None:
-            instance.agent = agent["meta"]
-        agent_account = dict_data.get("agentAccount")
-        if agent_account is not None:
-            instance.agent_account = agent_account["meta"]
+        instance.agent = helpers.get_meta(dict_data.get("agent"))
+        instance.agent_account = helpers.get_meta(dict_data.get("agentAccount"))
         instance.applicable = dict_data.get("applicable")
         instance.attributes = dict_data.get("attributes")
         instance.code = dict_data.get("code")
-        contract = dict_data.get("contract")
-        if contract is not None:
-            instance.contract = contract["meta"]
-        created = dict_data.get("created")
-        if created is not None:
-            instance.created = datetime.datetime.fromisoformat(created)
-        deleted = dict_data.get("deleted")
-        if deleted is not None:
-            instance.deleted = datetime.datetime.fromisoformat(deleted)
+        instance.contract = helpers.get_meta(dict_data.get("contract"))
+        instance.created = helpers.parse_date(dict_data.get("created"))
+        instance.deleted = helpers.parse_date(dict_data.get("deleted"))
         instance.description = dict_data.get("description")
         instance.external_code = dict_data.get("externalCode")
         instance.files = dict_data.get("files")
-        group = dict_data.get("group")
-        if group is not None:
-            instance.group = group["meta"]
+        instance.group = helpers.get_meta(dict_data.get("group"))
         instance.id = dict_data.get("id")
         meta = dict_data.get("meta")
         if meta is not None:
             instance.meta = meta
-        moment = dict_data.get("moment")
-        if moment is not None:
-            instance.moment = datetime.datetime.fromisoformat(moment)
+        instance.moment = helpers.parse_date(dict_data.get("moment"))
         instance.name = dict_data.get("name")
-        organization = dict_data.get("organization")
-        if organization is not None:
-            instance.organization = organization["meta"]
-        organization_account = dict_data.get("organizationAccount")
-        if organization_account is not None:
-            instance.organization_account = organization_account["meta"]
+        instance.organization = helpers.get_meta(dict_data.get("organization"))
+        instance.organization_account = helpers.get_meta(
+            dict_data.get("organizationAccount")
+        )
         instance.overhead = dict_data.get("overhead")
-        owner = dict_data.get("owner")
-        if owner is not None:
-            instance.owner = owner["meta"]
+        instance.owner = helpers.get_meta(dict_data.get("owner"))
         instance.payed_sum = dict_data.get("payedSum")
         instance.positions = dict_data.get("positions")
         instance.printed = dict_data.get("printed")
-        project = dict_data.get("project")
-        if project is not None:
-            instance.project = project["meta"]
+        instance.project = helpers.get_meta(dict_data.get("project"))
         instance.published = dict_data.get("published")
         instance.rate = dict_data.get("rate")
-        sales_channel = dict_data.get("salesChannel")
-        if sales_channel is not None:
-            instance.sales_channel = sales_channel["meta"]
+        instance.sales_channel = helpers.get_meta(dict_data.get("salesChannel"))
         instance.shared = dict_data.get("shared")
         instance.shipment_address = dict_data.get("shipmentAddress")
         instance.shipment_address_full = dict_data.get("shipmentAddressFull")
-        state = dict_data.get("state")
-        if state is not None:
-            instance.state = state["meta"]
-        store = dict_data.get("store")
-        if store is not None:
-            instance.store = store["meta"]
+        instance.state = helpers.get_meta(dict_data.get("state"))
+        instance.store = helpers.get_meta(dict_data.get("store"))
         instance.sum = dict_data.get("sum")
         instance.sync_id = dict_data.get("syncId")
-        updated = dict_data.get("updated")
-        if updated is not None:
-            instance.updated = datetime.datetime.fromisoformat(updated)
+        instance.updated = helpers.parse_date(dict_data.get("updated"))
         instance.vat_enabled = dict_data.get("vatEnabled")
         instance.vat_included = dict_data.get("vatIncluded")
         instance.vat_sum = dict_data.get("vatSum")
@@ -208,18 +180,14 @@ class DemandPosition(types.MoySkladBaseClass):
     def from_json(cls, dict_data: dict) -> "DemandPosition":
         instance = cls()
         instance.account_id = dict_data.get("accountId")
-        assortment = dict_data.get("assortment")
-        if assortment is not None:
-            instance.assortment = assortment["meta"]
+        instance.assortment = helpers.get_meta(dict_data.get("assortment"))
         instance.cost = dict_data.get("cost")
         instance.discount = dict_data.get("discount")
         instance.id = dict_data.get("id")
         instance.pack = dict_data.get("pack")
         instance.price = dict_data.get("price")
         instance.quantity = dict_data.get("quantity")
-        slot = dict_data.get("slot")
-        if slot is not None:
-            instance.slot = slot["meta"]
+        instance.slot = helpers.get_meta(dict_data.get("slot"))
         instance.things = dict_data.get("things")
         instance.tracking_codes = dict_data.get("trackingCodes")
         instance.tracking_codes_1162 = dict_data.get("trackingCodes_1162")
@@ -368,7 +336,7 @@ class CreateDemandRequest(types.ApiRequest):
         self.vat_enabled = vat_enabled
         self.vat_included = vat_included
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {
             "organization": {"meta": self.organization},
             "agent": {"meta": self.agent},
@@ -399,7 +367,7 @@ class CreateDemandRequest(types.ApiRequest):
                 {"meta": self.group} if self.group is not None else None
             )
         if self.moment != Unset:
-            json_data["moment"] = self.moment.strftime("%Y-%m-%d %H:%M:%S")
+            json_data["moment"] = helpers.date_to_str(self.moment)
         if self.name != Unset:
             json_data["name"] = self.name
         if self.organization_account != Unset:
@@ -437,11 +405,11 @@ class CreateDemandRequest(types.ApiRequest):
         if self.vat_included != Unset:
             json_data["vatIncluded"] = self.vat_included
 
-        return {
-            "method": "POST",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/demand",
-            "json": json_data,
-        }
+        return RequestData(
+            method="POST",
+            url="https://api.moysklad.ru/api/remap/1.2/entity/demand",
+            json=json_data,
+        )
 
     @classmethod
     def from_response(cls, dict_data: dict) -> "Demand":
@@ -474,7 +442,7 @@ class GetDemandsRequest(types.ApiRequest):
         self.offset = offset
         self.search = search
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         params = {}
         if self.limit != Unset:
             params["limit"] = self.limit
@@ -483,11 +451,11 @@ class GetDemandsRequest(types.ApiRequest):
         if self.search != Unset:
             params["search"] = self.search
 
-        return {
-            "method": "GET",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/demand",
-            "params": params,
-        }
+        return RequestData(
+            method="GET",
+            url="https://api.moysklad.ru/api/remap/1.2/entity/demand",
+            params=params,
+        )
 
     def from_response(self, result: dict) -> typing.List[Demand]:
         return [Demand.from_json(demand_json) for demand_json in result["rows"]]
@@ -508,12 +476,12 @@ class DeleteDemandRequest(types.ApiRequest):
         """
         self.id = demand_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "DELETE",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/demand/{self.id}",
-            "allow_non_json": True,
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="DELETE",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/demand/{self.id}",
+            allow_non_json=True,
+        )
 
     def from_response(self, result: dict) -> None:
         return None
@@ -534,11 +502,11 @@ class GetDemandRequest(types.ApiRequest):
         """
         self.demand_id = demand_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "GET",
-            "url": f"https://api.moysklad.ru/api/remap/1.2/entity/demand/{self.demand_id}",
-        }
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="GET",
+            url=f"https://api.moysklad.ru/api/remap/1.2/entity/demand/{self.demand_id}",
+        )
 
     def from_response(self, result: dict) -> Demand:
         return Demand.from_json(result)
@@ -676,7 +644,7 @@ class UpdateDemandRequest(types.ApiRequest):
         self.vat_enabled = vat_enabled
         self.vat_included = vat_included
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json_data = {}
         if self.organization != Unset:
             json_data["organization"] = (
@@ -715,7 +683,7 @@ class UpdateDemandRequest(types.ApiRequest):
                 {"meta": self.group} if self.group is not None else None
             )
         if self.moment != Unset:
-            json_data["moment"] = self.moment.strftime("%Y-%m-%d %H:%M:%S")
+            json_data["moment"] = helpers.date_to_str(self.moment)
         if self.name != Unset:
             json_data["name"] = self.name
         if self.organization_account != Unset:
@@ -753,12 +721,11 @@ class UpdateDemandRequest(types.ApiRequest):
         if self.vat_included != Unset:
             json_data["vatIncluded"] = self.vat_included
 
-        return {
-            "method": "PUT",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/demand/"
-            + str(self.id),
-            "json": json_data,
-        }
+        return RequestData(
+            method="PUT",
+            url="https://api.moysklad.ru/api/remap/1.2/entity/demand/" + str(self.id),
+            json=json_data,
+        )
 
     @classmethod
     def from_response(cls, dict_data: dict) -> "Demand":
@@ -786,19 +753,19 @@ class GetDemandPositionsRequest(types.ApiRequest):
         self.limit = limit
         self.offset = offset
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         params = {}
         if self.limit != Unset:
             params["limit"] = self.limit
         if self.offset != Unset:
             params["offset"] = self.offset
-        return {
-            "method": "GET",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/demand/"
+        return RequestData(
+            method="GET",
+            url="https://api.moysklad.ru/api/remap/1.2/entity/demand/"
             + str(self.id)
             + "/positions",
-            "params": params,
-        }
+            params=params,
+        )
 
     @classmethod
     def from_response(cls, dict_data: dict) -> typing.List[DemandPosition]:
@@ -826,15 +793,15 @@ class CreateDemandPositionsRequest(types.ApiRequest):
         self.id = demand_id
         self.positions = positions
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json = self.positions
-        return {
-            "method": "POST",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/demand/"
+        return RequestData(
+            method="POST",
+            url="https://api.moysklad.ru/api/remap/1.2/entity/demand/"
             + str(self.id)
             + "/positions",
-            "json": json,
-        }
+            json=json,
+        )
 
     def from_response(self, result: list) -> typing.List[DemandPosition]:
         return [DemandPosition.from_json(item) for item in result]
@@ -854,14 +821,14 @@ class GetDemandPositionRequest(types.ApiRequest):
         self.demand_id = demand_id
         self.position_id = position_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "GET",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/demand/"
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="GET",
+            url="https://api.moysklad.ru/api/remap/1.2/entity/demand/"
             + str(self.demand_id)
             + "/positions/"
             + str(self.position_id),
-        }
+        )
 
     def from_response(self, result: dict) -> DemandPosition:
         return DemandPosition.from_json(result)
@@ -886,16 +853,16 @@ class UpdateDemandPositionRequest(types.ApiRequest):
         self.position_id = position_id
         self.position = position
 
-    def to_request(self) -> dict:
+    def to_request(self) -> RequestData:
         json = self.position
-        return {
-            "method": "PUT",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/demand/"
+        return RequestData(
+            method="PUT",
+            url="https://api.moysklad.ru/api/remap/1.2/entity/demand/"
             + str(self.demand_id)
             + "/positions/"
             + str(self.position_id),
-            "json": json,
-        }
+            json=json,
+        )
 
     def from_response(self, result: dict) -> DemandPosition:
         return DemandPosition.from_json(result)
@@ -915,15 +882,15 @@ class DeleteDemandPositionRequest(types.ApiRequest):
         self.demand_id = demand_id
         self.position_id = position_id
 
-    def to_request(self) -> dict:
-        return {
-            "method": "DELETE",
-            "url": "https://api.moysklad.ru/api/remap/1.2/entity/demand/"
+    def to_request(self) -> RequestData:
+        return RequestData(
+            method="DELETE",
+            url="https://api.moysklad.ru/api/remap/1.2/entity/demand/"
             + str(self.demand_id)
             + "/positions/"
             + str(self.position_id),
-            "allow_non_json": True,
-        }
+            allow_non_json=True,
+        )
 
     def from_response(self, result: dict) -> None:
         return None
