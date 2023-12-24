@@ -1,7 +1,7 @@
 import typing
 import datetime
-from .... import types, helpers
-from ....types import Unset, RequestData
+from moysklad_api import types, helpers
+from moysklad_api.types import Unset, RequestData
 
 
 class PurchaseOrder(types.MoySkladBaseClass):
@@ -55,7 +55,7 @@ class PurchaseOrder(types.MoySkladBaseClass):
     customerOrders      	Массив ссылок на связанные заказы покупателей в формате Метаданных
     invoicesIn 	            Массив ссылок на связанные счета поставщиков в формате Метаданных
     payments 	            Массив ссылок на связанные платежи в формате Метаданных
-    supplies 	            Массив ссылок на связанные приемки в формате Метаданных
+    supply 	            Массив ссылок на связанные приемки в формате Метаданных
     internalOrder 	        Внутренний заказ, связанный с заказом поставщику, в формате Метаданных
     """
 
@@ -161,7 +161,7 @@ class PurchaseOrder(types.MoySkladBaseClass):
         payments = dict_data.get("payments")
         if payments:
             instance.payments = [item["meta"] for item in payments]
-        supplies = dict_data.get("supplies")
+        supplies = dict_data.get("supply")
         if supplies:
             instance.supplies = [item["meta"] for item in supplies]
         instance.internal_order = helpers.get_meta(dict_data.get("internalOrder"))
@@ -256,7 +256,7 @@ class GetPurchaseOrderListRequest(types.ApiRequest):
             params["search"] = self.search
         return RequestData(
             method="GET",
-            url=f"{helpers.BASE_URL}/entity/purchaseorder",
+            url=f"{helpers.BASE_URL}/entity/purchase_order",
             params=params,
         )
 
@@ -305,7 +305,7 @@ class CreatePurchaseOrderRequest(types.ApiRequest):
     customerOrders      	Массив ссылок на связанные заказы покупателей в формате Метаданных
     invoicesIn 	            Массив ссылок на связанные счета поставщиков в формате Метаданных
     payments 	            Массив ссылок на связанные платежи в формате Метаданных
-    supplies 	            Массив ссылок на связанные приемки в формате Метаданных
+    supply 	            Массив ссылок на связанные приемки в формате Метаданных
     internalOrder 	        Внутренний заказ, связанный с заказом поставщику, в формате Метаданных
     """
 
@@ -534,7 +534,7 @@ class CreatePurchaseOrderRequest(types.ApiRequest):
         if self.payments != Unset:
             json_data["payments"] = [{"meta": item} for item in self.payments]
         if self.supplies != Unset:
-            json_data["supplies"] = [{"meta": item} for item in self.supplies]
+            json_data["supply"] = [{"meta": item} for item in self.supplies]
         if self.internal_order != Unset:
             json_data["internalOrder"] = (
                 {"meta": self.internal_order}
@@ -543,7 +543,7 @@ class CreatePurchaseOrderRequest(types.ApiRequest):
             )
         return RequestData(
             method="POST",
-            url=f"{helpers.BASE_URL}/entity/purchaseorder",
+            url=f"{helpers.BASE_URL}/entity/purchase_order",
             json=json_data,
         )
 
@@ -569,7 +569,7 @@ class DeletePurchaseOrderRequest(types.ApiRequest):
     def to_request(self) -> RequestData:
         return RequestData(
             method="DELETE",
-            url=f"{helpers.BASE_URL}/entity/purchaseorder/{self.order_id}",
+            url=f"{helpers.BASE_URL}/entity/purchase_order/{self.order_id}",
             allow_non_json=True,
         )
 
@@ -598,7 +598,7 @@ class GetPurchaseOrderRequest(types.ApiRequest):
     def to_request(self) -> RequestData:
         return RequestData(
             method="GET",
-            url=f"{helpers.BASE_URL}/entity/purchaseorder/{self.order_id}",
+            url=f"{helpers.BASE_URL}/entity/purchase_order/{self.order_id}",
         )
 
     def from_response(self, result) -> PurchaseOrder:
@@ -649,7 +649,7 @@ class UpdatePurchaseOrderRequest(types.ApiRequest):
     customerOrders      	Массив ссылок на связанные заказы покупателей в формате Метаданных
     invoicesIn 	            Массив ссылок на связанные счета поставщиков в формате Метаданных
     payments 	            Массив ссылок на связанные платежи в формате Метаданных
-    supplies 	            Массив ссылок на связанные приемки в формате Метаданных
+    supply 	            Массив ссылок на связанные приемки в формате Метаданных
     internalOrder 	        Внутренний заказ, связанный с заказом поставщику, в формате Метаданных
     """
 
@@ -868,7 +868,7 @@ class UpdatePurchaseOrderRequest(types.ApiRequest):
         if self.payments != Unset:
             json_data["payments"] = [{"meta": item} for item in self.payments]
         if self.supplies != Unset:
-            json_data["supplies"] = [{"meta": item} for item in self.supplies]
+            json_data["supply"] = [{"meta": item} for item in self.supplies]
         if self.internal_order != Unset:
             json_data["internalOrder"] = (
                 {"meta": self.internal_order}
@@ -878,7 +878,7 @@ class UpdatePurchaseOrderRequest(types.ApiRequest):
 
         return RequestData(
             method="PUT",
-            url=f"{helpers.BASE_URL}/entity/purchaseorder/{self.order_id}",
+            url=f"{helpers.BASE_URL}/entity/purchase_order/{self.order_id}",
             json=json_data,
         )
 
@@ -916,7 +916,7 @@ class GetPurchaseOrderPositionsRequest(types.ApiRequest):
             params["offset"] = self.offset
         return RequestData(
             method="GET",
-            url=f"{helpers.BASE_URL}/entity/purchaseorder/{self.order_id}/positions",
+            url=f"{helpers.BASE_URL}/entity/purchase_order/{self.order_id}/positions",
             params=params,
         )
 
@@ -955,7 +955,7 @@ class CreatePurchaseOrderPositionRequest(types.ApiRequest):
         :param quantity: Quantity of the product/service/series/modification (Количество товара/услуги/серии/модификации)
         :param price: Price (Цена поставки)
         :param vat: VAT rate (Ставка НДС)
-        :param in_transit: Number of products in transit (Количество товаров в пути)
+        :param in_transit: Number of product in transit (Количество товаров в пути)
         :param discount: Discount (Скидка)
         """
         self.order_id = order_id
@@ -1011,7 +1011,7 @@ class GetPurchaseOrderPositionRequest(types.ApiRequest):
     def to_request(self) -> RequestData:
         return RequestData(
             method="GET",
-            url=f"{helpers.BASE_URL}/entity/purchaseorder/{self.order_id}/positions/{self.position_id}",
+            url=f"{helpers.BASE_URL}/entity/purchase_order/{self.order_id}/positions/{self.position_id}",
         )
 
     def from_response(self, result) -> PurchaseOrderPosition:
@@ -1085,7 +1085,7 @@ class UpdatePurchaseOrderPositionRequest(types.ApiRequest):
 
         return RequestData(
             method="PUT",
-            url=f"{helpers.BASE_URL}/entity/purchaseorder/{self.order_id}/positions/{self.position_id}",
+            url=f"{helpers.BASE_URL}/entity/purchase_order/{self.order_id}/positions/{self.position_id}",
             json=json_data,
         )
 
@@ -1114,7 +1114,7 @@ class DeletePurchaseOrderPositionRequest(types.ApiRequest):
     def to_request(self) -> RequestData:
         return RequestData(
             method="DELETE",
-            url=f"{helpers.BASE_URL}/entity/purchaseorder/{self.order_id}/positions/{self.position_id}",
+            url=f"{helpers.BASE_URL}/entity/purchase_order/{self.order_id}/positions/{self.position_id}",
             allow_non_json=True,
         )
 

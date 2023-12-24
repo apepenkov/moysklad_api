@@ -133,7 +133,7 @@ class GetFullStockReportRequest(types.ApiRequest):
         :param limit: Limit the number of entities to retrieve. (Ограничить количество сущностей для извлечения.)
         :param offset: Offset in the returned list of entities. (Отступ в выдаваемом списке сущностей.)
         :param group_by: Type to group by. (Тип, по которому нужно сгруппировать выдачу.)
-        :param include_related: Include consignments for products and variants. (Вывод остатков по модификациям и сериям товаров.)
+        :param include_related: Include consignments for product and variants. (Вывод остатков по модификациям и сериям товаров.)
         """
 
         self.limit = limit

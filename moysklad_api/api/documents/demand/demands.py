@@ -1,8 +1,8 @@
 import datetime
 import typing
 
-from .... import types, helpers
-from ....types import Unset, RequestData
+from moysklad_api import types, helpers
+from moysklad_api.types import Unset, RequestData
 
 
 class Demand(types.MoySkladBaseClass):
@@ -759,9 +759,7 @@ class GetDemandPositionsRequest(types.ApiRequest):
             params["offset"] = self.offset
         return RequestData(
             method="GET",
-            url=f"{helpers.BASE_URL}/entity/demand/"
-            + str(self.id)
-            + "/positions",
+            url=f"{helpers.BASE_URL}/entity/demand/" + str(self.id) + "/positions",
             params=params,
         )
 
@@ -795,9 +793,7 @@ class CreateDemandPositionsRequest(types.ApiRequest):
         json = self.positions
         return RequestData(
             method="POST",
-            url=f"{helpers.BASE_URL}/entity/demand/"
-            + str(self.id)
-            + "/positions",
+            url=f"{helpers.BASE_URL}/entity/demand/" + str(self.id) + "/positions",
             json=json,
         )
 

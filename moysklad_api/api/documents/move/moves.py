@@ -1,7 +1,7 @@
 import typing
 import datetime
-from .... import types, helpers
-from ....types import Unset, RequestData
+from moysklad_api import types, helpers
+from moysklad_api.types import Unset, RequestData
 
 
 class Move(types.MoySkladBaseClass):
@@ -171,8 +171,8 @@ class GetMovesRequest(types.ApiRequest):
     ):
         """
 
-        :param limit: Limit of moves to get (Лимит передвижений для получения)
-        :param offset: Offset of moves to get (Отступ передвижений для получения)
+        :param limit: Limit of move to get (Лимит передвижений для получения)
+        :param offset: Offset of move to get (Отступ передвижений для получения)
         :param search: Search string (Строка поиска)
         """
         self.limit = limit

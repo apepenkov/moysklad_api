@@ -1,7 +1,7 @@
 import typing
 import datetime
-from .... import types, helpers
-from ....types import Unset, RequestData
+from moysklad_api import types, helpers
+from moysklad_api.types import Unset, RequestData
 
 
 class Enter(types.MoySkladBaseClass):

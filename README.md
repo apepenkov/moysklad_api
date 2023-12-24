@@ -155,3 +155,90 @@ Responses are only type-hinted, if you use wrapped methods from `client`, or if 
 I would highly recommend looking at type hints, as they are very informative.
 
 
+
+
+## Roadmap:
+
+### Entities
+- [ ] Assortment
+- [ ] Agent
+- [ ] Bonus operation
+- [ ] Currency
+- [x] Webhook
+- [ ] GTD
+- [ ] Processing Plan Folder
+- [x] Product group (product folder)
+- [ ] Agreement
+- [ ] Units of measurement
+- [ ] Task
+- [ ] Image
+- [ ] Sales channel
+- [ ] Cashier
+- [ ] Tracking codes
+- [ ] Bundle
+- [ ] Counterparty
+- [ ] Variant
+- [ ] Company settings
+- [ ] User settings
+- [ ] Group
+- [ ] Barcode / QR code printing (export)
+- [ ] Subscription
+- [ ] User roles
+- [x] Custom entity
+- [ ] Project
+- [ ] Region
+- [ ] Consignment
+- [ ] Discount
+- [x] Store
+- [ ] Employee
+- [ ] Saved filter
+- [ ] VAT
+- [ ] Document status
+- [ ] Expense item
+- [ ] Country
+- [ ] Processing plan
+- [ ] Processing process
+- [ ] Price type
+- [x] Product
+- [ ] Retail store
+- [ ] Service
+- [ ] Files
+- [ ] Characteristics
+- [ ] Embedded Template
+- [x] Organization
+- [ ] Processing Stage
+
+### Documents
+
+- [ ] Retail drawer cash in
+- [x] Internal order
+- [ ] Sales return
+- [ ] Purchase return
+- [ ] Prepayment return
+- [ ] Payment in
+- [ ] Commission report out
+- [ ] Retail drawer cash out
+- [ ] Processing order
+- [ ] Customer order
+- [x] Purchase order
+- [ ] inventory
+- [ ] Payment out
+- [ ] Counterparty adjustment
+- [x] Enter
+- [x] Demand
+- [x] Move
+- [ ] Commission report inf
+- [ ] Price list
+- [ ] Prepayment
+- [ ] Supply
+- [ ] Cash in
+- [ ] Cash out
+- [ ] Retail demand
+- [ ] Retail shift
+- [ ] Retail sales return
+- [ ] Loss
+- [ ] Invoice out
+- [x] Invoice in
+- [ ] Facture out
+- [ ] Facture in
+- [ ] Processing

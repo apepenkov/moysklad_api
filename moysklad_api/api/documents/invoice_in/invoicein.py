@@ -1,8 +1,8 @@
 import typing
 import datetime
-from .... import types
-from .... import helpers
-from ....types import Unset, RequestData
+from moysklad_api import types
+from moysklad_api import helpers
+from moysklad_api.types import Unset, RequestData
 
 
 class InvoiceIn(types.MoySkladBaseClass):
@@ -141,7 +141,7 @@ class InvoiceIn(types.MoySkladBaseClass):
         instance.vat_included = dict_data.get("vatIncluded", False)
         instance.vat_sum = dict_data.get("vatSum")
         instance.supplies = [
-            helpers.get_meta(x, must=True) for x in dict_data.get("supplies", [])
+            helpers.get_meta(x, must=True) for x in dict_data.get("supply", [])
         ]
         instance.purchase_order = helpers.get_meta(dict_data.get("purchaseOrder"))
         return instance

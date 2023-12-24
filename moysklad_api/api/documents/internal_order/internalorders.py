@@ -1,7 +1,7 @@
 import typing
 import datetime
-from .... import types, helpers
-from ....types import Unset, RequestData
+from moysklad_api import types, helpers
+from moysklad_api.types import Unset, RequestData
 
 
 class InternalOrder(types.MoySkladBaseClass):
@@ -22,7 +22,7 @@ class InternalOrder(types.MoySkladBaseClass):
     id 	UUID 	 	                        ID Внутреннего заказа  Обязательное при ответе Только для чтения
     meta 	Meta 		                    Метаданные Внутреннего заказа    Обязательное при ответе Только для чтения
     moment 	DateTime 	 	                Дата документа     Обязательное при ответе
-    moves 	Array(Object) 		            Коллекция метаданных на связанные заказы перемещения    Обязательное при ответе
+    move 	Array(Object) 		            Коллекция метаданных на связанные заказы перемещения    Обязательное при ответе
     name 	String(255) 	 	            Наименование Внутреннего заказа    Обязательное при ответе Необходимо при создании
     organization 	Meta 	 	            Метаданные юрлица    Обязательное при ответе Expand Необходимо при создании
     owner 	Meta 	 	                    Владелец (Сотрудник)    Обязательное при ответе Expand
@@ -97,7 +97,7 @@ class InternalOrder(types.MoySkladBaseClass):
         instance.meta = dict_data.get("meta")
         instance.moment = helpers.parse_date(dict_data.get("moment"))
         instance.moves = [
-            helpers.get_meta(x, must=True) for x in dict_data.get("moves", [])
+            helpers.get_meta(x, must=True) for x in dict_data.get("move", [])
         ]
         instance.name = dict_data.get("name")
         instance.organization = helpers.get_meta(dict_data.get("organization"))
@@ -210,7 +210,7 @@ class GetInternalOrdersRequest(types.ApiRequest):
             params["search"] = self.search
         return RequestData(
             method="GET",
-            url=f"{helpers.BASE_URL}/entity/internalorder",
+            url=f"{helpers.BASE_URL}/entity/internal_order",
             params=params,
         )
 
@@ -391,7 +391,7 @@ class CreateInternalOrderRequest(types.ApiRequest):
         if self.files != Unset:
             json_data["files"] = self.files
         if self.moves != Unset:
-            json_data["moves"] = self.moves
+            json_data["move"] = self.moves
         if self.purchase_orders != Unset:
             json_data["purchaseOrders"] = self.purchase_orders
         if self.vat_enabled != Unset:
@@ -400,7 +400,7 @@ class CreateInternalOrderRequest(types.ApiRequest):
             json_data["vatIncluded"] = self.vat_included
         return RequestData(
             method="POST",
-            url=f"{helpers.BASE_URL}/entity/internalorder",
+            url=f"{helpers.BASE_URL}/entity/internal_order",
             json=json_data,
         )
 
@@ -427,7 +427,7 @@ class GetInternalOrderRequest(types.ApiRequest):
     ) -> RequestData:
         return RequestData(
             method="GET",
-            url=f"{helpers.BASE_URL}/entity/internalorder/{self.id}",
+            url=f"{helpers.BASE_URL}/entity/internal_order/{self.id}",
         )
 
     def from_response(self, response: dict) -> InternalOrder:
@@ -600,7 +600,7 @@ class UpdateInternalOrderRequest(types.ApiRequest):
         if self.files != Unset:
             json_data["files"] = self.files
         if self.moves != Unset:
-            json_data["moves"] = self.moves
+            json_data["move"] = self.moves
         if self.purchase_orders != Unset:
             json_data["purchaseOrders"] = self.purchase_orders
         if self.vat_enabled != Unset:
@@ -609,7 +609,7 @@ class UpdateInternalOrderRequest(types.ApiRequest):
             json_data["vatIncluded"] = self.vat_included
         return RequestData(
             method="PUT",
-            url=f"{helpers.BASE_URL}/entity/internalorder/{self.id}",
+            url=f"{helpers.BASE_URL}/entity/internal_order/{self.id}",
             json=json_data,
         )
 
@@ -656,7 +656,7 @@ class GetOrderPositionsRequest(types.ApiRequest):
 
         return RequestData(
             method="GET",
-            url=f"{helpers.BASE_URL}/entity/internalorder/{self.id}/positions",
+            url=f"{helpers.BASE_URL}/entity/internal_order/{self.id}/positions",
             params=params,
         )
 
@@ -710,7 +710,7 @@ class AddOrderPositionsRequest(types.ApiRequest):
             )
         return RequestData(
             method="POST",
-            url=f"{helpers.BASE_URL}/entity/internalorder/{self.id}/positions",
+            url=f"{helpers.BASE_URL}/entity/internal_order/{self.id}/positions",
             json=json_data,
         )
 
@@ -743,7 +743,7 @@ class DeleteOrderPositionRequest(types.ApiRequest):
     ) -> RequestData:
         return RequestData(
             method="DELETE",
-            url=f"{helpers.BASE_URL}/entity/internalorder/{self.order_id}/positions/{self.position_id}",
+            url=f"{helpers.BASE_URL}/entity/internal_order/{self.order_id}/positions/{self.position_id}",
             allow_non_json=True,  # this endpoint returns empty body (octet-stream)
             json={},
         )
@@ -779,7 +779,7 @@ class GetOrderPositionRequest(types.ApiRequest):
     ) -> RequestData:
         return RequestData(
             method="GET",
-            url=f"{helpers.BASE_URL}/entity/internalorder/{self.order_id}/positions/{self.position_id}",
+            url=f"{helpers.BASE_URL}/entity/internal_order/{self.order_id}/positions/{self.position_id}",
         )
 
     def from_response(self, response: dict) -> Position:
