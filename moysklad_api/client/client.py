@@ -139,7 +139,7 @@ class MoySkladClient:
                         if resp.status >= 500:
                             try:
                                 json_resp = await resp.json()
-                            except Exception:
+                            except (aiohttp.ContentTypeError, json.JSONDecodeError):
                                 json_resp = {}
                             last_exception = MoySkladError(
                                 json_resp.get(

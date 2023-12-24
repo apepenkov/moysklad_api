@@ -1,3 +1,4 @@
+import abc
 import typing
 
 
@@ -40,7 +41,7 @@ class Rate(typing.TypedDict):
     currency: Meta
 
 
-class MoySkladBaseClass:
+class MoySkladBaseClass(abc.ABC):
     def __repr__(self):
         return (
             f"{self.__class__.__name__}("
@@ -49,6 +50,7 @@ class MoySkladBaseClass:
         )
 
     @classmethod
+    @abc.abstractmethod
     def from_json(cls, dict_data: dict) -> "MoySkladBaseClass":
         raise NotImplementedError
 
@@ -94,11 +96,12 @@ class RequestData:
         return kwargs
 
 
-class ApiRequest:
-    # method: typing.Literal["GET", "POST", "PUT", "DELETE"], url: str, **kwargs
+class ApiRequest(abc.ABC):
+    @abc.abstractmethod
     def to_request(self) -> RequestData:
         raise NotImplementedError
 
+    @abc.abstractmethod
     def from_response(self, result: dict):
         raise NotImplementedError
 
