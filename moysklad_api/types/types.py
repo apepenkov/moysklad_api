@@ -83,7 +83,7 @@ class RequestData:
         return self.__repr__()
 
     def to_kwargs(self) -> dict:
-        kwargs = {"allow_non_json": self.allow_non_json}
+        kwargs = {"allow_non_json": self.allow_non_json, "method": self.method, "url": self.url}
         if self.json is not None:
             kwargs["json"] = self.json
         if self.params is not None:
