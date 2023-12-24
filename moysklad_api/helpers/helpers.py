@@ -20,3 +20,6 @@ def get_meta(
     if must:
         return meta_data["meta"]
     return meta_data.get("meta") if meta_data else None
+
+
+BASE_URL = "https://api.moysklad.ru/api/remap/1.2"

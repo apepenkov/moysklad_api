@@ -130,7 +130,7 @@ class GetProductFoldersRequest(types.ApiRequest):
             params["offset"] = self.offset
         return RequestData(
             method="GET",
-            url="https://api.moysklad.ru/api/remap/1.2/entity/productfolder",
+            url=f"{helpers.BASE_URL}/entity/productfolder",
             params=params,
         )
 
@@ -254,7 +254,7 @@ class CreateProductFolderRequest(types.ApiRequest):
 
         return RequestData(
             method="POST",
-            url="https://api.moysklad.ru/api/remap/1.2/entity/productfolder",
+            url=f"{helpers.BASE_URL}/entity/productfolder",
             json=json_data,
         )
 
@@ -281,7 +281,7 @@ class DeleteProductFolderRequest(types.ApiRequest):
     def to_request(self) -> RequestData:
         return RequestData(
             method="DELETE",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/productfolder/{self.folder_id}",
+            url=f"{helpers.BASE_URL}/entity/productfolder/{self.folder_id}",
             allow_non_json=True,
         )
 
@@ -307,7 +307,7 @@ class GetProductFolderRequest(types.ApiRequest):
     def to_request(self) -> RequestData:
         return RequestData(
             method="GET",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/productfolder/{self.folder_id}",
+            url=f"{helpers.BASE_URL}/entity/productfolder/{self.folder_id}",
         )
 
     def from_response(self, result) -> "ProductFolder":
@@ -423,7 +423,7 @@ class UpdateProductFolderRequest(types.ApiRequest):
             json_data["vatEnabled"] = self.vat_enabled
         return RequestData(
             method="PUT",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/productfolder/{self.folder_id}",
+            url=f"{helpers.BASE_URL}/entity/productfolder/{self.folder_id}",
             json=json_data,
         )
 

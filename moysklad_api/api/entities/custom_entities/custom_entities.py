@@ -100,7 +100,7 @@ class CreateCustomEntityRequest(types.ApiRequest):
             json_request["meta"] = self.meta
         return RequestData(
             method="POST",
-            url="https://api.moysklad.ru/api/remap/1.2/entity/customentity",
+            url=f"{helpers.BASE_URL}/entity/customentity",
             json=json_request,
         )
 
@@ -137,7 +137,7 @@ class UpdateCustomEntityRequest(types.ApiRequest):
             json_request["meta"] = self.meta
         return RequestData(
             method="PUT",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/customentity/{self.id}",
+            url=f"{helpers.BASE_URL}/entity/customentity/{self.id}",
             json=json_request,
         )
 
@@ -160,7 +160,7 @@ class DeleteCustomEntityRequest(types.ApiRequest):
     def to_request(self) -> RequestData:
         return RequestData(
             method="DELETE",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/customentity/{self.id}",
+            url=f"{helpers.BASE_URL}/entity/customentity/{self.id}",
             allow_non_json=True,
         )
 
@@ -232,7 +232,7 @@ class CreateCustomEntityElementRequest(types.ApiRequest):
             json_data["shared"] = self.shared
         return RequestData(
             method="POST",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/customentity/{self.metadata_id}",
+            url=f"{helpers.BASE_URL}/entity/customentity/{self.metadata_id}",
             json=json_data,
         )
 
@@ -307,7 +307,7 @@ class UpdateCustomEntityElementRequest(types.ApiRequest):
             json_data["shared"] = self.shared
         return RequestData(
             method="PUT",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/customentity/{self.metadata_id}/{self.element_id}",
+            url=f"{helpers.BASE_URL}/entity/customentity/{self.metadata_id}/{self.element_id}",
             json=json_data,
         )
 
@@ -333,7 +333,7 @@ class DeleteCustomEntityElementRequest(types.ApiRequest):
     def to_request(self) -> RequestData:
         return RequestData(
             method="DELETE",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/customentity/{self.metadata_id}/{self.element_id}",
+            url=f"{helpers.BASE_URL}/entity/customentity/{self.metadata_id}/{self.element_id}",
             allow_non_json=True,
         )
 
@@ -359,7 +359,7 @@ class GetCustomEntityElementRequest(types.ApiRequest):
     def to_request(self) -> RequestData:
         return RequestData(
             method="GET",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/customentity/{self.metadata_id}/{self.element_id}",
+            url=f"{helpers.BASE_URL}/entity/customentity/{self.metadata_id}/{self.element_id}",
         )
 
     def from_response(self, result: dict) -> "CustomEntityElement":
@@ -396,7 +396,7 @@ class GetCustomEntityElementsRequest(types.ApiRequest):
             params["offset"] = self.offset
         return RequestData(
             method="GET",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/customentity/{self.metadata_id}",
+            url=f"{helpers.BASE_URL}/entity/customentity/{self.metadata_id}",
             params=params,
         )
 

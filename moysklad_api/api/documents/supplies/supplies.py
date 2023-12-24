@@ -237,7 +237,7 @@ class GetSuppliesRequest(types.ApiRequest):
             params["search"] = self.search
         return RequestData(
             method="GET",
-            url="https://api.moysklad.ru/api/remap/1.2/entity/supply",
+            url=f"{helpers.BASE_URL}/entity/supply",
             params=params,
         )
 
@@ -451,7 +451,7 @@ class CreateSupplyRequest(types.ApiRequest):
             json_data["vatIncluded"] = self.vat_included
         return RequestData(
             method="POST",
-            url="https://api.moysklad.ru/api/remap/1.2/entity/supply",
+            url=f"{helpers.BASE_URL}/entity/supply",
             json=json_data,
         )
 
@@ -477,7 +477,7 @@ class DeleteSupplyRequest(types.ApiRequest):
     def to_request(self) -> RequestData:
         return RequestData(
             method="DELETE",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}",
+            url=f"{helpers.BASE_URL}/entity/supply/{self.supply_id}",
             allow_non_json=True,
         )
 
@@ -503,7 +503,7 @@ class GetSupplyRequest(types.ApiRequest):
     def to_request(self) -> RequestData:
         return RequestData(
             method="GET",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}",
+            url=f"{helpers.BASE_URL}/entity/supply/{self.supply_id}",
         )
 
     def from_response(self, result: dict) -> Supply:
@@ -733,7 +733,7 @@ class UpdateSupplyRequest(types.ApiRequest):
 
         return RequestData(
             method="PUT",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}",
+            url=f"{helpers.BASE_URL}/entity/supply/{self.supply_id}",
             json=json_data,
         )
 
@@ -777,7 +777,7 @@ class GetSupplyPositionsRequest(types.ApiRequest):
             params["offset"] = self.offset
         return RequestData(
             method="GET",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}/positions",
+            url=f"{helpers.BASE_URL}/entity/supply/{self.supply_id}/positions",
             params=params,
         )
 
@@ -843,7 +843,7 @@ class CreateSupplyPositionRequest(types.ApiRequest):
             json_data["overhead"] = self.overhead
         return RequestData(
             method="POST",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}/positions",
+            url=f"{helpers.BASE_URL}/entity/supply/{self.supply_id}/positions",
             json=json_data,
         )
 
@@ -881,7 +881,7 @@ class GetSupplyPositionRequest(types.ApiRequest):
     def to_request(self) -> RequestData:
         return RequestData(
             method="GET",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}/positions/{self.position_id}",
+            url=f"{helpers.BASE_URL}/entity/supply/{self.supply_id}/positions/{self.position_id}",
         )
 
     def from_response(self, result: dict) -> Position:
@@ -956,7 +956,7 @@ class UpdateSupplyPositionRequest(types.ApiRequest):
             json_data["overhead"] = self.overhead
         return RequestData(
             method="PUT",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}/positions/{self.position_id}",
+            url=f"{helpers.BASE_URL}/entity/supply/{self.supply_id}/positions/{self.position_id}",
             json=json_data,
         )
 
@@ -994,7 +994,7 @@ class DeleteSupplyPositionRequest(types.ApiRequest):
     def to_request(self) -> RequestData:
         return RequestData(
             method="DELETE",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/supply/{self.supply_id}/positions/{self.position_id}",
+            url=f"{helpers.BASE_URL}/entity/supply/{self.supply_id}/positions/{self.position_id}",
             allow_non_json=True,
         )
 

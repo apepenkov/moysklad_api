@@ -202,7 +202,7 @@ class GetEntersRequest(types.ApiRequest):
             params["search"] = self.search
         return RequestData(
             method="GET",
-            url="https://api.moysklad.ru/api/remap/1.2/entity/enter",
+            url=f"{helpers.BASE_URL}/entity/enter",
             params=params,
         )
 
@@ -396,7 +396,7 @@ class CreateEnterRequest(types.ApiRequest):
             json_data["shared"] = self.shared
         return RequestData(
             method="POST",
-            url="https://api.moysklad.ru/api/remap/1.2/entity/enter",
+            url=f"{helpers.BASE_URL}/entity/enter",
             json=json_data,
         )
 
@@ -422,7 +422,7 @@ class DeleteEnterRequest(types.ApiRequest):
     def to_request(self) -> RequestData:
         return RequestData(
             method="DELETE",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/enter/{self.enter_id}",
+            url=f"{helpers.BASE_URL}/entity/enter/{self.enter_id}",
             allow_non_json=True,
         )
 
@@ -448,7 +448,7 @@ class GetEnterRequest(types.ApiRequest):
     def to_request(self) -> RequestData:
         return RequestData(
             method="GET",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/enter/{self.enter_id}",
+            url=f"{helpers.BASE_URL}/entity/enter/{self.enter_id}",
         )
 
     def from_response(self, result) -> Enter:
@@ -605,7 +605,7 @@ class UpdateEnterRequest(types.ApiRequest):
             json_data["shared"] = self.shared
         return RequestData(
             method="PUT",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/enter/{self.enter_id}",
+            url=f"{helpers.BASE_URL}/entity/enter/{self.enter_id}",
             json=json_data,
         )
 
@@ -647,7 +647,7 @@ class GetEnterPositionsRequest(types.ApiRequest):
             params["offset"] = self.offset
         return RequestData(
             method="GET",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/enter/{self.enter_id}/positions",
+            url=f"{helpers.BASE_URL}/entity/enter/{self.enter_id}/positions",
             params=params,
         )
 
@@ -721,7 +721,7 @@ class CreateEnterPositionRequest(types.ApiRequest):
             json_data.append(pos)
         return RequestData(
             method="POST",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/enter/{self.enter_id}/positions",
+            url=f"{helpers.BASE_URL}/entity/enter/{self.enter_id}/positions",
             json=json_data,
         )
 
@@ -754,7 +754,7 @@ class GetEnterPositionRequest(types.ApiRequest):
     def to_request(self) -> RequestData:
         return RequestData(
             method="GET",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/enter/{self.enter_id}/positions/{self.position_id}",
+            url=f"{helpers.BASE_URL}/entity/enter/{self.enter_id}/positions/{self.position_id}",
         )
 
     def from_response(self, result) -> EnterPosition:
@@ -849,7 +849,7 @@ class UpdateEnterPositionRequest(types.ApiRequest):
             json_data["overhead"] = self.overhead
         return RequestData(
             method="PUT",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/enter/{self.enter_id}/positions/{self.position_id}",
+            url=f"{helpers.BASE_URL}/entity/enter/{self.enter_id}/positions/{self.position_id}",
             json=json_data,
         )
 
@@ -882,7 +882,7 @@ class DeleteEnterPositionRequest(types.ApiRequest):
     def to_request(self) -> RequestData:
         return RequestData(
             method="DELETE",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/enter/{self.enter_id}/positions/{self.position_id}",
+            url=f"{helpers.BASE_URL}/entity/enter/{self.enter_id}/positions/{self.position_id}",
             allow_non_json=True,
         )
 

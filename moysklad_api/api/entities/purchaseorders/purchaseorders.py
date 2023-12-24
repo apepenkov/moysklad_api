@@ -256,7 +256,7 @@ class GetPurchaseOrderListRequest(types.ApiRequest):
             params["search"] = self.search
         return RequestData(
             method="GET",
-            url="https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder",
+            url=f"{helpers.BASE_URL}/entity/purchaseorder",
             params=params,
         )
 
@@ -543,7 +543,7 @@ class CreatePurchaseOrderRequest(types.ApiRequest):
             )
         return RequestData(
             method="POST",
-            url="https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder",
+            url=f"{helpers.BASE_URL}/entity/purchaseorder",
             json=json_data,
         )
 
@@ -569,7 +569,7 @@ class DeletePurchaseOrderRequest(types.ApiRequest):
     def to_request(self) -> RequestData:
         return RequestData(
             method="DELETE",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}",
+            url=f"{helpers.BASE_URL}/entity/purchaseorder/{self.order_id}",
             allow_non_json=True,
         )
 
@@ -598,7 +598,7 @@ class GetPurchaseOrderRequest(types.ApiRequest):
     def to_request(self) -> RequestData:
         return RequestData(
             method="GET",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}",
+            url=f"{helpers.BASE_URL}/entity/purchaseorder/{self.order_id}",
         )
 
     def from_response(self, result) -> PurchaseOrder:
@@ -878,7 +878,7 @@ class UpdatePurchaseOrderRequest(types.ApiRequest):
 
         return RequestData(
             method="PUT",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}",
+            url=f"{helpers.BASE_URL}/entity/purchaseorder/{self.order_id}",
             json=json_data,
         )
 
@@ -916,7 +916,7 @@ class GetPurchaseOrderPositionsRequest(types.ApiRequest):
             params["offset"] = self.offset
         return RequestData(
             method="GET",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}/positions",
+            url=f"{helpers.BASE_URL}/entity/purchaseorder/{self.order_id}/positions",
             params=params,
         )
 
@@ -981,7 +981,7 @@ class CreatePurchaseOrderPositionRequest(types.ApiRequest):
             json_data["discount"] = self.discount
         return RequestData(
             method="POST",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseOrder/{self.order_id}/positions",
+            url=f"{helpers.BASE_URL}/entity/purchaseOrder/{self.order_id}/positions",
             json=json_data,
         )
 
@@ -1011,7 +1011,7 @@ class GetPurchaseOrderPositionRequest(types.ApiRequest):
     def to_request(self) -> RequestData:
         return RequestData(
             method="GET",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}/positions/{self.position_id}",
+            url=f"{helpers.BASE_URL}/entity/purchaseorder/{self.order_id}/positions/{self.position_id}",
         )
 
     def from_response(self, result) -> PurchaseOrderPosition:
@@ -1085,7 +1085,7 @@ class UpdatePurchaseOrderPositionRequest(types.ApiRequest):
 
         return RequestData(
             method="PUT",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}/positions/{self.position_id}",
+            url=f"{helpers.BASE_URL}/entity/purchaseorder/{self.order_id}/positions/{self.position_id}",
             json=json_data,
         )
 
@@ -1114,7 +1114,7 @@ class DeletePurchaseOrderPositionRequest(types.ApiRequest):
     def to_request(self) -> RequestData:
         return RequestData(
             method="DELETE",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/purchaseorder/{self.order_id}/positions/{self.position_id}",
+            url=f"{helpers.BASE_URL}/entity/purchaseorder/{self.order_id}/positions/{self.position_id}",
             allow_non_json=True,
         )
 

@@ -118,7 +118,7 @@ class GetOrganizationsRequest(types.ApiRequest):
 
         return RequestData(
             method="GET",
-            url="https://api.moysklad.ru/api/remap/1.2/entity/organization",
+            url=f"{helpers.BASE_URL}/entity/organization",
             params=params,
         )
 
@@ -232,7 +232,7 @@ class CreateOrganizationRequest(types.ApiRequest):
 
         return RequestData(
             method="POST",
-            url="https://api.moysklad.ru/api/remap/1.2/entity/organization",
+            url=f"{helpers.BASE_URL}/entity/organization",
             json=json_data,
         )
 
@@ -252,7 +252,7 @@ class DeleteOrganizationRequest(types.ApiRequest):
     def to_request(self) -> RequestData:
         return RequestData(
             method="DELETE",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/organization/{self.id}",
+            url=f"{helpers.BASE_URL}/entity/organization/{self.id}",
             allow_non_json=True,
         )
 
@@ -272,7 +272,7 @@ class GetOrganizationRequest(types.ApiRequest):
     def to_request(self) -> RequestData:
         return RequestData(
             method="GET",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/organization/{self.id}",
+            url=f"{helpers.BASE_URL}/entity/organization/{self.id}",
         )
 
     def from_response(self, result: dict) -> Organization:
@@ -388,7 +388,7 @@ class UpdateOrganizationRequest(types.ApiRequest):
 
         return RequestData(
             method="PUT",
-            url="https://api.moysklad.ru/api/remap/1.2/entity/organization/" + self.id,
+            url=f"{helpers.BASE_URL}/entity/organization/" + self.id,
             json=json_data,
         )
 

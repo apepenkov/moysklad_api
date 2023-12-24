@@ -190,7 +190,7 @@ class GetMovesRequest(types.ApiRequest):
 
         return RequestData(
             method="GET",
-            url="https://api.moysklad.ru/api/remap/1.2/entity/move",
+            url=f"{helpers.BASE_URL}/entity/move",
             params=params,
         )
 
@@ -343,7 +343,7 @@ class CreateMoveRequest(types.ApiRequest):
 
         return RequestData(
             method="POST",
-            url="https://api.moysklad.ru/api/remap/1.2/entity/move",
+            url=f"{helpers.BASE_URL}/entity/move",
             json=json_data,
         )
 
@@ -368,7 +368,7 @@ class DeleteMoveRequest(types.ApiRequest):
     def to_request(self) -> RequestData:
         return RequestData(
             method="DELETE",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}",
+            url=f"{helpers.BASE_URL}/entity/move/{self.move_id}",
             allow_non_json=True,
         )
 
@@ -393,7 +393,7 @@ class GetMoveRequest(types.ApiRequest):
     def to_request(self) -> RequestData:
         return RequestData(
             method="GET",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}",
+            url=f"{helpers.BASE_URL}/entity/move/{self.move_id}",
         )
 
     def from_response(self, result) -> Move:
@@ -560,7 +560,7 @@ class UpdateMoveRequest(types.ApiRequest):
             json_data["syncId"] = self.sync_id
         return RequestData(
             method="PUT",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}",
+            url=f"{helpers.BASE_URL}/entity/move/{self.move_id}",
             json=json_data,
         )
 
@@ -610,7 +610,7 @@ class GetMovePositionsRequest(types.ApiRequest):
 
         return RequestData(
             method="GET",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}/positions",
+            url=f"{helpers.BASE_URL}/entity/move/{self.move_id}/positions",
             params=params,
         )
 
@@ -665,7 +665,7 @@ class CreateMovePositionRequest(types.ApiRequest):
 
         return RequestData(
             method="POST",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}/positions",
+            url=f"{helpers.BASE_URL}/entity/move/{self.move_id}/positions",
             json=json_data,
         )
 
@@ -697,7 +697,7 @@ class GetMovePositionRequest(types.ApiRequest):
     def to_request(self) -> RequestData:
         return RequestData(
             method="GET",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}/positions/{self.position_id}",
+            url=f"{helpers.BASE_URL}/entity/move/{self.move_id}/positions/{self.position_id}",
         )
 
     def from_response(self, result) -> MovePosition:
@@ -758,7 +758,7 @@ class UpdateMovePositionRequest(types.ApiRequest):
 
         return RequestData(
             method="PUT",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}/positions/{self.position_id}",
+            url=f"{helpers.BASE_URL}/entity/move/{self.move_id}/positions/{self.position_id}",
             json=json_data,
         )
 
@@ -787,7 +787,7 @@ class DeleteMovePositionRequest(types.ApiRequest):
     def to_request(self) -> RequestData:
         return RequestData(
             method="DELETE",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/move/{self.move_id}/positions/{self.position_id}",
+            url=f"{helpers.BASE_URL}/entity/move/{self.move_id}/positions/{self.position_id}",
         )
 
     def from_response(self, result) -> None:

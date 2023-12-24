@@ -182,7 +182,7 @@ class GetProductListRequest(types.ApiRequest):
 
         return RequestData(
             method="GET",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/product",
+            url=f"{helpers.BASE_URL}/entity/product",
             params=params,
         )
 
@@ -456,7 +456,7 @@ class CreateProductRequest(types.ApiRequest):
 
         return RequestData(
             method="POST",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/product",
+            url=f"{helpers.BASE_URL}/entity/product",
             json=json_data,
         )
 
@@ -483,7 +483,7 @@ class DeleteProductRequest(types.ApiRequest):
             raise ValueError("Product ID is required")
         return RequestData(
             method="DELETE",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/product/{self.id}",
+            url=f"{helpers.BASE_URL}/entity/product/{self.id}",
             allow_non_json=True,
         )
 
@@ -510,7 +510,7 @@ class GetProductRequest(types.ApiRequest):
             raise ValueError("Product ID is required")
         return RequestData(
             method="GET",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/product/{self.id}",
+            url=f"{helpers.BASE_URL}/entity/product/{self.id}",
         )
 
     def from_response(self, response: dict) -> Product:
@@ -790,7 +790,7 @@ class UpdateProductRequest(types.ApiRequest):
         # но я не думаю, что это должно делаться на уровне библиотеки
         return RequestData(
             method="PUT",
-            url=f"https://api.moysklad.ru/api/remap/1.2/entity/product/{self.id}",
+            url=f"{helpers.BASE_URL}/entity/product/{self.id}",
             json=json_data,
         )
 
