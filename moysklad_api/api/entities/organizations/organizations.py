@@ -32,29 +32,28 @@ class Organization(types.MoySkladBaseClass):
     updated                DateTime     Момент последнего обновления Юрлица  Обязательное при ответе, Только для чтения
     """
 
-    def __init__(self):
-        self.account_id: str = None
-        self.actual_address: typing.Optional[str] = None
-        self.actual_address_full: typing.Optional[dict] = None
-        self.archived: bool = None
-        self.attributes: typing.List[dict] = None
-        self.bonus_points: typing.Optional[int] = None
-        self.bonus_program: typing.Optional[types.Meta] = None
-        self.code: typing.Optional[str] = None
-        self.company_type: typing.Literal["legal", "entrepreneur", "individual"] = None
-        self.created: datetime.datetime = None
-        self.description: typing.Optional[str] = None
-        self.external_code: str = None
-        self.group: types.Meta = None
-        self.id: str = None
-        self.meta: types.Meta = None
-        self.name: str = None
-        self.owner: typing.Optional[types.Meta] = None
-        self.shared: bool = None
-        self.sync_id: typing.Optional[str] = None
-        self.tracking_contract_date: typing.Optional[datetime.datetime] = None
-        self.tracking_contract_number: typing.Optional[str] = None
-        self.updated: datetime.datetime = None
+    account_id: str
+    actual_address: typing.Optional[str]
+    actual_address_full: typing.Optional[dict]
+    archived: bool
+    attributes: typing.List[dict]
+    bonus_points: typing.Optional[int]
+    bonus_program: typing.Optional[types.Meta]
+    code: typing.Optional[str]
+    company_type: typing.Literal["legal", "entrepreneur", "individual"]
+    created: datetime.datetime
+    description: typing.Optional[str]
+    external_code: str
+    group: types.Meta
+    id: str
+    meta: types.Meta
+    name: str
+    owner: typing.Optional[types.Meta]
+    shared: bool
+    sync_id: typing.Optional[str]
+    tracking_contract_date: typing.Optional[datetime.datetime]
+    tracking_contract_number: typing.Optional[str]
+    updated: datetime.datetime
 
     @classmethod
     def from_json(cls, dict_data: dict) -> "Organization":
@@ -80,9 +79,9 @@ class Organization(types.MoySkladBaseClass):
         instance.owner = helpers.get_meta(dict_data.get("owner"))
         instance.shared = dict_data.get("shared")
         instance.sync_id = dict_data.get("syncId")
-        tracking_contract_date = dict_data.get("trackingContractDate")
-        if tracking_contract_date is not None:
-            instance.tracking_contract_date = helpers.parse_date(tracking_contract_date)
+        instance.tracking_contract_date = helpers.parse_date(
+            dict_data.get("trackingContractDate")
+        )
         instance.tracking_contract_number = dict_data.get("trackingContractNumber")
         instance.updated = helpers.parse_date(dict_data.get("updated"))
         return instance

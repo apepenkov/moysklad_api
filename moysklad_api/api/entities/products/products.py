@@ -59,117 +59,101 @@ class Product(types.MoySkladBaseClass):
     weight 	                Int 	            Вес
     """
 
-    def __init__(self):
-        # TODO: set optional where required
-        self.account_id: str = None
-        self.alcoholic: dict = None
-        self.archived: bool = None
-        self.article: str = None
-        self.attributes: list = None
-        self.barcodes: list = None
-        self.buy_price: dict = None
-        self.code: str = None
-        self.country: types.Meta = None
-        self.description: str = None
-        self.discount_prohibited: bool = None
-        self.effective_vat: int = None
-        self.effective_vat_enabled: bool = None
-        self.external_code: str = None
-        self.files: types.MetaArray = None
-        self.group: types.Meta = None
-        self.id: str = None
-        self.images: types.MetaArray = None
-        self.is_serial_trackable: bool = None
-        self.meta: types.Meta = None
-        self.min_price: dict = None
-        self.minimum_balance: int = None
-        self.name: str = None
-        self.owner: types.Meta = None
-        self.packs: list = None
-        self.partial_disposal: bool = None
-        self.path_name: str = None
-        self.payment_item_type: str = None
-        self.ppe_type: str = None
-        self.product_folder: types.Meta = None
-        self.sale_prices: list = None
-        self.supplier: types.Meta = None
-        self.sync_id: str = None
-        self.tax_system: str = None
-        self.things: typing.List[str] = None
-        self.tnved: str = None
-        self.tracking_type: str = None
-        self.uom: types.Meta = None
-        self.updated: datetime.datetime = None
-        self.use_parent_vat: bool = None
-        self.variants_count: int = None
-        self.vat: int = None
-        self.vat_enabled: bool = None
-        self.volume: int = None
-        self.weight: int = None
+    account_id: str
+    alcoholic: dict
+    archived: bool
+    article: str
+    attributes: list
+    barcodes: list
+    buy_price: dict
+    code: str
+    country: types.Meta
+    description: str
+    discount_prohibited: bool
+    effective_vat: int
+    effective_vat_enabled: bool
+    external_code: str
+    files: types.MetaArray
+    group: types.Meta
+    id: str
+    images: types.MetaArray
+    is_serial_trackable: bool
+    meta: types.Meta
+    min_price: dict
+    minimum_balance: int
+    name: str
+    owner: types.Meta
+    packs: list
+    partial_disposal: bool
+    path_name: str
+    payment_item_type: str
+    ppe_type: str
+    product_folder: types.Meta
+    sale_prices: list
+    supplier: types.Meta
+    sync_id: str
+    tax_system: str
+    things: typing.List[str]
+    tnved: str
+    tracking_type: str
+    uom: types.Meta
+    updated: datetime.datetime
+    use_parent_vat: bool
+    variants_count: int
+    vat: int
+    vat_enabled: bool
+    volume: int
+    weight: int
 
     @classmethod
     def from_json(cls, dict_data: dict) -> "Product":
-        result = cls()
-        result.account_id = dict_data.get("accountId")
-        result.alcoholic = dict_data.get("alcoholic")
-        result.archived = dict_data.get("archived")
-        result.article = dict_data.get("article")
-        result.attributes = dict_data.get("attributes")
-        result.barcodes = dict_data.get("barcodes")
-        result.buy_price = dict_data.get("buyPrice")
-        result.code = dict_data.get("code")
-        country = dict_data.get("country")
-        if country:
-            result.country = country["meta"]
-        result.description = dict_data.get("description")
-        result.discount_prohibited = dict_data.get("discountProhibited")
-        result.effective_vat = dict_data.get("effectiveVat")
-        result.effective_vat_enabled = dict_data.get("effectiveVatEnabled")
-        result.external_code = dict_data.get("externalCode")
-        result.files = dict_data.get("files")
-        group = dict_data.get("group")
-        if group:
-            result.group = group["meta"]
-        result.id = dict_data.get("id")
-        result.images = dict_data.get("images")
-        result.is_serial_trackable = dict_data.get("isSerialTrackable")
-        result.meta = dict_data.get("meta")
-        result.min_price = dict_data.get("minPrice")
-        result.minimum_balance = dict_data.get("minimumBalance")
-        result.name = dict_data.get("name")
-        owner = dict_data.get("owner")
-        if owner:
-            result.owner = owner["meta"]
-        result.packs = dict_data.get("packs")
-        result.partial_disposal = dict_data.get("partialDisposal")
-        result.path_name = dict_data.get("pathName")
-        result.payment_item_type = dict_data.get("paymentItemType")
-        result.ppe_type = dict_data.get("ppeType")
-        product_folder = dict_data.get("productFolder")
-        if product_folder:
-            result.product_folder = product_folder["meta"]
-        result.sale_prices = dict_data.get("salePrices")
-        supplier = dict_data.get("supplier")
-        if supplier:
-            result.supplier = supplier["meta"]
-        result.sync_id = dict_data.get("syncId")
-        result.tax_system = dict_data.get("taxSystem")
-        result.things = dict_data.get("things")
-        result.tnved = dict_data.get("tnved")
-        result.tracking_type = dict_data.get("trackingType")
-        uom = dict_data.get("uom")
-        if uom:
-            result.uom = uom["meta"]
-        updated = dict_data.get("updated")
-        if updated:
-            result.updated = helpers.parse_date(updated)
-        result.use_parent_vat = dict_data.get("useParentVat")
-        result.variants_count = dict_data.get("variantsCount")
-        result.vat = dict_data.get("vat")
-        result.vat_enabled = dict_data.get("vatEnabled")
-        result.volume = dict_data.get("volume")
-        result.weight = dict_data.get("weight")
-        return result
+        instance = cls()
+        instance.account_id = dict_data.get("accountId")
+        instance.alcoholic = dict_data.get("alcoholic")
+        instance.archived = dict_data.get("archived")
+        instance.article = dict_data.get("article")
+        instance.attributes = dict_data.get("attributes")
+        instance.barcodes = dict_data.get("barcodes")
+        instance.buy_price = dict_data.get("buyPrice")
+        instance.code = dict_data.get("code")
+        instance.country = helpers.get_meta(dict_data.get("country"))
+        instance.description = dict_data.get("description")
+        instance.discount_prohibited = dict_data.get("discountProhibited")
+        instance.effective_vat = dict_data.get("effectiveVat")
+        instance.effective_vat_enabled = dict_data.get("effectiveVatEnabled")
+        instance.external_code = dict_data.get("externalCode")
+        instance.files = dict_data.get("files")
+        instance.group = helpers.get_meta(dict_data.get("group"))
+        instance.id = dict_data.get("id")
+        instance.images = dict_data.get("images")
+        instance.is_serial_trackable = dict_data.get("isSerialTrackable")
+        instance.meta = dict_data.get("meta")
+        instance.min_price = dict_data.get("minPrice")
+        instance.minimum_balance = dict_data.get("minimumBalance")
+        instance.name = dict_data.get("name")
+        instance.owner = helpers.get_meta(dict_data.get("owner"))
+        instance.packs = dict_data.get("packs")
+        instance.partial_disposal = dict_data.get("partialDisposal")
+        instance.path_name = dict_data.get("pathName")
+        instance.payment_item_type = dict_data.get("paymentItemType")
+        instance.ppe_type = dict_data.get("ppeType")
+        instance.product_folder = helpers.get_meta(dict_data.get("productFolder"))
+        instance.sale_prices = dict_data.get("salePrices")
+        instance.supplier = helpers.get_meta(dict_data.get("supplier"))
+        instance.sync_id = dict_data.get("syncId")
+        instance.tax_system = dict_data.get("taxSystem")
+        instance.things = dict_data.get("things")
+        instance.tnved = dict_data.get("tnved")
+        instance.tracking_type = dict_data.get("trackingType")
+        instance.uom = helpers.get_meta(dict_data.get("uom"))
+        instance.updated = helpers.parse_date(dict_data.get("updated"))
+        instance.use_parent_vat = dict_data.get("useParentVat")
+        instance.variants_count = dict_data.get("variantsCount")
+        instance.vat = dict_data.get("vat")
+        instance.vat_enabled = dict_data.get("vatEnabled")
+        instance.volume = dict_data.get("volume")
+        instance.weight = dict_data.get("weight")
+        return instance
 
 
 class GetProductListRequest(types.ApiRequest):

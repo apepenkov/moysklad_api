@@ -42,38 +42,37 @@ class Move(types.MoySkladBaseClass):
     updated 	        DateTime 	  	Момент последнего обновления Перемещения     Обязательное при ответе Только для чтения
     """
 
-    def __init__(self):
-        self.account_id: str = None
-        self.applicable: bool = None
-        self.attributes: dict = None
-        self.code: str = None
-        self.created: datetime.datetime = None
-        self.deleted: datetime.datetime = None
-        self.description: str = None
-        self.external_code: str = None
-        self.files: types.MetaArray = None
-        self.group: types.Meta = None
-        self.id: str = None
-        self.internal_order: types.Meta = None
-        self.custom_order: types.Meta = None
-        self.meta: types.Meta = None
-        self.moment: datetime.datetime = None
-        self.name: str = None
-        self.organization: types.Meta = None
-        self.overhead: dict = None
-        self.owner: types.Meta = None
-        self.positions: types.MetaArray = None
-        self.printed: bool = None
-        self.project: types.Meta = None
-        self.published: bool = None
-        self.rate: types.Rate = None
-        self.shared: bool = None
-        self.source_store: types.Meta = None
-        self.state: types.Meta = None
-        self.sum: int = None
-        self.sync_id: str = None
-        self.target_store: types.Meta = None
-        self.updated: datetime.datetime = None
+    account_id: str
+    applicable: bool
+    attributes: dict
+    code: str
+    created: datetime.datetime
+    deleted: datetime.datetime
+    description: str
+    external_code: str
+    files: types.MetaArray
+    group: types.Meta
+    id: str
+    internal_order: types.Meta
+    custom_order: types.Meta
+    meta: types.Meta
+    moment: datetime.datetime
+    name: str
+    organization: types.Meta
+    overhead: dict
+    owner: types.Meta
+    positions: types.MetaArray
+    printed: bool
+    project: types.Meta
+    published: bool
+    rate: types.Rate
+    shared: bool
+    source_store: types.Meta
+    state: types.Meta
+    sum: int
+    sync_id: str
+    target_store: types.Meta
+    updated: datetime.datetime
 
     @classmethod
     def from_json(cls, dict_data: dict) -> "Move":
@@ -127,17 +126,16 @@ class MovePosition(types.MoySkladBaseClass):
     things 	    Array(String) 	Серийные номера. Значение данного атрибута игнорируется, если товар позиции не находится на серийном учете. В ином случае количество товаров в позиции будет равно количеству серийных номеров, переданных в значении атрибута.
     """
 
-    def __init__(self):
-        self.account_id: str = None
-        self.assortment: types.Meta = None
-        self.id: str = None
-        self.overhead: int = None
-        self.pack: dict = None
-        self.price: float = None
-        self.quantity: float = None
-        self.source_slot: types.Meta = None
-        self.target_slot: types.Meta = None
-        self.things: typing.List[str] = None
+    account_id: str
+    assortment: types.Meta
+    id: str
+    overhead: int
+    pack: dict
+    price: float
+    quantity: float
+    source_slot: types.Meta
+    target_slot: types.Meta
+    things: typing.List[str]
 
     @classmethod
     def from_json(cls, dict_data: dict) -> "MovePosition":

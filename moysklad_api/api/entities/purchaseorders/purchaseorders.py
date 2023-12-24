@@ -59,51 +59,50 @@ class PurchaseOrder(types.MoySkladBaseClass):
     internalOrder 	        Внутренний заказ, связанный с заказом поставщику, в формате Метаданных
     """
 
-    def __init__(self):
-        self.account_id: str = None
-        self.agent: types.Meta = None
-        self.agent_account: typing.Optional[types.Meta] = None
-        self.applicable: bool = None
-        self.attributes: typing.Optional[typing.List[dict]] = None
-        self.code: typing.Optional[str] = None
-        self.contract: typing.Optional[types.Meta] = None
-        self.created: datetime.datetime = None
-        self.deleted: typing.Optional[datetime.datetime] = None
-        self.delivery_planned_moment: typing.Optional[datetime.datetime] = None
-        self.description: typing.Optional[str] = None
-        self.external_code: str = None
-        self.files: types.MetaArray = None
-        self.group: types.Meta = None
-        self.id: str = None
-        self.invoiced_sum: float = None
-        self.meta: types.Meta = None
-        self.moment: datetime.datetime = None
-        self.name: str = None
-        self.organization: types.Meta = None
-        self.organization_account: typing.Optional[types.Meta] = None
-        self.owner: types.Meta = None
-        self.payed_sum: typing.Optional[float] = None
-        self.positions: typing.Optional[types.MetaArray] = None
-        self.printed: bool = None
-        self.project: typing.Optional[types.Meta] = None
-        self.published: bool = None
-        self.rate: types.Rate = None
-        self.shared: bool = None
-        self.shipped_sum: typing.Optional[float] = None
-        self.state: typing.Optional[types.Meta] = None
-        self.store: typing.Optional[types.Meta] = None
-        self.sum: typing.Optional[int] = None
-        self.sync_id: typing.Optional[str] = None
-        self.updated: datetime.datetime = None
-        self.vat_enabled: bool = None
-        self.vat_included: typing.Optional[bool] = None
-        self.vat_sum: typing.Optional[float] = None
-        self.wait_sum: typing.Optional[float] = None
-        self.custom_orders: typing.Optional[typing.List[types.Meta]] = None
-        self.invoices_in: typing.Optional[typing.List[types.Meta]] = None
-        self.payments: typing.Optional[typing.List[types.Meta]] = None
-        self.supplies: typing.Optional[typing.List[types.Meta]] = None
-        self.internal_order: typing.Optional[types.Meta] = None
+    account_id: str
+    agent: types.Meta
+    agent_account: typing.Optional[types.Meta]
+    applicable: bool
+    attributes: typing.Optional[typing.List[dict]]
+    code: typing.Optional[str]
+    contract: typing.Optional[types.Meta]
+    created: datetime.datetime
+    deleted: typing.Optional[datetime.datetime]
+    delivery_planned_moment: typing.Optional[datetime.datetime]
+    description: typing.Optional[str]
+    external_code: str
+    files: types.MetaArray
+    group: types.Meta
+    id: str
+    invoiced_sum: float
+    meta: types.Meta
+    moment: datetime.datetime
+    name: str
+    organization: types.Meta
+    organization_account: typing.Optional[types.Meta]
+    owner: types.Meta
+    payed_sum: typing.Optional[float]
+    positions: typing.Optional[types.MetaArray]
+    printed: bool
+    project: typing.Optional[types.Meta]
+    published: bool
+    rate: types.Rate
+    shared: bool
+    shipped_sum: typing.Optional[float]
+    state: typing.Optional[types.Meta]
+    store: typing.Optional[types.Meta]
+    sum: typing.Optional[int]
+    sync_id: typing.Optional[str]
+    updated: datetime.datetime
+    vat_enabled: bool
+    vat_included: typing.Optional[bool]
+    vat_sum: typing.Optional[float]
+    wait_sum: typing.Optional[float]
+    custom_orders: typing.Optional[typing.List[types.Meta]]
+    invoices_in: typing.Optional[typing.List[types.Meta]]
+    payments: typing.Optional[typing.List[types.Meta]]
+    supplies: typing.Optional[typing.List[types.Meta]]
+    internal_order: typing.Optional[types.Meta]
 
     @classmethod
     def from_json(cls, dict_data: dict) -> "PurchaseOrder":
@@ -189,19 +188,18 @@ class PurchaseOrderPosition(types.MoySkladBaseClass):
     wait 	            Boolean 	Ожидается данной позиции
     """
 
-    def __init__(self):
-        self.account_id: str = None
-        self.assortment: types.Meta = None
-        self.discount: int = None
-        self.id: str = None
-        self.pack: typing.Optional[dict] = None
-        self.price: float = None
-        self.quantity: float = None
-        self.shipped: int = None
-        self.in_transit: int = None
-        self.vat: int = None
-        self.vat_enabled: bool = None
-        self.wait: typing.Optional[bool] = None
+    account_id: str
+    assortment: types.Meta
+    discount: int
+    id: str
+    pack: typing.Optional[dict]
+    price: float
+    quantity: float
+    shipped: int
+    in_transit: int
+    vat: int
+    vat_enabled: bool
+    wait: typing.Optional[bool]
 
     @classmethod
     def from_json(cls, dict_data: dict) -> "PurchaseOrderPosition":

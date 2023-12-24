@@ -21,16 +21,15 @@ class Webhook(types.MoySkladBaseClass):
     action 	            String 	        Тип события
     """
 
-    def __init__(self):
-        self.meta: types.Meta = None
-        self.author_application: types.Meta = None
-        self.id: str = None
-        self.account_id: str = None
-        self.entity_type: str = None
-        self.url: str = None
-        self.method: str = None
-        self.enabled: bool = None
-        self.action: str = None
+    meta: types.Meta
+    author_application: types.Meta
+    id: str
+    account_id: str
+    entity_type: str
+    url: str
+    method: str
+    enabled: bool
+    action: str
 
     @classmethod
     def from_json(cls, dict_data: dict) -> "Webhook":

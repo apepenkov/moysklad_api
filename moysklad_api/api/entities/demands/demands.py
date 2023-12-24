@@ -49,46 +49,45 @@ class Demand(types.MoySkladBaseClass):
     vatSum              Float         Сумма НДС     Только для чтения
     """
 
-    def __init__(self):
-        self.account_id: str = None
-        self.agent: types.Meta = None
-        self.agent_account: typing.Optional[types.Meta] = None
-        self.applicable: bool = None
-        self.attributes: typing.Optional[typing.List[dict]] = None
-        self.code: typing.Optional[str] = None
-        self.contract: typing.Optional[types.Meta] = None
-        self.created: datetime.datetime = None
-        self.deleted: typing.Optional[datetime.datetime] = None
-        self.description: typing.Optional[str] = None
-        self.external_code: str = None
-        self.files: types.MetaArray = None
-        self.group: types.Meta = None
-        self.id: str = None
-        self.meta: types.Meta = None
-        self.moment: datetime.datetime = None
-        self.name: str = None
-        self.organization: types.Meta = None
-        self.organization_account: typing.Optional[types.Meta] = None
-        self.overhead: typing.Optional[dict] = None
-        self.owner: types.Meta = None
-        self.payed_sum: float = None
-        self.positions: types.MetaArray = None
-        self.printed: bool = None
-        self.project: typing.Optional[types.Meta] = None
-        self.published: bool = None
-        self.rate: dict = None
-        self.sales_channel: typing.Optional[types.Meta] = None
-        self.shared: bool = None
-        self.shipment_address: typing.Optional[str] = None
-        self.shipment_address_full: typing.Optional[dict] = None
-        self.state: typing.Optional[types.Meta] = None
-        self.store: types.Meta = None
-        self.sum: int = None
-        self.sync_id: typing.Optional[str] = None
-        self.updated: datetime.datetime = None
-        self.vat_enabled: bool = None
-        self.vat_included: typing.Optional[bool] = None
-        self.vat_sum: typing.Optional[float] = None
+    account_id: str
+    agent: types.Meta
+    agent_account: typing.Optional[types.Meta]
+    applicable: bool
+    attributes: typing.Optional[typing.List[dict]]
+    code: typing.Optional[str]
+    contract: typing.Optional[types.Meta]
+    created: datetime.datetime
+    deleted: typing.Optional[datetime.datetime]
+    description: typing.Optional[str]
+    external_code: str
+    files: types.MetaArray
+    group: types.Meta
+    id: str
+    meta: types.Meta
+    moment: datetime.datetime
+    name: str
+    organization: types.Meta
+    organization_account: typing.Optional[types.Meta]
+    overhead: typing.Optional[dict]
+    owner: types.Meta
+    payed_sum: float
+    positions: types.MetaArray
+    printed: bool
+    project: typing.Optional[types.Meta]
+    published: bool
+    rate: dict
+    sales_channel: typing.Optional[types.Meta]
+    shared: bool
+    shipment_address: typing.Optional[str]
+    shipment_address_full: typing.Optional[dict]
+    state: typing.Optional[types.Meta]
+    store: types.Meta
+    sum: int
+    sync_id: typing.Optional[str]
+    updated: datetime.datetime
+    vat_enabled: bool
+    vat_included: typing.Optional[bool]
+    vat_sum: typing.Optional[float]
 
     @classmethod
     def from_json(cls, dict_data: dict) -> "Demand":
@@ -159,22 +158,21 @@ class DemandPosition(types.MoySkladBaseClass):
     vatEnabled         Boolean       Включен ли НДС для позиции. С помощью этого флага для позиции можно выставлять НДС = 0 или НДС = "без НДС". (vat = 0, vatEnabled = false) -> vat = "без НДС", (vat = 0, vatEnabled = true) -> vat = 0%.
     """
 
-    def __init__(self):
-        self.account_id: str = None
-        self.assortment: types.Meta = None
-        self.cost: typing.Optional[int] = None
-        self.discount: int = None
-        self.id: str = None
-        self.pack: typing.Optional[dict] = None
-        self.price: float = None
-        self.quantity: float = None
-        self.slot: typing.Optional[types.Meta] = None
-        self.things: typing.Optional[typing.List[str]] = None
-        self.tracking_codes: typing.Optional[typing.List[dict]] = None
-        self.tracking_codes_1162: typing.Optional[typing.List[dict]] = None
-        self.overhead: int = None
-        self.vat: int = None
-        self.vat_enabled: bool = None
+    account_id: str
+    assortment: types.Meta
+    cost: typing.Optional[int]
+    discount: int
+    id: str
+    pack: typing.Optional[dict]
+    price: float
+    quantity: float
+    slot: typing.Optional[types.Meta]
+    things: typing.Optional[typing.List[str]]
+    tracking_codes: typing.Optional[typing.List[dict]]
+    tracking_codes_1162: typing.Optional[typing.List[dict]]
+    overhead: int
+    vat: int
+    vat_enabled: bool
 
     @classmethod
     def from_json(cls, dict_data: dict) -> "DemandPosition":

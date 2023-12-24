@@ -31,26 +31,25 @@ class Store(types.MoySkladBaseClass):
     slots 	            MetaArray 		Ячейки склада. Подробнее тут                            Только для чтения Expand
     """
 
-    def __init__(self):
-        self.account_id: str = None
-        self.address: typing.Optional[str] = None
-        self.address_full: typing.Optional[dict] = None
-        self.archived: bool = None
-        self.attributes: typing.Optional[typing.List[dict]] = None
-        self.code: typing.Optional[str] = None
-        self.description: typing.Optional[str] = None
-        self.external_code: str = None
-        self.group: typing.Optional[types.Meta] = None
-        self.id: str = None
-        self.meta: types.Meta = None
-        self.name: str = None
-        self.owner: typing.Optional[types.Meta] = None
-        self.parent: typing.Optional[types.Meta] = None
-        self.path_name: str = None
-        self.shared: bool = None
-        self.updated: datetime.datetime = None
-        self.zones: typing.Optional[types.MetaArray] = None
-        self.slots: typing.Optional[types.MetaArray] = None
+    account_id: str
+    address: typing.Optional[str]
+    address_full: typing.Optional[dict]
+    archived: bool
+    attributes: typing.Optional[typing.List[dict]]
+    code: typing.Optional[str]
+    description: typing.Optional[str]
+    external_code: str
+    group: typing.Optional[types.Meta]
+    id: str
+    meta: types.Meta
+    name: str
+    owner: typing.Optional[types.Meta]
+    parent: typing.Optional[types.Meta]
+    path_name: str
+    shared: bool
+    updated: datetime.datetime
+    zones: typing.Optional[types.MetaArray]
+    slots: typing.Optional[types.MetaArray]
 
     @classmethod
     def from_json(cls, dict_data: dict) -> "Store":
@@ -91,13 +90,12 @@ class StoreZone(types.MoySkladBaseClass):
     updated 	    DateTime 		    Момент последнего обновления Зоны   Обязательное при ответе Только для чтения
     """
 
-    def __init__(self):
-        self.account_id: str = None
-        self.external_code: str = None
-        self.id: str = None
-        self.meta: types.Meta = None
-        self.name: str = None
-        self.updated: datetime.datetime = None
+    account_id: str
+    external_code: str
+    id: str
+    meta: types.Meta
+    name: str
+    updated: datetime.datetime
 
     @classmethod
     def from_json(cls, dict_data: dict) -> "StoreZone":
@@ -125,14 +123,13 @@ class StoreSlot(types.MoySkladBaseClass):
     zone 	        Meta 		    Зона ячейки. Подробнее тут https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-sklad-zony-sklada    Только для чтения Expand
     """
 
-    def __init__(self):
-        self.account_id: str = None
-        self.external_code: str = None
-        self.id: str = None
-        self.meta: types.Meta = None
-        self.name: str = None
-        self.updated: datetime.datetime = None
-        self.zone: typing.Optional[types.Meta] = None
+    account_id: str
+    external_code: str
+    id: str
+    meta: types.Meta
+    name: str
+    updated: datetime.datetime
+    zone: typing.Optional[types.Meta] = None
 
     @classmethod
     def from_json(cls, dict_data: dict) -> "StoreSlot":

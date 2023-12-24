@@ -29,22 +29,21 @@ class FullStockReport(types.MoySkladBaseClass):
     uom 	            Object 	        Единица измерения. Подробнее тут (https://dev.moysklad.ru/doc/api/remap/1.2/reports/#otchety-otchet-ostatki-rasshirennyj-otchet-ob-ostatkah-edinica-izmereniq)    Обязательное при ответе
     """
 
-    def __init__(self):
-        self.article: typing.Optional[str] = None
-        self.code: str = None
-        self.external_code: str = None
-        self.folder: dict = None
-        self.image: types.Meta = None
-        self.in_transit: float = None
-        self.meta: types.Meta = None
-        self.name: str = None
-        self.price: typing.Optional[float] = None
-        self.quantity: float = None
-        self.reserve: float = None
-        self.sale_price: typing.Optional[float] = None
-        self.stock: float = None
-        self.stock_days: int = None
-        self.uom: dict = None
+    article: typing.Optional[str]
+    code: str
+    external_code: str
+    folder: dict
+    image: types.Meta
+    in_transit: float
+    meta: types.Meta
+    name: str
+    price: typing.Optional[float]
+    quantity: float
+    reserve: float
+    sale_price: typing.Optional[float]
+    stock: float
+    stock_days: int
+    uom: dict
 
     @classmethod
     def from_json(cls, dict_data: dict) -> "FullStockReport":
@@ -77,10 +76,9 @@ class SmallStockReport(types.MoySkladBaseClass):
     https://dev.moysklad.ru/doc/api/remap/1.2/reports/#otchety-otchet-ostatki-kratkij-otchet-ob-ostatkah
     """
 
-    def __init__(self):
-        self.assortment_id: str = None
-        self.store_id: typing.Optional[str] = None
-        self.stock: int = None
+    assortment_id: str
+    store_id: typing.Optional[str]
+    stock: int
 
     @classmethod
     def from_json(cls, dict_data: dict) -> "SmallStockReport":

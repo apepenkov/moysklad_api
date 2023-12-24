@@ -48,35 +48,34 @@ class Enter(types.MoySkladBaseClass):
 
     """
 
-    def __init__(self):
-        self.account_id: str = None
-        self.applicable: bool = None
-        self.attributes: typing.Optional[list] = None
-        self.code: typing.Optional[str] = None
-        self.created: datetime.datetime = None
-        self.deleted: typing.Optional[datetime.datetime] = None
-        self.description: typing.Optional[str] = None
-        self.external_code: str = None
-        self.files: types.MetaArray = None
-        self.group: types.Meta = None
-        self.id: str = None
-        self.meta: types.Meta = None
-        self.moment: datetime.datetime = None
-        self.name: str = None
-        self.organization: types.Meta = None
-        self.overhead: typing.Optional[dict] = None
-        self.owner: types.Meta = None
-        self.positions: types.MetaArray = None
-        self.printed: bool = None
-        self.project: typing.Optional[types.Meta] = None
-        self.published: bool = None
-        self.rate: dict = None
-        self.shared: bool = None
-        self.state: typing.Optional[types.Meta] = None
-        self.store: types.Meta = None
-        self.sum: int = None
-        self.sync_id: typing.Optional[str] = None
-        self.updated: datetime.datetime = None
+    account_id: str
+    applicable: bool
+    attributes: typing.Optional[list]
+    code: typing.Optional[str]
+    created: datetime.datetime
+    deleted: typing.Optional[datetime.datetime]
+    description: typing.Optional[str]
+    external_code: str
+    files: types.MetaArray
+    group: types.Meta
+    id: str
+    meta: types.Meta
+    moment: datetime.datetime
+    name: str
+    organization: types.Meta
+    overhead: typing.Optional[dict]
+    owner: types.Meta
+    positions: types.MetaArray
+    printed: bool
+    project: typing.Optional[types.Meta]
+    published: bool
+    rate: dict
+    shared: bool
+    state: typing.Optional[types.Meta]
+    store: types.Meta
+    sum: int
+    sync_id: typing.Optional[str]
+    updated: datetime.datetime
 
     @classmethod
     def from_json(cls, dict_data: dict) -> "Enter":
@@ -135,19 +134,18 @@ class EnterPosition(types.MoySkladBaseClass):
     things 	    Object(String) 	Серийные номера. Значение данного атрибута игнорируется, если товар позиции не находится на серийном учете. В ином случае количество товаров в позиции будет равно количеству серийных номеров, переданных в значении атрибута. Change-handler
     """
 
-    def __init__(self):
-        self.account_id: str = None
-        self.assortment: types.Meta = None
-        self.country: typing.Optional[types.Meta] = None
-        self.gtd: typing.Optional[dict] = None
-        self.id: str = None
-        self.overhead: int = None
-        self.pack: typing.Optional[dict] = None
-        self.price: float = None
-        self.quantity: float = None
-        self.reason: typing.Optional[str] = None
-        self.slot: typing.Optional[types.Meta] = None
-        self.things: typing.Optional[dict] = None
+    account_id: str
+    assortment: types.Meta
+    country: typing.Optional[types.Meta]
+    gtd: typing.Optional[dict]
+    id: str
+    overhead: int
+    pack: typing.Optional[dict]
+    price: float
+    quantity: float
+    reason: typing.Optional[str]
+    slot: typing.Optional[types.Meta]
+    things: typing.Optional[dict]
 
     @classmethod
     def from_json(cls, dict_data: dict) -> "EnterPosition":

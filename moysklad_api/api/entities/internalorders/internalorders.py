@@ -43,106 +43,85 @@ class InternalOrder(types.MoySkladBaseClass):
     vatSum 	Float 		                    Сумма НДС   Обязательное при ответе Только для чтения
     """
 
-    def __init__(self):
-        self.account_id: str = None
-        self.applicable: bool = None
-        self.attributes: typing.Optional[list] = None
-        self.code: typing.Optional[str] = None
-        self.created: datetime.datetime = None
-        self.deleted: datetime.datetime = None
-        self.delivery_planned_moment: typing.Optional[datetime.datetime] = None
-        self.description: typing.Optional[str] = None
-        self.external_code: str = None
-        self.files: types.MetaArray = None
-        self.group: types.Meta = None
-        self.id: str = None
-        self.meta: types.Meta = None
-        self.moment: datetime.datetime = None
-        self.moves: typing.List[types.Meta] = None
-        self.name: str = None
-        self.organization: types.Meta = None
-        self.owner: types.Meta = None
-        self.positions: types.MetaArray = None
-        self.project: typing.Optional[types.Meta] = None
-        self.printed: bool = None
-        self.published: bool = None
-        self.purchase_orders: typing.List[types.Meta] = None
-        self.rate: types.Rate = None
-        self.shared: bool = None
-        self.state: typing.Optional[types.Meta] = None
-        self.store: typing.Optional[types.Meta] = None
-        self.sum: int = None
-        self.sync_id: typing.Optional[str] = None
-        self.updated: datetime.datetime = None
-        self.vat_enabled: bool = None
-        self.vat_included: typing.Optional[bool] = None
-        self.vat_sum: float = None
+    account_id: str
+    applicable: bool
+    attributes: typing.Optional[list]
+    code: typing.Optional[str]
+    created: datetime.datetime
+    deleted: datetime.datetime
+    delivery_planned_moment: typing.Optional[datetime.datetime]
+    description: typing.Optional[str]
+    external_code: str
+    files: types.MetaArray
+    group: types.Meta
+    id: str
+    meta: types.Meta
+    moment: datetime.datetime
+    moves: typing.List[types.Meta]
+    name: str
+    organization: types.Meta
+    owner: types.Meta
+    positions: types.MetaArray
+    project: typing.Optional[types.Meta]
+    printed: bool
+    published: bool
+    purchase_orders: typing.List[types.Meta]
+    rate: types.Rate
+    shared: bool
+    state: typing.Optional[types.Meta]
+    store: typing.Optional[types.Meta]
+    sum: int
+    sync_id: typing.Optional[str]
+    updated: datetime.datetime
+    vat_enabled: bool
+    vat_included: typing.Optional[bool]
+    vat_sum: float
 
     @classmethod
     def from_json(cls, dict_data: dict) -> "InternalOrder":
-        result = cls()
-        result.account_id = dict_data.get("accountId")
-        result.applicable = dict_data.get("applicable")
-        result.attributes = dict_data.get("attributes")
-        result.code = dict_data.get("code")
-        created = dict_data.get("created")
-        if created:
-            result.created = helpers.parse_date(created)
-        deleted = dict_data.get("deleted")
-        if deleted:
-            result.deleted = helpers.parse_date(deleted)
-        delivery_planned_moment = dict_data.get("deliveryPlannedMoment")
-        if delivery_planned_moment:
-            result.delivery_planned_moment = helpers.parse_date(delivery_planned_moment)
-        result.description = dict_data.get("description")
-        result.external_code = dict_data.get("externalCode")
-        result.files = dict_data.get("files")
-        group = dict_data.get("group")
-        if group:
-            result.group = group["meta"]
-        result.id = dict_data.get("id")
-        result.meta = dict_data.get("meta")
-        moment = dict_data.get("moment")
-        if moment:
-            result.moment = helpers.parse_date(moment)
-        result.moves = [
+        instance = cls()
+        instance.account_id = dict_data.get("accountId")
+        instance.applicable = dict_data.get("applicable")
+        instance.attributes = dict_data.get("attributes")
+        instance.code = dict_data.get("code")
+        instance.created = helpers.parse_date(dict_data.get("created"))
+        instance.deleted = helpers.parse_date(dict_data.get("deleted"))
+        instance.delivery_planned_moment = helpers.parse_date(
+            dict_data.get("deliveryPlannedMoment")
+        )
+        instance.description = dict_data.get("description")
+        instance.external_code = dict_data.get("externalCode")
+        instance.files = dict_data.get("files")
+        instance.group = helpers.get_meta(dict_data.get("group"))
+        instance.id = dict_data.get("id")
+        instance.meta = dict_data.get("meta")
+        instance.moment = helpers.parse_date(dict_data.get("moment"))
+        instance.moves = [
             helpers.get_meta(x, must=True) for x in dict_data.get("moves", [])
         ]
-        result.name = dict_data.get("name")
-        organization = dict_data.get("organization")
-        if organization:
-            result.organization = organization["meta"]
-        owner = dict_data.get("owner")
-        if owner:
-            result.owner = owner["meta"]
-        result.positions = dict_data.get("positions")
-        project = dict_data.get("project")
-        if project:
-            result.project = project["meta"]
-        result.printed = dict_data.get("printed")
-        result.published = dict_data.get("published")
+        instance.name = dict_data.get("name")
+        instance.organization = helpers.get_meta(dict_data.get("organization"))
+        instance.owner = helpers.get_meta(dict_data.get("owner"))
+        instance.positions = dict_data.get("positions")
+        instance.project = helpers.get_meta(dict_data.get("project"))
+        instance.printed = dict_data.get("printed")
+        instance.published = dict_data.get("published")
 
-        result.purchase_orders = [
+        instance.purchase_orders = [
             helpers.get_meta(x, must=True) for x in dict_data.get("purchaseOrders", [])
         ]
 
-        result.rate = dict_data.get("rate")
-        result.shared = dict_data.get("shared")
-        state = dict_data.get("state")
-        if state:
-            result.state = state["meta"]
-        store = dict_data.get("store")
-        if store:
-            result.store = store["meta"]
-        result.sum = dict_data.get("sum")
-        result.sync_id = dict_data.get("syncId")
-        updated = dict_data.get("updated")
-        if updated:
-            result.updated = helpers.parse_date(updated)
-        result.vat_enabled = dict_data.get("vatEnabled")
-        result.vat_included = dict_data.get("vatIncluded")
-        result.vat_sum = dict_data.get("vatSum")
-        return result
+        instance.rate = dict_data.get("rate")
+        instance.shared = dict_data.get("shared")
+        instance.state = helpers.get_meta(dict_data.get("state"))
+        instance.store = helpers.get_meta(dict_data.get("store"))
+        instance.sum = dict_data.get("sum")
+        instance.sync_id = dict_data.get("syncId")
+        instance.updated = helpers.parse_date(dict_data.get("updated"))
+        instance.vat_enabled = dict_data.get("vatEnabled")
+        instance.vat_included = dict_data.get("vatIncluded")
+        instance.vat_sum = dict_data.get("vatSum")
+        return instance
 
 
 class Position(types.MoySkladBaseClass):
@@ -180,16 +159,16 @@ class Position(types.MoySkladBaseClass):
 
     @classmethod
     def from_json(cls, dict_data: dict) -> "Position":
-        result = cls()
-        result.account_id = dict_data.get("accountId")
-        result.assortment = dict_data.get("assortment", {}).get("meta")
-        result.id = dict_data.get("id")
-        result.pack = dict_data.get("pack")
-        result.price = dict_data.get("price")
-        result.quantity = dict_data.get("quantity")
-        result.vat = dict_data.get("vat")
-        result.vat_enabled = dict_data.get("vatEnabled")
-        return result
+        instance = cls()
+        instance.account_id = dict_data.get("accountId")
+        instance.assortment = dict_data.get("assortment", {}).get("meta")
+        instance.id = dict_data.get("id")
+        instance.pack = dict_data.get("pack")
+        instance.price = dict_data.get("price")
+        instance.quantity = dict_data.get("quantity")
+        instance.vat = dict_data.get("vat")
+        instance.vat_enabled = dict_data.get("vatEnabled")
+        return instance
 
 
 class GetInternalOrdersRequest(types.ApiRequest):

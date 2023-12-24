@@ -45,37 +45,36 @@ class ProductFolder(types.MoySkladBaseClass):
     UNIFIED_AGRICULTURAL_TAX 	            ЕСХН
     """
 
-    def __init__(self):
-        self.account_id: str = None
-        self.archived: bool = None
-        self.code: typing.Optional[str] = None
-        self.description: typing.Optional[str] = None
-        self.effective_vat: typing.Optional[int] = None
-        self.effective_vat_enabled: typing.Optional[bool] = None
-        self.external_code: str = None
-        self.group: types.Meta = None
-        self.id: str = None
-        self.meta: types.Meta = None
-        self.name: str = None
-        self.owner: types.Meta = None
-        self.path_name: typing.Optional[str] = None
-        self.shared: bool = None
-        self.tax_system: typing.Optional[
-            typing.Literal[
-                "GENERAL_TAX_SYSTEM",
-                "PATENT_BASED",
-                "PRESUMPTIVE_TAX_SYSTEM",
-                "SIMPLIFIED_TAX_SYSTEM_INCOME",
-                "SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME",
-                "TAX_SYSTEM_SAME_AS_GROUP",
-                "UNIFIED_AGRICULTURAL_TAX",
-            ]
-        ] = None
-        self.updated: datetime.datetime = None
-        self.use_parent_vat: bool = None
-        self.vat: typing.Optional[int] = None
-        self.vat_enabled: typing.Optional[bool] = None
-        self.product_folder: types.Meta = None
+    account_id: str
+    archived: bool
+    code: typing.Optional[str]
+    description: typing.Optional[str]
+    effective_vat: typing.Optional[int]
+    effective_vat_enabled: typing.Optional[bool]
+    external_code: str
+    group: types.Meta
+    id: str
+    meta: types.Meta
+    name: str
+    owner: types.Meta
+    path_name: typing.Optional[str]
+    shared: bool
+    tax_system: typing.Optional[
+        typing.Literal[
+            "GENERAL_TAX_SYSTEM",
+            "PATENT_BASED",
+            "PRESUMPTIVE_TAX_SYSTEM",
+            "SIMPLIFIED_TAX_SYSTEM_INCOME",
+            "SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME",
+            "TAX_SYSTEM_SAME_AS_GROUP",
+            "UNIFIED_AGRICULTURAL_TAX",
+        ]
+    ]
+    updated: datetime.datetime
+    use_parent_vat: bool
+    vat: typing.Optional[int]
+    vat_enabled: typing.Optional[bool]
+    product_folder: types.Meta
 
     @classmethod
     def from_json(cls, dict_data: dict) -> "ProductFolder":

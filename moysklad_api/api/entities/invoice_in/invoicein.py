@@ -52,48 +52,47 @@ class InvoiceIn(types.MoySkladBaseClass):
     vatSum 	                Float 		Сумма НДС Обязательное при ответе Только для чтения Change-handler
     """
 
-    def __init__(self):
-        self.account_id: str = None
-        self.agent: types.Meta = None
-        self.agent_account: typing.Optional[types.Meta] = None
-        self.applicable: bool = None
-        self.attributes: typing.Optional[typing.List[dict]] = None
-        self.code: typing.Optional[str] = None
-        self.contract: typing.Optional[types.Meta] = None
-        self.created: datetime.datetime = None
-        self.deleted: typing.Optional[datetime.datetime] = None
-        self.description: typing.Optional[str] = None
-        self.external_code: str = None
-        self.files: typing.Optional[types.MetaArray] = None
-        self.group: types.Meta = None
-        self.id: str = None
-        self.incoming_date: typing.Optional[datetime.datetime] = None
-        self.incoming_number: typing.Optional[float] = None
-        self.meta: types.Meta = None
-        self.moment: datetime.datetime = None
-        self.name: str = None
-        self.organization: types.Meta = None
-        self.organization_account: typing.Optional[types.Meta] = None
-        self.owner: types.Meta = None
-        self.payed_sum: float = None
-        self.payment_planned_moment: typing.Optional[datetime.datetime] = None
-        self.positions: types.MetaArray = None
-        self.printed: bool = None
-        self.project: typing.Optional[types.Meta] = None
-        self.published: bool = None
-        self.rate: dict = None
-        self.shared: bool = None
-        self.shipped_sum: float = None
-        self.state: typing.Optional[types.Meta] = None
-        self.store: typing.Optional[types.Meta] = None
-        self.sum: int = None
-        self.sync_id: typing.Optional[str] = None
-        self.updated: datetime.datetime = None
-        self.vat_enabled: bool = None
-        self.vat_included: typing.Optional[bool] = None
-        self.vat_sum: float = None
-        self.supplies: typing.List[types.Meta] = None
-        self.purchase_order: typing.Optional[types.Meta] = None
+    account_id: str
+    agent: types.Meta
+    agent_account: typing.Optional[types.Meta]
+    applicable: bool
+    attributes: typing.Optional[typing.List[dict]]
+    code: typing.Optional[str]
+    contract: typing.Optional[types.Meta]
+    created: datetime.datetime
+    deleted: typing.Optional[datetime.datetime]
+    description: typing.Optional[str]
+    external_code: str
+    files: typing.Optional[types.MetaArray]
+    group: types.Meta
+    id: str
+    incoming_date: typing.Optional[datetime.datetime]
+    incoming_number: typing.Optional[float]
+    meta: types.Meta
+    moment: datetime.datetime
+    name: str
+    organization: types.Meta
+    organization_account: typing.Optional[types.Meta]
+    owner: types.Meta
+    payed_sum: float
+    payment_planned_moment: typing.Optional[datetime.datetime]
+    positions: types.MetaArray
+    printed: bool
+    project: typing.Optional[types.Meta]
+    published: bool
+    rate: dict
+    shared: bool
+    shipped_sum: float
+    state: typing.Optional[types.Meta]
+    store: typing.Optional[types.Meta]
+    sum: int
+    sync_id: typing.Optional[str]
+    updated: datetime.datetime
+    vat_enabled: bool
+    vat_included: typing.Optional[bool]
+    vat_sum: float
+    supplies: typing.List[types.Meta]
+    purchase_order: typing.Optional[types.Meta]
 
     @classmethod
     def from_json(cls, dict_data: dict) -> "InvoiceIn":
@@ -471,30 +470,30 @@ class CreateInvoiceInRequest(types.ApiRequest):
 
 class InvoiceInPosition(types.MoySkladBaseClass):
     # https://dev.moysklad.ru/doc/api/remap/1.2/documents/#dokumenty-schet-postawschika-poziciq-scheta-postawschika
-    def __init__(self):
-        self.meta: typing.Optional[types.Meta] = None
-        self.id: typing.Optional[str] = None
-        self.account_id: typing.Optional[str] = None
-        self.quantity: typing.Optional[float] = None
-        self.price: typing.Optional[float] = None
-        self.discount: typing.Optional[float] = None
-        self.vat: typing.Optional[float] = None
-        self.vat_enabled: typing.Optional[bool] = None
-        self.assortment: typing.Optional[types.Meta] = None
+
+    meta: typing.Optional[types.Meta]
+    id: typing.Optional[str]
+    account_id: typing.Optional[str]
+    quantity: typing.Optional[float]
+    price: typing.Optional[float]
+    discount: typing.Optional[float]
+    vat: typing.Optional[float]
+    vat_enabled: typing.Optional[bool]
+    assortment: typing.Optional[types.Meta]
 
     @classmethod
     def from_json(cls, data: dict) -> "InvoiceInPosition":
-        position = cls()
-        position.meta = data.get("meta")
-        position.id = data.get("id")
-        position.account_id = data.get("accountId")
-        position.quantity = data.get("quantity")
-        position.price = data.get("price")
-        position.discount = data.get("discount")
-        position.vat = data.get("vat")
-        position.vat_enabled = data.get("vatEnabled")
-        position.assortment = helpers.get_meta(data.get("assortment"))
-        return position
+        instance = cls()
+        instance.meta = data.get("meta")
+        instance.id = data.get("id")
+        instance.account_id = data.get("accountId")
+        instance.quantity = data.get("quantity")
+        instance.price = data.get("price")
+        instance.discount = data.get("discount")
+        instance.vat = data.get("vat")
+        instance.vat_enabled = data.get("vatEnabled")
+        instance.assortment = helpers.get_meta(data.get("assortment"))
+        return instance
 
 
 class DeleteInvoiceInRequest(types.ApiRequest):

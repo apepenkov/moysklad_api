@@ -16,10 +16,9 @@ class CustomEntity(types.MoySkladBaseClass):
     name 	    String(255) 	Наименование Пользовательского справочника     Обязательное при ответе Необходимо при создании
     """
 
-    def __init__(self):
-        self.id: str = None
-        self.meta: types.Meta = None
-        self.name: str = None
+    id: str
+    meta: types.Meta
+    name: str
 
     @classmethod
     def from_json(cls, dict_data: dict) -> "CustomEntity":
@@ -48,18 +47,17 @@ class CustomEntityElement(types.MoySkladBaseClass):
     shared 	        Boolean 	    Общий доступ                                                            Обязательное при ответе
     """
 
-    def __init__(self):
-        self.account_id: str = None
-        self.code: typing.Optional[str] = None
-        self.description: typing.Optional[str] = None
-        self.external_code: str = None
-        self.id: str = None
-        self.meta: types.Meta = None
-        self.name: str = None
-        self.updated: datetime.datetime = None
-        self.group: types.Meta = None
-        self.owner: types.Meta = None
-        self.shared: bool = None
+    account_id: str
+    code: typing.Optional[str]
+    description: typing.Optional[str]
+    external_code: str
+    id: str
+    meta: types.Meta
+    name: str
+    updated: datetime.datetime
+    group: types.Meta
+    owner: types.Meta
+    shared: bool
 
     @classmethod
     def from_json(cls, dict_data: dict) -> "CustomEntityElement":

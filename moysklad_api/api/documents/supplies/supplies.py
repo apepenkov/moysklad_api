@@ -52,47 +52,46 @@ class Supply(types.MoySkladBaseClass):
     vatSum 	            Float 		    Сумма НДС                                           Обязательное при ответе Только для чтения Change-handler
     """
 
-    def __init__(self):
-        self.account_id: str = None
-        self.agent: types.Meta = None
-        self.agent_account: typing.Optional[types.Meta] = None
-        self.applicable: bool = None
-        self.attributes: typing.Optional[typing.List[dict]] = None
-        self.code: typing.Optional[str] = None
-        self.contract: typing.Optional[types.Meta] = None
-        self.created: datetime.datetime = None
-        self.deleted: typing.Optional[datetime.datetime] = None
-        self.description: typing.Optional[str] = None
-        self.external_code: str = None
-        self.files: types.MetaArray = None
-        self.group: types.Meta = None
-        self.id: str = None
-        self.incoming_date: datetime.datetime = None
-        self.incoming_number: typing.Optional[str] = None
-        self.meta: types.Meta = None
-        self.moment: datetime.datetime = None
-        self.name: str = None
-        self.organization: types.Meta = None
-        self.organization_account: typing.Optional[types.Meta] = None
-        self.overhead: typing.Optional[dict] = None
-        self.owner: types.Meta = None
-        self.payed_sum: float = None
-        self.positions: types.MetaArray = None
-        self.printed: bool = None
-        self.project: typing.Optional[types.Meta] = None
-        self.published: bool = None
-        self.rate: typing.Optional[dict] = None
-        self.shared: bool = None
-        self.state: types.Meta = None
-        self.store: types.Meta = None
-        self.sum: int = None
-        self.sync_id: typing.Optional[str] = None
-        self.updated: datetime.datetime = None
-        self.vat_enabled: bool = None
-        self.vat_included: typing.Optional[bool] = None
-        self.vat_sum: float = None
-        self.invoices_in: typing.List[types.Meta] = None
-        self.facture_in: typing.Optional[types.Meta] = None
+    account_id: str
+    agent: types.Meta
+    agent_account: typing.Optional[types.Meta]
+    applicable: bool
+    attributes: typing.Optional[typing.List[dict]]
+    code: typing.Optional[str]
+    contract: typing.Optional[types.Meta]
+    created: datetime.datetime
+    deleted: typing.Optional[datetime.datetime]
+    description: typing.Optional[str]
+    external_code: str
+    files: types.MetaArray
+    group: types.Meta
+    id: str
+    incoming_date: datetime.datetime
+    incoming_number: typing.Optional[str]
+    meta: types.Meta
+    moment: datetime.datetime
+    name: str
+    organization: types.Meta
+    organization_account: typing.Optional[types.Meta]
+    overhead: typing.Optional[dict]
+    owner: types.Meta
+    payed_sum: float
+    positions: types.MetaArray
+    printed: bool
+    project: typing.Optional[types.Meta]
+    published: bool
+    rate: typing.Optional[dict]
+    shared: bool
+    state: types.Meta
+    store: types.Meta
+    sum: int
+    sync_id: typing.Optional[str]
+    updated: datetime.datetime
+    vat_enabled: bool
+    vat_included: typing.Optional[bool]
+    vat_sum: float
+    invoices_in: typing.List[types.Meta]
+    facture_in: typing.Optional[types.Meta]
 
     @classmethod
     def from_json(cls, dict_data: dict) -> "Supply":
@@ -117,7 +116,9 @@ class Supply(types.MoySkladBaseClass):
         instance.moment = helpers.parse_date(dict_data.get("moment"))
         instance.name = dict_data.get("name")
         instance.organization = helpers.get_meta(dict_data.get("organization"))
-        instance.organization_account = helpers.get_meta(dict_data.get("organizationAccount"))
+        instance.organization_account = helpers.get_meta(
+            dict_data.get("organizationAccount")
+        )
         instance.overhead = dict_data.get("overhead")
         instance.owner = helpers.get_meta(dict_data.get("owner"))
         instance.payed_sum = dict_data.get("payedSum")
@@ -164,21 +165,20 @@ class Position(types.MoySkladBaseClass):
     vatEnabled 	        Boolean 	Включен ли НДС для позиции. С помощью этого флага для позиции можно выставлять НДС = 0 или НДС = "без НДС". (vat = 0, vatEnabled = false) -> vat = "без НДС", (vat = 0, vatEnabled = true) -> vat = 0%. Обязательное при ответе Change-handler Update-provider
     """
 
-    def __init__(self):
-        self.account_id: str = None
-        self.assortment: types.Meta = None
-        self.country: typing.Optional[types.Meta] = None
-        self.discount: int = None
-        self.gtd: typing.Optional[dict] = None
-        self.id: str = None
-        self.pack: typing.Optional[dict] = None
-        self.price: float = None
-        self.quantity: float = None
-        self.slot: typing.Optional[int] = None
-        self.things: typing.Optional[typing.List[str]] = None
-        self.overhead: int
-        self.vat: bool = None
-        self.vat_enabled: bool = None
+    account_id: str
+    assortment: types.Meta
+    country: typing.Optional[types.Meta]
+    discount: int
+    gtd: typing.Optional[dict]
+    id: str
+    pack: typing.Optional[dict]
+    price: float
+    quantity: float
+    slot: typing.Optional[int]
+    things: typing.Optional[typing.List[str]]
+    overhead: int
+    vat: bool
+    vat_enabled: bool
 
     @classmethod
     def from_json(cls, dict_data: dict) -> "Position":
