@@ -130,7 +130,7 @@ class GetProductFoldersRequest(types.ApiRequest):
             params["offset"] = self.offset
         return RequestData(
             method="GET",
-            url=f"{helpers.BASE_URL}/entity/product_folder",
+            url=f"{helpers.BASE_URL}/entity/productfolder",
             params=params,
         )
 
@@ -254,7 +254,7 @@ class CreateProductFolderRequest(types.ApiRequest):
 
         return RequestData(
             method="POST",
-            url=f"{helpers.BASE_URL}/entity/product_folder",
+            url=f"{helpers.BASE_URL}/entity/productfolder",
             json=json_data,
         )
 
@@ -281,7 +281,7 @@ class DeleteProductFolderRequest(types.ApiRequest):
     def to_request(self) -> RequestData:
         return RequestData(
             method="DELETE",
-            url=f"{helpers.BASE_URL}/entity/product_folder/{self.folder_id}",
+            url=f"{helpers.BASE_URL}/entity/productfolder/{self.folder_id}",
             allow_non_json=True,
         )
 
@@ -307,7 +307,7 @@ class GetProductFolderRequest(types.ApiRequest):
     def to_request(self) -> RequestData:
         return RequestData(
             method="GET",
-            url=f"{helpers.BASE_URL}/entity/product_folder/{self.folder_id}",
+            url=f"{helpers.BASE_URL}/entity/productfolder/{self.folder_id}",
         )
 
     def from_response(self, result) -> "ProductFolder":
@@ -423,7 +423,7 @@ class UpdateProductFolderRequest(types.ApiRequest):
             json_data["vatEnabled"] = self.vat_enabled
         return RequestData(
             method="PUT",
-            url=f"{helpers.BASE_URL}/entity/product_folder/{self.folder_id}",
+            url=f"{helpers.BASE_URL}/entity/productfolder/{self.folder_id}",
             json=json_data,
         )
 

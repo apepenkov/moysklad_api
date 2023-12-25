@@ -210,7 +210,7 @@ class GetInternalOrdersRequest(types.ApiRequest):
             params["search"] = self.search
         return RequestData(
             method="GET",
-            url=f"{helpers.BASE_URL}/entity/internal_order",
+            url=f"{helpers.BASE_URL}/entity/internalorder",
             params=params,
         )
 
@@ -400,7 +400,7 @@ class CreateInternalOrderRequest(types.ApiRequest):
             json_data["vatIncluded"] = self.vat_included
         return RequestData(
             method="POST",
-            url=f"{helpers.BASE_URL}/entity/internal_order",
+            url=f"{helpers.BASE_URL}/entity/internalorder",
             json=json_data,
         )
 
