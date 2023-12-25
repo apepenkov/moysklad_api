@@ -116,11 +116,9 @@ class PurchaseOrder(types.MoySkladBaseClass):
         instance.contract = helpers.get_meta(dict_data.get("contract"))
         instance.created = helpers.parse_date(dict_data.get("created"))
         instance.deleted = helpers.parse_date(dict_data.get("deleted"))
-        delivery_planned_moment = dict_data.get("deliveryPlannedMoment")
-        if delivery_planned_moment:
-            instance.delivery_planned_moment = helpers.parse_date(
-                delivery_planned_moment
-            )
+        instance.delivery_planned_moment = helpers.parse_date(
+            dict_data.get("deliveryPlannedMoment")
+        )
         instance.description = dict_data.get("description")
         instance.external_code = dict_data.get("externalCode")
         instance.files = dict_data.get("files")
@@ -152,18 +150,10 @@ class PurchaseOrder(types.MoySkladBaseClass):
         instance.vat_included = dict_data.get("vatIncluded")
         instance.vat_sum = dict_data.get("vatSum")
         instance.wait_sum = dict_data.get("waitSum")
-        custom_orders = dict_data.get("customOrders")
-        if custom_orders:
-            instance.custom_orders = [item["meta"] for item in custom_orders]
-        invoices_in = dict_data.get("invoicesIn")
-        if invoices_in:
-            instance.invoices_in = [item["meta"] for item in invoices_in]
-        payments = dict_data.get("payments")
-        if payments:
-            instance.payments = [item["meta"] for item in payments]
-        supplies = dict_data.get("supply")
-        if supplies:
-            instance.supplies = [item["meta"] for item in supplies]
+        instance.custom_orders = [helpers.get_meta(x, must=True) for x in dict_data.get("customOrders", [])]
+        instance.invoices_in = [helpers.get_meta(x, must=True) for x in dict_data.get("invoicesIn", [])]
+        instance.payments = [helpers.get_meta(x, must=True) for x in dict_data.get("payments", [])]
+        instance.supplies = [helpers.get_meta(x, must=True) for x in dict_data.get("supply", [])]
         instance.internal_order = helpers.get_meta(dict_data.get("internalOrder"))
         return instance
 
