@@ -106,11 +106,9 @@ class InternalOrder(types.MoySkladBaseClass):
         instance.project = helpers.get_meta(dict_data.get("project"))
         instance.printed = dict_data.get("printed")
         instance.published = dict_data.get("published")
-
         instance.purchase_orders = [
             helpers.get_meta(x, must=True) for x in dict_data.get("purchaseOrders", [])
         ]
-
         instance.rate = dict_data.get("rate")
         instance.shared = dict_data.get("shared")
         instance.state = helpers.get_meta(dict_data.get("state"))

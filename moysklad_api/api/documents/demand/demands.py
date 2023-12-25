@@ -106,9 +106,7 @@ class Demand(types.MoySkladBaseClass):
         instance.files = dict_data.get("files")
         instance.group = helpers.get_meta(dict_data.get("group"))
         instance.id = dict_data.get("id")
-        meta = dict_data.get("meta")
-        if meta is not None:
-            instance.meta = meta
+        instance.meta = dict_data.get("meta")
         instance.moment = helpers.parse_date(dict_data.get("moment"))
         instance.name = dict_data.get("name")
         instance.organization = helpers.get_meta(dict_data.get("organization"))

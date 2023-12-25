@@ -150,10 +150,18 @@ class PurchaseOrder(types.MoySkladBaseClass):
         instance.vat_included = dict_data.get("vatIncluded")
         instance.vat_sum = dict_data.get("vatSum")
         instance.wait_sum = dict_data.get("waitSum")
-        instance.custom_orders = [helpers.get_meta(x, must=True) for x in dict_data.get("customOrders", [])]
-        instance.invoices_in = [helpers.get_meta(x, must=True) for x in dict_data.get("invoicesIn", [])]
-        instance.payments = [helpers.get_meta(x, must=True) for x in dict_data.get("payments", [])]
-        instance.supplies = [helpers.get_meta(x, must=True) for x in dict_data.get("supply", [])]
+        instance.custom_orders = [
+            helpers.get_meta(x, must=True) for x in dict_data.get("customOrders", [])
+        ]
+        instance.invoices_in = [
+            helpers.get_meta(x, must=True) for x in dict_data.get("invoicesIn", [])
+        ]
+        instance.payments = [
+            helpers.get_meta(x, must=True) for x in dict_data.get("payments", [])
+        ]
+        instance.supplies = [
+            helpers.get_meta(x, must=True) for x in dict_data.get("supply", [])
+        ]
         instance.internal_order = helpers.get_meta(dict_data.get("internalOrder"))
         return instance
 

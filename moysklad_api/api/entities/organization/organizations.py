@@ -72,9 +72,7 @@ class Organization(types.MoySkladBaseClass):
         instance.external_code = dict_data.get("externalCode")
         instance.group = helpers.get_meta(dict_data.get("group"))
         instance.id = dict_data.get("id")
-        meta = dict_data.get("meta")
-        if meta is not None:
-            instance.meta = meta
+        instance.meta = dict_data.get("meta")
         instance.name = dict_data.get("name")
         instance.owner = helpers.get_meta(dict_data.get("owner"))
         instance.shared = dict_data.get("shared")
