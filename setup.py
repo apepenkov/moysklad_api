@@ -20,7 +20,7 @@ setup(
         "moysklad_api.api.documents.invoice_in",
         "moysklad_api.api.entities.webhook",
         "moysklad_api.api.reports",
-        "moysklad_api.api.reports.stocks",
+        "moysklad_api.api.reports.stock",
         "moysklad_api.api.documents",
         "moysklad_api.api.documents.supply",
         "moysklad_api.types",

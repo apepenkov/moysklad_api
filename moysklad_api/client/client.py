@@ -20,7 +20,7 @@ from ..api.entities import (
     webhook as webhook_api,
 )
 from ..api.reports import (
-    stocks as stocks_api,
+    stock as stock_api,
 )
 from ..api.documents import (
     supply as supply_api,
@@ -1914,7 +1914,7 @@ class MoySkladClient:
             )
         )
 
-    # stocks
+    # stock
     async def get_full_stock_report(
         self,
         limit: typing.Union[Unset, int] = 1000,
@@ -1923,7 +1923,7 @@ class MoySkladClient:
             Unset, typing.Literal["product", "variant", "consignment"]
         ] = Unset,
         include_related: typing.Union[Unset, bool] = Unset,
-    ) -> typing.List[stocks_api.FullStockReport]:
+    ) -> typing.List[stock_api.FullStockReport]:
         """
 
         :param limit: Limit the number of entities to retrieve. (Ограничить количество сущностей для извлечения.)
@@ -1933,7 +1933,7 @@ class MoySkladClient:
         :return: List of full stock reports (Список отчетов по остаткам)
         """
         return await self(
-            stocks_api.GetFullStockReportRequest(
+            stock_api.GetFullStockReportRequest(
                 limit=limit,
                 offset=offset,
                 group_by=group_by,
@@ -1950,7 +1950,7 @@ class MoySkladClient:
         ] = Unset,
         filter_assortment_id: typing.Union[Unset, typing.List[str]] = Unset,
         filter_store_id: typing.Union[Unset, typing.List[str]] = Unset,
-    ) -> typing.List[stocks_api.SmallStockReport]:
+    ) -> typing.List[stock_api.SmallStockReport]:
         """
 
         :param include: Include related entities (Включить связанные сущности)
@@ -1962,7 +1962,7 @@ class MoySkladClient:
         """
 
         return await self(
-            stocks_api.GetSmallStockReportCurrentRequest(
+            stock_api.GetSmallStockReportCurrentRequest(
                 include=include,
                 changed_since=changed_since,
                 stock_type=stock_type,

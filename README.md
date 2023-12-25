@@ -242,3 +242,12 @@ I would highly recommend looking at type hints, as they are very informative.
 - [ ] Facture out
 - [ ] Facture in
 - [ ] Processing
+
+### Reports
+- [x] Stock
+- [ ] Byproduct
+- [ ] Plot Series
+- [ ] Sales by product
+- [ ] Counterparty
+- [ ] Turnover
+- [ ] Dashboard
