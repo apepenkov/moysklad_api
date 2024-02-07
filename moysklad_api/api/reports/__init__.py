@@ -1,3 +1,3 @@
 from . import stock
 
-__all__ = ["stocks"]
+__all__ = ["stock"]

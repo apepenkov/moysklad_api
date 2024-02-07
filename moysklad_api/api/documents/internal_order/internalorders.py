@@ -22,7 +22,7 @@ class InternalOrder(types.MoySkladBaseClass):
     id 	UUID 	 	                        ID Внутреннего заказа  Обязательное при ответе Только для чтения
     meta 	Meta 		                    Метаданные Внутреннего заказа    Обязательное при ответе Только для чтения
     moment 	DateTime 	 	                Дата документа     Обязательное при ответе
-    move 	Array(Object) 		            Коллекция метаданных на связанные заказы перемещения    Обязательное при ответе
+    moves 	Array(Object) 		            Коллекция метаданных на связанные заказы перемещения    Обязательное при ответе
     name 	String(255) 	 	            Наименование Внутреннего заказа    Обязательное при ответе Необходимо при создании
     organization 	Meta 	 	            Метаданные юрлица    Обязательное при ответе Expand Необходимо при создании
     owner 	Meta 	 	                    Владелец (Сотрудник)    Обязательное при ответе Expand
@@ -349,7 +349,7 @@ class CreateInternalOrderRequest(types.ApiRequest):
         if self.external_code != Unset:
             json_data["externalCode"] = self.external_code
         if self.moment != Unset:
-            json_data["moment"] = self.moment
+            json_data["moment"] = helpers.date_to_str(self.moment)
         if self.applicable != Unset:
             json_data["applicable"] = self.applicable
         if self.rate != Unset:

@@ -18,6 +18,8 @@ from ..api.entities import (
     store as store_api,
     organization as organization_api,
     webhook as webhook_api,
+    currency as currency_api,
+    bonus_transaction as bonustransaction_api, # TODO
 )
 from ..api.reports import (
     stock as stock_api,
@@ -3903,3 +3905,114 @@ class MoySkladClient:
                 vat=vat,
             )
         )
+
+    async def create_currency_request(
+        self,
+        code: str,
+        iso_code: str,
+        name: str,
+        archived: typing.Union[Unset, bool] = Unset,
+        full_name: typing.Union[Unset, str] = Unset,
+        indirect: typing.Union[Unset, bool] = Unset,
+        major_unit: typing.Union[Unset, dict] = Unset,
+        margin: typing.Union[Unset, float] = Unset,
+        minor_unit: typing.Union[Unset, dict] = Unset,
+        multiplicity: typing.Union[Unset, int] = Unset,
+        rate: typing.Union[Unset, float] = Unset,
+        system: typing.Union[Unset, bool] = Unset,
+    ) -> currency_api.Currency:
+        """
+        :param archived: Добавлена ли Валюта в архив
+        :param code: Цифровой код Валюты
+        :param full_name: Полное наименование Валюты
+        :param indirect: Признак обратного курса Валюты
+        :param iso_code: Буквенный код Валюты
+        :param major_unit: Формы единиц целой части Валюты. https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-valuta-formy-edinic
+        :param margin: Наценка при автоматическом обновлении курса
+        :param minor_unit: Формы единиц дробной части Валюты. https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-valuta-formy-edinic
+        :param multiplicity: Кратность курса Валюты
+        :param name: Краткое наименование Валюты
+        :param rate: Курс Валюты
+        :param system: Является ли Валюта системной
+        :return: Currency
+        """
+        return await self(
+            currency_api.CreateCurrencyRequest(
+                archived=archived,
+                code=code,
+                full_name=full_name,
+                indirect=indirect,
+                iso_code=iso_code,
+                major_unit=major_unit,
+                margin=margin,
+                minor_unit=minor_unit,
+                multiplicity=multiplicity,
+                name=name,
+                rate=rate,
+                system=system,
+            )
+        )
+
+    async def delete_currency_request(self, id_: str) -> None:
+        """
+        :param id_: ID объекта для удаления
+        :return: None
+        """
+        return await self(currency_api.DeleteCurrencyRequest(id_=id_))
+
+    async def update_currency_request(
+        self,
+        id_: str,
+        archived: typing.Union[Unset, bool] = Unset,
+        code: typing.Union[Unset, str] = Unset,
+        full_name: typing.Union[Unset, str] = Unset,
+        indirect: typing.Union[Unset, bool] = Unset,
+        iso_code: typing.Union[Unset, str] = Unset,
+        major_unit: typing.Union[Unset, dict] = Unset,
+        margin: typing.Union[Unset, float] = Unset,
+        minor_unit: typing.Union[Unset, dict] = Unset,
+        multiplicity: typing.Union[Unset, int] = Unset,
+        name: typing.Union[Unset, str] = Unset,
+        rate: typing.Union[Unset, float] = Unset,
+    ) -> currency_api.Currency:
+        """
+        :param id_: ID объекта для обновления
+        :param archived: Добавлена ли Валюта в архив
+        :param code: Цифровой код Валюты
+        :param full_name: Полное наименование Валюты
+        :param indirect: Признак обратного курса Валюты
+        :param iso_code: Буквенный код Валюты
+        :param major_unit: Формы единиц целой части Валюты. https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-valuta-formy-edinic
+        :param margin: Наценка при автоматическом обновлении курса
+        :param minor_unit: Формы единиц дробной части Валюты. https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-valuta-formy-edinic
+        :param multiplicity: Кратность курса Валюты
+        :param name: Краткое наименование Валюты
+        :param rate: Курс Валюты
+        :return: Currency
+        """
+        return await self(
+            currency_api.UpdateCurrencyRequest(
+                id_=id_,
+                archived=archived,
+                code=code,
+                full_name=full_name,
+                indirect=indirect,
+                iso_code=iso_code,
+                major_unit=major_unit,
+                margin=margin,
+                minor_unit=minor_unit,
+                multiplicity=multiplicity,
+                name=name,
+                rate=rate,
+            )
+        )
+
+    async def get_currencies_request(
+        self, limit: int = 1000, offset: int = 0
+    ) -> typing.List[currency_api.Currency]:
+        """
+        :param limit: Количество элементов в ответе
+        :param offset: Смещение
+        :return: typing.List[Currency]
+        """
+        return await self(currency_api.GetCurrenciesRequest(limit=limit, offset=offset))

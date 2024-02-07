@@ -155,6 +155,8 @@ Responses are only type-hinted, if you use wrapped methods from `client`, or if 
 I would highly recommend looking at type hints, as they are very informative.
 
 
+### No mass actions are implmented.
+
 
 
 ## Roadmap:

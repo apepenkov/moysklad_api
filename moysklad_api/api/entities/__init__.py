@@ -5,6 +5,7 @@ from . import (
     organization,
     product_folder,
     custom_entity,
+    assortment,
 )
 
 __all__ = [
@@ -14,4 +15,5 @@ __all__ = [
     "organization",
     "product_folder",
     "custom_entity",
+    "assortment",
 ]
