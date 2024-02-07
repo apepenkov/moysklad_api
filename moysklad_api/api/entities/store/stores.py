@@ -75,6 +75,10 @@ class Store(types.MoySkladBaseClass):
         instance.slots = dict_data.get("slots")
         return instance
 
+    @staticmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        return ("store",)
+
 
 class StoreZone(types.MoySkladBaseClass):
     """
@@ -107,6 +111,10 @@ class StoreZone(types.MoySkladBaseClass):
         instance.name = dict_data.get("name")
         instance.updated = helpers.parse_date(dict_data.get("updated"))
         return instance
+
+    @staticmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        return "store", "zones"
 
 
 class StoreSlot(types.MoySkladBaseClass):
@@ -142,6 +150,10 @@ class StoreSlot(types.MoySkladBaseClass):
         instance.updated = helpers.parse_date(dict_data.get("updated"))
         instance.zone = helpers.get_meta(dict_data.get("zone"))
         return instance
+
+    @staticmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        return "store", "slots"
 
 
 class GetStoresRequest(types.ApiRequest):

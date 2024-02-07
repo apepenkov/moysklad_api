@@ -155,6 +155,10 @@ class Product(types.MoySkladBaseClass):
         instance.weight = dict_data.get("weight")
         return instance
 
+    @staticmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        return ("product",)
+
 
 class GetProductListRequest(types.ApiRequest):
     """https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-towar-poluchit-spisok-towarow

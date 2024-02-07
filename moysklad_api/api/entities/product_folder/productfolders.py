@@ -101,6 +101,10 @@ class ProductFolder(types.MoySkladBaseClass):
         instance.product_folder = helpers.get_meta(dict_data.get("productFolder"))
         return instance
 
+    @staticmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        return ("productfolder",)
+
 
 class GetProductFoldersRequest(types.ApiRequest):
     """

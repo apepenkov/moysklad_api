@@ -165,6 +165,10 @@ class PurchaseOrder(types.MoySkladBaseClass):
         instance.internal_order = helpers.get_meta(dict_data.get("internalOrder"))
         return instance
 
+    @staticmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        return ("purchaseorder",)
+
 
 class PurchaseOrderPosition(types.MoySkladBaseClass):
     """
@@ -215,6 +219,10 @@ class PurchaseOrderPosition(types.MoySkladBaseClass):
         instance.vat_enabled = dict_data.get("vatEnabled")
         instance.wait = dict_data.get("wait")
         return instance
+
+    @staticmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        return "purchaseorder", "positions"
 
 
 class GetPurchaseOrderListRequest(types.ApiRequest):

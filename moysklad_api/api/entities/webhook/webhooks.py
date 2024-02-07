@@ -47,6 +47,10 @@ class Webhook(types.MoySkladBaseClass):
         instance.action = dict_data.get("action")
         return instance
 
+    @staticmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        return ("webhook",)
+
 
 class GetWebhooksRequest(types.ApiRequest):
     """

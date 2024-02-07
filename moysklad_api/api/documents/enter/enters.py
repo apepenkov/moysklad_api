@@ -110,6 +110,10 @@ class Enter(types.MoySkladBaseClass):
         instance.updated = helpers.parse_date(dict_data.get("updated"))
         return instance
 
+    @staticmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        return ("enter",)
+
 
 class EnterPosition(types.MoySkladBaseClass):
     """
@@ -163,6 +167,10 @@ class EnterPosition(types.MoySkladBaseClass):
         instance.slot = helpers.get_meta(dict_data.get("slot"))
         instance.things = dict_data.get("things")
         return instance
+
+    @staticmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        return "enter", "position"
 
 
 class GetEntersRequest(types.ApiRequest):

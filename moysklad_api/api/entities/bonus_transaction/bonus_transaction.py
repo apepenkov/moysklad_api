@@ -63,7 +63,7 @@ class BonusTransaction(types.MoySkladBaseClass):
     def from_json(cls, dict_data: dict) -> "BonusTransaction":
         instance = cls()
 
-        instance.meta = helpers.get_meta(dict_data.get("meta"))
+        instance.meta = dict_data.get("meta")
         instance.id = dict_data.get("id")
         instance.account_id = dict_data.get("accountId")
         instance.agent = helpers.get_meta(dict_data.get("agent"))
@@ -87,6 +87,10 @@ class BonusTransaction(types.MoySkladBaseClass):
         instance.updated = helpers.parse_date(dict_data.get("updated"))
         instance.updated_by = dict_data.get("updatedBy")
         return instance
+
+    @staticmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        return ("bonustransaction",)
 
 
 class GetBonusTransactionsRequest(types.ApiRequest):
@@ -298,5 +302,6 @@ class UpdateBonusTransactionRequest(types.ApiRequest):
 
     def from_response(self, result: dict) -> BonusTransaction:
         return BonusTransaction.from_json(result)
+
 
 # TODO: implement friendly methods

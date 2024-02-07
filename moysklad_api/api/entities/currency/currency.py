@@ -63,6 +63,10 @@ class Currency(types.MoySkladBaseClass):
         instance.system = dict_data.get("system")
         return instance
 
+    @staticmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        return ("currency",)
+
 
 class CreateCurrencyRequest(types.ApiRequest):
     def __init__(

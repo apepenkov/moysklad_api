@@ -135,6 +135,10 @@ class Demand(types.MoySkladBaseClass):
         instance.vat_sum = dict_data.get("vatSum")
         return instance
 
+    @staticmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        return ("demand",)
+
 
 class DemandPosition(types.MoySkladBaseClass):
     """
@@ -191,6 +195,10 @@ class DemandPosition(types.MoySkladBaseClass):
         instance.vat = dict_data.get("vat")
         instance.vat_enabled = dict_data.get("vatEnabled")
         return instance
+
+    @staticmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        return "demand", "positions"
 
 
 class CreateDemandRequest(types.ApiRequest):

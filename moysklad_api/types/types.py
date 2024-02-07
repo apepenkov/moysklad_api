@@ -54,6 +54,17 @@ class MoySkladBaseClass(abc.ABC):
     def from_json(cls, dict_data: dict) -> "MoySkladBaseClass":
         raise NotImplementedError
 
+    @staticmethod
+    @abc.abstractmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        """
+        This should return either a (name, ) or (name, subname) tuple.
+        Subname usecase - for example, a position in an order would have
+        ("purchaseorder", "positions") as a name, and
+        purchaseorder by itself would just have ("purchaseorder", ) as a name.
+        """
+        raise NotImplementedError
+
 
 class RequestData:
     def __init__(

@@ -28,6 +28,10 @@ class CustomEntity(types.MoySkladBaseClass):
         instance.name = dict_data.get("name")
         return instance
 
+    @staticmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        return None
+
 
 class CustomEntityElement(types.MoySkladBaseClass):
     """
@@ -74,6 +78,10 @@ class CustomEntityElement(types.MoySkladBaseClass):
         instance.owner = helpers.get_meta(dict_data.get("owner"))
         instance.shared = dict_data.get("shared")
         return instance
+
+    @staticmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        return ("customentity",)
 
 
 class CreateCustomEntityRequest(types.ApiRequest):

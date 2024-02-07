@@ -70,6 +70,10 @@ class FullStockReport(types.MoySkladBaseClass):
         instance.uom = dict_data.get("uom")
         return instance
 
+    @staticmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        return "stock", "all"
+
 
 class SmallStockReport(types.MoySkladBaseClass):
     """
@@ -92,6 +96,10 @@ class SmallStockReport(types.MoySkladBaseClass):
         instance.store_id = dict_data.get("storeId")
         instance.stock = dict_data.get("stock")
         return instance
+
+    @staticmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        return None
 
 
 class GetFullStockReportRequest(types.ApiRequest):

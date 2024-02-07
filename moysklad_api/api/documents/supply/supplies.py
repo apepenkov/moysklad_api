@@ -142,6 +142,10 @@ class Supply(types.MoySkladBaseClass):
         instance.facture_in = helpers.get_meta(dict_data.get("factureIn"))
         return instance
 
+    @staticmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        return ("supply",)
+
 
 class Position(types.MoySkladBaseClass):
     """
@@ -198,6 +202,10 @@ class Position(types.MoySkladBaseClass):
         instance.vat = dict_data.get("vat")
         instance.vat_enabled = dict_data.get("vatEnabled")
         return instance
+
+    @staticmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        return "supply", "positions"
 
 
 class GetSuppliesRequest(types.ApiRequest):

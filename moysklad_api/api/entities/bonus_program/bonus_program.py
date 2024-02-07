@@ -65,6 +65,10 @@ class BonusProgram(types.MoySkladBaseClass):
         instance.welcome_bonuses_value = dict_data.get("welcomeBonusesValue")
         return instance
 
+    @staticmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        return ("bonusprogram",)
+
 
 class CreateBonusProgramRequest(types.ApiRequest):
     def __init__(
@@ -226,7 +230,9 @@ class UpdateBonusProgramRequest(types.ApiRequest):
         if self.welcome_bonuses_value != Unset:
             json_data["welcomeBonusesValue"] = self.welcome_bonuses_value
         return RequestData(
-            method="PUT", url=f"{helpers.BASE_URL}/entity/bonusprogram/{self.id}", json=json_data
+            method="PUT",
+            url=f"{helpers.BASE_URL}/entity/bonusprogram/{self.id}",
+            json=json_data,
         )
 
     def from_response(self, response: dict) -> BonusProgram:
@@ -255,4 +261,3 @@ class GetBonusProgramsRequest(types.ApiRequest):
 
     def from_response(self, result: dict) -> typing.List[BonusProgram]:
         return [BonusProgram.from_json(x) for x in result["rows"]]
-

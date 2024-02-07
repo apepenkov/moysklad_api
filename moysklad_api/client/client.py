@@ -19,7 +19,8 @@ from ..api.entities import (
     organization as organization_api,
     webhook as webhook_api,
     currency as currency_api,
-    bonus_transaction as bonustransaction_api, # TODO
+    assortment as assortment_api,
+    bonus_transaction as bonustransaction_api,  # TODO
 )
 from ..api.reports import (
     stock as stock_api,
@@ -1058,6 +1059,7 @@ class MoySkladClient:
         limit: typing.Union[Unset, int] = Unset,
         offset: typing.Union[Unset, int] = Unset,
         search: typing.Union[Unset, str] = Unset,
+        expand: typing.Union[Unset, typing.Literal["assortment"]] = Unset,
     ) -> typing.List[move_api.MovePosition]:
         """
 
@@ -1065,11 +1067,16 @@ class MoySkladClient:
         :param limit: Limit (Максимальное количество сущностей для извлечения.Допустимые значения 1 - 1000.)
         :param offset: Offset (Отступ в выдаваемом списке сущностей.)
         :param search: Search (Фильтр документов по указанной поисковой строке.)
+        :param expand: Expand (Связанные сущности, которые необходимо добавить в ответ. Может быть только "assortment")
         """
 
         return await self(
             move_api.GetMovePositionsRequest(
-                move_id=move_id, limit=limit, offset=offset, search=search
+                move_id=move_id,
+                limit=limit,
+                offset=offset,
+                search=search,
+                expand=expand,
             )
         )
 

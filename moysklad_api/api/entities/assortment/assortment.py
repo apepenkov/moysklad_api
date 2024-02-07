@@ -46,7 +46,7 @@ class Assortment(types.MoySkladBaseClass):
     @classmethod
     def from_json(cls, dict_data: dict) -> "Assortment":
         instance = cls()
-        instance.meta = helpers.get_meta(dict_data.get("meta"))
+        instance.meta = dict_data.get("meta")
         instance.id = dict_data.get("id")
         instance.account_id = dict_data.get("accountId")
         instance.owner = helpers.get_meta(dict_data.get("owner"))
@@ -81,6 +81,10 @@ class Assortment(types.MoySkladBaseClass):
         instance.quantity = dict_data.get("quantity")
         return instance
 
+    @staticmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        return ("assortment",)
+
 
 class AssortmentSettingsUniqueCodeRules(types.MoySkladBaseClass):
     check_unique_code: bool
@@ -93,6 +97,10 @@ class AssortmentSettingsUniqueCodeRules(types.MoySkladBaseClass):
         instance.fill_unique_code = dict_data.get("fillUniqueCode")
         return instance
 
+    @staticmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        return None
+
 
 class AssortmentSettingsBarcodeRules(types.MoySkladBaseClass):
     fill_ean13_barcode: bool
@@ -104,6 +112,10 @@ class AssortmentSettingsBarcodeRules(types.MoySkladBaseClass):
         instance.fill_ean13_barcode = dict_data.get("fillEAN13Barcode")
         instance.weight_barcode_prefix = dict_data.get("weightBarcodePrefix")
         return instance
+
+    @staticmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        return None
 
 
 class AssortmentSettings(types.MoySkladBaseClass):
@@ -122,8 +134,12 @@ class AssortmentSettings(types.MoySkladBaseClass):
             dict_data.get("barcodeRules")
         )
         instance.created_shared = dict_data.get("createdShared")
-        instance.meta = helpers.get_meta(dict_data.get("meta"))
+        instance.meta = dict_data.get("meta")
         return instance
+
+    @staticmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        return "assortment", "settings"
 
 
 class GetAssortmentListRequest(types.ApiRequest):

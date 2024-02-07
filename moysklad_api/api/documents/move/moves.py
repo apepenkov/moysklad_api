@@ -2,6 +2,8 @@ import typing
 import datetime
 from moysklad_api import types, helpers
 from moysklad_api.types import Unset, RequestData
+from moysklad_api.api.entities.product import Product
+from moysklad_api.api.entities.assortment import Assortment
 
 
 class Move(types.MoySkladBaseClass):
@@ -110,6 +112,10 @@ class Move(types.MoySkladBaseClass):
         instance.updated = helpers.parse_date(dict_data.get("updated"))
         return instance
 
+    @staticmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        return ("move",)
+
 
 class MovePosition(types.MoySkladBaseClass):
     """
@@ -127,7 +133,7 @@ class MovePosition(types.MoySkladBaseClass):
     """
 
     account_id: str
-    assortment: types.Meta
+    assortment: typing.Union[types.Meta, Product, Assortment]
     id: str
     overhead: int
     pack: dict
@@ -141,7 +147,8 @@ class MovePosition(types.MoySkladBaseClass):
     def from_json(cls, dict_data: dict) -> "MovePosition":
         instance = cls()
         instance.account_id = dict_data.get("accountId")
-        instance.assortment = helpers.get_meta(dict_data.get("assortment"))
+        instance.assortment = helpers.construct_or_meta(dict_data.get("assortment"))
+
         instance.id = dict_data.get("id")
         instance.overhead = dict_data.get("overhead")
         instance.pack = dict_data.get("pack")
@@ -151,6 +158,10 @@ class MovePosition(types.MoySkladBaseClass):
         instance.target_slot = helpers.get_meta(dict_data.get("targetSlot"))
         instance.things = dict_data.get("things")
         return instance
+
+    @staticmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        return "move", "position"
 
 
 class GetMovesRequest(types.ApiRequest):
@@ -585,6 +596,7 @@ class GetMovePositionsRequest(types.ApiRequest):
         limit: typing.Union[Unset, int] = Unset,
         offset: typing.Union[Unset, int] = Unset,
         search: typing.Union[Unset, str] = Unset,
+        expand: typing.Union[Unset, str] = Unset,
     ):
         """
 
@@ -592,12 +604,20 @@ class GetMovePositionsRequest(types.ApiRequest):
         :param limit: Limit (Максимальное количество сущностей для извлечения.Допустимые значения 1 - 1000.)
         :param offset: Offset (Отступ в выдаваемом списке сущностей.)
         :param search: Search (Фильтр документов по указанной поисковой строке.)
+        :param expand: Expand (Связанные сущности, которые необходимо добавить в ответ.)
         """
 
         self.move_id = move_id
         self.limit = limit
         self.offset = offset
         self.search = search
+        if expand and expand != "assortment":
+            raise ValueError("expand can only be 'assortment'")
+        elif expand and limit != Unset and limit > 100:
+            raise ValueError(
+                "limit must be less than or equal to 100 (if expand is set)"
+            )
+        self.expand = expand
 
     def to_request(self) -> RequestData:
         params = {}
@@ -607,6 +627,8 @@ class GetMovePositionsRequest(types.ApiRequest):
             params["offset"] = self.offset
         if self.search != Unset:
             params["search"] = self.search
+        if self.expand != Unset:
+            params["expand"] = self.expand
 
         return RequestData(
             method="GET",

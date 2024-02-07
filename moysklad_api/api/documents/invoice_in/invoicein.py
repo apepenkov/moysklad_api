@@ -146,6 +146,10 @@ class InvoiceIn(types.MoySkladBaseClass):
         instance.purchase_order = helpers.get_meta(dict_data.get("purchaseOrder"))
         return instance
 
+    @staticmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        return ("invoicein",)
+
 
 class GetInvoicesInRequest(types.ApiRequest):
     """
@@ -494,6 +498,10 @@ class InvoiceInPosition(types.MoySkladBaseClass):
         instance.vat_enabled = data.get("vatEnabled")
         instance.assortment = helpers.get_meta(data.get("assortment"))
         return instance
+
+    @staticmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        return "invoicein", "position"
 
 
 class DeleteInvoiceInRequest(types.ApiRequest):

@@ -84,6 +84,10 @@ class Organization(types.MoySkladBaseClass):
         instance.updated = helpers.parse_date(dict_data.get("updated"))
         return instance
 
+    @staticmethod
+    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+        return ("organization",)
+
 
 class GetOrganizationsRequest(types.ApiRequest):
     """
