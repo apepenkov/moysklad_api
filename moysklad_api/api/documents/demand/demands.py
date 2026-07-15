@@ -347,7 +347,7 @@ class CreateDemandRequest(types.ApiRequest):
             "store": {"meta": self.store},
         }
         if self.agent_account != Unset:
-            json_data["agenAccount"] = (
+            json_data["agentAccount"] = (
                 {"meta": self.agent_account} if self.agent_account is not None else None
             )
         if self.applicable != Unset:
