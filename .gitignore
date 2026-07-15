@@ -12,6 +12,8 @@ MoySklad_api.iml
 .idea
 scratch.py
 gen
+.claude
+.claude/*
 
 # AWS User-specific
 .idea/**/aws.xml

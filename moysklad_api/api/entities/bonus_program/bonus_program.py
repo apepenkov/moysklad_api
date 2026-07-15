@@ -66,7 +66,7 @@ class BonusProgram(types.MoySkladBaseClass):
         return instance
 
     @staticmethod
-    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+    def ms_name() -> typing.Optional[typing.Tuple[str]]:
         return ("bonusprogram",)
 
 

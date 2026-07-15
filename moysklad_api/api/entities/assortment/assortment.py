@@ -82,7 +82,7 @@ class Assortment(types.MoySkladBaseClass):
         return instance
 
     @staticmethod
-    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+    def ms_name() -> typing.Optional[typing.Tuple[str]]:
         return ("assortment",)
 
 
@@ -98,7 +98,7 @@ class AssortmentSettingsUniqueCodeRules(types.MoySkladBaseClass):
         return instance
 
     @staticmethod
-    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+    def ms_name() -> typing.Optional[typing.Tuple[str]]:
         return None
 
 
@@ -114,7 +114,7 @@ class AssortmentSettingsBarcodeRules(types.MoySkladBaseClass):
         return instance
 
     @staticmethod
-    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+    def ms_name() -> typing.Optional[typing.Tuple[str]]:
         return None
 
 
@@ -138,7 +138,7 @@ class AssortmentSettings(types.MoySkladBaseClass):
         return instance
 
     @staticmethod
-    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+    def ms_name() -> typing.Optional[typing.Tuple[str]]:
         return "assortment", "settings"
 
 

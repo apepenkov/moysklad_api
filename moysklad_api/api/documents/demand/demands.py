@@ -136,7 +136,7 @@ class Demand(types.MoySkladBaseClass):
         return instance
 
     @staticmethod
-    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+    def ms_name() -> typing.Optional[typing.Tuple[str]]:
         return ("demand",)
 
 
@@ -197,7 +197,7 @@ class DemandPosition(types.MoySkladBaseClass):
         return instance
 
     @staticmethod
-    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+    def ms_name() -> typing.Optional[typing.Tuple[str]]:
         return "demand", "positions"
 
 

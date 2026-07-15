@@ -76,7 +76,7 @@ class Store(types.MoySkladBaseClass):
         return instance
 
     @staticmethod
-    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+    def ms_name() -> typing.Optional[typing.Tuple[str]]:
         return ("store",)
 
 
@@ -113,7 +113,7 @@ class StoreZone(types.MoySkladBaseClass):
         return instance
 
     @staticmethod
-    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+    def ms_name() -> typing.Optional[typing.Tuple[str]]:
         return "store", "zones"
 
 
@@ -152,7 +152,7 @@ class StoreSlot(types.MoySkladBaseClass):
         return instance
 
     @staticmethod
-    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+    def ms_name() -> typing.Optional[typing.Tuple[str]]:
         return "store", "slots"
 
 

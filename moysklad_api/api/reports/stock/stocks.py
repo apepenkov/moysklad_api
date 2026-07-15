@@ -71,7 +71,7 @@ class FullStockReport(types.MoySkladBaseClass):
         return instance
 
     @staticmethod
-    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+    def ms_name() -> typing.Optional[typing.Tuple[str]]:
         return "stock", "all"
 
 
@@ -98,7 +98,7 @@ class SmallStockReport(types.MoySkladBaseClass):
         return instance
 
     @staticmethod
-    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+    def ms_name() -> typing.Optional[typing.Tuple[str]]:
         return None
 
 

@@ -56,7 +56,7 @@ class MoySkladBaseClass(abc.ABC):
 
     @staticmethod
     @abc.abstractmethod
-    def ms_name() -> typing.Optional[typing.Tuple[str, ...]]:
+    def ms_name() -> typing.Optional[typing.Tuple[str]]:
         """
         This should return either a (name, ) or (name, subname) tuple.
         Subname usecase - for example, a position in an order would have
